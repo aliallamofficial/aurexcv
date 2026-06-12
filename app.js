@@ -25,8 +25,8 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     قم بإعادة صياغة الخبرات بأسلوب نقاط القوة والإنجازات (STAR method)، ونظم السيرة الذاتية بشكل احترافي جداً وجاهز للنسخ.`;
 
     try {
-        // الاتصال بالسيرفر المحلي الآمن الخاص بك
-        const response = await fetch('http://localhost:3000/api/optimize-cv', {
+        // الاتصال المباشر عبر خدمات Netlify الداخلية
+        const response = await fetch('/.netlify/functions/optimize', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +36,6 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
 
         const data = await response.json();
         
-        // التحقق مما إذا كان السيرفر أرجع خطأ بسبب استهلاك حد الـ 3 مرات
         if (data.error) {
             resultBox.innerHTML = `<p style="color: #e74c3c; font-weight: bold; text-align: center;">${data.error}</p>`;
             return;
@@ -51,7 +50,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
 
     } catch (error) {
         console.error('Error:', error);
-        resultBox.innerHTML = '<p style="color: red; text-align: center;">تأكد من تشغيل السيرفر المحلي (server.js) على جهازك أولاً ليتمكن التطبيق من العمل.</p>';
+        resultBox.innerHTML = '<p style="color: red; text-align: center;">حدث خطأ في الاتصال بالسيرفر الداخلي.</p>';
     } finally {
         loadingDiv.classList.add('hidden');
     }
