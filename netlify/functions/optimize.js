@@ -1,7 +1,10 @@
 exports.handler = async (event, context) => {
-    // السماح فقط بطلبات POST لزيادة الأمان
+    // السماح فقط بطلبات POST
     if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: "Method Not Allowed" };
+        return { 
+            statusCode: 405, 
+            body: JSON.stringify({ error: "Method Not Allowed" }) 
+        };
     }
 
     try {
@@ -21,14 +24,28 @@ exports.handler = async (event, context) => {
         });
 
         const data = await response.json();
-        return {
-            statusCode: 200,
-            body: JSON.stringify(data)
-        };
+
+        // التأكد من أن الرد يحتوي على خيارات الإجابة من الذكاء الاصطناعي
+        if (data.choices && data.choices[0].message) {
+            return {
+                statusCode: 200,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            };
+        } else {
+            // في حال أرجعت شركة Groq خطأ في المفتاح أو الخدمة
+            return {
+                statusCode: 400,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ error: data.error?.message || "فشل الذكاء الاصطناعي في الاستجابة، يرجى التحقق من الخادم." })
+            };
+        }
+
     } catch (error) {
         return { 
             statusCode: 500, 
-            body: JSON.stringify({ error: "حدث خطأ في الاتصال بالسيرفر الداخلي" }) 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ error: "حدث خطأ أثناء الاتصال بالسيرفر الداخلي: " + error.message }) 
         };
     }
 };
