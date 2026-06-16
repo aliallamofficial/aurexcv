@@ -1,3 +1,32 @@
+// دالة للتحقق من السماح بإنشاء السيرة الذاتية بحد أقصى 5 مرات يومياً
+function handleCVCreation() {
+    const maxAllowedPerDay = 5; // الحد الأقصى المسموح به يومياً
+    const today = new Date().toDateString(); // جلب تاريخ اليوم الحالي للهاتف
+    
+    // قراءة البيانات المخزنة في ذاكرة الهاتف المحلية
+    let savedDate = localStorage.getItem('cv_creation_date');
+    let creationCount = parseInt(localStorage.getItem('cv_creation_count')) || 0;
+
+    // إذا كان تاريخ اليوم مختلفاً عن التاريخ المخزن، يتم تصفير العداد ليوم جديد
+    if (savedDate !== today) {
+        localStorage.setItem('cv_creation_date', today);
+        creationCount = 0;
+        localStorage.setItem('cv_creation_count', creationCount);
+    }
+
+    // التحقق مما إذا كان المستخدم قد استهلك المرات الخمس بالكامل
+    if (creationCount >= maxAllowedPerDay) {
+        alert("عذراً، لقد وصلت للحد الأقصى المسموح به لإنشاء وتعديل السير الذاتية اليوم (5 مرات). يمكنك المحاولة مجدداً غداً!");
+        return false; // إيقاف العملية
+    }
+
+    // إذا كان مسموحاً، يتم زيادة العداد بمقدار 1 وحفظه في الذاكرة
+    creationCount += 1;
+    localStorage.setItem('cv_creation_count', creationCount);
+    return true; // السماح بإتمام العملية
+}
+
+// حدث الضغط على زر تحسين السيرة الذاتية بالذكاء الاصطناعي
 document.getElementById('optimizeBtn').addEventListener('click', async () => {
     const fullName = document.getElementById('fullName').value.trim();
     const jobTitle = document.getElementById('jobTitle').value.trim();
@@ -7,6 +36,11 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     if (!fullName || !jobTitle) {
         alert('رجاءً أدخل الاسم والمسمى الوظيفي على الأقل!');
         return;
+    }
+
+    // استدعاء دالة التحقق من الـ 5 مرات أولاً قبل تشغيل الذكاء الاصطناعي
+    if (!handleCVCreation()) {
+        return; // إذا تخطى الـ 5 مرات، يتم إيقاف الدالة بالكامل هنا ولا يتم شحن الـ Loading
     }
 
     const loading = document.getElementById('loading');
