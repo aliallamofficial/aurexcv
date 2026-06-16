@@ -20,31 +20,30 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     المسمى الوظيفي المستهدف: ${jobTitle}
     الخبرات: ${experience}
     المهارات: ${skills}
-    
-    نسق الإجابة بنقاط واضحة وبأسلوب احترافي مشوق ومناسب للشركات.`;
+    نسق الإجابة بنقاط واضحة ومحترفة.`;
+
+    // وضعنا مفتاحك الجديد المكتمل مباشرة هنا لتشغيل التطبيق فوراً بدون سيرفر Netlify
+    const API_KEY = "AQ.Ab8RN6IMCQbiw-juUaKPoLCJsfHOgQK1WftEMdjLmGnuDQ0yiQ"; 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
-        // نعود للاستدعاء عبر السيرفر لتخطي حظر المتصفح
-        const response = await fetch('/.netlify/functions/optimize', {
+        const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ promptMessage })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: promptMessage }] }] })
         });
 
         const data = await response.json();
 
-        if (response.ok && data.choices && data.choices[0].message) {
-            const aiResult = data.choices[0].message.content;
-            resultBox.innerHTML = `<div style="white-space: pre-line; color: #fff; line-height: 1.6; text-align: right;">${aiResult}</div>`;
+        if (data.candidates && data.candidates[0].content) {
+            const aiResult = data.candidates[0].content.parts[0].text;
+            // تحويل النص إلى نقاط منسقة بشكل جميل
+            resultBox.innerHTML = `<div style="white-space: pre-line; color: #fff; text-align: right; direction: rtl; line-height: 1.8;">${aiResult}</div>`;
         } else {
-            const errorText = data.error || 'حدث خطأ غير معروف.';
-            resultBox.innerHTML = `<p style="color: #ff4a4a; font-weight: bold;">${errorText}</p>`;
+            resultBox.innerHTML = `<p style="color: #ff4a4a;">خطأ: ${data.error?.message || 'فشل الاتصال بجوجل'}</p>`;
         }
-
     } catch (error) {
-        resultBox.innerHTML = `<p style="color: #ff4a4a; font-weight: bold;">فشل الاتصال بالخادم الداخلي: ${error.message}</p>`;
+        resultBox.innerHTML = `<p style="color: #ff4a4a;">خطأ في الاتصال: ${error.message}</p>`;
     } finally {
         loading.classList.add('hidden');
     }
