@@ -17,8 +17,8 @@ exports.handler = async (event, context) => {
             };
         }
 
-        // الرابط الصحيح والمؤكد 100% من وثائق جوجل الرسمية لنموذج gemini-1.5-flash
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        // الرابط المحدث للنسخة المستقرة v1 لتجنب خطأ الـ v1beta
+        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
         const response = await fetch(url, {
             method: 'POST',
@@ -34,7 +34,6 @@ exports.handler = async (event, context) => {
 
         const data = await response.json();
 
-        // فحص دقيق للاستجابة القادمة من جوجل لمعالجة أي عطل
         if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
             const aiText = data.candidates[0].content.parts[0].text;
             
@@ -52,7 +51,6 @@ exports.handler = async (event, context) => {
                 body: JSON.stringify(formattedResponse)
             };
         } else {
-            // إذا أرجعت جوجل خطأ، نقوم بتمريره مباشرة لنعرف سببه بدقة
             return {
                 statusCode: 400,
                 headers: { "Content-Type": "application/json" },
