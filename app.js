@@ -62,7 +62,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
         
         شروط الصياغة الصارمة لمنع النمطية:
         1. اكتب بأسلوب بشري طبيعي ومباشر تماماً، وتجنب العبارات الطويلة المكررة (مثل: يسعدني، أتقدم، متطلع لـ).
-        2. استخدم أفعالاً حركية قوية ومباشرة في بداية النقاط (مثل: إدارة، تطوير، تنفيذ، تنسيق، تصميم).
+        2. استخدم أفعالاً حركية قوية ومباشرة في بداية النقاط (مثل: إدارة, تطوير، تنفيذ، تنسيق، تصميم).
         3. ركز على إبراز المهام والنتائج العملية بدقة.
         4. نسق النص في أقسام واضحة مستخدماً النقاط (•) للفصل بين العبارات لسهولة القراءة.`;
     } else {
@@ -165,16 +165,37 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     }
 });
 
-// 3. ميزة تحميل السيرة الذاتية وطباعتها بصيغة PDF
+// 3. ميزة تحميل السيرة الذاتية وطباعتها بصيغة PDF (بدون مسح البيانات)
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const printContent = document.getElementById('cvTemplateArea').innerHTML;
-    const originalContent = document.body.innerHTML;
-
-    // استبدال الشاشة مؤقتاً لعرض محتوى السيرة الذاتية فقط لطباعة نظيفة
-    document.body.innerHTML = `<div style="padding:20px;">${printContent}</div>`;
-    window.print();
     
-    // إرجاع محتوى التطبيق وإعادة تنشيط الأحداث
-    document.body.innerHTML = originalContent;
-    window.location.reload(); 
+    // إنشاء نافذة مؤقتة للطباعة للحفاظ على بيانات الصفحة الرئيسية
+    const printWindow = window.open('', '_blank');
+    
+    // تحديد اتجاه النص حسب القالب المعروض
+    const isEn = document.getElementById('cvTemplateArea').style.textAlign === 'left';
+    const direction = isEn ? 'ltr' : 'rtl';
+
+    printWindow.document.write(`
+        <html dir="${direction}">
+        <head>
+            <title>السيرة الذاتية</title>
+            <style>
+                body { font-family: sans-serif; padding: 20px; background: #fff; color: #000; }
+            </style>
+        </head>
+        <body>
+            <div>${printContent}</div>
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    printWindow.focus();
+    
+    // تشغيل أمر الحفظ كـ PDF والطباعة
+    printWindow.print();
+    
+    // إغلاق النافذة المؤقتة بعد الحفظ
+    printWindow.close();
 });
