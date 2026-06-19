@@ -56,16 +56,23 @@
                     </select>
                 </div>
 
-                <button id="optimizeBtn">حسّن سيرتي الذاتية الآن 🚀</button>
+                <button id="optimizeBtn" style="margin-bottom: 10px;">حسّن سيرتي الذاتية الآن 🚀</button>
+                <button id="rateBtn" style="width: 100%; padding: 12px; border-radius: 5px; background-color: #f59e0b; color: white; border: none; font-weight: bold; cursor: pointer;">قيم سيرتي الذاتية الحالية 📊</button>
                 
-                <button id="downloadPdfBtn" class="hidden" style="width: 100%; padding: 12px; border-radius: 5px; margin-top: 15px; background-color: #10b981; color: white; border: none; font-weight: bold; cursor: pointer;">تحميل بصيغة PDF / طباعة فورية 🖨️</button>
+                <div id="downloadContainer" class="hidden" style="margin-top: 15px; position: relative;">
+                    <button id="mainDownloadBtn" style="width: 100%; padding: 12px; border-radius: 5px; background-color: #10b981; color: white; border: none; font-weight: bold; cursor: pointer;">تحميل السيرة الذاتية 📥</button>
+                    <div id="downloadOptions" class="hidden" style="position: absolute; width: 100%; background: #2d3748; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 100; margin-top: 5px;">
+                        <button id="downloadPdfBtn" style="width: 100%; padding: 10px; background: none; color: white; border: none; border-bottom: 1px solid #4a5568; cursor: pointer; font-weight: bold;">تحميل بصيغة PDF / طباعة 🖨️</button>
+                        <button id="downloadWordBtn" style="width: 100%; padding: 10px; background: none; color: white; border: none; cursor: pointer; font-weight: bold;">تحميل بصيغة Word (.doc) 📄</button>
+                    </div>
+                </div>
             </section>
 
             <section class="output-section">
-                <h2>النتيجة الاحترافية</h2>
-                <div id="loading" class="hidden">جاري التحليل والتحسين عبر الذكاء الاصطناعي...</div>
+                <h2>النتيجة والتحليل</h2>
+                <div id="loading" class="hidden">جاري التحليل والعمل عبر الذكاء الاصطناعي...</div>
                 <div id="resultBox" class="result-box">
-                    <p class="placeholder-text">ستظهر سيرتك الذاتية المُحسّنة هنا...</p>
+                    <p class="placeholder-text">ستظهر سيرتك الذاتية المُحسّنة أو تقييمك الذكي هنا...</p>
                 </div>
             </section>
         </main>
