@@ -146,7 +146,7 @@ document.addEventListener('click', () => {
     document.getElementById('downloadOptions').classList.add('hidden');
 });
 
-// 📄 خيار تحميل بصيغة PDF المتوافق تماماً مع الهواتف الذكية والتطبيقات
+// 📄 خيار تحميل بصيغة PDF عبر استدعاء نظام Median للموبايل مباشرة
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
     const cvContent = cvElement.innerHTML;
@@ -154,21 +154,42 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const direction = isEn ? 'ltr' : 'rtl';
 
     const fullHtml = `<html dir="${direction}"><head><title>السيرة_الذاتية</title><style>body{font-family:sans-serif; padding:20px; color:#000; background:#fff;}</style></head><body>${cvContent}</body></html>`;
-    
-    // التحويل المباشر إلى رابط بيانات Data URL صريح ومفهوم للأندرويد
     const pdfUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(fullHtml);
-    window.location.href = pdfUrl;
+
+    // إذا كان يعمل داخل تطبيق Median، نستخدم الجسر المخصص لتنزيل الملفات بأمان وثبات
+    if (typeof median !== 'undefined' && median.download) {
+        median.download.downloadFile({
+            url: pdfUrl,
+            filename: 'السيرة_الذاتية.html'
+        });
+    } else {
+        // حل احتياطي للمتصفحات العادية والتابلت
+        const iframe = document.createElement('iframe');
+        iframe.style.position = 'fixed'; iframe.style.width = '0'; iframe.style.height = '0'; iframe.style.border = '0';
+        document.body.appendChild(iframe);
+        const doc = iframe.contentWindow.document;
+        doc.open(); doc.write(fullHtml); doc.close();
+        iframe.contentWindow.focus(); iframe.contentWindow.print();
+        setTimeout(() => { document.body.removeChild(iframe); }, 1000);
+    }
 });
 
-// 📄 خيار تحميل السيرة الذاتية بصيغة Word (.doc) المباشر المتوافق مع الهواتف
+// 📄 خيار تحميل السيرة الذاتية بصيغة Word عبر نظام Median للموبايل مباشرة
 document.getElementById('downloadWordBtn').addEventListener('click', () => {
     const cvContent = document.getElementById('cvTemplateArea').innerText;
-    
-    // استخدام طريقة التحويل المباشر لتجنب قيود الـ Blob داخل الـ WebView
     const wordUrl = 'data:application/msword;charset=utf-8,\ufeff' + encodeURIComponent(cvContent);
-    
-    const a = document.createElement('a');
-    a.href = wordUrl;
-    a.download = 'السيرة_الذاتية.doc';
-    a.click();
+
+    // إذا كان يعمل داخل تطبيق Median، نستخدم الجسر المخصص لتنزيل ملفات الـ Word
+    if (typeof median !== 'undefined' && median.download) {
+        median.download.downloadFile({
+            url: wordUrl,
+            filename: 'السيرة_الذاتية.doc'
+        });
+    } else {
+        // حل احتياطي للمتصفحات العادية والتابلت
+        const a = document.createElement('a');
+        a.href = wordUrl;
+        a.download = 'السيرة_الذاتية.doc';
+        a.click();
+    }
 });
