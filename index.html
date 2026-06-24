@@ -69,7 +69,12 @@
                 </div>
 
                 <button id="optimizeBtn" style="margin-bottom: 10px;">حسّن سيرتي الذاتية الآن 🚀</button>
-                <button id="rateBtn" style="width: 100%; padding: 12px; border-radius: 5px; background-color: #f59e0b; color: white; border: none; font-weight: bold; cursor: pointer;">قيم سيرتي الذاتية الحالية 📊</button>
+                <button id="rateBtn" style="width: 100%; padding: 12px; border-radius: 5px; background-color: #f59e0b; color: white; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px;">قيم سيرتي الذاتية الحالية 📊</button>
+                
+                <div class="advanced-features-panel">
+                    <button id="atsCheckBtn" class="btn-secondary">فحص التوافق العالمي ATS 🔍</button>
+                    <button id="signCvBtn" class="btn-secondary">توقيع وتشفير رقمي GPG 🔐</button>
+                </div>
                 
                 <div id="downloadContainer" class="hidden" style="margin-top: 15px; position: relative;">
                     <button id="mainDownloadBtn" style="width: 100%; padding: 12px; border-radius: 5px; background-color: #10b981; color: white; border: none; font-weight: bold; cursor: pointer;">تحميل السيرة الذاتية 📥</button>
@@ -83,6 +88,7 @@
             <section class="output-section">
                 <h2>النتيجة والتحليل</h2>
                 <div id="loading" class="hidden">جاري التحليل والعمل عبر الذكاء الاصطناعي...</div>
+                
                 <div id="resultBox" class="result-box">
                     <p class="placeholder-text">ستظهر سيرتك الذاتية المُحسّنة أو تقييمك الذكي هنا...</p>
                 </div>
@@ -91,13 +97,13 @@
 
         <footer>
             <p>تم التطوير بكل فخر بواسطة <span class="developer-name">علي حاتم علام</span> © 2026</p>
-            <p style="font-size: 11px; color: #475569; font-family: monospace; margin-top: 5px; letter-spacing: 1px;">
+            <p class="footer-gpg-text">
                 Verified: @aliallamofficial [GPG: 55392380FBF1C8F1]
             </p>
-            <div class="footer-links" style="margin-top: 10px;">
-                <a href="http://www.linkedin.com/in/aliallamofficial" target="_blank" style="color: #3b82f6; margin: 0 10px; text-decoration: none; font-weight: bold;">LinkedIn</a> | 
-                <a href="https://github.com/aliallamofficial" target="_blank" style="color: #f8fafc; margin: 0 10px; text-decoration: none; font-weight: bold;">GitHub</a> | 
-                <a href="mailto:prof.ali.hatem.cairo@gmail.com" style="color: #10b981; margin: 0 10px; text-decoration: none; font-weight: bold;">تواصل معي ✉️</a>
+            <div class="footer-links">
+                <a href="https://github.com/aliallamofficial" target="_blank" class="link-github">GitHub</a> | 
+                <a href="http://www.linkedin.com/in/aliallamofficial" target="_blank" class="link-linkedin">LinkedIn</a> | 
+                <a href="mailto:prof.ali.hatem.cairo@gmail.com" class="link-email">تواصل معي ✉️</a>
             </div>
         </footer>
     </div>
