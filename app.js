@@ -305,4 +305,4 @@ document.getElementById('downloadWordBtn').addEventListener('click', () => {
     if (typeof median !== 'undefined' && median.download) {
         median.download.downloadFile({ url: wordUrl, filename: 'السيرة_الذاتية.doc' });
     } else {
-        const a = document.createElement('a
+        const a = document.createElement('a');
