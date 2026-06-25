@@ -243,11 +243,10 @@ document.addEventListener('click', () => {
     if(options) options.classList.add('hidden');
 });
 
-// 📄 خيار تحميل بصيغة PDF حقيقي ومغلق (مُعدل ومُصلح لحل مشكلة الصفحة البيضاء تماماً)
+// 📄 خيار تحميل بصيغة PDF حقيقي ومغلق (تم التحديث لمنع الصفحة البيضاء تماماً)
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
     
-    // منع التحميل إذا كانت لوحة النتيجة فارغة تماماً
     if (!cvElement || cvElement.innerText.trim() === "" || cvElement.innerText.includes("ستظهر سيرتك الذاتية")) {
         alert(document.getElementById('langSelect').value === 'ar' ? 'يرجى تحسين السيرة الذاتية أولاً وتوليد النص قبل محاولة تحميلها!' : 'Please optimize your CV first before downloading!');
         return;
@@ -259,45 +258,54 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
 
     let currentHtml = cvElement.innerHTML;
 
-    // حقن التوقيع البرمجي الموثق ومفتاح الـ GPG التابع لك إذا لم يكن محقوناً بالأسفل
     if (!currentHtml.includes('cv-crypto-footer')) {
         currentHtml = appendCryptoSignatureToCV(currentHtml);
     }
 
-    // بناء حاوية طباعة مستقلة ونظيفة وإجبار الألوان لحل مشكلة اختفاء النصوص البيضاء
+    // بناء حاوية مستقلة ومؤقتة في الـ DOM لضمان قراءتها بشكل صحيح
     const optArea = document.createElement('div');
+    optArea.style.position = 'fixed';
+    optArea.style.left = '-9999px';
+    optArea.style.top = '0';
+    optArea.style.width = '750px'; // حجم مثالي لعرض الورقة
     optArea.style.direction = direction;
-    optArea.style.padding = '35px';
+    optArea.style.padding = '40px';
     optArea.style.background = '#ffffff'; 
     optArea.style.color = '#000000';      
     optArea.innerHTML = currentHtml;
 
-    // إصلاح جذري: إجبار جميع النصوص والوسوم الداخلية على اللون الأسود لتقرأها المكتبة بوضوح فوق الصفحة البيضاء
+    document.body.appendChild(optArea);
+
+    // تحويل كل النصوص الداخلية إلى اللون الأسود الصريح لعدم التداخل مع الخلفية البيضاء
     const allElements = optArea.querySelectorAll('*');
     allElements.forEach(el => {
         el.style.color = '#000000';
         el.style.backgroundColor = 'transparent';
     });
 
-    // إخفاء شارة الواجهة البرمجية العلوية داخل ملف الـ PDF والاكتفاء بالتوقيع الرسمي السفلي المكتوب
     const badge = optArea.querySelector('.crypto-badge');
     if (badge) badge.style.display = 'none';
 
-    // إعدادات مكتبة html2pdf المتقدمة للقفل والدمج الكامل والواضح
     const options = {
-        margin:       0.5,
+        margin:       [0.4, 0.4, 0.4, 0.4],
         filename:     'السيرة_الذاتية_الموثقة.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true, logging: false, letterRendering: true },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
 
-    alert(selectedLang === 'ar' ? 'جاري إنشاء مستند PDF محمّي ومقفل وموثق رقمياً...' : 'Generating a secured and locked PDF document...');
+    alert(selectedLang === 'ar' ? 'جاري معالجة وبناء ملف PDF واضح... انتظر لحظة واحدة.' : 'Generating PDF file... please wait a moment.');
     
-    // تنفيذ عملية التوليد الرسومية المقفلة
-    html2pdf().set(options).from(optArea).save().then(() => {
-        navigator.clipboard.writeText(cvElement.innerText).catch(() => {});
-    });
+    // إعطاء المتصفح 800ms لتصيير العناصر المخفية قبل التقاط الصورة وثم إزالتها
+    setTimeout(() => {
+        html2pdf().set(options).from(optArea).save().then(() => {
+            document.body.removeChild(optArea);
+            navigator.clipboard.writeText(cvElement.innerText).catch(() => {});
+        }).catch((err) => {
+            document.body.removeChild(optArea);
+            alert("حدث خطأ أثناء التصدير، يرجى إعادة المحاولة.");
+        });
+    }, 800);
 });
 
 // 📄 خيار تحميل السيرة الذاتية بصيغة Word مع إظهار التنبيه الاحترافي الصارم للمستخدم
@@ -305,7 +313,6 @@ document.getElementById('downloadWordBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
     if (!cvElement) return;
 
-    // إظهار التنبيه التوضيحي الصارم للمسخدم قبل التحميل
     alert("تنبيه: ملف الـ Word مخصص للتعديل الشخصي، بينما نسخة الـ PDF هي النسخة الرسمية المقفلة والموثقة التي تُرسل للموظفين.");
 
     let cvContentText = cvElement.innerText;
