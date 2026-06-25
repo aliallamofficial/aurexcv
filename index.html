@@ -6,7 +6,6 @@
     <title>مُحسّن السيرة الذاتية بالذكاء الاصطناعي</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
 </head>
@@ -46,16 +45,16 @@
 
                 <div class="form-group">
                     <label for="experience">الخبرات السابقة (اكتبها بشكل بسيط):</label>
-                    <textarea id="experience" rows="5" placeholder="مثال: عملت بشركة اكس لمدة سنتين في خدمة العملاء وكنت ارد على الايميلات..."></textarea>
+                    <textarea id="experience" rows="5" placeholder="مثال: عملت بشركة اكس لمدة سنتين في خدمة العملاء..."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="skills">المهارات:</label>
-                    <input type="text" id="skills" placeholder="مثال: تواصل، حل مشكلات، اكسل، تفاوض">
+                    <input type="text" id="skills" placeholder="مثال: تواصل، حل مشكلات، اكسل">
                 </div>
 
                 <div class="form-group">
-                    <label for="langSelect">لغة صياغة السيرة الذاتية:</label>
+                    <label for="langSelect">لغة الصياغة:</label>
                     <select id="langSelect">
                         <option value="ar">العربية (Arabic)</option>
                         <option value="en">الإنجليزية (English)</option>
@@ -71,7 +70,28 @@
                     </select>
                 </div>
 
+                <div class="form-row" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="fontFamilySelect">نوع الخط:</label>
+                        <select id="fontFamilySelect">
+                            <option value="sans-serif">Sans-Serif (عصري)</option>
+                            <option value="'Times New Roman', serif">Times New Roman (رسمي)</option>
+                            <option value="Arial">Arial (واضح)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="fontSizeSelect">حجم الخط:</label>
+                        <select id="fontSizeSelect">
+                            <option value="14px">صغير (14px)</option>
+                            <option value="16px" selected>طبيعي (16px)</option>
+                            <option value="18px">كبير (18px)</option>
+                        </select>
+                    </div>
+                </div>
+
                 <button id="optimizeBtn" style="margin-bottom: 10px;">حسّن سيرتي الذاتية الآن 🚀</button>
+                
+                <button id="coverLetterBtn" style="width: 100%; padding: 12px; border-radius: 5px; background-color: #6366f1; color: white; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px;">صياغة رسالة تغطية (Cover Letter) ✉️</button>
                 
                 <button id="rateBtn" style="width: 100%; padding: 12px; border-radius: 5px; background-color: #f59e0b; color: white; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px;">قيم سيرتي الذاتية الحالية 📊</button>
                 
@@ -103,27 +123,10 @@
 
         <footer>
             <p>تم التطوير بكل فخر بواسطة <span class="developer-name">علي حاتم علام</span> © 2026</p>
-            <p class="footer-gpg-text">
-                Verified: @aliallamofficial [GPG: 55392380FBF1C8F1]
-            </p>
-            <div class="footer-links">
-                <a href="https://github.com/aliallamofficial" target="_blank" class="link-github">GitHub</a> | 
-                <a href="http://www.linkedin.com/in/aliallamofficial" target="_blank" class="link-linkedin">LinkedIn</a> | 
-                <a href="mailto:prof.ali.hatem.cairo@gmail.com" class="link-email">تواصل معي ✉️</a>
-            </div>
+            <p class="footer-gpg-text">Verified: @aliallamofficial [GPG: 55392380FBF1C8F1]</p>
         </footer>
     </div>
 
     <script src="app.js"></script>
-
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('تطبيق PWA جاهز للعمل!'))
-            .catch(err => console.log('حدث خطأ في الـ PWA', err));
-        });
-      }
-    </script>
 </body>
 </html>
