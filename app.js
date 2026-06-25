@@ -47,7 +47,7 @@ function formatMarkdown(text) {
 
 // دالة لتطبيق ثيم القوالب على النتيجة المطبوعة والمستخرجة
 function getTemplateStyles(selectedLang, selectedTemplate) {
-    let styles = "padding:25px; line-height:1.8; font-size:16px; border-radius:8px; margin-top:15px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); font-family: sans-serif;";
+    let styles = "padding:25px; line-height:1.8; font-size:16px; border-radius:8px; margin-top:15px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); font-family: sans-serif; overflow: hidden;";
     styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr;";
     
     if (selectedTemplate === 'modern') styles += " background-color: #1e293b; color: #f8fafc; border-left: 6px solid #3b82f6;";
@@ -60,7 +60,7 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
 // دالة مخصصة لحقن التوقيع الرقمي ومفتاح الـ GPG في أسفل الـ CV لتوثيقه رسمياً وحمايته
 function appendCryptoSignatureToCV(htmlContent) {
     const signatureHtml = `
-        <div class="cv-crypto-footer" style="margin-top: 35px; padding-top: 15px; border-top: 1px dashed #cbd5e1; text-align: center; font-family: monospace; direction: ltr;">
+        <div class="cv-crypto-footer" style="margin-top: 35px; padding-top: 15px; border-top: 1px dashed #cbd5e1; text-align: center; font-family: monospace; direction: ltr; clear: both;">
             <p style="font-size: 10px; color: #64748b; margin: 0; letter-spacing: 1px;">
                 🔒 Digitally Signed & Verified via AI CV Optimizer
             </p>
@@ -70,6 +70,32 @@ function appendCryptoSignatureToCV(htmlContent) {
         </div>
     `;
     return htmlContent + signatureHtml;
+}
+
+// دالة لتوليد الـ QR Code السريع وإضافته تلقائياً داخل السيرة الذاتية لربط الملفات الخارجية
+function generateCVQRCode(containerId, textToEncode) {
+    // التحقق أولاً من عدم وجود كود QR سابق منعاً للتكرار
+    const existingQr = document.getElementById('cvQrCode');
+    if (existingQr) existingQr.remove();
+
+    const qrContainer = document.createElement('div');
+    qrContainer.id = "cvQrCode";
+    // يتم محاذاته يسارًا في القوالب العربية ويمينًا في الإنجليزية بشكل يعطي لمسة جمالية
+    const isAr = document.getElementById('langSelect').value === 'ar';
+    qrContainer.style = `float: ${isAr ? 'left' : 'right'}; margin: 10px; padding: 6px; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; display: inline-block;`;
+    
+    const targetElement = document.getElementById(containerId);
+    if (targetElement) {
+        targetElement.prepend(qrContainer);
+        new QRCode(qrContainer, {
+            text: textToEncode,
+            width: 80,
+            height: 80,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
 }
 
 // حدث الضغط على زر تحسين السيرة الذاتية
@@ -98,7 +124,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     downloadContainer.classList.add('hidden');
     resultBox.innerHTML = '';
 
-    // ✨ فكرة ذكية: فحص حالة الإنترنت لتشغيل الـ Offline Mode تلقائياً
+    // ✨ ميزة العمل دون اتصال بالإنترنت (Offline Mode)
     if (!navigator.onLine) {
         alert(selectedLang === 'ar' 
             ? "أنت تعمل الآن بدون إنترنت (Offline Mode). سيتم تنسيق سيرتك الذاتية محلياً فوراً دون انتظار الذكاء الاصطناعي!" 
@@ -123,10 +149,10 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
         downloadContainer.classList.remove('hidden');
         loading.classList.add('hidden');
         btn.disabled = false;
-        return; // الخروج من الدالة وتخطي طلب السيرفر
+        return; 
     }
 
-    // الطريقة العادية في حال وجود إنترنت
+    // الوضع الطبيعي عند توفر شبكة الإنترنت
     let promptMessage = selectedLang === 'ar' ? 
         `قم بصياغة سيرة ذاتية احترافية وموجزة باللغة العربية للشخص التالي:\nالاسم: ${fullName}\nالوظيفة: ${jobTitle}\nالخبرات: ${experience || 'مبتدئ'}\nالمهارات: ${skills || 'تواصل، عمل جماعي'}\n\nشروط صارمة: أسلوب بشري بدون مقدمات ذكاء اصطناعي، نقاط واضحة (•)، أفعال حركة قوية.` :
         `Create a professional and concise resume in English for:\nName: ${fullName}\nJob: ${jobTitle}\nExperience: ${experience || 'Entry-level'}\nSkills: ${skills || 'Communication'}\n\nStrict Rules: Human style, strong action verbs, clear bullet points (•).`;
@@ -142,6 +168,10 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
             let formattedResult = formatMarkdown(aiResult);
             
             resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}">${formattedResult}</div>`;
+            
+            // حقن ميزة الروابط الذكية (توليد QR يربط الحساب الشخصي أو رابط توثيق المستند)
+            generateCVQRCode('cvTemplateArea', `https://aliallamofficial.github.io/ali-cv-builder/?user=${encodeURIComponent(fullName)}`);
+            
             downloadContainer.classList.remove('hidden'); 
         } else { throw new Error(); }
     } catch (error) {
@@ -237,6 +267,48 @@ document.getElementById('atsCheckBtn').addEventListener('click', async () => {
         }
     } catch (e) {
         alert("فشل فحص الـ ATS حالياً بسبب ضغط الخادم.");
+    } finally { 
+        loading.classList.add('hidden'); 
+        btn.disabled = false;
+    }
+});
+
+// 🎯 ميزة محاكي المقابلات الشخصية الذكي (AI Interview Simulator)
+document.getElementById('interviewPrepBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('interviewPrepBtn');
+    const cvArea = document.getElementById('cvTemplateArea');
+    const selectedLang = document.getElementById('langSelect').value;
+
+    if (!cvArea) {
+        alert(selectedLang === 'ar' ? 'يرجى توليد السيرة الذاتية أولاً لكي نتوقع أسئلة المقابلة بناءً عليها!' : 'Please generate your CV first!');
+        return;
+    }
+
+    if (!navigator.onLine) {
+        alert(selectedLang === 'ar' ? "هذه الميزة تتطلب اتصالاً بالإنترنت لتشغيل المحاكي الذكي." : "This feature requires an internet connection.");
+        return;
+    }
+
+    const loading = document.getElementById('loading');
+    const resultBox = document.getElementById('resultBox');
+    
+    btn.disabled = true;
+    loading.classList.remove('hidden');
+
+    let promptMessage = `بناءً على السيرة الذاتية التالية، تقمص دور مدير التوظيف (Interviewer) واقترح أبرز 5 أسئلة متوقعة وصعبة يمكن طرحها على صاحب هذا الملف أثناء المقابلة الشخصية، مع توفير نصيحة ذهبية ومختصرة لكيفية الإجابة على كل سؤال باحترافية:\n\n${cvArea.innerText}`;
+
+    try {
+        const aiResult = await askAI(promptMessage, "أنت مدير توظيف خبير وصارم في المقابلات الشخصية. تعطي أسئلة ذكية وموجهة بدقة بناءً على خبرات المرشح باللغة العربية.");
+        if (aiResult) {
+            let formattedQuestions = formatMarkdown(aiResult);
+            resultBox.innerHTML = `
+                <div class="interview-box" style="padding:25px; background:#0f172a; border-left:6px solid #10b981; color:#f8fafc; border-radius:12px; direction:rtl; text-align:right; line-height:1.8;">
+                    <h3>🎙️ محاكي المقابلات الشخصية والأسئلة المتوقعة:</h3>
+                    <br>${formattedQuestions}
+                </div>`;
+        }
+    } catch (e) {
+        alert("فشل تشغيل المحاكي حالياً بسبب ضغط الخادم.");
     } finally { 
         loading.classList.add('hidden'); 
         btn.disabled = false;
