@@ -93,12 +93,40 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     const resultBox = document.getElementById('resultBox');
     const downloadContainer = document.getElementById('downloadContainer');
 
-    // حماية: تعطيل الزر لمنع تكرار الطلب وظهور خطأ الـ Queue
     btn.disabled = true;
     loading.classList.remove('hidden');
     downloadContainer.classList.add('hidden');
     resultBox.innerHTML = '';
 
+    // ✨ فكرة ذكية: فحص حالة الإنترنت لتشغيل الـ Offline Mode تلقائياً
+    if (!navigator.onLine) {
+        alert(selectedLang === 'ar' 
+            ? "أنت تعمل الآن بدون إنترنت (Offline Mode). سيتم تنسيق سيرتك الذاتية محلياً فوراً دون انتظار الذكاء الاصطناعي!" 
+            : "You are offline. Your CV will be formatted locally without AI layout generation!");
+        
+        let offlineResult = selectedLang === 'ar' ? `
+            <h2>${fullName}</h2>
+            <h3>${jobTitle}</h3>
+            <hr style="border: 1px solid #cbd5e1; margin: 15px 0;">
+            <strong>📋 الخبرات المهنية والمشاريع:</strong><br>${experience || 'مبتدئ'}<br><br>
+            <strong>💡 المهارات والقدرات:</strong><br>${skills || 'تواصل، عمل جماعي'}
+        ` : `
+            <h2>${fullName}</h2>
+            <h3>${jobTitle}</h3>
+            <hr style="border: 1px solid #cbd5e1; margin: 15px 0;">
+            <strong>📋 Professional Experience & Projects:</strong><br>${experience || 'Entry-level'}<br><br>
+            <strong>💡 Skills & Abilities:</strong><br>${skills || 'Communication, Teamwork'}
+        `;
+
+        let templateStyles = getTemplateStyles(selectedLang, selectedTemplate);
+        resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}">${offlineResult}</div>`;
+        downloadContainer.classList.remove('hidden');
+        loading.classList.add('hidden');
+        btn.disabled = false;
+        return; // الخروج من الدالة وتخطي طلب السيرفر
+    }
+
+    // الطريقة العادية في حال وجود إنترنت
     let promptMessage = selectedLang === 'ar' ? 
         `قم بصياغة سيرة ذاتية احترافية وموجزة باللغة العربية للشخص التالي:\nالاسم: ${fullName}\nالوظيفة: ${jobTitle}\nالخبرات: ${experience || 'مبتدئ'}\nالمهارات: ${skills || 'تواصل، عمل جماعي'}\n\nشروط صارمة: أسلوب بشري بدون مقدمات ذكاء اصطناعي، نقاط واضحة (•)، أفعال حركة قوية.` :
         `Create a professional and concise resume in English for:\nName: ${fullName}\nJob: ${jobTitle}\nExperience: ${experience || 'Entry-level'}\nSkills: ${skills || 'Communication'}\n\nStrict Rules: Human style, strong action verbs, clear bullet points (•).`;
@@ -120,7 +148,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
         resultBox.innerHTML = `<p style="color:red;">الخادم مشغول حالياً أو حدث خطأ أثناء الصياغة. يرجى المحاولة مجدداً بعد ثوانٍ قليلة.</p>`;
     } finally { 
         loading.classList.add('hidden'); 
-        btn.disabled = false; // إعادة تفعيل الزر بعد الانتهاء
+        btn.disabled = false;
     }
 });
 
@@ -135,6 +163,11 @@ document.getElementById('rateBtn').addEventListener('click', async () => {
 
     if (!fullName || !jobTitle) {
         alert(selectedLang === 'ar' ? 'رجاءً أدخل الاسم والمسمى الوظيفي أولاً ليتم التقييم بناءً عليهما!' : 'Please enter Name and Job Title first!');
+        return;
+    }
+
+    if (!navigator.onLine) {
+        alert(selectedLang === 'ar' ? "عذراً، ميزة تقييم الـ ATS تتطلب اتصالاً بالإنترنت." : "Sorry, Resume Scoring features require an internet connection.");
         return;
     }
 
@@ -180,6 +213,11 @@ document.getElementById('atsCheckBtn').addEventListener('click', async () => {
     const selectedLang = document.getElementById('langSelect').value;
     if (!cvArea) {
         alert(selectedLang === 'ar' ? 'يرجى تحسين السيرة الذاتية أولاً قبل فحص الـ ATS!' : 'Please optimize your CV first!');
+        return;
+    }
+
+    if (!navigator.onLine) {
+        alert(selectedLang === 'ar' ? "عذراً، نظام فحص الـ ATS يتطلب اتصالاً بالإنترنت لربطه بالخوارزميات الحية." : "Sorry, ATS Checker requires an active internet connection.");
         return;
     }
 
@@ -254,18 +292,14 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
 
     let currentHtml = cvElement.innerHTML;
 
-    // إلحاق التوقيع الرسمي بالأسفل
     if (!currentHtml.includes('cv-crypto-footer')) {
         currentHtml = appendCryptoSignatureToCV(currentHtml);
     }
 
-    // فتح نافذة طباعة فرعية نظيفة ومستقلة تماماً لمنع ظهور باقي أزرار الموقع في المستند
     const printWindow = window.open('', '_blank', 'width=800,height=900');
-    
     const isEn = cvElement.style.textAlign === 'left';
     const direction = isEn ? 'ltr' : 'rtl';
 
-    // حقن الكود وتنسيقات الـ CSS للطباعة لضمان خلفية بيضاء ونصوص سوداء حادة ومثالية للـ ATS
     printWindow.document.write(`
         <!DOCTYPE html>
         <html dir="${direction}">
@@ -281,7 +315,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
                     font-size: 15px;
                 }
                 strong { font-weight: bold; color: #000000; }
-                /* إخفاء الشارة العلوية أثناء طباعة الملف */
                 .crypto-badge { display: none !important; }
                 @media print {
                     body { padding: 0; }
@@ -292,7 +325,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
         <body>
             <div>${currentHtml}</div>
             <script>
-                // تشغيل أمر حفظ كـ PDF تلقائياً فور التحميل ثم إغلاق النافذة المنبثقة
                 window.onload = function() {
                     window.print();
                     setTimeout(function() { window.close(); }, 500);
