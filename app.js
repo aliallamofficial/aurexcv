@@ -40,7 +40,7 @@ async function askAI(promptMessage, systemMessage) {
 function formatMarkdown(text) {
     if (!text) return '';
     return text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // تحويل النجوم الثنائية لخط عريض
+        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') // تحويل النجوم الثنائية لخط عريض
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          // تحويل النجمة الأحادية لخط مائل
         .replace(/\n/g, '<br>');                        // تحويل السطور الجديدة
 }
@@ -243,69 +243,67 @@ document.addEventListener('click', () => {
     if(options) options.classList.add('hidden');
 });
 
-// 📄 خيار تحميل بصيغة PDF حقيقي ومغلق (تم التحديث لمنع الصفحة البيضاء تماماً)
+// 📄 خيار تحميل بصيغة PDF حقيقي ومغلق (حل نهائي ومباشر لمنع الصفحة البيضاء)
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
     
+    // منع التحميل إذا كانت لوحة النتيجة فارغة تماماً
     if (!cvElement || cvElement.innerText.trim() === "" || cvElement.innerText.includes("ستظهر سيرتك الذاتية")) {
         alert(document.getElementById('langSelect').value === 'ar' ? 'يرجى تحسين السيرة الذاتية أولاً وتوليد النص قبل محاولة تحميلها!' : 'Please optimize your CV first before downloading!');
         return;
     }
 
     const selectedLang = document.getElementById('langSelect').value;
-    const isEn = cvElement.style.textAlign === 'left';
-    const direction = isEn ? 'ltr' : 'rtl';
+    
+    // حفظ الستايلات الأصلية لصندوق النتيجة لإعادتها بعد الحفظ
+    const originalStyle = cvElement.getAttribute('style');
 
-    let currentHtml = cvElement.innerHTML;
+    // إجبار الصندوق الظاهر فوراً على ألوان الطباعة (خلفية بيضاء ونصوص سوداء صريحة) ليراها المحرك
+    cvElement.style.backgroundColor = '#ffffff';
+    cvElement.style.color = '#000000';
+    cvElement.style.boxShadow = 'none';
 
-    if (!currentHtml.includes('cv-crypto-footer')) {
-        currentHtml = appendCryptoSignatureToCV(currentHtml);
-    }
-
-    // بناء حاوية مستقلة ومؤقتة في الـ DOM لضمان قراءتها بشكل صحيح
-    const optArea = document.createElement('div');
-    optArea.style.position = 'fixed';
-    optArea.style.left = '-9999px';
-    optArea.style.top = '0';
-    optArea.style.width = '750px'; // حجم مثالي لعرض الورقة
-    optArea.style.direction = direction;
-    optArea.style.padding = '40px';
-    optArea.style.background = '#ffffff'; 
-    optArea.style.color = '#000000';      
-    optArea.innerHTML = currentHtml;
-
-    document.body.appendChild(optArea);
-
-    // تحويل كل النصوص الداخلية إلى اللون الأسود الصريح لعدم التداخل مع الخلفية البيضاء
-    const allElements = optArea.querySelectorAll('*');
-    allElements.forEach(el => {
+    // تحويل الألوان لكافة العناصر الداخلية بالداخل (عناوين، فقرات، إلخ)
+    const innerElements = cvElement.querySelectorAll('*');
+    innerElements.forEach(el => {
         el.style.color = '#000000';
         el.style.backgroundColor = 'transparent';
     });
 
-    const badge = optArea.querySelector('.crypto-badge');
+    // إخفاء الشارات غير المرغوبة أثناء الطباعة
+    const badge = cvElement.querySelector('.crypto-badge');
     if (badge) badge.style.display = 'none';
 
+    // إعدادات مكتبة html2pdf الدقيقة والمتوافقة عالمياً
     const options = {
-        margin:       [0.4, 0.4, 0.4, 0.4],
+        margin:       0.5,
         filename:     'السيرة_الذاتية_الموثقة.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false, letterRendering: true },
+        html2canvas:  { 
+            scale: 2, 
+            useCORS: true, 
+            logging: false,
+            letterRendering: true
+        },
         jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
 
-    alert(selectedLang === 'ar' ? 'جاري معالجة وبناء ملف PDF واضح... انتظر لحظة واحدة.' : 'Generating PDF file... please wait a moment.');
-    
-    // إعطاء المتصفح 800ms لتصيير العناصر المخفية قبل التقاط الصورة وثم إزالتها
+    alert(selectedLang === 'ar' ? 'جاري التقاط وحفظ مستند PDF... انتظر لحظة.' : 'Capturing and generating PDF... please wait.');
+
+    // تشغيل التقاط العنصر المباشر مع مهلة صغيرة جداً لضمان ثبات الألوان
     setTimeout(() => {
-        html2pdf().set(options).from(optArea).save().then(() => {
-            document.body.removeChild(optArea);
+        html2pdf().set(options).from(cvElement).save().then(() => {
+            // إعادة الستايل الأصلي للموقع فوراً بعد اكتمال التحميل
+            cvElement.setAttribute('style', originalStyle);
+            if (badge) badge.style.display = 'inline-flex';
             navigator.clipboard.writeText(cvElement.innerText).catch(() => {});
         }).catch((err) => {
-            document.body.removeChild(optArea);
-            alert("حدث خطأ أثناء التصدير، يرجى إعادة المحاولة.");
+            // إعادة الستايل في حال حدوث أي خطأ مفاجئ
+            cvElement.setAttribute('style', originalStyle);
+            if (badge) badge.style.display = 'inline-flex';
+            alert("حدث خطأ أثناء المعالجة، يرجى المحاولة مرة أخرى.");
         });
-    }, 800);
+    }, 300);
 });
 
 // 📄 خيار تحميل السيرة الذاتية بصيغة Word مع إظهار التنبيه الاحترافي الصارم للمستخدم
