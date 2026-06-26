@@ -16,94 +16,165 @@
 </head>
 <body>
 
-    <div id="splash-screen">
-        🚀 جاري تشغيل مُحسّن السيرة الذاتية الذكي...
+    <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; color: #fff; font-family: sans-serif;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: #38bdf8; animation: pulse 1.5s infinite;">Ali CV Builder</h1>
+        <p style="color: #64748b; font-size: 1rem;">جاري تهيئة مستشار التوظيف الذكي...</p>
     </div>
 
-    <div class="header-menu">
-        <h2>مُحسّن السيرة الذاتية الذكي ✨</h2>
-        <button id="dropdownToggleBtn">⚙️</button>
+    <div class="container" style="position: relative;">
         
-        <div id="topLeftMenu" class="hidden">
-            <button id="openSettingsBtn">⚙️ الإعدادات المتقدمة</button>
+        <div class="top-left-dropdown">
+            <button id="dropdownToggleBtn" class="dropdown-trigger-btn">⚙️</button>
+            <div id="topLeftMenu" class="dropdown-menu-content hidden">
+                <button id="openSettingsBtn">⚙️ الإعدادات</button>
+            </div>
         </div>
+
+        <header style="text-align: center; margin-bottom: 30px; margin-top: 20px;">
+            <h1 style="color: #f8fafc; font-size: 2.2rem; margin-bottom: 8px;">مُحسّن السيرة الذاتية الذكي ✨</h1>
+            <p style="color: #94a3b8; font-size: 1.1rem;">صمم، حسّن، ووثق سيرتك الذاتية رقمياً بمعايير ATS العالمية</p>
+        </header>
+
+        <div id="liveTipBox" style="background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; padding: 15px; border-radius: 8px; margin-bottom: 25px; color: #e2e8f0;">
+            <span style="font-weight: bold; color: #38bdf8; display: block; margin-bottom: 5px;">💡 نصيحة الخبراء اليوم:</span>
+            <p id="liveTipText" style="margin: 0; font-size: 14px; line-height: 1.6;">جاري جلب نصيحة مخصصة لك...</p>
+        </div>
+
+        <div class="input-section" style="background: #1e293b; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 30px;">
+            
+            <div style="margin-bottom: 15px;">
+                <label for="fullName" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الاسم الكامل:</label>
+                <input type="text" id="fullName" placeholder="مثال: علي علام" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="jobTitle" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المسمى الوظيفي المستهدف:</label>
+                <input type="text" id="jobTitle" placeholder="مثال: مهندس برمجيات" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="experience" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الخبرات المهنية السابقة:</label>
+                <textarea id="experience" rows="4" placeholder="اذكر الشركات والمهام الرئيسية التي قمت بها باختصار..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="skills" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المهارات (افصل بينها بفاصلة):</label>
+                <input type="text" id="skills" placeholder="JavaScript, Python, حل المشكلات, العمل الجماعي" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;">
+                <div>
+                    <label for="langSelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">اللغة المستهدفة:</label>
+                    <select id="langSelect" style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff;">
+                        <option value="ar">العربية (Arabic)</option>
+                        <option value="en">الإنجليزية (English)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="templateSelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">نمط قالب الـ CV:</label>
+                    <select id="templateSelect" style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff;">
+                        <option value="modern">عصري داكن (Modern)</option>
+                        <option value="classic">كلاسيكي رسمي (Classic)</option>
+                        <option value="elegant">أنيق بلمسة فاخرة (Elegant)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="fontFamilySelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">نوع الخط المفضل:</label>
+                    <select id="fontFamilySelect" style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff;">
+                        <option value="Cairo, sans-serif">Cairo (عربي ممتاز)</option>
+                        <option value="Tajawal, sans-serif">Tajawal</option>
+                        <option value="Arial, sans-serif">Arial (عالمي)</option>
+                        <option value="'Courier New', monospace">Monospace</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="fontSizeSelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">حجم النص الأساسي:</label>
+                    <select id="fontSizeSelect" style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff;">
+                        <option value="14px">صغير (14px)</option>
+                        <option value="15px" selected>افتراضي (15px)</option>
+                        <option value="17px">كبير (17px)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button id="optimizeBtn" style="width: 100%; padding: 14px; border: none; border-radius: 6px; background: #2563eb; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s;">✨ إنشاء وتحسين السيرة الذاتية الذكية</button>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">
+                    <button id="coverLetterBtn" style="padding: 10px; border: 1px solid #475569; border-radius: 6px; background: #334155; color: #fff; cursor: pointer; font-weight: bold;">✉️ صانع رسالة التغطية</button>
+                    <button id="rateBtn" style="padding: 10px; border: 1px solid #475569; border-radius: 6px; background: #334155; color: #fff; cursor: pointer; font-weight: bold;">📊 تقييم البيانات</button>
+                    <button id="atsCheckBtn" style="padding: 10px; border: 1px solid #475569; border-radius: 6px; background: #334155; color: #fff; cursor: pointer; font-weight: bold;">🔍 محاكاة فحص ATS</button>
+                    <button id="signCvBtn" style="padding: 10px; border: 1px solid #10b981; border-radius: 6px; background: rgba(16,185,129,0.1); color: #10b981; cursor: pointer; font-weight: bold;">🔐 توقيع GPG رقمي</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="loading" class="hidden" style="text-align: center; margin: 20px 0;">
+            <div class="spinner" style="width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: #38bdf8; border-radius: 50%; display: inline-block; animation: spin 1s linear infinite;"></div>
+            <p style="color: #38bdf8; margin-top: 10px; font-weight: bold;">يقوم الذكاء الاصطناعي بمعالجة وتدقيق مستندك الآن...</p>
+        </div>
+
+        <div id="resultBox" style="margin-top: 20px;">
+            </div>
+
+        <div id="downloadContainer" class="hidden" style="margin-top: 25px; text-align: center; position: relative; display: inline-block; width: 100%;">
+            <button id="mainDownloadBtn" style="padding: 12px 30px; background: #10b981; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                📥 تحميل المستند الآن ▾
+            </button>
+            <div id="downloadOptions" class="hidden" style="position: absolute; left: 50%; transform: translateX(-50%); top: 50px; background: #1e293b; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-radius: 6px; width: 220px; z-index: 100; text-align: right;">
+                <button id="downloadPdfBtn" style="width: 100%; background: none; border: none; color: #fff; padding: 12px; text-align: right; cursor: pointer; font-weight: bold; font-family: inherit; border-bottom: 1px solid #334155;">📄 تصدير كـ PDF جاهز للطباعة</button>
+                <button id="downloadWordBtn" style="width: 100%; background: none; border: none; color: #fff; padding: 12px; text-align: right; cursor: pointer; font-weight: bold; font-family: inherit;">📝 تحميل ملف Word قابل للتعديل (.doc)</button>
+            </div>
+        </div>
+
     </div>
 
-    <div class="container">
-        
-        <div id="liveTipBox">
-            💡 <strong>نصيحة اليوم:</strong> <span id="liveTipText">جاري تحميل النصيحة...</span>
-        </div>
-
-        <div class="form-group">
-            <input type="text" id="fullName" placeholder="الاسم الكامل">
-            <input type="text" id="jobTitle" placeholder="المسمى الوظيفي المستهدف">
-            <textarea id="experience" placeholder="الخبرات المهنية السابقة"></textarea>
-            <textarea id="skills" placeholder="المهارات (افصل بينها بفاصلة)"></textarea>
-            
-            <div class="row-inputs">
-                <select id="langSelect">
-                    <option value="ar">اللغة العربية</option>
-                    <option value="en">English</option>
-                </select>
-                <select id="templateSelect">
-                    <option value="modern">ثيم عصري (Modern)</option>
-                    <option value="classic">ثيم كلاسيكي (Classic)</option>
-                    <option value="elegant">ثيم أنيق (Elegant)</option>
-                </select>
-            </div>
-
-            <button id="optimizeBtn">🚀 تحسين وصياغة السيرة الذاتية</button>
-            <button id="coverLetterBtn">✉️ إنشاء رسالة تغطية (Cover Letter)</button>
-            
-            <div class="tools-buttons">
-                <button id="rateBtn">📊 تقييم السيرة الذاتية</button>
-                <button id="atsCheckBtn">🔍 فحص التوافق ATS</button>
-                <button id="signCvBtn">🔐 توقيع رقمي GPG</button>
-            </div>
-        </div>
-
-        <div id="loading" class="hidden">
-            ⏳ جاري المعالجة بواسطة مستشار الذكاء الاصطناعي الصارم...
-        </div>
-
-        <div id="resultBox"></div>
-
-        <div id="downloadContainer" class="hidden">
-            <button id="mainDownloadBtn">📥 تحميل المستند المستخرج</button>
-            <div id="downloadOptions" class="hidden">
-                <button id="downloadPdfBtn">📄 طباعة وحفظ بصيغة PDF</button>
-                <button id="downloadWordBtn">📝 تحميل بصيغة Word (.doc)</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="settingsPageModal" class="hidden">
+    <div id="settingsPageModal" class="modal-backdrop hidden">
         <div class="modal-content">
-            <button id="closeSettingsBtn">❌</button>
-            <h3>⚙️ الإعدادات المتقدمة للنظام</h3>
+            <div class="modal-header">
+                <h2>⚙️ إعدادات التطبيق</h2>
+                <button id="closeSettingsBtn" class="close-modal-x">&times;</button>
+            </div>
             
-            <div class="setting-item">
-                <label>نوع خط المستند:</label>
-                <select id="fontFamilySelect">
-                    <option value="Arial, sans-serif">Arial (افتراضي للمستندات)</option>
-                    <option value="'Courier New', monospace">Courier New (تقني وعملي)</option>
-                    <option value="'Times New Roman', serif">Times New Roman (رسمي وجاد)</option>
-                </select>
+            <div class="modal-body">
+                <div class="settings-section-card">
+                    <h3>🔔 نظام تنبيهات دفع الويب</h3>
+                    <p>قم بتفعيل الإشعارات ليصلك إشعار فوري وتلقائي بمجرد قيامنا بتحديث خوارزميات أو ميزات التطبيق.</p>
+                    <button id="enableNotificationsBtn" class="action-settings-btn">تفعيل الإشعارات الآن</button>
+                </div>
+
+                <div class="settings-section-card">
+                    <h3>🔒 سياسة الخصوصية والأمان</h3>
+                    <p>نحن نحترم خصوصيتك بالكامل. كافة البيانات المدخلة لتوليد السير الذاتية تتم معالجتها لحظياً ولا يتم تخزينها على خوادمنا مطلقاً.</p>
+                    <a href="#" id="privacyPolicyLink" target="_blank" class="settings-link">قراءة سياسة الخصوصية الكاملة ←</a>
+                </div>
             </div>
 
-            <div class="setting-item">
-                <label>حجم خط السيرة الذاتية:</label>
-                <select id="fontSizeSelect">
-                    <option value="14px">صغير (14px)</option>
-                    <option value="16px" selected>متوسط (16px)</option>
-                    <option value="18px">كبير (18px)</option>
-                </select>
-            </div>
+            <div class="modal-footer" style="padding: 25px 20px; background: #1e293b; border-top: 1px solid #334155; text-align: center; direction: rtl;">
+                
+                <p style="margin: 0 0 12px 0; font-size: 14px; color: #cbd5e1;">
+                    تم التطوير بكل فخر بواسطة <strong style="color: #38bdf8;">علي حاتم علام</strong> © 2026
+                </p>
 
-            <div class="setting-actions">
-                <button id="enableNotificationsBtn">🔔 تفعيل تنبيهات التحديثات الآلية</button>
-                <button id="privacyPolicyBtn">🔒 سياسة الخصوصية والأمان</button>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px; color: #475569; font-size: 13px;">
+                    <a href="https://github.com/aliallamofficial" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">GitHub</a>
+                    <span>|</span>
+                    <a href="https://linkedin.com/in/aliallamofficial" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">LinkedIn</a>
+                    <span>|</span>
+                    <a href="mailto:prof.ali.hatem.cairo@gmail.com" style="color: #10b981; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+                        ✉️ تواصل معي
+                    </a>
+                </div>
+
+                <div class="crypto-verified-box" style="background: #0f172a; border: 1px solid #1e293b; border-radius: 6px; padding: 10px; display: inline-block; min-width: 280px; font-family: monospace; font-size: 11px; color: #64748b; line-height: 1.5; direction: ltr; text-align: center;">
+                    Verified: @aliallamofficial [GPG:<br>
+                    55392380FBF1C8F1]
+                </div>
+
             </div>
         </div>
     </div>
