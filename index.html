@@ -12,106 +12,101 @@
     <meta name="author" content="@aliallamofficial">
 
     <link rel="stylesheet" href="style.css">
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
-    <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; color: white; font-family: sans-serif; font-size: 24px;">
+    <div id="splash-screen">
         🚀 جاري تشغيل مُحسّن السيرة الذاتية الذكي...
     </div>
 
-    <div style="position: relative; padding: 10px; display: flex; justify-content: space-between; align-items: center; background: #1e293b; color: #fff;">
+    <div class="header-menu">
         <h2>مُحسّن السيرة الذاتية الذكي ✨</h2>
-        <button id="dropdownToggleBtn" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">⚙️</button>
+        <button id="dropdownToggleBtn">⚙️</button>
         
-        <div id="topLeftMenu" class="hidden" style="position: absolute; top: 50px; left: 10px; background: #334155; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); padding: 10px; z-index: 100; display: flex; flex-direction: column; gap: 8px;">
-            <button id="openSettingsBtn" style="background: #475569; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; text-align: right;">⚙️ الإعدادات المتقدمة</button>
+        <div id="topLeftMenu" class="hidden">
+            <button id="openSettingsBtn">⚙️ الإعدادات المتقدمة</button>
         </div>
     </div>
 
-    <div class="container" style="max-width: 600px; margin: 30px auto; padding: 20px; font-family: sans-serif;">
+    <div class="container">
         
-        <div id="liveTipBox" style="background: #f0fdf4; border-right: 4px solid #16a34a; padding: 10px; margin-bottom: 20px; border-radius: 4px;">
+        <div id="liveTipBox">
             💡 <strong>نصيحة اليوم:</strong> <span id="liveTipText">جاري تحميل النصيحة...</span>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 15px;">
-            <input type="text" id="fullName" placeholder="الاسم الكامل" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
-            <input type="text" id="jobTitle" placeholder="المسمى الوظيفي المستهدف" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
-            <textarea id="experience" placeholder="الخبرات المهنية السابقة" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; height: 100px;"></textarea>
-            <textarea id="skills" placeholder="المهارات (افصل بينها بفاصلة)" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; height: 80px;"></textarea>
+        <div class="form-group">
+            <input type="text" id="fullName" placeholder="الاسم الكامل">
+            <input type="text" id="jobTitle" placeholder="المسمى الوظيفي المستهدف">
+            <textarea id="experience" placeholder="الخبرات المهنية السابقة"></textarea>
+            <textarea id="skills" placeholder="المهارات (افصل بينها بفاصلة)"></textarea>
             
-            <div style="display: flex; gap: 10px;">
-                <select id="langSelect" style="padding: 10px; flex: 1; border-radius: 6px;">
+            <div class="row-inputs">
+                <select id="langSelect">
                     <option value="ar">اللغة العربية</option>
                     <option value="en">English</option>
                 </select>
-                <select id="templateSelect" style="padding: 10px; flex: 1; border-radius: 6px;">
+                <select id="templateSelect">
                     <option value="modern">ثيم عصري (Modern)</option>
                     <option value="classic">ثيم كلاسيكي (Classic)</option>
                     <option value="elegant">ثيم أنيق (Elegant)</option>
                 </select>
             </div>
 
-            <button id="optimizeBtn" style="padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">🚀 تحسين وصياغة السيرة الذاتية</button>
-            <button id="coverLetterBtn" style="padding: 12px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">✉️ إنشاء رسالة تغطية (Cover Letter)</button>
+            <button id="optimizeBtn">🚀 تحسين وصياغة السيرة الذاتية</button>
+            <button id="coverLetterBtn">✉️ إنشاء رسالة تغطية (Cover Letter)</button>
             
-            <div style="display: flex; gap: 10px;">
-                <button id="rateBtn" style="flex: 1; padding: 10px; background: #f59e0b; color: white; border: none; border-radius: 6px; cursor: pointer;">📊 تقييم السيرة الذاتية</button>
-                <button id="atsCheckBtn" style="flex: 1; padding: 10px; background: #64748b; color: white; border: none; border-radius: 6px; cursor: pointer;">🔍 فحص التوافق ATS</button>
-                <button id="signCvBtn" style="flex: 1; padding: 10px; background: #8b5cf6; color: white; border: none; border-radius: 6px; cursor: pointer;">🔐 توقيع رقمي GPG</button>
+            <div class="tools-buttons">
+                <button id="rateBtn">📊 تقييم السيرة الذاتية</button>
+                <button id="atsCheckBtn">🔍 فحص التوافق ATS</button>
+                <button id="signCvBtn">🔐 توقيع رقمي GPG</button>
             </div>
         </div>
 
-        <div id="loading" class="hidden" style="text-align: center; margin: 20px 0; font-weight: bold; color: #3b82f6;">
+        <div id="loading" class="hidden">
             ⏳ جاري المعالجة بواسطة مستشار الذكاء الاصطناعي الصارم...
         </div>
 
-        <div id="resultBox" style="margin-top: 20px;"></div>
+        <div id="resultBox"></div>
 
-        <div id="downloadContainer" class="hidden" style="margin-top: 20px; position: relative;">
-            <button id="mainDownloadBtn" style="padding: 12px 20px; background: #0f172a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%;">📥 تحميل المستند المستخرج</button>
-            <div id="downloadOptions" class="hidden" style="position: absolute; bottom: 50px; right: 0; left: 0; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; z-index: 50;">
-                <button id="downloadPdfBtn" style="padding: 12px; background: none; border: none; border-bottom: 1px solid #e2e8f0; cursor: pointer; text-align: right;">📄 طباعة وحفظ بصيغة PDF</button>
-                <button id="downloadWordBtn" style="padding: 12px; background: none; border: none; cursor: pointer; text-align: right;">📝 تحميل بصيغة Word (.doc)</button>
+        <div id="downloadContainer" class="hidden">
+            <button id="mainDownloadBtn">📥 تحميل المستند المستخرج</button>
+            <div id="downloadOptions" class="hidden">
+                <button id="downloadPdfBtn">📄 طباعة وحفظ بصيغة PDF</button>
+                <button id="downloadWordBtn">📝 تحميل بصيغة Word (.doc)</button>
             </div>
         </div>
     </div>
 
-    <div id="settingsPageModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; direction: rtl;">
-        <div style="background: #ffffff; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 15px; position: relative;">
-            <button id="closeSettingsBtn" style="position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b;">❌</button>
-            <h3 style="margin: 0 0 10px 0; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">⚙️ الإعدادات المتقدمة للنظام</h3>
+    <div id="settingsPageModal" class="hidden">
+        <div class="modal-content">
+            <button id="closeSettingsBtn">❌</button>
+            <h3>⚙️ الإعدادات المتقدمة للنظام</h3>
             
-            <div>
-                <label style="display: block; font-weight: bold; margin-bottom: 6px; color: #334155;">نوع خط المستند:</label>
-                <select id="fontFamilySelect" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+            <div class="setting-item">
+                <label>نوع خط المستند:</label>
+                <select id="fontFamilySelect">
                     <option value="Arial, sans-serif">Arial (افتراضي للمستندات)</option>
                     <option value="'Courier New', monospace">Courier New (تقني وعملي)</option>
                     <option value="'Times New Roman', serif">Times New Roman (رسمي وجاد)</option>
                 </select>
             </div>
 
-            <div>
-                <label style="display: block; font-weight: bold; margin-bottom: 6px; color: #334155;">حجم خط السيرة الذاتية:</label>
-                <select id="fontSizeSelect" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+            <div class="setting-item">
+                <label>حجم خط السيرة الذاتية:</label>
+                <select id="fontSizeSelect">
                     <option value="14px">صغير (14px)</option>
                     <option value="16px" selected>متوسط (16px)</option>
                     <option value="18px">كبير (18px)</option>
                 </select>
             </div>
 
-            <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
-                <button id="enableNotificationsBtn" style="padding: 10px; background: #2563eb; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">🔔 تفعيل تنبيهات التحديثات الآلية</button>
-                <button id="privacyPolicyBtn" style="padding: 10px; background: #64748b; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">🔒 سياسة الخصوصية والأمان</button>
+            <div class="setting-actions">
+                <button id="enableNotificationsBtn">🔔 تفعيل تنبيهات التحديثات الآلية</button>
+                <button id="privacyPolicyBtn">🔒 سياسة الخصوصية والأمان</button>
             </div>
         </div>
     </div>
-
-    <style>
-        .hidden { display: none !important; }
-    </style>
 
     <script src="app.js"></script>
 </body>
