@@ -416,7 +416,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 🚀 [تصحيح الإعدادات]: إضافة مستمعات الأحداث لفتح وإغلاق نافذة الإعدادات
+    // [إدارة الإعدادات]: إضافة مستمعات الأحداث لفتح وإغلاق نافذة الإعدادات
     const openSettingsBtn = document.getElementById('openSettingsBtn');
     const settingsPageModal = document.getElementById('settingsPageModal');
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
@@ -436,8 +436,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
         settingsPageModal.addEventListener('click', (e) => {
             if (e.target === settingsPageModal) {
-                settingsPageModal.classList.add('hidden'); // إغلاق عند الضغط على الخلفية الشفافة المحيطة بالنافذة
+                settingsPageModal.classList.add('hidden'); // إغلاق عند الضغط على الخلفية الشفافة
             }
+        });
+    }
+
+    // 🔒 [تحديث سياسة الخصوصية الجديد]: فتح الرابط المخصص بشكل تلقائي عند الضغط عليه
+    const privacyPolicyBtn = document.getElementById('privacyPolicyBtn') || document.getElementById('privacyPolicyLink');
+    if (privacyPolicyBtn) {
+        privacyPolicyBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // منع السلوك الافتراضي
+            window.open('https://wp.me/Phj9fM-E', '_blank'); // فتح الرابط في نافذة جديدة
         });
     }
 
