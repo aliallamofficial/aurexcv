@@ -1,3 +1,14 @@
+// ==========================================
+// 💡 مصفوفة النصائح الجاهزة لتغيير النصيحة تلقائياً محلياً (عند عدم الاتصال)
+// ==========================================
+const cvTips = [
+    "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
+    "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك أقل من 5 سنوات.",
+    "استخدم أرقاماً ونسباً مئوية حقيقية لإثبات إنجازاتك (مثال: زيادة المبيعات بنسبة 20%).",
+    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء المستعارة.",
+    "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
+];
+
 // دالة التحقق من حد الاستخدام اليومي المخصص (5 مرات في اليوم)
 function handleCVCreation() {
     const maxAllowedPerDay = 5; 
@@ -51,7 +62,7 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
     const chosenSize = document.getElementById('fontSizeSelect').value;
 
     let styles = `padding:25px; line-height:1.8; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); overflow: hidden;`;
-    styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr(";
+    styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr;";
     
     if (selectedTemplate === 'modern') styles += " background-color: #1e293b; color: #f8fafc; border-left: 6px solid #3b82f6;";
     else if (selectedTemplate === 'classic') styles += " background-color: #ffffff; color: #000000; border: 2px solid #000000;";
@@ -352,15 +363,6 @@ document.getElementById('downloadWordBtn').addEventListener('click', () => {
     a.click();
 });
 
-// مصفوفة النصائح الجاهزة لتغيير النصيحة تلقائياً محلياً (عند عدم الاتصال)
-const cvTips = [
-    "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
-    "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك أقل من 5 سنوات.",
-    "استخدم أرقاماً ونسباً مئوية حقيقية لإثبات إنجازاتك (مثال: زيادة المبيعات بنسبة 20%).",
-    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء مستعارة.",
-    "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
-];
-
 // ==========================================
 // 🔄 دالة الفحص التلقائي لآخر تعديل للملفات على السيرفر لإطلاق التنبيهات
 // ==========================================
@@ -398,7 +400,7 @@ window.addEventListener('DOMContentLoaded', () => {
         tipElement.innerText = cvTips[Math.floor(Math.random() * cvTips.length)];
     }
 
-    // 2. إدارة فتح وإغلاق قائمة أعلى اليسار المنسدلة
+    // 2. إدارة فتح وإغلاق قائمة أعلى اليسار المنسدلة (زر الترس)
     const dropdownToggleBtn = document.getElementById('dropdownToggleBtn');
     const topLeftMenu = document.getElementById('topLeftMenu');
     if (dropdownToggleBtn && topLeftMenu) {
@@ -414,7 +416,32 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. ربط زر تفعيل الإشعارات من داخل القائمة المنسدلة
+    // 🚀 [تصحيح الإعدادات]: إضافة مستمعات الأحداث لفتح وإغلاق نافذة الإعدادات
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const settingsPageModal = document.getElementById('settingsPageModal');
+    const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+
+    if (openSettingsBtn && settingsPageModal) {
+        openSettingsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (topLeftMenu) topLeftMenu.classList.add('hidden'); // إخفاء القائمة المنسدلة الصغيرة أولاً
+            settingsPageModal.classList.remove('hidden'); // فتح نافذة الإعدادات الكبيرة
+        });
+    }
+
+    if (closeSettingsBtn && settingsPageModal) {
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsPageModal.classList.add('hidden'); // إغلاق عند الضغط على X
+        });
+
+        settingsPageModal.addEventListener('click', (e) => {
+            if (e.target === settingsPageModal) {
+                settingsPageModal.classList.add('hidden'); // إغلاق عند الضغط على الخلفية الشفافة المحيطة بالنافذة
+            }
+        });
+    }
+
+    // 3. ربط زر تفعيل الإشعارات من داخل نافذة الإعدادات
     const enableNotificationsBtn = document.getElementById('enableNotificationsBtn');
     if (enableNotificationsBtn) {
         enableNotificationsBtn.addEventListener('click', () => {
