@@ -30,6 +30,75 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
+/* ==========================================
+    🌟 التحديث الجديد: تنسيق الهيدر الاحترافي الفاخر 🌟
+   ========================================== */
+.main-app-header {
+    text-align: center;
+    margin-bottom: 35px;
+    margin-top: 20px;
+}
+
+/* 1. شارة الـ AI الذكية علوية */
+.logo-badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #38bdf8;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+/* 2. اسم التطبيق بالتدرج اللوني الانسيابي من الأبيض للفضي الفاخر */
+.app-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* 3. البراندينج الفرعي الإنجليزي الأنيق */
+.branding-sub {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #38bdf8;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    opacity: 0.95;
+}
+
+/* الوصف الفرعي للمنصة */
+.app-subtitle {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    margin: 0 auto;
+    max-width: 500px;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+/* تأثير حركة النجوم التفاعلية */
+.sparkle {
+    display: inline-block;
+    animation: sparkleFloat 2s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* الهيدر القديم كدعم إضافي */
 header {
     text-align: center;
     margin-bottom: 40px;
@@ -50,7 +119,9 @@ header p {
     font-weight: 300;
 }
 
-/* تقسيم الصفحة لعمودين بشكل متناسق ومريح للعين */
+/* ==========================================
+    تقسيم العناصر والأزرار الأساسية للمنصة
+   ========================================== */
 main {
     display: flex;
     gap: 40px;
@@ -86,7 +157,6 @@ h2::before {
     border-radius: 2px;
 }
 
-/* تنسيق الخانات والمدخلات الفاخرة والقوائم المنسدلة الموحدة */
 .form-group {
     margin-bottom: 20px;
 }
@@ -99,7 +169,6 @@ label {
     color: #cbd5e1;
 }
 
-/* دمج وتأمين مظهر الـ select ليتناسب تماماً مع الـ inputs الاحترافية */
 input[type="text"], textarea, select {
     width: 100%;
     padding: 14px 16px;
@@ -118,7 +187,6 @@ input[type="text"], textarea, select {
     cursor: pointer;
 }
 
-/* ضبط اتجاه النص والسهم لعلامات الاختيار للـ RTL */
 [dir="rtl"] select {
     background-position: left 16px center;
     padding-left: 45px;
@@ -135,13 +203,11 @@ input[type="text"]::placeholder, textarea::placeholder {
     color: #64748b;
 }
 
-/* تنسيق الخيارات الداخلية للقوائم المنسدلة */
 select option {
     background: #1e293b;
     color: #f8fafc;
 }
 
-/* زر التحسين التفاعلي اللامع */
 button {
     width: 100%;
     padding: 16px;
@@ -167,7 +233,6 @@ button:active {
     transform: translateY(0);
 }
 
-/* صندوق استلام النتيجة */
 .result-box {
     min-height: 320px;
     background: rgba(15, 23, 42, 0.4);
@@ -204,7 +269,7 @@ button:active {
 }
 
 /* ==========================================
-    إصلاح وتطوير تنسيق تذييل الصفحة الاحترافي (Footer)
+    تذييل الصفحة الاحترافي (Footer)
    ========================================== */
 footer {
     text-align: center;
@@ -271,10 +336,19 @@ footer {
     .container {
         padding: 20px;
     }
+    .app-title {
+        font-size: 1.8rem;
+    }
+    .branding-sub {
+        font-size: 0.95rem;
+    }
+    .app-subtitle {
+        font-size: 0.95rem;
+    }
 }
 
 /* ==========================================
-    تنسيقات الواجهة الترحيبية (From Brand & GPG)
+    تنسيقات الواجهة الترحيبية (Splash Screen)
    ========================================== */
 #splash-screen {
     position: fixed;
@@ -394,9 +468,8 @@ footer {
 }
 
 /* ==========================================
-   ⚙️ التحديث الجديد: تنسيقات القائمة المنسدلة والصفحة المنبثقة للاعدادات
+    تنسيقات القائمة المنسدلة والصفحة المنبثقة للاعدادات
    ========================================== */
-
 .top-left-dropdown {
     position: absolute;
     top: 15px;
@@ -585,7 +658,6 @@ footer {
     text-decoration: underline;
 }
 
-/* تأثير تحويم (Hover) ناعم لروابط التواصل المدمجة بالتذييل */
 .modal-footer a {
     transition: opacity 0.2s ease, text-decoration 0.2s ease;
 }
