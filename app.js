@@ -310,7 +310,7 @@ document.addEventListener('click', () => {
     if(options) options.classList.add('hidden');
 });
 
-// 📄 خيار تحميل بصيغة PDF
+// 📄 خيار تحميل بصيغة PDF (تم تصحيح وسم الإغلاق لعدم حدوث تعليق)
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
     if (!cvElement || cvElement.innerText.trim() === "" || cvElement.innerText.includes("ستظهر سيرتك الذاتية")) return;
@@ -416,7 +416,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // [إدارة الإعدادات]
+    // [إدارة الإعدادات]: إضافة مستمعات الأحداث لفتح وإغلاق نافذة الإعدادات
     const openSettingsBtn = document.getElementById('openSettingsBtn');
     const settingsPageModal = document.getElementById('settingsPageModal');
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
@@ -441,6 +441,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 🔒 [تحديث سياسة الخصوصية الجديد]: فتح الرابط المخصص بشكل تلقائي عند الضغط عليه
     const privacyPolicyBtn = document.getElementById('privacyPolicyBtn') || document.getElementById('privacyPolicyLink');
     if (privacyPolicyBtn) {
         privacyPolicyBtn.addEventListener('click', (e) => {
@@ -449,6 +450,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 3. ربط زر تفعيل الإشعارات من داخل نافذة الإعدادات
     const enableNotificationsBtn = document.getElementById('enableNotificationsBtn');
     if (enableNotificationsBtn) {
         enableNotificationsBtn.addEventListener('click', () => {
@@ -469,32 +471,28 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 4. تشغيل الفحص الآلي الذكي للتحديثات المرفوعة على السيرفر
     checkAutomatedUpdates();
 
-    // ==========================================
-    // 5. نظام الدليل التفاعلي الناعم المطور (Interactive Tooltip Tour)
-    // ==========================================
+    // 5. ميزة الجولة التعريفية الاحترافية والذكية (Onboarding Tour)
     const tourSteps = [
         {
-            targetId: "liveTipBox",
-            icon: "💡",
-            title: "نصائح التوظيف الذكية",
-            desc: "هنا تظهر لك نصيحة متغيرة تلقائياً ومخصصة لمجالك لتساعدك في تحسين مستنداتك وتجنب أخطاء التصفية الإملائية الكارثية.",
-            btnText: "التالي ⚡"
+            icon: "🚀",
+            title: "مرحباً بك في مستقبلك المهني!",
+            desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.",
+            btnText: "ابدأ الرحلة الآن ←"
         },
         {
-            targetId: "optimizeBtn",
-            icon: "✨",
-            title: "المحرك الرئيسي للاستشارة",
-            desc: "بمجرد إدخال بياناتك، اضغط هنا ليقوم مستشار الذكاء الاصطناعي بصياغة، تدقيق، وهيكلة سيرتك الذاتية فوراً.",
-            btnText: "الخطوة التالية 🔍"
+            icon: "📝",
+            title: "عبّئ بياناتك الأساسية بدقة",
+            desc: "قم بملء حقول اسمك، المسمى المستهدف، وخبراتك السابقة. خوارزميتنا ستقرأها وتصيغها بأسلوب احترافي جذاب.",
+            btnText: "الخطوة التالية ⚡"
         },
         {
-            targetId: "atsCheckBtn",
             icon: "🔍",
-            title: "تجاوز فحص الروبوتات ATS",
-            desc: "استخدم هذا الزر لإجراء محاكاة كاملة لأنظمة الفرز العالمية ومعرفة مدى توافق كلماتك الدلالية لتضمن وصول ملفك البشري للمدرجات الأولى.",
-            btnText: "إنهاء وجاهز للانطلاق! 🎉"
+            title: "تجاوز فحص أنظمة الـ ATS",
+            desc: "استخدم زر 'محاكاة فحص ATS' بعد توليد النص للتأكد من مطابقة سيرتك الذاتية مع معايير الروبوتات وأنظمة التوظيف العالمية.",
+            btnText: "فهمت، جاهز للانطلاق! 🎉"
         }
     ];
 
@@ -507,42 +505,17 @@ window.addEventListener('DOMContentLoaded', () => {
     const nextTourBtn = document.getElementById("nextTourBtn");
     const skipTourBtn = document.getElementById("skipTourBtn");
 
-    function highlightAndPositionTooltip() {
-        document.querySelectorAll('.tour-highlight-active').forEach(el => {
-            el.classList.remove('tour-highlight-active');
-            el.style.boxShadow = '';
-        });
-
+    function updateTourDOM() {
         const stepData = tourSteps[currentStep];
-        const targetElement = document.getElementById(stepData.targetId);
-
-        if (!targetElement || !tourModal) return;
-
         if (tourProgress) tourProgress.innerText = `خطوة ${currentStep + 1} من ${tourSteps.length}`;
         if (tourIcon) tourIcon.innerText = stepData.icon;
         if (tourTitle) tourTitle.innerText = stepData.title;
         if (tourDescription) tourDescription.innerText = stepData.desc;
         if (nextTourBtn) nextTourBtn.innerText = stepData.btnText;
-
-        targetElement.classList.add('tour-highlight-active');
-        targetElement.style.boxShadow = '0 0 20px #38bdf8';
-
-        const rect = targetElement.getBoundingClientRect();
-        const containerRect = document.querySelector('.container').getBoundingClientRect();
-
-        const topPosition = (rect.bottom + window.scrollY) - containerRect.top + 12;
-        const leftPosition = (rect.left + window.scrollX) - containerRect.left;
-
-        tourModal.style.top = `${topPosition}px`;
-        tourModal.style.left = `${Math.max(10, Math.min(leftPosition, containerRect.width - 300))}px`;
     }
 
     function finishTour() {
         if (tourModal) tourModal.classList.add("hidden");
-        document.querySelectorAll('.tour-highlight-active').forEach(el => {
-            el.classList.remove('tour-highlight-active');
-            el.style.boxShadow = '';
-        });
         localStorage.setItem("ali_cv_tour_completed", "true");
     }
 
@@ -550,7 +523,7 @@ window.addEventListener('DOMContentLoaded', () => {
         nextTourBtn.addEventListener("click", () => {
             if (currentStep < tourSteps.length - 1) {
                 currentStep++;
-                highlightAndPositionTooltip();
+                updateTourDOM();
             } else {
                 finishTour();
             }
@@ -561,12 +534,7 @@ window.addEventListener('DOMContentLoaded', () => {
         skipTourBtn.addEventListener("click", finishTour);
     }
 
-    window.addEventListener('resize', () => {
-        if (tourModal && !tourModal.classList.contains('hidden')) {
-            highlightAndPositionTooltip();
-        }
-    });
-
+    // 6. إخفاء الواجهة الترحيبية المتحركة (Splash Screen) ثم التحقق من الجولة التعريفية
     setTimeout(() => {
         const splash = document.getElementById('splash-screen');
         if (splash) {
@@ -574,10 +542,11 @@ window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { 
                 splash.remove(); 
                 
+                // تشغيل الجولة التعريفية فقط إذا كان المستخدم يزور الموقع للمرة الأولى
                 const isTourCompleted = localStorage.getItem("ali_cv_tour_completed");
                 if (!isTourCompleted && tourModal) {
                     tourModal.classList.remove("hidden");
-                    highlightAndPositionTooltip();
+                    updateTourDOM();
                 }
             }, 500);
         }
