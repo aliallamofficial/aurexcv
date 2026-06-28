@@ -51,7 +51,7 @@ async function askAI(promptMessage, systemMessage) {
 function formatMarkdown(text) {
     if (!text) return '';
     return text
-        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>');                        
 }
@@ -508,7 +508,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const skipTourBtn = document.getElementById("skipTourBtn");
 
     function highlightAndPositionTooltip() {
-        // إزالة تأثيرات الوميض والظلال السابقة من كافة العناصر المستهدفة
         document.querySelectorAll('.tour-highlight-active').forEach(el => {
             el.classList.remove('tour-highlight-active');
             el.style.boxShadow = '';
@@ -519,27 +518,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (!targetElement || !tourModal) return;
 
-        // تحديث محتوى الـ Tooltip
         if (tourProgress) tourProgress.innerText = `خطوة ${currentStep + 1} من ${tourSteps.length}`;
         if (tourIcon) tourIcon.innerText = stepData.icon;
         if (tourTitle) tourTitle.innerText = stepData.title;
         if (tourDescription) tourDescription.innerText = stepData.desc;
         if (nextTourBtn) nextTourBtn.innerText = stepData.btnText;
 
-        // إضافة تأثير وميض للزر النشط حالياً
         targetElement.classList.add('tour-highlight-active');
         targetElement.style.boxShadow = '0 0 20px #38bdf8';
 
-        // حساب مكان الحاوية الرئيسية للتطبيق والموقع المطلق الموثوق
         const rect = targetElement.getBoundingClientRect();
         const containerRect = document.querySelector('.container').getBoundingClientRect();
 
-        // حساب مكان الـ Tooltip ليظهر أسفل العنصر بـ 12 بكسل بدقة
         const topPosition = (rect.bottom + window.scrollY) - containerRect.top + 12;
         const leftPosition = (rect.left + window.scrollX) - containerRect.left;
 
         tourModal.style.top = `${topPosition}px`;
-        // حماية الـ Tooltip من الخروج عن حدود الحاوية يميناً أو يساراً
         tourModal.style.left = `${Math.max(10, Math.min(leftPosition, containerRect.width - 300))}px`;
     }
 
@@ -567,14 +561,12 @@ window.addEventListener('DOMContentLoaded', () => {
         skipTourBtn.addEventListener("click", finishTour);
     }
 
-    // إعادة ضبط التموضع ديناميكياً إذا قام المستخدم بتغيير حجم شاشة المتصفح
     window.addEventListener('resize', () => {
         if (tourModal && !tourModal.classList.contains('hidden')) {
             highlightAndPositionTooltip();
         }
     });
 
-    // 6. إخفاء الواجهة الترحيبية المتحركة (Splash Screen) ثم التحقق من الدليل التفاعلي
     setTimeout(() => {
         const splash = document.getElementById('splash-screen');
         if (splash) {
@@ -582,7 +574,6 @@ window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { 
                 splash.remove(); 
                 
-                // تشغيل الجولة الموجهة الفوقية فقط إذا كان المستخدم يزور المنصة لأول مرة
                 const isTourCompleted = localStorage.getItem("ali_cv_tour_completed");
                 if (!isTourCompleted && tourModal) {
                     tourModal.classList.remove("hidden");
