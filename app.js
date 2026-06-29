@@ -246,7 +246,6 @@ function generateCVQRCode(containerId, textToEncode) {
 // 📄 🔥 ميزة 3: التنزيل المباشر الفوري كملف PDF (منع قاطع لصفحة الطباعة)
 // ==========================================
 document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
-    // إيقاف السلوكات والانتشار التلقائي للأحداث تماماً لمنع فتح واجهة طباعة المتصفح
     e.preventDefault();
     e.stopPropagation();
 
@@ -256,7 +255,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
         return;
     }
 
-    // إضافة التوقيع التوثيقي الرقمي إذا لم يكن موجوداً
     if (!cvElement.innerHTML.includes('cv-crypto-footer')) {
         cvElement.innerHTML = appendCryptoSignatureToCV(cvElement.innerHTML);
     }
@@ -281,7 +279,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // التنزيل الفوري المباشر لجهاز المستخدم دون استدعاء مخرجات الطباعة الافتراضية
         html2pdf().set(options).from(cvElement).save().then(() => {
             document.getElementById('downloadPdfBtn').innerText = originalBtnText;
             document.getElementById('downloadOptions').classList.add('hidden');
@@ -291,7 +288,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
         });
     };
 
-    // جلب المكتبة تلقائياً إذا لم تكن مضافة في الـ HTML لضمان عملها فوراً
     if (typeof html2pdf === 'undefined') {
         const script = document.createElement('script');
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
@@ -304,6 +300,45 @@ document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
     } else {
         executeDirectDownload();
     }
+});
+
+// ==========================================
+// 📝 ميزة 4: التنزيل المباشر كملف Word (.doc)
+// ==========================================
+document.getElementById('downloadWordBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const cvElement = document.getElementById('cvTemplateArea');
+    if (!cvElement || cvElement.innerText.trim() === "") {
+        alert("الرجاء توليد السيرة الذاتية أولاً قبل التحميل!");
+        return;
+    }
+
+    const fullName = document.getElementById('fullName').value.trim() || "CV";
+    const htmlContent = cvElement.innerHTML;
+    
+    const blobContent = `
+      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head><title>Resume</title><meta charset='utf-8'></head>
+      <body>${htmlContent}</body>
+      </html>
+    `;
+
+    const blob = new Blob(['\ufeff' + blobContent], {
+        type: 'application/msword;charset=utf-8'
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fullName}_Resume.doc`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    document.getElementById('downloadOptions').classList.add('hidden');
 });
 
 // حدث تحسين السيرة الذاتية
