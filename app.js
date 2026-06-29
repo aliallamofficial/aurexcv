@@ -186,7 +186,7 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
 function formatMarkdown(text) {
     if (!text) return '';
     return text
-        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>');                        
 }
@@ -243,7 +243,7 @@ function generateCVQRCode(containerId, textToEncode) {
 }
 
 // ==========================================
-// 📄 🔥 ميزة 3: التصدير الذكي إلى PDF عبر معالج الطباعة الأصلي (حل جذري للصفحة البيضاء)
+// 📄 🔥 ميزة 3: التصدير الذكي إلى PDF عبر معالج الطباعة الأصلي (نسخة مطورة ومضمونة)
 // ==========================================
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
@@ -257,15 +257,35 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
         cvElement.innerHTML = appendCryptoSignatureToCV(cvElement.innerHTML);
     }
 
-    // 1. إنشاء عنصر ستايل مخصص للطباعة لإخفاء كل شيء ما عدا السيرة الذاتية
+    // إخفاء واجهة التطبيق بالكامل عن طريق إضافة كلاس مؤقت لجسم الصفحة
+    const allContainers = document.querySelectorAll('body > *:not(#resultBox):not(style):not(script)');
+    allContainers.forEach(el => el.style.display = 'none');
+    
+    // إخفاء أي عناصر أخرى داخل صندوق النتائج عدا الـ CV نفسه
+    const resultBox = document.getElementById('resultBox');
+    if (resultBox) {
+        resultBox.style.padding = '0';
+        resultBox.style.margin = '0';
+    }
+
+    // إنشاء استايل طباعة صارم يجبر المتصفح على رؤية الـ CV فقط بأبعاد كاملة وبشكل نقي
     const printStyle = document.createElement('style');
     printStyle.id = 'cv-print-style';
     printStyle.innerHTML = `
         @media print {
-            body * {
-                visibility: hidden !important;
+            html, body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            #cvTemplateArea, #cvTemplateArea * {
+            body * {
+                display: none !important;
+            }
+            #resultBox, #cvTemplateArea, #cvTemplateArea * {
+                display: block !important;
                 visibility: visible !important;
             }
             #cvTemplateArea {
@@ -273,29 +293,23 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
                 left: 0 !important;
                 top: 0 !important;
                 width: 100% !important;
-                background: #ffffff !important;
-                color: #000000 !important;
-                padding: 0px !important;
                 box-shadow: none !important;
-            }
-            /* إجبار المتصفح على إظهار الألوان والخلفيات في ملف الـ PDF */
-            html, body {
-                background: #ffffff !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
+                padding: 0 !important;
+                margin: 0 !important;
             }
         }
     `;
     document.head.appendChild(printStyle);
 
-    // 2. استدعاء نافذة الطباعة/الحفظ كـ PDF الأصلية للمتصفح
-    window.print();
-
-    // 3. تنظيف الاستايل المؤقت بعد إغلاق نافذة الحفظ ليعود التطبيق لشكله الطبيعي
+    // استدعاء أمر الطباعة بعد مهلة قصيرة لضمان استقرار المتصفح
     setTimeout(() => {
+        window.print();
+
+        // إعادة إظهار واجهة التطبيق كاملة للمستخدم بعد إغلاق نافذة الطباعة
+        allContainers.forEach(el => el.style.display = '');
         const styleEl = document.getElementById('cv-print-style');
         if (styleEl) styleEl.remove();
-    }, 1000);
+    }, 250);
 });
 
 // حدث تحسين السيرة الذاتية
@@ -343,7 +357,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     }
 
     let promptMessage = selectedLang === 'ar' ? 
-        `قم بصياغة سيرة ذاتية احترافية وموجزة باللغة العربية للشخص التالي:\nالاسم: ${fullName}\nالوظيفة: ${jobTitle}\nالخبرات: ${experience || 'مبتدئ'}\nالمهارات: ${skills || 'تواصل'}\n\nشروط صارمة: أسلوب بشري، نقاط واضحة (•)، أفعال حركة قوية، وقم بإجراء تدقيق لغوي وإملائي كامل وتصحيح كافة الأخطاء النحوية واللغوية بصرامة.` :
+        `قم بصياغة سيرة ذاتية احترافية وموجزة باللغة العربية للشخص التالي:\nالاسم: ${fullName}\nالوظيفة: ${jobTitle}\nالخبرات: ${experience || 'مبتدئ'}\nالمهارات: ${skills || 'تواصل'}\n\nشروط صارمة: أسلوب بشري، نقاط واضحة (•)، أفعاف حركة قوية، وقم بإجراء تدقيق لغوي وإملائي كامل وتصحيح كافة الأخطاء النحوية واللغوية بصرامة.` :
         `Create a professional resume in English for:\nName: ${fullName}\nJob: ${jobTitle}\nExperience: ${experience || 'Entry-level'}\nSkills: ${skills || 'Communication'}\n\nStrict Rules: Human style, bullet points (•), and absolute proofreading to ensure zero spelling or grammatical errors.`;
 
     const systemMessage = selectedLang === 'ar' ? 
