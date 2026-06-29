@@ -165,10 +165,9 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
             })
         });
 
-        // إذا كان السيرفر مضغوطاً (429 أو 503) ولديه محاولات متبقية، يعيد المحاولة صامتاً في الخلفية
         if ((response.status === 429 || response.status === 503 || !response.ok) && retries > 0) {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // انتظر ثانيتين
-            return await askAI(promptMessage, systemMessage, retries - 1); // إعادة المحاولة خفية
+            await new Promise(resolve => setTimeout(resolve, 2000)); 
+            return await askAI(promptMessage, systemMessage, retries - 1); 
         }
 
         if (!response.ok) throw new Error();
@@ -199,7 +198,7 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
     const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
 
     let styles = `padding:25px; line-height:1.8; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); overflow: hidden;`;
-    styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr;";
+    styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr(";
     
     if (selectedTemplate === 'modern') styles += ` background-color: #1e293b; color: #f8fafc; border-left: 6px solid ${activeColor};`;
     else if (selectedTemplate === 'classic') styles += " background-color: #ffffff; color: #000000; border: 2px solid #000000;";
@@ -244,7 +243,7 @@ function generateCVQRCode(containerId, textToEncode) {
 }
 
 // ==========================================
-// 📄 🔥 ميزة 3: تحميل مباشر بصيغة PDF حقيقية عبر حقن مكتبة html2pdf ديناميكياً
+// 📄 🔥 ميزة 3: تحميل مباشر بصيغة PDF حقيقية (تم تعديل الخصائص لمنع الصفحة البيضاء)
 // ==========================================
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
@@ -263,20 +262,30 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     document.getElementById('downloadPdfBtn').innerText = "⏳ جاري التجهيز...";
 
     const startPdfGeneration = () => {
+        // الخصائص المعدلة لضمان استقرار الألوان والتقاط المحتوى كاملاً
         const options = {
             margin:       [10, 10, 10, 10],
             filename:     `${fullName}_Resume.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: true, 
+                logging: false,
+                letterRendering: true,
+                backgroundColor: null // يمنع فرض السواد أو البياض التلقائي على العناصر الملونة
+            },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        html2pdf().set(options).from(cvElement).save().then(() => {
-            document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-        }).catch((err) => {
-            console.error("خطأ أثناء توليد الـ PDF:", err);
-            document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-        });
+        // نمنح المتصفح مهلة 300ms للتأكد من رندرة العناصر الرسومية قبل التصوير
+        setTimeout(() => {
+            html2pdf().set(options).from(cvElement).save().then(() => {
+                document.getElementById('downloadPdfBtn').innerText = originalBtnText;
+            }).catch((err) => {
+                console.error("خطأ أثناء توليد الـ PDF:", err);
+                document.getElementById('downloadPdfBtn').innerText = originalBtnText;
+            });
+        }, 300);
     };
 
     if (typeof html2pdf === 'undefined') {
@@ -326,7 +335,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
     }
 
     if (!navigator.onLine) {
-        alert(selectedLang === 'ar' ? "أنت تعمل الآن بدون إنترنت (Offline Mode)." : "You are offline.");
+        alert(selectedLang === 'ar' ? "أنت تعمل الآن بدون إنترنت (Offline Mode)." : "You are obsolete.");
         let offlineResult = `<h2>${fullName}</h2><h3>${jobTitle}</h3><hr><br>${experience || ''}<br>${skills || ''}`;
         let templateStyles = getTemplateStyles(selectedLang, selectedTemplate);
         resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}">${offlineResult}</div>`;
