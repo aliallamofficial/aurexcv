@@ -186,7 +186,7 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
 function formatMarkdown(text) {
     if (!text) return '';
     return text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>');                        
 }
@@ -243,77 +243,59 @@ function generateCVQRCode(containerId, textToEncode) {
 }
 
 // ==========================================
-// 📄 🔥 ميزة 3: تحميل مباشر بصيغة PDF حقيقية (تم التحديث لمنع الصفحة البيضاء نهائياً)
+// 📄 🔥 ميزة 3: التصدير الذكي إلى PDF عبر معالج الطباعة الأصلي (حل جذري للصفحة البيضاء)
 // ==========================================
 document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const cvElement = document.getElementById('cvTemplateArea');
     if (!cvElement || cvElement.innerText.trim() === "") {
-        alert("الرجاء توليد السيرة الذاتية أولاً قبل التحميل!");
+        alert("الرجاء توليد السيرة الذاتية أولاً!");
         return;
     }
 
-    const fullName = document.getElementById('fullName').value.trim() || "CV";
-    const originalBtnText = document.getElementById('downloadPdfBtn').innerText;
-    document.getElementById('downloadPdfBtn').innerText = "⏳ جاري التجهيز...";
+    // إضافة التوقيع التوثيقي الرقمي إذا لم يكن موجوداً
+    if (!cvElement.innerHTML.includes('cv-crypto-footer')) {
+        cvElement.innerHTML = appendCryptoSignatureToCV(cvElement.innerHTML);
+    }
 
-    // إنشاء حاوية مستقلة مؤقتة بخلفية بيضاء ونصوص سوداء واضحة لضمان عدم اختفاء الألوان أثناء التصوير
-    const printArea = document.createElement('div');
-    printArea.style.cssText = `
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        padding: 30px !important;
-        width: 100%;
-        box-sizing: border-box;
+    // 1. إنشاء عنصر ستايل مخصص للطباعة لإخفاء كل شيء ما عدا السيرة الذاتية
+    const printStyle = document.createElement('style');
+    printStyle.id = 'cv-print-style';
+    printStyle.innerHTML = `
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #cvTemplateArea, #cvTemplateArea * {
+                visibility: visible !important;
+            }
+            #cvTemplateArea {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0px !important;
+                box-shadow: none !important;
+            }
+            /* إجبار المتصفح على إظهار الألوان والخلفيات في ملف الـ PDF */
+            html, body {
+                background: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
     `;
-    printArea.innerHTML = cvElement.innerHTML;
+    document.head.appendChild(printStyle);
 
-    // إجبار كل النصوص داخل الحاوية المؤقتة على أخذ اللون الأسود لضمان ظهورها بالمكتبة
-    const allTextElements = printArea.querySelectorAll('*');
-    allTextElements.forEach(el => {
-        el.style.color = '#000000';
-    });
+    // 2. استدعاء نافذة الطباعة/الحفظ كـ PDF الأصلية للمتصفح
+    window.print();
 
-    // إضافة التوقيع الرقمي إن لم يكن موجوداً
-    if (!printArea.innerHTML.includes('cv-crypto-footer')) {
-        printArea.innerHTML = appendCryptoSignatureToCV(printArea.innerHTML);
-    }
-
-    const startPdfGeneration = () => {
-        const options = {
-            margin:       [12, 12, 12, 12],
-            filename:     `${fullName}_Resume.pdf`,
-            image:        { type: 'jpeg', quality: 1.0 },
-            html2canvas:  { 
-                scale: 2, 
-                useCORS: true, 
-                logging: false,
-                letterRendering: true,
-                backgroundColor: '#ffffff'
-            },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        setTimeout(() => {
-            html2pdf().set(options).from(printArea).save().then(() => {
-                document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-            }).catch((err) => {
-                console.error("خطأ أثناء توليد الـ PDF:", err);
-                document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-            });
-        }, 400);
-    };
-
-    if (typeof html2pdf === 'undefined') {
-        const script = document.createElement('script');
-        script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-        script.onload = startPdfGeneration;
-        script.onerror = () => {
-            document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-        };
-        document.head.appendChild(script);
-    } else {
-        startPdfGeneration();
-    }
+    // 3. تنظيف الاستايل المؤقت بعد إغلاق نافذة الحفظ ليعود التطبيق لشكله الطبيعي
+    setTimeout(() => {
+        const styleEl = document.getElementById('cv-print-style');
+        if (styleEl) styleEl.remove();
+    }, 1000);
 });
 
 // حدث تحسين السيرة الذاتية
