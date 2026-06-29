@@ -151,7 +151,7 @@ function handleCVCreation() {
 }
 
 // ==========================================
-// 🤖 دالة الاتصال بالسيرفر الجديد السريع والمجاني (Llama-3) بدون إعلانات وضغط
+// 🤖 دالة الاتصال المضمونة والسريعة بالسيرفر الذكي (Llama-3) لمنع أخطاء الحجب
 // ==========================================
 async function askAI(promptMessage, systemMessage, retries = 3) {
     const url = `https://text.pollinations.ai/openai`; 
@@ -160,7 +160,7 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                model: "llama", // تحديد نموذج Llama السريع والذكي جداً في صياغة الـ CV
+                model: "llama", 
                 messages: [
                     { role: "system", content: systemMessage },
                     { role: "user", content: promptMessage }
@@ -175,7 +175,20 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
         }
 
         if (!response.ok) throw new Error();
-        return await response.text();
+        
+        const rawText = await response.text();
+        
+        // التحقق الذكي ومعالجة صيغة الرد المستلمة (JSON أو نص عادي) لمنع سقوط الاتصال
+        try {
+            const parsed = JSON.parse(rawText);
+            if (parsed.choices && parsed.choices[0] && parsed.choices[0].message) {
+                return parsed.choices[0].message.content;
+            } else if (parsed.content) {
+                return parsed.content;
+            }
+        } catch(e) {
+            return rawText;
+        }
 
     } catch (error) {
         if (retries > 0) {
@@ -187,7 +200,7 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
 }
 
 // ==========================================
-// ✨ دالة تحويل الـ Markdown وتطهير النص بالكامل لضمان مخرجات نظيفة واحترافية بيضاء
+// ✨ دالة تحويل الـ Markdown وتطهير النص التام لمنع الإعلانات
 // ==========================================
 function formatMarkdown(text) {
     if (!text) return '';
