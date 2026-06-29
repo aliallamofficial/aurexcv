@@ -150,18 +150,37 @@ function handleCVCreation() {
     return true;
 }
 
-// دالة عامة لإرسال الطلبات إلى API الذكاء الاصطناعي
-async function askAI(promptMessage, systemMessage) {
+// ==========================================
+// 🤖 دالة عامة مطورة ومحمية للاتصال بالذكاء الاصطناعي مع معالجة صامتة لضغط السيرفر
+// ==========================================
+async function askAI(promptMessage, systemMessage, retries = 3) {
     const url = `https://text.pollinations.ai/`;
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            messages: [{ role: "user", content: promptMessage }],
-            system: systemMessage
-        })
-    });
-    return await response.text();
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                messages: [{ role: "user", content: promptMessage }],
+                system: systemMessage
+            })
+        });
+
+        // إذا كان السيرفر مضغوطاً (429 أو 503) ولديه محاولات متبقية، يعيد المحاولة صامتاً في الخلفية
+        if ((response.status === 429 || response.status === 503 || !response.ok) && retries > 0) {
+            await new Promise(resolve => setTimeout(resolve, 2000)); // انتظر ثانيتين
+            return await askAI(promptMessage, systemMessage, retries - 1); // إعادة المحاولة خفية
+        }
+
+        if (!response.ok) throw new Error();
+        return await response.text();
+
+    } catch (error) {
+        if (retries > 0) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            return await askAI(promptMessage, systemMessage, retries - 1);
+        }
+        throw error;
+    }
 }
 
 // دالة تحويل الـ Markdown
@@ -234,7 +253,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
         return;
     }
 
-    // حقن التوقيع الرقمي ومفتاح الـ GPG إن لم يكن متواجداً
     let currentHtml = cvElement.innerHTML;
     if (!currentHtml.includes('cv-crypto-footer')) {
         cvElement.innerHTML = appendCryptoSignatureToCV(currentHtml);
@@ -244,7 +262,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
     const originalBtnText = document.getElementById('downloadPdfBtn').innerText;
     document.getElementById('downloadPdfBtn').innerText = "⏳ جاري التجهيز...";
 
-    // دالة التوليد والحفظ الفوري للـ PDF
     const startPdfGeneration = () => {
         const options = {
             margin:       [10, 10, 10, 10],
@@ -258,18 +275,15 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
             document.getElementById('downloadPdfBtn').innerText = originalBtnText;
         }).catch((err) => {
             console.error("خطأ أثناء توليد الـ PDF:", err);
-            alert("حدث خطأ أثناء التصدير المباشر.");
             document.getElementById('downloadPdfBtn').innerText = originalBtnText;
         });
     };
 
-    // التأكد من تحميل مكتبة html2pdf.js ديناميكياً لتجنب تعديل الـ HTML يدوياً
     if (typeof html2pdf === 'undefined') {
         const script = document.createElement('script');
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
         script.onload = startPdfGeneration;
         script.onerror = () => {
-            alert("فشل تحميل محرك الـ PDF، يرجى التحقق من اتصال الإنترنت.");
             document.getElementById('downloadPdfBtn').innerText = originalBtnText;
         };
         document.head.appendChild(script);
@@ -342,7 +356,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
             applyThemeColorToLiveCV();
         } else { throw new Error(); }
     } catch (error) {
-        resultBox.innerHTML = `<p style="color:red;">حدث خطأ أثناء الصياغة. يرجى المحاولة مجدداً.</p>`;
+        resultBox.innerHTML = `<p style="color:red;">السيرفر مشغول حالياً بالمعالجة، يرجى النقر مرة أخرى بعد لحظات.</p>`;
     } finally { 
         loading.classList.add('hidden'); 
         btn.disabled = false;
@@ -387,7 +401,7 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
             applyThemeColorToLiveCV();
         }
     } catch (e) {
-        alert("فشل خادم توليد الرسائل حالياً.");
+        alert("السيرفر مضغوط حالياً، يرجى المحاولة بعد قليل.");
     } finally { 
         loading.classList.add('hidden'); 
         btn.disabled = false;
@@ -396,7 +410,6 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
 
 // تهيئة الأدوات عند تحميل الصفحة والنافذة المنبثقة بشكل فوري
 document.addEventListener('DOMContentLoaded', () => {
-    // إزالة السكرين سبلاش بعد التجهيز
     const splash = document.getElementById('splash-screen');
     if(splash) {
         setTimeout(() => {
@@ -405,25 +418,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
     
-    // تشغيل ميزات الواجهة الأساسية
     initCVScoreGauge();
     initThemeColorPicker();
     
-    // تشغيل الهيدر المنسدل للإعدادات
     const dropBtn = document.getElementById('dropdownToggleBtn');
     const menu = document.getElementById('topLeftMenu');
     if (dropBtn && menu) {
         dropBtn.addEventListener('click', () => menu.classList.toggle('hidden'));
     }
 
-    // فتح وغلق مودال الإعدادات
     const openSettings = document.getElementById('openSettingsBtn');
     const closeSettings = document.getElementById('closeSettingsBtn');
     const modal = document.getElementById('settingsPageModal');
     if(openSettings && modal) openSettings.addEventListener('click', () => { modal.classList.remove('hidden'); menu.classList.add('hidden'); });
     if(closeSettings && modal) closeSettings.addEventListener('click', () => modal.classList.add('hidden'));
 
-    // قائمة التحميل المنسدلة الفرعية
     const mainDown = document.getElementById('mainDownloadBtn');
     const downOpts = document.getElementById('downloadOptions');
     if(mainDown && downOpts) {
