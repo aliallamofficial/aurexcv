@@ -151,22 +151,26 @@ function handleCVCreation() {
 }
 
 // ==========================================
-// 🤖 دالة عامة مطورة ومحمية للاتصال بالذكاء الاصطناعي مع معالجة صامتة لضغط السيرفر
+// 🤖 دالة الاتصال بالسيرفر الجديد السريع والمجاني (Llama-3) بدون إعلانات وضغط
 // ==========================================
 async function askAI(promptMessage, systemMessage, retries = 3) {
-    const url = `https://text.pollinations.ai/`;
+    const url = `https://text.pollinations.ai/openai`; 
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                messages: [{ role: "user", content: promptMessage }],
-                system: systemMessage
+                model: "llama", // تحديد نموذج Llama السريع والذكي جداً في صياغة الـ CV
+                messages: [
+                    { role: "system", content: systemMessage },
+                    { role: "user", content: promptMessage }
+                ],
+                jsonMode: false
             })
         });
 
         if ((response.status === 429 || response.status === 503 || !response.ok) && retries > 0) {
-            await new Promise(resolve => setTimeout(resolve, 2000)); 
+            await new Promise(resolve => setTimeout(resolve, 1500)); 
             return await askAI(promptMessage, systemMessage, retries - 1); 
         }
 
@@ -175,7 +179,7 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
 
     } catch (error) {
         if (retries > 0) {
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise(resolve => setTimeout(resolve, 1500));
             return await askAI(promptMessage, systemMessage, retries - 1);
         }
         throw error;
@@ -183,18 +187,19 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
 }
 
 // ==========================================
-// ✨ دالة تحويل الـ Markdown مع تنظيف دقيق للنصوص الإعلانية والترويجية لـ Pollinations
+// ✨ دالة تحويل الـ Markdown وتطهير النص بالكامل لضمان مخرجات نظيفة واحترافية بيضاء
 // ==========================================
 function formatMarkdown(text) {
     if (!text) return '';
 
-    // تصفية وحذف الجمل والروابط التي يضيفها السيرفر المجاني تلقائياً في النهاية
+    // تصفية وحذف الجمل والروابط التي يضيفها السيرفر المجاني تلقائياً في النهاية من الجذور
     let cleanedText = text
-        .replace(/Powered by Pollinations\.AI.*/gi, '')
+        .replace(/Powered by.*/gi, '')
         .replace(/.*Support our mission.*/gi, '')
         .replace(/.*accessible for everyone.*/gi, '')
-        .replace(/🌸\s*Ad\s*🌸/gi, '')
-        .replace(/Pollinations\.AI:/gi, '');
+        .replace(/🌸.*🌸/gi, '')
+        .replace(/Pollinations.*/gi, '')
+        .replace(/Text\.Pollinations.*/gi, '');
 
     // تطبيق وسوم HTML المعتادة على النص النظيف
     return cleanedText
