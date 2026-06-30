@@ -73,30 +73,30 @@
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الاسم الكامل:</label>
+                <label for="fullName" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الاسم الكامل:</label>
                 <input type="text" id="fullName" placeholder="مثال: علي علام" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المسمى الوظيفي المستهدف:</label>
+                <label for="jobTitle" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المسمى الوظيفي المستهدف:</label>
                 <input type="text" id="jobTitle" placeholder="مثال: مهندس برمجيات" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الخبرات المهنية السابقة:</label>
+                <label for="experience" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الخبرات المهنية السابقة:</label>
                 <textarea id="experience" rows="4" placeholder="اذكر الشركات والمهام الرئيسية التي قمت بها باختصار..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; resize: vertical;"></textarea>
                 <button class="inline-ai-btn" data-field="experience" style="margin-top: 6px; padding: 5px 12px; background: #0f172a; border: 1px solid #38bdf8; color: #38bdf8; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;">🪄 تحسين صياغة الخبرات ذكياً (Action Verbs)</button>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المهارات (افصل بينها بفاصلة):</label>
+                <label for="skills" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المهارات (افصل بينها بفاصلة):</label>
                 <input type="text" id="skills" placeholder="JavaScript, Python, حل المشكلات, العمل الجماعي" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
                 <button class="inline-ai-btn" data-field="skills" style="margin-top: 6px; padding: 5px 12px; background: #0f172a; border: 1px solid #38bdf8; color: #38bdf8; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;">🪄 تحسين وتدقيق قسم المهارات ذكياً</button>
             </div>
 
             <div style="margin-bottom: 25px; background: rgba(15, 23, 42, 0.4); padding: 15px; border: 1px dashed #475569; border-radius: 8px;">
                 <label style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">🎯 مطابقة الكلمات المفتاحية (إعلان الوظيفة المستهدفة):</label>
-                <textarea id="jobDescriptionInput" rows="3" placeholder="انسخ نص متطلبات أو شروط إعلان الوظيفة التي تريد التقديم عليها هنا، ليقوم النظام تلقائياً بمقارنتها وحقن المفردات الناقصة لتخطي الـ ATS..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 13px; resize: vertical;"></textarea>
+                <textarea id="jobDescriptionInput" rows="3" placeholder="انسخ نص متطلبات أو شروط إعلان الوظيفة الشاغرة هنا، ليقوم النظام تلقائياً بمقارنتها وحقن المفردات الناقصة لتخطي الـ ATS..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 13px; resize: vertical;"></textarea>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -260,7 +260,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // حل مشكلة النصائح: عرض نصيحة عشوائية فورية في حال لم يقم ملف app.js بتحديثها
             const tipTextElement = document.getElementById("liveTipText");
             if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
                 const tips = [
@@ -274,7 +273,6 @@
                 tipTextElement.innerText = randomTip;
             }
 
-            // تفعيل زر الإشعارات
             const notifyBtn = document.getElementById("enableNotificationsBtn");
             if (notifyBtn) {
                 notifyBtn.addEventListener("click", function(e) {
