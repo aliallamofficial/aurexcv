@@ -218,18 +218,31 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // حل مشكلة النصائح: عرض نصيحة عشوائية فورية في حال لم يقم ملف app.js بتحديثها
+            const tipTextElement = document.getElementById("liveTipText");
+            if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
+                const tips = [
+                    "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت، أدرت، حققت) بدلاً من الكلمات التقليدية.",
+                    "تجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
+                    "اجعل الكلمات المفتاحية الموجودة في إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
+                    "صياغة سيرة ذاتية من صفحة واحدة كافية جداً إذا كانت خبرتك المهنية أقل من 5 سنوات.",
+                    "تأكد من كتابة معلومات الاتصال الخاصة برابط حسابك على LinkedIn في أعلى السيرة الذاتية وبشكل واضح."
+                ];
+                // اختيار نصيحة عشوائية
+                const randomTip = tips[Math.floor(Math.random() * tips.length)];
+                tipTextElement.innerText = randomTip;
+            }
+
+            // تفعيل زر الإشعارات
             const notifyBtn = document.getElementById("enableNotificationsBtn");
             if (notifyBtn) {
                 notifyBtn.addEventListener("click", function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
-
                     if (!("Notification" in window)) {
-                        alert("تنبيه: متصفحك الحالي أو بيئة العمل المحلية لا تدعم طلب إشعارات دفع الويب.");
+                        alert("تنبيه: متصفحك الحالي لا يدعم طلب إشعارات دفع الويب.");
                         return;
                     }
 
-                    // طلب الإذن المباشر من المتصفح
                     Notification.requestPermission().then(function(permission) {
                         if (permission === "granted") {
                             alert("🔔 ممتاز! تم تفعيل نظام التنبيهات بنجاح، ستصلك التحديثات فور صدورها.");
@@ -238,8 +251,6 @@
                         } else if (permission === "denied") {
                             alert("لقد قمت برفض الإشعارات مسبقاً. يمكنك إعادة تفعيلها عبر الضغط على أيقونة القفل بجانب رابط الموقع في شريط المتصفح.");
                         }
-                    }).catch(function(err) {
-                        console.error("خطأ أثناء تفعيل الإشعارات:", err);
                     });
                 });
             }
