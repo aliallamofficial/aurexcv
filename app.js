@@ -19,6 +19,84 @@ function displayRandomLiveTip() {
 }
 
 // ==========================================
+// 🚀 نظام تشغيل وإدارة جولة التطبيق الترحيبية (App Tour) للمستخدم الجديد
+// ==========================================
+const tourSteps = [
+    {
+        icon: "🚀",
+        title: "مرحباً بك في مستقبلك المهني!",
+        desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.",
+        btnText: "ابدأ الرحلة الآن ←"
+    },
+    {
+        icon: "📊",
+        title: "مستشار الـ ATS الذكي لحظة بلحظة",
+        desc: "أثناء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
+        btnText: "التالي مذهل كالعادة ←"
+    },
+    {
+        icon: "✨",
+        title: "الذكاء الاصطناعي في خدمتك",
+        desc: "اضغط على زر الإنشاء ليقوم التطبيق بصياغة وتدقيق نصك لغوياً وإصدار نسخة احترافية بالكامل مع رمز QR وتوقيع رقمي آمن.",
+        btnText: "إنهاء الجولة والدخول للتطبيق 🎉"
+    }
+];
+
+let currentTourStep = 0;
+
+function initAppTour() {
+    // التحقق مما إذا كان المستخدم قد شاهد الجولة مسبقاً
+    if (localStorage.getItem('cv_tour_completed') === 'true') return;
+
+    const tourModal = document.getElementById('appTourModal');
+    if (!tourModal) return;
+
+    // إظهار نافذة الجولة
+    tourModal.classList.remove('hidden');
+
+    const nextBtn = document.getElementById('nextTourBtn');
+    const skipBtn = document.getElementById('skipTourBtn');
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentTourStep++;
+            if (currentTourStep < tourSteps.length) {
+                updateTourContent();
+            } else {
+                closeTour();
+            }
+        });
+    }
+
+    if (skipBtn) {
+        skipBtn.addEventListener('click', closeTour);
+    }
+}
+
+function updateTourContent() {
+    const stepData = tourSteps[currentTourStep];
+    
+    const progress = document.getElementById('tourProgress');
+    const icon = document.getElementById('tourIcon');
+    const title = document.getElementById('tourTitle');
+    const desc = document.getElementById('tourDescription');
+    const nextBtn = document.getElementById('nextTourBtn');
+
+    if (progress) progress.innerText = `خطوة ${currentTourStep + 1} من ${tourSteps.length}`;
+    if (icon) icon.innerText = stepData.icon;
+    if (title) title.innerText = stepData.title;
+    if (desc) desc.innerText = stepData.desc;
+    if (nextBtn) nextBtn.innerText = stepData.btnText;
+}
+
+function closeTour() {
+    const tourModal = document.getElementById('appTourModal');
+    if (tourModal) tourModal.classList.add('hidden');
+    // حفظ في المتصفح لعدم الإزعاج مجدداً
+    localStorage.setItem('cv_tour_completed', 'true');
+}
+
+// ==========================================
 // 🔥 ميزة 1: عداد قياس قوة وجاهزية الـ CV لنظام الـ ATS
 // ==========================================
 function initCVScoreGauge() {
@@ -489,6 +567,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // عرض النصيحة العشوائية فوراً بمجرد فتح التطبيق ودخول المستخدم
     displayRandomLiveTip();
+    
+    // تشغيل الجولة الترحيبية للمستخدم الجديد فوراً
+    initAppTour();
     
     initCVScoreGauge();
     initThemeColorPicker();
