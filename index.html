@@ -6,7 +6,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-5WP8H9FKZS');
     </script>
 
@@ -15,14 +14,13 @@
     <title>مُحسّن السيرة الذاتية الذكي ✨</title>
 
     <meta name="google-site-verification" content="L3tPSb-jmutxmhHwf_FTcPCVK69TdAetKEoSoTS7JME" />
-
     <meta name="description" content="تطبيق ذكي لتوليد وصياغة السير الذاتية الاحترافية ورسائل التغطية بالذكاء الاصطناعي واجتياز نظام الـ ATS مباشرة من متصفحك مجاناً.">
     <meta name="keywords" content="صانع سير ذاتية, تطبيق cv, ذكاء اصطناعي, ats checker, ali cv builder, سيرة ذاتية ذكية, محسن السيرة الذاتية">
     <meta name="author" content="@aliallamofficial">
 
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
@@ -42,22 +40,22 @@
             Ali CV Builder
         </div>
 
-        <div class="top-left-dropdown">
-            <button id="dropdownToggleBtn" class="dropdown-trigger-btn">⚙️</button>
+        <div class="top-left-dropdown" style="position: absolute; top: 15px; left: 20px; z-index: 100;">
+            <button id="dropdownToggleBtn" class="dropdown-trigger-btn" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">⚙️</button>
             <div id="topLeftMenu" class="dropdown-menu-content hidden">
                 <button id="openSettingsBtn">⚙️ الإعدادات</button>
             </div>
         </div>
 
-        <header class="main-app-header" style="padding-top: 40px;">
-            <div class="logo-badge">🤖 AI POWERED PLATFORM</div>
+        <header class="main-app-header" style="padding-top: 60px; text-align: center; margin-bottom: 30px;">
+            <div class="logo-badge" style="display: inline-block; background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px;">🤖 AI POWERED PLATFORM</div>
             
             <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px;">
-                <h1 class="app-title">مُحسّن السيرة الذاتية الذكي</h1>
+                <h1 class="app-title" style="margin: 0;">مُحسّن السيرة الذاتية الذكي</h1>
                 <span class="sparkle" style="font-size: 2rem;">✨</span>
             </div>
             
-            <p class="app-subtitle">صمم، حسّن، ووثق سيرتك الذاتية رقمياً بمعايير ATS العالمية</p>
+            <p class="app-subtitle" style="color: #94a3b8; margin: 5px 0 0 0;">صمم، حسّن، ووثق سيرتك الذاتية رقمياً بمعايير ATS العالمية</p>
         </header>
 
         <div id="liveTipBox" style="background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; padding: 15px; border-radius: 8px; margin-bottom: 25px; color: #e2e8f0;">
@@ -266,11 +264,12 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // منطق توليد النصائح العشوائية الذكية
             const tipTextElement = document.getElementById("liveTipText");
             if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
                 const tips = [
                     "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت, أدرت, حققت) بدلاً من الكلمات التقليدية.",
-                    "تجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
+                    "Tجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
                     "اجعل الكلمات المفتاحية الموجودة في إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
                     "صياغة سيرة ذاتية من صفحة واحدة كافية جداً إذا كانت خبرتك المهنية أقل من 5 سنوات.",
                     "تأكد من كتابة معلومات الاتصال الخاصة برابط حسابك على LinkedIn في أعلى السيرة الذاتية وبشكل واضح."
@@ -279,6 +278,7 @@
                 tipTextElement.innerText = randomTip;
             }
 
+            // تفعيل نظام طلب إشعارات دفع الويب
             const notifyBtn = document.getElementById("enableNotificationsBtn");
             if (notifyBtn) {
                 notifyBtn.addEventListener("click", function(e) {
