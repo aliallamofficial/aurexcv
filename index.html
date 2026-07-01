@@ -25,6 +25,11 @@
 </head>
 <body>
 
+    <div id="update-banner" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(90deg, #0f172a 0%, #10b981 100%); color: white; padding: 16px 24px; text-align: center; font-family: sans-serif; font-weight: bold; z-index: 100000; box-shadow: 0 -4px 20px rgba(0,0,0,0.4); border-top: 2px solid #34d399; backdrop-filter: blur(10px); direction: rtl; align-items: center; justify-content: center; gap: 15px;">
+        <span style="font-size: 14px; letter-spacing: 0.5px;">🚀 يتوفر تحديث جديد ومحسن للتطبيق لإصلاح الأخطاء ورفع الأداء!</span>
+        <a id="update-link" href="#" target="_blank" style="background: #ffffff; color: #0f172a; padding: 8px 18px; border-radius: 6px; text-decoration: none; display: inline-block; font-size: 13px; font-weight: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.2s ease;">تحديث الآن</a>
+    </div>
+
     <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; color: #fff; font-family: sans-serif;">
         <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: #38bdf8; animation: pulse 1.5s infinite;">Ali CV Builder</h1>
         <p style="color: #64748b; font-size: 1rem; margin-bottom: 25px;">جاري تهيئة مستشار التوظيف الذكي...</p>
@@ -264,13 +269,37 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // ============================================
+            // نظام التحديث الذكي لتطبيق الهاتف (Median.co + GitHub)
+            // ============================================
+            
+            // 1. اكتب إصدار هذا التطبيق الحالي (قم بتغييره فقط عند بناء ملف APK جديد في Median)
+            const CURRENT_APP_VERSION = "1.0.0"; 
+
+            // 2. فحص التحديث تلقائياً من ملف version.json الخاص بمستودعك
+            fetch('version.json?nocache=' + new Date().getTime())
+                .then(response => response.json())
+                .then(data => {
+                    // إذا كان الإصدار المكتوب في السيرفر لا يطابق الإصدار الحالي في هاتف المستخدم
+                    if (data.latestVersion !== CURRENT_APP_VERSION) {
+                        const banner = document.getElementById('update-banner');
+                        const link = document.getElementById('update-link');
+                        
+                        if (banner && link) {
+                            link.href = data.updateUrl; // حقن رابط التحميل من APKPure
+                            banner.style.display = 'flex'; // إظهار شريط التحديث
+                        }
+                    }
+                })
+                .catch(err => console.log("نظام التحديث يعمل بشكل صامت في الخلفية..."));
+
             // منطق توليد النصائح العشوائية الذكية
             const tipTextElement = document.getElementById("liveTipText");
             if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
                 const tips = [
                     "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت, أدرت, حققت) بدلاً من الكلمات التقليدية.",
-                    "Tجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
-                    "اجعل الكلمات المفتاحية الموجودة in إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
+                    "تجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
+                    "اجعل الكلمات المفتاحية الموجودة في إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
                     "صياغة سيرة ذاتية من صفحة واحدة كافية جداً إذا كانت خبرتك المهنية أقل من 5 سنوات.",
                     "تأكد من كتابة معلومات الاتصال الخاصة برابط حسابك على LinkedIn في أعلى السيرة الذاتية وبشكل واضح."
                 ];
