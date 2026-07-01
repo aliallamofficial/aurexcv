@@ -19,6 +19,17 @@ function displayRandomLiveTip() {
 }
 
 // ========================================================
+// 🛡️ دالة نجاح التحقق من Cloudflare Turnstile (ربط إخفاء الـ Splash Screen بالتحقق)
+// ========================================================
+function onTurnstileSuccess(token) {
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(() => splash.remove(), 500); // تختفي تماماً بعد نجاح التحقق بنصف ثانية
+    }
+}
+
+// ========================================================
 // 🚀 نظام تشغيل وإدارة جولة التطبيق الترحيبية (App Tour) للمستخدم الجديد
 // ========================================================
 const tourSteps = [
@@ -31,7 +42,7 @@ const tourSteps = [
     {
         icon: "📊",
         title: "مستشار الـ ATS الذكي لحظة بلحظة",
-        desc: "أثناء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
+        desc: "أثتاء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
         btnText: "التالي مذهل كالعادة ←"
     },
     {
@@ -299,7 +310,7 @@ function formatMarkdown(text) {
         .replace(/Pollinations\.AI:/gi, '');
 
     return cleanedText
-        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>')
         .trim();
@@ -567,14 +578,8 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
 // 🏁 تهيئة وتفعيل المنظومة عند تحميل المستند
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    const splash = document.getElementById('splash-screen');
-    if(splash) {
-        setTimeout(() => {
-            splash.style.opacity = '0';
-            setTimeout(() => splash.remove(), 500);
-        }, 1000);
-    }
-    
+    // 🛠️ تم إزالة الكود المؤقت التلقائي لإخفاء السكرين من هنا، ليعتمد الكود كلياً على دالة النجاح الخاصة بـ Turnstile فوق.
+
     // تشغيل الميزات بشكل متناسق مع الـ HTML الحالي
     displayRandomLiveTip();
     initAppTour();
