@@ -29,6 +29,9 @@ function onTurnstileSuccess(token) {
     }
 }
 
+// لضمان عمل الدالة حتى لو استدعيت من النطاق العالمي لـ Turnstile
+window.onTurnstileSuccess = onTurnstileSuccess;
+
 // ========================================================
 // 🚀 نظام تشغيل وإدارة جولة التطبيق الترحيبية (App Tour) للمستخدم الجديد
 // ========================================================
@@ -42,7 +45,7 @@ const tourSteps = [
     {
         icon: "📊",
         title: "مستشار الـ ATS الذكي لحظة بلحظة",
-        desc: "أثتاء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
+        desc: "أثناء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
         btnText: "التالي مذهل كالعادة ←"
     },
     {
@@ -144,6 +147,7 @@ function calculateCVScore() {
             scoreFeedback.innerHTML = '🔥 مذهل! السيرة الذاتية مدعمة بكلمات مفتاحية قوية وجاهزة للقنص الرقمي.';
         }
     }
+    return score;
 }
 
 // ==========================================
@@ -211,6 +215,66 @@ function initAIInterviewPrep() {
 }
 
 // ==========================================
+// 🔍 ميزة: محاكاة فحص ATS وتقييم البيانات المتقدم
+// ==========================================
+function initAdditionalTools() {
+    const rateBtn = document.getElementById('rateBtn');
+    const atsCheckBtn = document.getElementById('atsCheckBtn');
+    const signCvBtn = document.getElementById('signCvBtn');
+
+    if (rateBtn) {
+        rateBtn.addEventListener('click', async () => {
+            const experience = document.getElementById('experience').value.trim();
+            const skills = document.getElementById('skills').value.trim();
+            if (!experience && !skills) { alert('الرجاء تعبئة بعض الحقول لتقييمها!'); return; }
+
+            const loading = document.getElementById('loading');
+            const resultBox = document.getElementById('resultBox');
+            loading.classList.remove('hidden');
+
+            try {
+                const review = await askAI(`قم بتقييم هذه الخبرات والمهارات تقييماً مهنياً صارماً وأعطِ نقاط الضعف والقوة بوضوح:\nالخبرة: ${experience}\nالمهارات: ${skills}`, "أنت مراجع سير ذاتية خبير.");
+                let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, 'modern');
+                resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}"><h3>📊 التقييم المهني الشامل للبيانات:</h3><br>${formatMarkdown(review)}</div>`;
+                document.getElementById('downloadContainer').classList.add('hidden');
+            } catch (err) { alert('خطأ في معالجة البيانات، حاول مجدداً.'); }
+            finally { loading.classList.add('hidden'); }
+        });
+    }
+
+    if (atsCheckBtn) {
+        atsCheckBtn.addEventListener('click', async () => {
+            const experience = document.getElementById('experience').value.trim();
+            const jd = document.getElementById('jobDescriptionInput')?.value.trim() || "";
+            if (!experience || !jd) { alert('يجب ملء حقل الخبرة وحقل الوصف الوظيفي للمطابقة وفحص الـ ATS!'); return; }
+
+            const loading = document.getElementById('loading');
+            const resultBox = document.getElementById('resultBox');
+            loading.classList.remove('hidden');
+
+            try {
+                const report = await askAI(`قم بمحاكاة فحص نظام ATS ومطابقة النصين التاليين، استخرج الكلمات المفتاحية المفقودة ونسبة التوافق التقريبية:\nالخبرة: ${experience}\nالوصف الوظيفي: ${jd}`, "أنت نظام فحص ATS ذكي.");
+                let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, 'modern');
+                resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}"><h3>🔍 تقرير محاكاة فحص ATS والمطابقة:</h3><br>${formatMarkdown(report)}</div>`;
+                document.getElementById('downloadContainer').classList.add('hidden');
+            } catch (err) { alert('فشلت عملية محاكاة الفحص، يرجى المحاولة لاحقاً.'); }
+            finally { loading.classList.add('hidden'); }
+        });
+    }
+
+    if (signCvBtn) {
+        signCvBtn.addEventListener('click', () => {
+            const cvArea = document.getElementById('cvTemplateArea');
+            if (!cvArea || cvArea.innerText.trim() === "") { alert('الرجاء توليد سيرة ذاتية أولاً لتوقيعها رقمياً!'); return; }
+            if (cvArea.innerHTML.includes('cv-crypto-footer')) { alert('هذا المستند موقع رقمياً بالفعل.'); return; }
+            
+            cvArea.innerHTML = appendCryptoSignatureToCV(cvArea.innerHTML);
+            alert('🔐 تم حقن توقيع الـ GPG البرمجي بنجاح أسفل السيرة الذاتية!');
+        });
+    }
+}
+
+// ==========================================
 // 🔥 ميزة: تخصيص المظهر (الأبعاد والمسافات واللون)
 // ==========================================
 function initThemeColorPicker() {
@@ -236,7 +300,6 @@ function initThemeColorPicker() {
 }
 
 function applyThemeColorToLiveCV() {
-    const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
     const cvArea = document.getElementById('cvTemplateArea');
     if (cvArea) {
         cvArea.style.cssText = getTemplateStyles(document.getElementById('langSelect').value, document.getElementById('templateSelect').value);
@@ -325,7 +388,7 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
     const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
 
     let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); overflow: hidden; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
-    styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr";
+    styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr;";
     
     if (selectedTemplate === 'modern') styles += ` background-color: #1e293b; color: #f8fafc; border-left: 6px solid ${activeColor}; border-right: none;`;
     else if (selectedTemplate === 'classic') styles += " background-color: #ffffff; color: #000000; border: 2px solid #000000;";
@@ -578,8 +641,6 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
 // 🏁 تهيئة وتفعيل المنظومة عند تحميل المستند
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 🛠️ تم إزالة الكود المؤقت التلقائي لإخفاء السكرين من هنا، ليعتمد الكود كلياً على دالة النجاح الخاصة بـ Turnstile فوق.
-
     // تشغيل الميزات بشكل متناسق مع الـ HTML الحالي
     displayRandomLiveTip();
     initAppTour();
@@ -587,12 +648,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initInlineAIWriters();
     initAIInterviewPrep();
     initThemeColorPicker();
+    initAdditionalTools(); // تشغيل أدوات فحص الـ ATS والتقييم الإضافية المدمجة
     
     // تفعيل قائمة الترس العلوي
     const dropBtn = document.getElementById('dropdownToggleBtn');
     const menu = document.getElementById('topLeftMenu');
     if (dropBtn && menu) {
-        dropBtn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        dropBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => menu.classList.add('hidden'));
     }
 
     const openSettings = document.getElementById('openSettingsBtn');
