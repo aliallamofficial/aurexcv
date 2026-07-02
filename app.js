@@ -326,7 +326,8 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
     const chosenPadding = document.getElementById('paddingSelect')?.value || "22px";
     const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
 
-    let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); overflow: hidden; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
+    // تم إصلاح السطر التالي بإزالة overflow: hidden ومنع انهيار الأبعاد أثناء رندرة التنزيل
+    let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
     styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr";
     
     if (selectedTemplate === 'modern') styles += ` background-color: #1e293b; color: #f8fafc; border-left: 6px solid ${activeColor}; border-right: none;`;
@@ -393,11 +394,12 @@ document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
     document.getElementById('downloadPdfBtn').innerText = "⏳ جاري التجهيز والتنزيل...";
 
     const executeDirectDownload = () => {
+        // تم تحديث الأوبجكت التالي بإجبار الحاوية على أبعاد الشاشة الحقيقية ولون خلفية صلبة لمنع الصفحة البيضاء تماماً
         const options = {
             margin:       [10, 10, 10, 10],
             filename:     `${fullName}_Resume.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false, letterRendering: true },
+            html2canvas:  { scale: 2, useCORS: true, logging: false, letterRendering: true, windowWidth: document.documentElement.offsetWidth, backgroundColor: '#ffffff' },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
