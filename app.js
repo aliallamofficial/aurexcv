@@ -326,7 +326,6 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
     const chosenPadding = document.getElementById('paddingSelect')?.value || "22px";
     const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
 
-    // تم إصلاح السطر التالي بإزالة overflow: hidden ومنع انهيار الأبعاد أثناء رندرة التنزيل
     let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
     styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr";
     
@@ -394,7 +393,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
     document.getElementById('downloadPdfBtn').innerText = "⏳ جاري التجهيز والتنزيل...";
 
     const executeDirectDownload = () => {
-        // تم تحديث الأوبجكت التالي بإجبار الحاوية على أبعاد الشاشة الحقيقية ولون خلفية صلبة لمنع الصفحة البيضاء تماماً
         const options = {
             margin:       [10, 10, 10, 10],
             filename:     `${fullName}_Resume.pdf`,
@@ -403,7 +401,6 @@ document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // إضافة مهلة زمنية 500 ملي ثانية لضمان رندرة الـ DOM والـ CSS بالكامل
         setTimeout(() => {
             html2pdf().set(options).from(cvElement).save().then(() => {
                 document.getElementById('downloadPdfBtn').innerText = originalBtnText;
@@ -582,6 +579,91 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
 });
 
 // ==========================================
+// 🆙 منظومة التنبيه الفوري بالتحديثات عبر ملف الإعدادات
+// ==========================================
+const CURRENT_VERSION = "1.0.0"; // رقم الإصدار الحالي للتطبيق
+
+async function checkForAppUpdates() {
+    try {
+        // فحص التحديثات من خلال قراءة ملف version.json المرفوع على خادمك
+        const response = await fetch('version.json'); 
+        if (!response.ok) return;
+        
+        const data = await response.json();
+        const latestVersion = data.latestVersion;
+        const updateUrl = data.updateUrl;
+        
+        // إذا وجد إصدار جديد على الخادم، أظهر نافذة التنبيه الإلزامية للمستخدم
+        if (latestVersion !== CURRENT_VERSION) {
+            showUpdatePopup(updateUrl);
+        }
+    } catch (error) {
+        console.log("تعذر فحص التحديثات حالياً.");
+    }
+}
+
+function showUpdatePopup(updateUrl) {
+    const updateModal = document.createElement('div');
+    updateModal.id = "appUpdateModal";
+    updateModal.style = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(15, 23, 42, 0.95); z-index: 999999; display: flex;
+        align-items: center; justify-content: center; font-family: sans-serif;
+        padding: 20px; box-sizing: border-box; direction: rtl;
+    `;
+    
+    updateModal.innerHTML = `
+        <div style="background: #1e293b; padding: 30px; border-radius: 12px; text-align: center; max-width: 450px; width: 100%; border: 2px solid #38bdf8; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+            <div style="font-size: 50px; margin-bottom: 15px;">🚀</div>
+            <h3 style="color: #38bdf8; margin-top: 0; font-size: 22px; font-weight: bold;">تحديث جديد متوفر الآن!</h3>
+            <p style="font-size: 15px; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px;">
+                لقد قمنا بإضافة ميزات جديدة مذهلة وإصلاح بعض المشاكل لتحسين تجربتك. يرجى تحميل التحديث الآن للاستفادة من كافة الخصائص الجديدة.
+            </p>
+            <a href="${updateUrl}" target="_blank" id="startUpdateBtn" style="display: block; background: #3b82f6; color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: background 0.3s ease; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);">
+                📥 تحديث التطبيق فوراً
+            </a>
+        </div>
+    `;
+    
+    document.body.appendChild(updateModal);
+
+    // ربط الزر بالجسر البرمجي لـ Median لفتح الرابط في متصفح النظام الخارجي بشكل صحيح
+    document.getElementById('startUpdateBtn').addEventListener('click', function(e) {
+        const medianBridge = window.median || window.gonative;
+        if (medianBridge && medianBridge.openURL) {
+            e.preventDefault();
+            // إجبار التطبيق على فتح الرابط خارج التطبيق في متصفح الهاتف لتنزيل الـ APK بسلاسة من APKPure
+            medianBridge.openURL({
+                url: updateUrl,
+                target: "_blank"
+            });
+        }
+    });
+}
+
+// ==========================================
+// 🔔 منظومة تفعيل الإشعارات المتوافقة مع Median.co
+// ==========================================
+function requestMedianNotifications() {
+    const medianBridge = window.median || window.gonative;
+    
+    if (medianBridge && medianBridge.push) {
+        // طلب صلاحية الإشعارات من نظام الهاتف (أندرويد / آيفون)
+        medianBridge.push.requestPermission({
+            callback: function(result) {
+                if (result && result.permissionGranted) {
+                    alert("تم تفعيل إشعارات التطبيق بنجاح! 🎉");
+                } else {
+                    alert("لم يتم تفعيل الإشعارات. يرجى السماح بها من إعدادات الهاتف.");
+                }
+            }
+        });
+    } else {
+        alert("خاصية إشعارات الهاتف تعمل فقط عند تشغيل التطبيق بعد بنائه على منصة Median.");
+    }
+}
+
+// ==========================================
 // 🏁 تهيئة وتفعيل المنظومة عند تحميل المستند
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -591,6 +673,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initInlineAIWriters();
     initAIInterviewPrep();
     initThemeColorPicker();
+    
+    // تشغيل فحص التحديثات الفورية تلقائياً عند فتح التطبيق
+    checkForAppUpdates();
+
+    // تفعيل حدث الضغط لزر صلاحية الإشعارات
+    const notifyBtn = document.getElementById('enableNotificationsBtn');
+    if (notifyBtn) {
+        notifyBtn.addEventListener('click', requestMedianNotifications);
+    }
     
     const dropBtn = document.getElementById('dropdownToggleBtn');
     const menu = document.getElementById('topLeftMenu');
