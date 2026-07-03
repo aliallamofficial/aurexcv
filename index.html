@@ -180,22 +180,29 @@
     </div>
 
     <div id="settingsPageModal" class="modal-backdrop hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>⚙️ إعدادات التطبيق والمظهر</h2>
-                <button id="closeSettingsBtn" class="close-modal-x">&times;</button>
+        <div class="modal-content" style="background: #111827; border: 1px solid #1f2937; border-radius: 16px; max-width: 500px; width: 90%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); overflow: hidden; font-family: 'Cairo', sans-serif;">
+            
+            <div class="modal-header" style="background: #1f2937; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #374151;">
+                <h2 style="font-size: 1.25rem; font-weight: 700; color: #f9fafb; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="background: #3b82f6; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">⚙️</span>
+                    إعدادات التطبيق والمظهر
+                </h2>
+                <button id="closeSettingsBtn" class="close-modal-x" style="background: #374151; border: none; color: #9ca3af; font-size: 1.2rem; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">&times;</button>
             </div>
             
-            <div class="modal-body">
+            <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto; display: flex; flex-direction: column; gap: 20px;">
+                
                 <div id="dynamicColorPickerContainer"></div>
 
-                <div class="settings-section-card" style="text-align: right; direction: rtl; margin-bottom: 15px; background: #0f172a; padding: 15px; border-radius: 6px;">
-                    <h3 style="color: #38bdf8; margin-top: 0;">↕️ التحكم في هوامش السطور والأبعاد</h3>
-                    <p style="font-size: 13px; color: #94a3b8; margin-bottom: 10px;">عدل المسافات لضمان احتواء بيانات سيرتك الذاتية بالكامل في صفحة واحدة بدقة.</p>
+                <div class="settings-section-card" style="background: #1f2937; border: 1px solid #374151; padding: 18px; border-radius: 12px; text-align: right; direction: rtl;">
+                    <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                        <span>↕️</span> التحكم في هوامش السطور والأبعاد
+                    </h3>
+                    <p style="font-size: 13px; color: #9ca3af; margin-bottom: 16px; line-height: 1.5;">عدل المسافات لضمان احتواء بيانات سيرتك الذاتية بالكامل في صفحة واحدة بدقة.</p>
                     
-                    <div style="margin-bottom: 10px;">
-                        <label style="font-size: 12px; color: #cbd5e1; display:block; margin-bottom:4px;">ارتفاع وتباعد الأسطر (Line Height):</label>
-                        <select id="lineHeightSelect" style="width: 100%; padding: 8px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px;">
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-size: 13px; color: #e5e7eb; display:block; margin-bottom:6px; font-weight: 600;">ارتفاع وتباعد الأسطر (Line Height):</label>
+                        <select id="lineHeightSelect" style="width: 100%; padding: 10px; background: #111827; border: 1px solid #374151; color: #f9fafb; border-radius: 8px; font-family: inherit; font-size: 14px; outline: none;">
                             <option value="1.3">مضغوط (للسير الطويلة جداً)</option>
                             <option value="1.6" selected>افتراضي مريح للمراجعة</option>
                             <option value="1.9">متباعد وواسع</option>
@@ -203,8 +210,8 @@
                     </div>
 
                     <div>
-                        <label style="font-size: 12px; color: #cbd5e1; display:block; margin-bottom:4px;">الهوامش الداخلية للمستند (Padding):</label>
-                        <select id="paddingSelect" style="width: 100%; padding: 8px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px;">
+                        <label style="font-size: 13px; color: #e5e7eb; display:block; margin-bottom:6px; font-weight: 600;">الهوامش الداخلية للمستند (Padding):</label>
+                        <select id="paddingSelect" style="width: 100%; padding: 10px; background: #111827; border: 1px solid #374151; color: #f9fafb; border-radius: 8px; font-family: inherit; font-size: 14px; outline: none;">
                             <option value="12px">ضيقة (مساحة أكبر للمحتوى)</option>
                             <option value="22px" selected>افتراضية متوازنة الأركان</option>
                             <option value="32px">عريضة وكلاسيكية</option>
@@ -212,35 +219,39 @@
                     </div>
                 </div>
 
-                <div class="settings-section-card">
-                    <h3>🔔 نظام تنبيهات دفع الويب</h3>
-                    <p>قم بتفعيل الإشعارات ليصلك إشعار فوري وتلقائي بمجرد قيامنا بتحديث خوارزميات أو ميزات التطبيق.</p>
-                    <button id="enableNotificationsBtn" class="action-settings-btn" style="padding: 8px 15px; background: #2563eb; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">تفعيل الإشعارات الآن</button>
+                <div class="settings-section-card" style="background: #1f2937; border: 1px solid #374151; padding: 18px; border-radius: 12px; text-align: right; direction: rtl;">
+                    <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                        <span>🔔</span> نظام تنبيهات دفع الويب
+                    </h3>
+                    <p style="font-size: 13px; color: #9ca3af; margin-bottom: 14px; line-height: 1.5;">قم بتفعيل الإشعارات ليصلك إشعار فوري وتلقائي بمجرد قيامنا بتحديث خوارزميات أو ميزات التطبيق.</p>
+                    <button id="enableNotificationsBtn" class="action-settings-btn" style="width: 100%; padding: 12px; background: #2563eb; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: inherit; font-size: 14px; transition: background 0.2s;">تفعيل الإشعارات الآن</button>
                 </div>
 
-                <div class="settings-section-card">
-                    <h3>🔒 سياسة الخصوصية والأمان</h3>
-                    <p>نحن نحترم خصوصيتك بالكامل. كافة البيانات المدخلة لتوليد السير الذاتية تتم معالجتها لحظياً ولا يتم تخزينها على خوادمنا مطلقاً.</p>
-                    <a href="https://wp.me/Phj9fM-E" id="privacyPolicyLink" target="_blank" class="settings-link" rel="noopener noreferrer">قراءة سياسة الخصوصية الكاملة ←</a>
+                <div class="settings-section-card" style="background: #1f2937; border: 1px solid #374151; padding: 18px; border-radius: 12px; text-align: right; direction: rtl;">
+                    <h3 style="color: #10b981; font-size: 1rem; font-weight: 700; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                        <span>🔒</span> سياسة الخصوصية والأمان
+                    </h3>
+                    <p style="font-size: 13px; color: #9ca3af; margin-bottom: 14px; line-height: 1.5;">نحن نحترم خصوصيتك بالكامل. كافة البيانات المدخلة لتوليد السير الذاتية تتم معالجتها لحظياً ولا يتم تخزينها على خوادمنا مطلقاً.</p>
+                    <a href="https://wp.me/Phj9fM-E" id="privacyPolicyLink" target="_blank" style="display: inline-block; color: #34d399; font-size: 13px; text-decoration: none; font-weight: 600;" rel="noopener noreferrer">قراءة سياسة الخصوصية الكاملة ←</a>
                 </div>
             </div>
 
-            <div class="modal-footer" style="padding: 25px 20px; background: #1e293b; border-top: 1px solid #334155; text-align: center; direction: rtl;">
+            <div class="modal-footer" style="padding: 20px 24px; background: #1f2937; border-top: 1px solid #374151; text-align: center; direction: rtl;">
                 <p style="margin: 0 0 12px 0; font-size: 14px; color: #cbd5e1;">
-                    تم التطوير بكل فخر بواسطة <strong style="color: #38bdf8;">علي حاتم علام</strong> © 2026
+                    تم التطوير بكل فخر بواسطة <strong style="color: #60a5fa;">علي حاتم علام</strong> © 2026
                 </p>
 
                 <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px; color: #475569; font-size: 13px;">
                     <a href="https://github.com/aliallamofficial" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">GitHub</a>
                     <span>|</span>
-                    <a href="https://linkedin.com/in/aliallamofficial" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">LinkedIn</a>
+                    <a href="https://linkedin.com/in/aliallamofficial" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: bold;">LinkedIn</a>
                     <span>|</span>
-                    <a href="mailto:prof.ali.hatem.cairo@gmail.com" style="color: #10b981; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+                    <a href="mailto:prof.ali.hatem.cairo@gmail.com" style="color: #34d399; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
                         ✉️ تواصل معي
                     </a>
                 </div>
 
-                <div class="crypto-verified-box" style="background: #0f172a; border: 1px solid #1e293b; border-radius: 6px; padding: 10px; display: inline-block; min-width: 280px; font-family: monospace; font-size: 11px; color: #64748b; line-height: 1.5; direction: ltr; text-align: center;">
+                <div class="crypto-verified-box" style="background: #111827; border: 1px solid #374151; border-radius: 8px; padding: 10px; display: inline-block; min-width: 280px; font-family: monospace; font-size: 11px; color: #9ca3af; line-height: 1.5; direction: ltr; text-align: center;">
                     Verified: @aliallamofficial [GPG:<br>
                     55392380FBF1C8F1]
                 </div>
@@ -268,7 +279,6 @@
     <script src="app.js" defer></script>
 
     <script>
-        // دالة رد النداء (Callback) لحل مشكلة توقف شاشة التحقق Cloudflare Turnstile
         function onTurnstileSuccess() {
             const splashScreen = document.getElementById('splash-screen');
             if (splashScreen) {
@@ -280,31 +290,22 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // ============================================
-            // نظام التحديث الذكي لتطبيق الهاتف (Median.co + GitHub)
-            // ============================================
-            
-            // 1. اكتب إصدار هذا التطبيق الحالي (قم بتغييره فقط عند بناء ملف APK جديد في Median)
-            const CURRENT_APP_VERSION = "1.0.1"; 
+            const CURRENT_APP_VERSION = "1.0.0"; 
 
-            // 2. فحص التحديث تلقائياً من ملف version.json الخاص بمستودعك
             fetch('version.json?nocache=' + new Date().getTime())
                 .then(response => response.json())
                 .then(data => {
-                    // إذا كان الإصدار المكتوب في السيرفر لا يطابق الإصدار الحالي في هاتف المستخدم
                     if (data.latestVersion !== CURRENT_APP_VERSION) {
                         const banner = document.getElementById('update-banner');
                         const link = document.getElementById('update-link');
-                        
                         if (banner && link) {
-                            link.href = data.updateUrl; // حقن رابط التحميل من APKPure
-                            banner.style.display = 'flex'; // إظهار شريط التحديث
+                            link.href = data.updateUrl;
+                            banner.style.display = 'flex';
                         }
                     }
                 })
-                .catch(err => console.log("نظام التحديث يعمل بشكل صامت في الخلفية..."));
+                .catch(err => console.log("نظام التحديث يعمل بشكل صامت..."));
 
-            // منطق توليد النصائح العشوائية الذكية
             const tipTextElement = document.getElementById("liveTipText");
             if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
                 const tips = [
@@ -318,7 +319,6 @@
                 tipTextElement.innerText = randomTip;
             }
 
-            // تفعيل نظام طلب إشعارات دفع الويب
             const notifyBtn = document.getElementById("enableNotificationsBtn");
             if (notifyBtn) {
                 notifyBtn.addEventListener("click", function(e) {
