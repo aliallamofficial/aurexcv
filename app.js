@@ -196,7 +196,7 @@ function initAIInterviewPrep() {
         loading.classList.remove('hidden');
 
         try {
-            const qaResult = await askAI(`أعطني أهم 5 أسئلة متوقعة in المقابلات الشخصية لوظيفة: ${jobTitle} مع الإجابات النموذجية والمختصرة جداً لكل سؤال باللغة العربية.`, "أنت مسؤول التوظيف التقني الخبير.");
+            const qaResult = await askAI(`أعطني أهم 5 أسئلة متوقعة في المقابلات الشخصية لوظيفة: ${jobTitle} مع الإجابات النموذجية والمختصرة جداً لكل سؤال باللغة العربية.`, "أنت مسؤول التوظيف التقني الخبير.");
             if (qaResult) {
                 let formattedQA = formatMarkdown(qaResult);
                 let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, 'modern');
@@ -502,7 +502,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
         let offlineResult = `<h2>${fullName}</h2><h3>${jobTitle}</h3><hr><br>${experience || ''}<br>${skills || ''}`;
         let templateStyles = getTemplateStyles(selectedLang, selectedTemplate);
         resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}">${offlineResult}</div>`;
-        downloadContainer.remove('hidden');
+        downloadContainer.classList.remove('hidden');
         loading.classList.add('hidden');
         btn.disabled = false;
         return; 
@@ -579,20 +579,21 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
 });
 
 // ==========================================
-// 🆙 منظومة التنبيه الفوري الداخلي بالتحديثات عبر شريط مدمج بالواجهة
+// 🆙 منظومة التنبيه الفوري بالتحديثات عبر ملف الإعدادات
 // ==========================================
 const CURRENT_VERSION = "1.0.0"; // رقم الإصدار الحالي للتطبيق
 
 async function checkForAppUpdates() {
     try {
-        // إضافة v لمنع الـ Cache الفوري على الأجهزة وجلب الأرقام الحقيقية من السيرفر
-        const response = await fetch(`version.json?v=${new Date().getTime()}`); 
+        // فحص التحديثات من خلال قراءة ملف version.json المرفوع على خادمك
+        const response = await fetch('version.json'); 
         if (!response.ok) return;
         
         const data = await response.json();
         const latestVersion = data.latestVersion;
         const updateUrl = data.updateUrl;
         
+        // إذا وجد إصدار جديد على الخادم، أظهر نافذة التنبيه الإلزامية للمستخدم
         if (latestVersion !== CURRENT_VERSION) {
             showUpdatePopup(updateUrl);
         }
@@ -602,35 +603,42 @@ async function checkForAppUpdates() {
 }
 
 function showUpdatePopup(updateUrl) {
-    const banner = document.getElementById('appInternalUpdateBanner');
-    const updateLink = document.getElementById('internalUpdateBtn');
-    const closeBtn = document.getElementById('closeInternalUpdateBanner');
+    const updateModal = document.createElement('div');
+    updateModal.id = "appUpdateModal";
+    updateModal.style = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(15, 23, 42, 0.95); z-index: 999999; display: flex;
+        align-items: center; justify-content: center; font-family: sans-serif;
+        padding: 20px; box-sizing: border-box; direction: rtl;
+    `;
+    
+    updateModal.innerHTML = `
+        <div style="background: #1e293b; padding: 30px; border-radius: 12px; text-align: center; max-width: 450px; width: 100%; border: 2px solid #38bdf8; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+            <div style="font-size: 50px; margin-bottom: 15px;">🚀</div>
+            <h3 style="color: #38bdf8; margin-top: 0; font-size: 22px; font-weight: bold;">تحديث جديد متوفر الآن!</h3>
+            <p style="font-size: 15px; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px;">
+                لقد قمنا بإضافة ميزات جديدة مذهلة وإصلاح بعض المشاكل لتحسين تجربتك. يرجى تحميل التحديث الآن للاستفادة من كافة الخصائص الجديدة.
+            </p>
+            <a href="${updateUrl}" target="_blank" id="startUpdateBtn" style="display: block; background: #3b82f6; color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: background 0.3s ease; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);">
+                📥 تحديث التطبيق فوراً
+            </a>
+        </div>
+    `;
+    
+    document.body.appendChild(updateModal);
 
-    if (!banner || !updateLink) return;
-
-    // إظهار شريط التنبيه الداخلي بدون حجب التطبيق بالكامل
-    banner.classList.remove('hidden');
-
-    // تفعيل وتوجيه رابط التحميل ليعمل على المتصفح أو Median
-    updateLink.addEventListener('click', function(e) {
+    // ربط الزر بالجسر البرمجي لـ Median لفتح الرابط في متصفح النظام الخارجي بشكل صحيح
+    document.getElementById('startUpdateBtn').addEventListener('click', function(e) {
         const medianBridge = window.median || window.gonative;
         if (medianBridge && medianBridge.openURL) {
             e.preventDefault();
+            // إجبار التطبيق على فتح الرابط خارج التطبيق في متصفح الهاتف لتنزيل الـ APK بسلاسة من APKPure
             medianBridge.openURL({
                 url: updateUrl,
                 target: "_blank"
             });
-        } else {
-            updateLink.href = updateUrl;
         }
     });
-
-    // إمكانية إغلاق التنبيه ليتسنى لمن لا يرغب بالتحديث حالياً استخدام التطبيق براحة
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            banner.classList.add('hidden');
-        });
-    }
 }
 
 // ==========================================
@@ -640,6 +648,7 @@ function requestMedianNotifications() {
     const medianBridge = window.median || window.gonative;
     
     if (medianBridge && medianBridge.push) {
+        // طلب صلاحية الإشعارات من نظام الهاتف (أندرويد / آيفون)
         medianBridge.push.requestPermission({
             callback: function(result) {
                 if (result && result.permissionGranted) {
@@ -658,12 +667,6 @@ function requestMedianNotifications() {
 // 🏁 تهيئة وتفعيل المنظومة عند تحميل المستند
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // تحديث رقم الإصدار تلقائياً في واجهة الإعدادات الاحترافية بناءً على المتغير البرمجي
-    const versionDisplay = document.getElementById('appVersionDisplay');
-    if (versionDisplay) {
-        versionDisplay.innerText = CURRENT_VERSION;
-    }
-
     displayRandomLiveTip();
     initAppTour();
     initCVScoreGauge();
@@ -671,8 +674,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initAIInterviewPrep();
     initThemeColorPicker();
     
+    // تشغيل فحص التحديثات الفورية تلقائياً عند فتح التطبيق
     checkForAppUpdates();
 
+    // تفعيل حدث الضغط لزر صلاحية الإشعارات
     const notifyBtn = document.getElementById('enableNotificationsBtn');
     if (notifyBtn) {
         notifyBtn.addEventListener('click', requestMedianNotifications);
