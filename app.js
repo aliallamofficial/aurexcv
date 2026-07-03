@@ -581,7 +581,7 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
 // ==========================================
 // 🆙 منظومة التنبيه الفوري بالتحديثات عبر ملف الإعدادات
 // ==========================================
-const CURRENT_VERSION = "1.0.0"; // رقم الإصدار الحالي للتطبيق
+const CURRENT_VERSION = "1.0.1"; // رقم الإصدار الحالي للتطبيق
 
 async function checkForAppUpdates() {
     try {
