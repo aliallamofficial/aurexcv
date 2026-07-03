@@ -579,13 +579,14 @@ document.getElementById('coverLetterBtn').addEventListener('click', async () => 
 });
 
 // ==========================================
-// 🆙 منظومة التنبيه الفوري بالتحديثات عبر ملف الإعدادات
+// 🆙 منظومة التنبيه الفوري الداخلي بالتحديثات عبر شريط مدمج بالواجهة
 // ==========================================
 const CURRENT_VERSION = "1.0.0"; // رقم الإصدار الحالي للتطبيق
 
 async function checkForAppUpdates() {
     try {
-        const response = await fetch('version.json'); 
+        // إضافة v لمنع الـ Cache الفوري على الأجهزة وجلب الأرقام الحقيقية من السيرفر
+        const response = await fetch(`version.json?v=${new Date().getTime()}`); 
         if (!response.ok) return;
         
         const data = await response.json();
@@ -601,31 +602,17 @@ async function checkForAppUpdates() {
 }
 
 function showUpdatePopup(updateUrl) {
-    const updateModal = document.createElement('div');
-    updateModal.id = "appUpdateModal";
-    updateModal.style = `
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(15, 23, 42, 0.95); z-index: 999999; display: flex;
-        align-items: center; justify-content: center; font-family: sans-serif;
-        padding: 20px; box-sizing: border-box; direction: rtl;
-    `;
-    
-    updateModal.innerHTML = `
-        <div style="background: #1e293b; padding: 30px; border-radius: 12px; text-align: center; max-width: 450px; width: 100%; border: 2px solid #38bdf8; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
-            <div style="font-size: 50px; margin-bottom: 15px;">🚀</div>
-            <h3 style="color: #38bdf8; margin-top: 0; font-size: 22px; font-weight: bold;">تحديث جديد متوفر الآن!</h3>
-            <p style="font-size: 15px; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px;">
-                لقد قمنا بإضافة ميزات جديدة مذهلة وإصلاح بعض المشاكل لتحسين تجربتك. يرجى تحميل التحديث الآن للاستفادة من كافة الخصائص الجديدة.
-            </p>
-            <a href="${updateUrl}" target="_blank" id="startUpdateBtn" style="display: block; background: #3b82f6; color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: background 0.3s ease; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);">
-                📥 تحديث التطبيق فوراً
-            </a>
-        </div>
-    `;
-    
-    document.body.appendChild(updateModal);
+    const banner = document.getElementById('appInternalUpdateBanner');
+    const updateLink = document.getElementById('internalUpdateBtn');
+    const closeBtn = document.getElementById('closeInternalUpdateBanner');
 
-    document.getElementById('startUpdateBtn').addEventListener('click', function(e) {
+    if (!banner || !updateLink) return;
+
+    // إظهار شريط التنبيه الداخلي بدون حجب التطبيق بالكامل
+    banner.classList.remove('hidden');
+
+    // تفعيل وتوجيه رابط التحميل ليعمل على المتصفح أو Median
+    updateLink.addEventListener('click', function(e) {
         const medianBridge = window.median || window.gonative;
         if (medianBridge && medianBridge.openURL) {
             e.preventDefault();
@@ -633,8 +620,17 @@ function showUpdatePopup(updateUrl) {
                 url: updateUrl,
                 target: "_blank"
             });
+        } else {
+            updateLink.href = updateUrl;
         }
     });
+
+    // إمكانية إغلاق التنبيه ليتسنى لمن لا يرغب بالتحديث حالياً استخدام التطبيق براحة
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            banner.classList.add('hidden');
+        });
+    }
 }
 
 // ==========================================
@@ -662,7 +658,7 @@ function requestMedianNotifications() {
 // 🏁 تهيئة وتفعيل المنظومة عند تحميل المستند
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // [تحديث رقم الإصدار تلقائياً في واجهة الإعدادات الاحترافية بناءً على المتغير البرمجي]
+    // تحديث رقم الإصدار تلقائياً في واجهة الإعدادات الاحترافية بناءً على المتغير البرمجي
     const versionDisplay = document.getElementById('appVersionDisplay');
     if (versionDisplay) {
         versionDisplay.innerText = CURRENT_VERSION;
