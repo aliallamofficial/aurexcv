@@ -329,10 +329,13 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
     let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
     styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr";
     
-    if (selectedTemplate === 'modern') styles += ` background-color: #1e293b; color: #f8fafc; border-left: 6px solid ${activeColor}; border-right: none;`;
-    else if (selectedTemplate === 'classic') styles += " background-color: #ffffff; color: #000000; border: 2px solid #000000;";
-    else if (selectedTemplate === 'elegant') styles += ` background-color: #fafaf9; color: #1c1917; border-top: 6px solid ${activeColor};`;
-    
+    if (selectedTemplate === 'modern') {
+        styles += ` background-color: #1e293b; color: #f8fafc; border-left: 6px solid ${activeColor}; border-right: none;`;
+    } else if (selectedTemplate === 'classic') {
+        styles += " background-color: #ffffff; color: #000000; border: 2px solid #000000;";
+    } else if (selectedTemplate === 'elegant') {
+        styles += ` background-color: #fafaf9; color: #1c1917; border-top: 6px solid ${activeColor};`;
+    }
     return styles;
 }
 
@@ -359,328 +362,127 @@ function generateCVQRCode(containerId, textToEncode) {
     
     const targetElement = document.getElementById(containerId);
     if (targetElement) {
-        targetElement.prepend(qrContainer);
+        targetElement.insertBefore(qrContainer, targetElement.firstChild);
         new QRCode(qrContainer, {
             text: textToEncode,
-            width: 80,
-            height: 80,
-            colorDark : "#000000",
+            width: 90,
+            height: 90,
+            colorDark : "#0f172a",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.H
         });
     }
 }
 
-// ==========================================
-// 📄 ميزة: التنزيل المباشر المطور PDF (مع مهلة زمنية لمنع الصفحة البيضاء)
-// ==========================================
-document.getElementById('downloadPdfBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const cvElement = document.getElementById('cvTemplateArea');
-    if (!cvElement || cvElement.innerText.trim() === "") {
-        alert("الرجاء توليد السيرة الذاتية أولاً قبل التحميل!");
-        return;
-    }
-
-    if (!cvElement.innerHTML.includes('cv-crypto-footer')) {
-        cvElement.innerHTML = appendCryptoSignatureToCV(cvElement.innerHTML);
-    }
-
-    const fullName = document.getElementById('fullName').value.trim() || "CV";
-    const originalBtnText = document.getElementById('downloadPdfBtn').innerText;
-    document.getElementById('downloadPdfBtn').innerText = "⏳ جاري التجهيز والتنزيل...";
-
-    const executeDirectDownload = () => {
-        const options = {
-            margin:       [10, 10, 10, 10],
-            filename:     `${fullName}_Resume.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false, letterRendering: true, windowWidth: document.documentElement.offsetWidth, backgroundColor: '#ffffff' },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        setTimeout(() => {
-            html2pdf().set(options).from(cvElement).save().then(() => {
-                document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-                document.getElementById('downloadOptions').classList.add('hidden');
-            }).catch((err) => {
-                console.error(err);
-                document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-            });
-        }, 500);
-    };
-
-    if (typeof html2pdf === 'undefined') {
-        const script = document.createElement('script');
-        script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-        script.onload = executeDirectDownload;
-        script.onerror = () => {
-            document.getElementById('downloadPdfBtn').innerText = originalBtnText;
-            alert("فشل جلب أداة التنزيل المباشر، تأكد من اتصالك بالإنترنت.");
-        };
-        document.head.appendChild(script);
-    } else {
-        executeDirectDownload();
-    }
-});
-
-// ==========================================
-// 📝 ميزة: التنزيل المباشر كملف Word
-// ==========================================
-document.getElementById('downloadWordBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const cvElement = document.getElementById('cvTemplateArea');
-    if (!cvElement || cvElement.innerText.trim() === "") {
-        alert("الرجاء توليد السيرة الذاتية أولاً قبل التحميل!");
-        return;
-    }
-
-    const fullName = document.getElementById('fullName').value.trim() || "CV";
-    const htmlContent = cvElement.innerHTML;
-    
-    const blobContent = `
-      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-      <head><title>Resume</title><meta charset='utf-8'></head>
-      <body>${htmlContent}</body>
-      </html>
-    `;
-
-    const blob = new Blob(['\ufeff' + blobContent], { type: 'application/msword;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${fullName}_Resume.doc`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    document.getElementById('downloadOptions').classList.add('hidden');
-});
-
-// ==========================================
-// ✨ حدث معالجة وإنشاء السيرة الذاتية الرئيسي (Optimize)
-// ==========================================
-document.getElementById('optimizeBtn').addEventListener('click', async () => {
-    const btn = document.getElementById('optimizeBtn');
-    const fullName = document.getElementById('fullName').value.trim();
-    const jobTitle = document.getElementById('jobTitle').value.trim();
-    const experience = document.getElementById('experience').value.trim();
-    const skills = document.getElementById('skills').value.trim();
-    const jdText = document.getElementById('jobDescriptionInput')?.value.trim() || "";
-    const selectedLang = document.getElementById('langSelect').value;
-    const selectedTemplate = document.getElementById('templateSelect').value;
-
-    if (!fullName || !jobTitle) {
-        alert(selectedLang === 'ar' ? 'رجاءً أدخل الاسم والمسمى الوظيفي على الأقل!' : 'Please enter Name and Job Title!');
-        return;
-    }
-
-    if (!handleCVCreation()) return; 
-
-    const loading = document.getElementById('loading');
-    const resultBox = document.getElementById('resultBox');
-    const downloadContainer = document.getElementById('downloadContainer');
-
-    btn.disabled = true;
-    loading.classList.remove('hidden');
-    downloadContainer.classList.add('hidden');
-    resultBox.innerHTML = '';
-
-    if (navigator.onLine && jobTitle) {
-        askAI(`أعطني نصيحة توظيف احترافية وموجزة جداً (سطر واحد فقط) لشخص يريد التقديم على وظيفة: ${jobTitle}`, "أنت خبير توظيف تعطي نصيحة مباشرة بدون مقدمات.")
-        .then(aiTip => {
-            if(aiTip) document.getElementById('liveTipText').innerText = aiTip;
-        }).catch(()=>{});
-    }
-
-    if (!navigator.onLine) {
-        alert(selectedLang === 'ar' ? "أنت تعمل الآن بدون إنترنت (Offline Mode)." : "You are offline.");
-        let offlineResult = `<h2>${fullName}</h2><h3>${jobTitle}</h3><hr><br>${experience || ''}<br>${skills || ''}`;
-        let templateStyles = getTemplateStyles(selectedLang, selectedTemplate);
-        resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}">${offlineResult}</div>`;
-        downloadContainer.classList.remove('hidden');
-        loading.classList.add('hidden');
-        btn.disabled = false;
-        return; 
-    }
-
-    let promptMessage = selectedLang === 'ar' ? 
-        `قم بصياغة سيرة ذاتية احترافية وموجزة باللغة العربية للشخص التالي:\nالاسم: ${fullName}\nالوظيفة: ${jobTitle}\nالخبرات: ${experience || 'مبتدئ'}\nالمهارات: ${skills || 'تواصل'}\n\n` +
-        (jdText ? `إعلان الوظيفة المستهدفة: ${jdText}\nشروط إضافية: قم بمطابقة السيرة الذاتية مع هذا الإعلان بذكاء ودمج الكلمات المفتاحية الأساسية المطلوبة فيه لضمان تخطي فحص الـ ATS بدقة شديدة.\n\n` : "") +
-        `شروط صارمة: أسلوب بشري، نقاط واضحة (•)، أفعال حركة قوية، وقم بإجراء تدقيق لغوي وإملائي كامل وتصحيح كافة الأخطاء النحوية واللغوية بصرامة.` :
-        `Create a professional resume in English for:\nName: ${fullName}\nJob: ${jobTitle}\nExperience: ${experience || 'Entry-level'}\nSkills: ${skills || 'Communication'}\n\n` +
-        (jdText ? `Target Job Description: ${jdText}\nAdditional rules: Align the resume dynamically with this job description. Incorporate key technical and soft keywords from it to ensure flawless ATS compliance.\n\n` : "") +
-        `Strict Rules: Human style, bullet points (•), and absolute proofreading to ensure zero spelling or grammatical errors.`;
-
-    const systemMessage = selectedLang === 'ar' ? 
-        "أنت مستشار توظيف خبير ومدقق لغوي صارم (HR & Proofreader Consultant). تكتب سير ذاتية بليغة خالية تماماً من الأخطاء وتطابق أنظمة الـ ATS بشكل استراتيجي." : 
-        "You are an expert HR Consultant and professional editor. You write flawless, ATS-friendly resumes aligned perfectly with specific job requirements.";
-
-    try {
-        const aiResult = await askAI(promptMessage, systemMessage);
-        if (aiResult && aiResult.trim().length > 0) {
-            let templateStyles = getTemplateStyles(selectedLang, selectedTemplate);
-            let formattedResult = formatMarkdown(aiResult);
-            
-            resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}">${formattedResult}</div>`;
-            generateCVQRCode('cvTemplateArea', `https://aliallamofficial.github.io/ali-cv-builder/?user=${encodeURIComponent(fullName)}`);
-            downloadContainer.classList.remove('hidden'); 
-        } else { throw new Error(); }
-    } catch (error) {
-        resultBox.innerHTML = `<p style="color:red;">السيرفر مشغول حالياً بالمعالجة، يرجى النقر مرة أخرى بعد لحظات.</p>`;
-    } finally { 
-        loading.classList.add('hidden'); 
-        btn.disabled = false;
-    }
-});
-
-// ==========================================
-// ✉️ صانع رسائل التغطية الذكي (AI Cover Letter Generator)
-// ==========================================
-document.getElementById('coverLetterBtn').addEventListener('click', async () => {
-    const btn = document.getElementById('coverLetterBtn');
-    const fullName = document.getElementById('fullName').value.trim();
-    const jobTitle = document.getElementById('jobTitle').value.trim();
-    const experience = document.getElementById('experience').value.trim();
-    const selectedLang = document.getElementById('langSelect').value;
-
-    if (!fullName || !jobTitle) {
-        alert(selectedLang === 'ar' ? 'رجاءً أدخل الاسم والمسمى الوظيفي أولاً لإنشاء رسالة التغطية!' : 'Please enter Name and Job Title first!');
-        return;
-    }
-
-    const loading = document.getElementById('loading');
-    const resultBox = document.getElementById('resultBox');
-    btn.disabled = true;
-    loading.classList.remove('hidden');
-
-    let promptMessage = selectedLang === 'ar' ?
-        `اكتب رسالة تغطية (Cover Letter) احترافية ومقنعة وموجهة لمدير التوظيف باسم المرشح: ${fullName} للتقديم على وظيفة: ${jobTitle}. بناءً على خبراته المذكورة باختصار: ${experience || 'مبتدئ متحمس'}. اجعلها منسقة وخالية تماماً من الأخطاء اللغوية.` :
-        `Write a professional Cover Letter from ${fullName} for a ${jobTitle} position based on this brief experience: ${experience || 'Enthusiastic entry-level'}. Ensure zero grammatical mistakes.`;
-
-    try {
-        const aiResult = await askAI(promptMessage, "أنت خبير صياغة خطابات التوظيف الرسمية. تكتب بأسلوب جذاب وبليغ.");
-        if (aiResult) {
-            let formattedLetter = formatMarkdown(aiResult);
-            let templateStyles = getTemplateStyles(selectedLang, document.getElementById('templateSelect').value);
-            resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}"><h3>✉️ رسالة التغطية الاحترافية (Cover Letter):</h3><br>${formattedLetter}</div>`;
-            document.getElementById('downloadContainer').classList.remove('hidden');
-        }
-    } catch (e) {
-        alert("السيرفر مضغوط حالياً، يرجى المحاولة بعد قليل.");
-    } finally { 
-        loading.classList.add('hidden'); 
-        btn.disabled = false;
-    }
-});
-
-// ==========================================
-// 🆙 منظومة التنبيه الفوري بالتحديثات عبر ملف الإعدادات
-// ==========================================
-const CURRENT_VERSION = "1.0.1"; // رقم الإصدار الحالي للتطبيق
-
-async function checkForAppUpdates() {
-    try {
-        // فحص التحديثات من خلال قراءة ملف version.json المرفوع على خادمك
-        const response = await fetch('version.json'); 
-        if (!response.ok) return;
-        
-        const data = await response.json();
-        const latestVersion = data.latestVersion;
-        const updateUrl = data.updateUrl;
-        
-        // إذا وجد إصدار جديد على الخادم، أظهر نافذة التنبيه الإلزامية للمستخدم
-        if (latestVersion !== CURRENT_VERSION) {
-            showUpdatePopup(updateUrl);
-        }
-    } catch (error) {
-        console.log("تعذر فحص التحديثات حالياً.");
-    }
-}
-
-function showUpdatePopup(updateUrl) {
-    const updateModal = document.createElement('div');
-    updateModal.id = "appUpdateModal";
-    updateModal.style = `
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(15, 23, 42, 0.95); z-index: 999999; display: flex;
-        align-items: center; justify-content: center; font-family: sans-serif;
-        padding: 20px; box-sizing: border-box; direction: rtl;
-    `;
-    
-    updateModal.innerHTML = `
-        <div style="background: #1e293b; padding: 30px; border-radius: 12px; text-align: center; max-width: 450px; width: 100%; border: 2px solid #38bdf8; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
-            <div style="font-size: 50px; margin-bottom: 15px;">🚀</div>
-            <h3 style="color: #38bdf8; margin-top: 0; font-size: 22px; font-weight: bold;">تحديث جديد متوفر الآن!</h3>
-            <p style="font-size: 15px; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px;">
-                لقد قمنا بإضافة ميزات جديدة مذهلة وإصلاح بعض المشاكل لتحسين تجربتك. يرجى تحميل التحديث الآن للاستفادة من كافة الخصائص الجديدة.
-            </p>
-            <a href="${updateUrl}" target="_blank" id="startUpdateBtn" style="display: block; background: #3b82f6; color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: background 0.3s ease; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);">
-                📥 تحديث التطبيق فوراً
-            </a>
-        </div>
-    `;
-    
-    document.body.appendChild(updateModal);
-
-    // ربط الزر بالجسر البرمجي لـ Median لفتح الرابط في متصفح النظام الخارجي بشكل صحيح
-    document.getElementById('startUpdateBtn').addEventListener('click', function(e) {
-        const medianBridge = window.median || window.gonative;
-        if (medianBridge && medianBridge.openURL) {
-            e.preventDefault();
-            // إجبار التطبيق على فتح الرابط خارج التطبيق في متصفح الهاتف لتنزيل الـ APK بسلاسة من APKPure
-            medianBridge.openURL({
-                url: updateUrl,
-                target: "_blank"
-            });
-        }
-    });
-}
-
-// ==========================================
-// 🔔 منظومة تفعيل الإشعارات المتوافقة مع Median.co
-// ==========================================
-function requestMedianNotifications() {
-    const medianBridge = window.median || window.gonative;
-    
-    if (medianBridge && medianBridge.push) {
-        // طلب صلاحية الإشعارات من نظام الهاتف (أندرويد / آيفون)
-        medianBridge.push.requestPermission({
-            callback: function(result) {
-                if (result && result.permissionGranted) {
-                    alert("تم تفعيل إشعارات التطبيق بنجاح! 🎉");
-                } else {
-                    alert("لم يتم تفعيل الإشعارات. يرجى السماح بها من إعدادات الهاتف.");
-                }
-            }
-        });
-    } else {
-        alert("خاصية إشعارات الهاتف تعمل فقط عند تشغيل التطبيق بعد بنائه على منصة Median.");
-    }
-}
-
-// ==========================================
-// 🏁 تهيئة وتفعيل المنظومة عند تحميل المستند
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    displayRandomLiveTip();
+// المستندات والتحميلات المستندة على الأحداث
+document.addEventListener("DOMContentLoaded", function () {
     initAppTour();
     initCVScoreGauge();
     initInlineAIWriters();
     initAIInterviewPrep();
     initThemeColorPicker();
-    
-    // تشغيل فحص التحديثات الفورية تلقائياً عند فتح التطبيق
-    checkForAppUpdates();
 
-    // تفعيل حدث الضغط لزر صلاحية الإشعارات
-    const notifyBtn = document.getElementById('enableNotificationsBtn');
-    if (notifyBtn) {
-        notifyBtn.addEventListener('click', requestMedianNotifications);
+    // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق
+    const optimizeBtn = document.getElementById('optimizeBtn');
+    if (optimizeBtn) {
+        optimizeBtn.addEventListener('click', async function () {
+            if (!handleCVCreation()) return;
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const jobTitle = document.getElementById('jobTitle').value.trim();
+            const experience = document.getElementById('experience').value.trim();
+            const skills = document.getElementById('skills').value.trim();
+            const jd = document.getElementById('jobDescriptionInput').value.trim();
+
+            if (!fullName || !jobTitle) {
+                alert("الرجاء إدخال الاسم الكامل والمسمى الوظيفي على الأقل لتوليد المستند!");
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const resultBox = document.getElementById('resultBox');
+            const downloadContainer = document.getElementById('downloadContainer');
+
+            optimizeBtn.disabled = true;
+            loading.classList.remove('hidden');
+
+            const systemInstruction = "أنت كاتب سير ذاتية محترف وخبير بأنظمة الـ ATS. تولد مستندات جاهزة وممتازة مباشرة بصيغة HTML مهيأة داخل الصناديق.";
+            const userPrompt = `قم بإنشاء سيرة ذاتية احترافية بالكامل متوافقة مع الـ ATS للاسم: ${fullName} بمسمى: ${jobTitle}. الخبرات: ${experience}. المهارات: ${skills}. مع مراعاة هذا الوصف إن وجد: ${jd}. وزع الأقسام بعناية متناهية وجذابة.`;
+
+            try {
+                const aiResult = await askAI(userPrompt, systemInstruction);
+                if (aiResult) {
+                    let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, document.getElementById('templateSelect').value);
+                    let processedHtml = `<div id="cvTemplateArea" style="${templateStyles}">${aiResult}</div>`;
+                    
+                    processedHtml = appendCryptoSignatureToCV(processedHtml);
+                    resultBox.innerHTML = processedHtml;
+
+                    setTimeout(() => {
+                        generateCVQRCode('cvTemplateArea', `https://github.com/aliallamofficial?verified_cv=${encodeURIComponent(fullName)}`);
+                    }, 200);
+
+                    downloadContainer.classList.remove('hidden');
+                }
+            } catch (err) {
+                alert("فشلت عملية التوليد الذكي، يرجى المحاولة بعد قليل.");
+            } finally {
+                loading.classList.add('hidden');
+                optimizeBtn.disabled = false;
+            }
+        });
+    }
+
+    // تبديل القائمة المنسدلة للخيارات وتحميل الـ PDF الفوري الذكي المباشر دون طباعة
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    if (downloadPdfBtn) {
+        downloadPdfBtn.addEventListener('click', function () {
+            const element = document.getElementById('resultBox'); 
+            
+            if (!element || element.innerText.trim().includes("المستند النهائي سيظهر هنا")) {
+                alert("رجاءً قم بإنشاء السيرة الذاتية أولاً قبل محاولة تحميلها!");
+                return;
+            }
+
+            // جلب اسم المستخدم ديناميكياً لتسمية الملف بأناقة
+            const nameInput = document.getElementById('fullName')?.value.trim();
+            const fileNameOutput = nameInput ? `${nameInput}_CV.pdf` : 'Ali_CV_Document.pdf';
+
+            // إعدادات المكتبة لضمان التحميل السلس المباشر بخلفية سليمة
+            const options = {
+                margin:       [12, 12, 12, 12],
+                filename:     fileNameOutput,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2.5, 
+                    useCORS: true, 
+                    backgroundColor: null, // الحفاظ على خلفيات القوالب الأساسية
+                    logging: false
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // تحميل مباشر فوري دون فتح نافذة الطباعة
+            html2pdf().set(options).from(element).save();
+        });
+    }
+
+    // تفعيل حفظ الملف النصي القياسي للـ ATS واكتشاف القوائم
+    const downloadTxtBtn = document.getElementById('downloadTxtBtn');
+    if (downloadTxtBtn) {
+        downloadTxtBtn.addEventListener('click', function () {
+            const resultBox = document.getElementById('resultBox');
+            if (!resultBox || resultBox.innerText.trim().includes("المستند النهائي سيظهر هنا")) {
+                alert("يرجى إنشاء السيرة الذاتية أولاً!");
+                return;
+            }
+            const textContent = resultBox.innerText;
+            const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'ATS_Friendly_Resume.txt';
+            link.click();
+        });
     }
     
     const dropBtn = document.getElementById('dropdownToggleBtn');
