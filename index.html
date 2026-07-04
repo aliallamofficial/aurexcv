@@ -290,28 +290,44 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            const CURRENT_APP_VERSION = "1.0.0"; 
+            // 1. تحديث رقم الإصدار الحالي للتطبيق إلى 1.0.1
+            const CURRENT_APP_VERSION = "1.0.1"; 
 
-            fetch('version.json?nocache=' + new Date().getTime())
-                .then(response => response.json())
+            // 2. فحص التحديث مع منع الكاش تماماً (Cache Busting)
+            const cacheBuster = new Date().getTime();
+            fetch(`version.json?v=${cacheBuster}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
                 .then(data => {
+                    const banner = document.getElementById('update-banner');
+                    const link = document.getElementById('update-link');
+                    
+                    // إذا كان الإصدار في السيرفر مختلفاً عن 1.0.1 يتم إظهار التحديث
                     if (data.latestVersion !== CURRENT_APP_VERSION) {
-                        const banner = document.getElementById('update-banner');
-                        const link = document.getElementById('update-link');
                         if (banner && link) {
                             link.href = data.updateUrl;
                             banner.style.display = 'flex';
                         }
+                    } else {
+                        // إذا كان متطابقاً، يتم التأكد من إخفاء الشريط بالكامل
+                        if (banner) banner.style.display = 'none';
                     }
                 })
-                .catch(err => console.log("نظام التحديث يعمل بشكل صامت..."));
+                .catch(err => {
+                    console.log("نظام التحديث يعمل بشكل صامت لمنع التجميد...");
+                    // إخفاء شريط التحديث تماماً في حالة حدوث خطأ اتصال أو عدم توفر الملف
+                    const banner = document.getElementById('update-banner');
+                    if (banner) banner.style.display = 'none';
+                });
 
             const tipTextElement = document.getElementById("liveTipText");
             if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
                 const tips = [
                     "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت, أدرت, حققت) بدلاً من الكلمات التقليدية.",
                     "تجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
-                    "اجعل الكلمات المفتاحية الموجودة في إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
+                    "اجعل الكلمات المفتاحية الموجودة in إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
                     "صياغة سيرة ذاتية من صفحة واحدة كافية جداً إذا كانت خبرتك المهنية أقل من 5 سنوات.",
                     "تأكد من كتابة معلومات الاتصال الخاصة برابط حسابك على LinkedIn في أعلى السيرة الذاتية وبشكل واضح."
                 ];
