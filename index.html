@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مُحسّن السيرة الذاتية الذكي ✨</title>
 
-    <meta name="google-site-verification" content="L3tPSb-jmutxmhHwf_FTcPCVK69TdAetKEoSoTS7JME" />
+    <meta name="google-site-verification" content="L3tPSb-jmutxwf_FTcPCVK69TdAetKEoSoTS7JME" />
     <meta name="description" content="تطبيق ذكي لتوليد وصياغة السير الذاتية الاحترافية ورسائل التغطية بالذكاء الاصطناعي واجتياز نظام الـ ATS مباشرة من متصفحك مجاناً.">
     <meta name="keywords" content="صانع سير ذاتية, تطبيق cv, ذكاء اصطناعي, ats checker, ali cv builder, سيرة ذاتية ذكية, محسن السيرة الذاتية">
     <meta name="author" content="@aliallamofficial">
@@ -251,9 +251,9 @@
                     </a>
                 </div>
 
-                <div class="crypto-verified-box" style="display: inline-flex; align-items: center; background: #1e293b; border: 1px solid #334155; border-radius: 6px; overflow: hidden; font-family: monospace; font-size: 11px; direction: ltr; box-shadow: 0 2px 8px rgba(0,0,0,0.2); white-space: nowrap;">
+                <div class="crypto-verified-box" style="display: inline-flex; align-items: center; background: #1e293b; border: 1px solid #334155; border-radius: 6px; overflow: hidden; font-family: monospace; font-size: 11px; direction: ltr; box-shadow: 0 2px 8px rgba(0,0,0,0.2); max-width: 100%; flex-wrap: wrap;">
                     <span style="background: #10b981; color: #0f172a; padding: 6px 10px; font-weight: bold; display: inline-block;">🔒 Verified</span>
-                    <span style="color: #cbd5e1; padding: 6px 12px; display: inline-block; letter-spacing: 0.5px;">
+                    <span style="color: #cbd5e1; padding: 6px 12px; display: inline-block; letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis;">
                         @aliallamofficial <span style="color: #64748b; margin: 0 4px;">|</span> <span style="color: #38bdf8; font-weight: bold;">GPG: 55392380FBF1C8F1</span>
                     </span>
                 </div>
@@ -292,10 +292,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. تحديد رقم الإصدار الحالي للتطبيق إلى 1.0.1
             const CURRENT_APP_VERSION = "1.0.1"; 
 
-            // 2. فحص التحديث مع منع الكاش تماماً (Cache Busting)
             const cacheBuster = new Date().getTime();
             fetch(`version.json?v=${cacheBuster}`)
                 .then(response => {
@@ -306,18 +304,15 @@
                     const banner = document.getElementById('update-banner');
                     const link = document.getElementById('update-link');
                     
-                    // إذا كان الإصدار في السيرفر مختلفاً عن 1.0.1 يتم إظهار التحديث
                     if (data.latestVersion !== CURRENT_APP_VERSION) {
                         if (banner && link) {
                             link.href = data.updateUrl;
                             banner.style.display = 'flex';
                         }
                     } else {
-                        // إذا كان متطابقاً، يتم التأكد من إخفاء الشريط بالكامل
                         if (banner) banner.style.display = 'none';
                     }
 
-                    // === التعديل الجديد للتطبيق المحول عبر Median ===
                     const isMedianApp = navigator.userAgent.toLowerCase().includes("median") || 
                                         navigator.userAgent.toLowerCase().includes("gonative") || 
                                         window.isMedian;
@@ -331,7 +326,6 @@
                 })
                 .catch(err => {
                     console.log("نظام التحديث يعمل بشكل صامت لمنع التجميد...");
-                    // إخفاء شريط التحديث تماماً في حالة حدوث خطأ اتصال أو عدم توفر الملف
                     const banner = document.getElementById('update-banner');
                     if (banner) banner.style.display = 'none';
                 });
