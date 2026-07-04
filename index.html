@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="style.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
@@ -130,213 +131,110 @@
                     <option value="en">الإنجليزية (English)</option>
                 </select>
             </div>
-
             <div>
                 <label for="templateSelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">نمط قالب الـ CV:</label>
                 <select id="templateSelect" style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff;">
-                    <option value="modern">عصري داكن (Modern)</option>
-                    <option value="classic">كلاسيكي رسمي (Classic)</option>
-                    <option value="elegant">أنيق بلمسة فاخرة (Elegant)</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="fontFamilySelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">نوع الخط المفضل:</label>
-                <select id="fontFamilySelect" style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff;">
-                    <option value="Cairo, sans-serif">Cairo (عربي ممتاز)</option>
-                    <option value="Tajawal, sans-serif">Tajawal</option>
-                    <option value="Arial, sans-serif">Arial (عالمي)</option>
-                    <option value="'Courier New', monospace">Monospace</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="fontSizeSelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">حجم النص الأساسي:</label>
-                <select id="fontSizeSelect" style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff;">
-                    <option value="14px">صغير (14px)</option>
-                    <option value="15px" selected>افتراضي (15px)</option>
-                    <option value="17px">كبير (17px)</option>
+                    <option value="modern">العصري المدمج (Modern)</option>
+                    <option value="classic">الكلاسيكي الأكاديمي (Classic)</option>
+                    <option value="elegant">الأنيق الفاخر (Elegant)</option>
                 </select>
             </div>
         </div>
 
-        <div id="loading" class="hidden" style="text-align: center; margin: 20px 0;">
-            <div class="spinner" style="width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: #38bdf8; border-radius: 50%; display: inline-block; animation: spin 1s linear infinite;"></div>
-            <p style="color: #38bdf8; margin-top: 10px; font-weight: bold;">يقوم الذكاء الاصطناعي بمعالجة وتدقيق مستندك الآن...</p>
+        <div style="text-align: center; margin-top: 15px;">
+            <div id="loading" class="hidden" style="color: #38bdf8; font-weight: bold;">⏳ جاري المعالجة وتوليد البيانات بذكاء...</div>
         </div>
 
-        <div id="resultBox" style="margin-top: 20px;"></div>
+        <div id="resultBox" style="margin-top: 25px; min-height: 150px; background: rgba(15, 23, 42, 0.3); border: 1px dashed #334155; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+            <p style="color: #64748b; text-align: center; margin-top: 50px;">المستند النهائي سيظهر هنا بمجرد التوليد والضغط على الأزرار العلوية...</p>
+        </div>
 
         <div id="downloadContainer" class="hidden" style="margin-top: 25px; text-align: center; position: relative; display: inline-block; width: 100%;">
-            <button id="mainDownloadBtn" style="padding: 12px 30px; background: #10b981; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
-                📥 تحميل المستند الآن ▾
-            </button>
-            <div id="downloadOptions" class="hidden" style="position: absolute; left: 50%; transform: translateX(-50%); top: 50px; background: #1e293b; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-radius: 6px; width: 220px; z-index: 100; text-align: right;">
-                <button id="downloadPdfBtn" style="width: 100%; background: none; border: none; color: #fff; padding: 12px; text-align: right; cursor: pointer; font-weight: bold; font-family: inherit; border-bottom: 1px solid #334155;">📄 تصدير كـ PDF جاهز للطباعة</button>
-                <button id="downloadWordBtn" style="width: 100%; background: none; border: none; color: #fff; padding: 12px; text-align: right; cursor: pointer; font-weight: bold; font-family: inherit;">📝 تحميل ملف Word قابل للتعديل (.doc)</button>
+            <button id="mainDownloadBtn" style="padding: 12px 30px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 4px 10px rgba(16,185,129,0.3);">📥 تحميل وحفظ المستند النهائي</button>
+            <div id="downloadOptions" class="hidden" style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: #1e293b; border: 1px solid #334155; border-radius: 6px; width: 220px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 50; margin-top: 5px; overflow: hidden;">
+                <button id="downloadPdfBtn" style="width: 100%; padding: 12px; background: none; border: none; color: white; text-align: right; font-weight: bold; cursor: pointer; border-bottom: 1px solid #334155; direction: rtl;">📄 تصدير كملف PDF فوري</button>
+                <button id="downloadTxtBtn" style="width: 100%; padding: 12px; background: none; border: none; color: white; text-align: right; font-weight: bold; cursor: pointer; direction: rtl;">📝 حفظ كملف نصي ATS TXT</button>
             </div>
         </div>
 
     </div>
 
-    <div id="settingsPageModal" class="modal-backdrop hidden">
-        <div class="modal-content" style="background: #111827; border: 1px solid #1f2937; border-radius: 16px; max-width: 500px; width: 90%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); overflow: hidden; font-family: 'Cairo', sans-serif;">
+    <div id="settingsPageModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000;">
+        <div style="background: #1e293b; border: 1px solid #334155; width: 90%; max-width: 550px; border-radius: 12px; padding: 25px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; max-height: 85vh; overflow-y: auto;">
+            <button id="closeSettingsBtn" style="position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 1.4rem; color: #94a3b8; cursor: pointer;">✕</button>
+            <h2 style="margin-top: 0; color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 12px; direction: rtl; text-align: right;">⚙️ إعدادات التحكم وتخصيص القوالب</h2>
             
-            <div class="modal-header" style="background: #1f2937; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #374151;">
-                <h2 style="font-size: 1.25rem; font-weight: 700; color: #f9fafb; margin: 0; display: flex; align-items: center; gap: 10px;">
-                    <span style="background: #3b82f6; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">⚙️</span>
-                    إعدادات التطبيق والمظهر
-                </h2>
-                <button id="closeSettingsBtn" class="close-modal-x" style="background: #374151; border: none; color: #9ca3af; font-size: 1.2rem; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">&times;</button>
-            </div>
-            
-            <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto; display: flex; flex-direction: column; gap: 20px;">
-                
-                <div id="dynamicColorPickerContainer"></div>
+            <div id="dynamicColorPickerContainer"></div>
 
-                <div class="settings-section-card" style="background: #1f2937; border: 1px solid #374151; padding: 18px; border-radius: 12px; text-align: right; direction: rtl;">
-                    <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-                        <span>↕️</span> التحكم في هوامش السطور والأبعاد
-                    </h3>
-                    <p style="font-size: 13px; color: #9ca3af; margin-bottom: 16px; line-height: 1.5;">عدل المسافات لضمان احتواء بيانات سيرتك الذاتية بالكامل في صفحة واحدة بدقة.</p>
-                    
-                    <div style="margin-bottom: 14px;">
-                        <label style="font-size: 13px; color: #e5e7eb; display:block; margin-bottom:6px; font-weight: 600;">ارتفاع وتباعد الأسطر (Line Height):</label>
-                        <select id="lineHeightSelect" style="width: 100%; padding: 10px; background: #111827; border: 1px solid #374151; color: #f9fafb; border-radius: 8px; font-family: inherit; font-size: 14px; outline: none;">
-                            <option value="1.3">مضغوط (للسير الطويلة جداً)</option>
-                            <option value="1.6" selected>افتراضي مريح للمراجعة</option>
-                            <option value="1.9">متباعد وواسع</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label style="font-size: 13px; color: #e5e7eb; display:block; margin-bottom:6px; font-weight: 600;">الهوامش الداخلية للمستند (Padding):</label>
-                        <select id="paddingSelect" style="width: 100%; padding: 10px; background: #111827; border: 1px solid #374151; color: #f9fafb; border-radius: 8px; font-family: inherit; font-size: 14px; outline: none;">
-                            <option value="12px">ضيقة (مساحة أكبر للمحتوى)</option>
-                            <option value="22px" selected>افتراضية متوازنة الأركان</option>
-                            <option value="32px">عريضة وكلاسيكية</option>
-                        </select>
-                    </div>
+            <div class="settings-section-card" style="text-align: right; direction: rtl; margin-bottom: 15px; background: #0f172a; padding: 15px; border-radius: 6px;">
+                <h3 style="color: #38bdf8; margin-top: 0; font-size: 15px;">🅰️ نوع وحجم خط السيرة الذاتية</h3>
+                <div style="margin-top: 10px;">
+                    <label for="fontFamilySelect" style="font-size: 12px; color: #94a3b8;">اختر عائلة الخط:</label>
+                    <select id="fontFamilySelect" style="width: 100%; padding: 8px; background: #1e293b; border: 1px solid #334155; border-radius: 4px; color: white; margin-top: 4px;">
+                        <option value="'Cairo', sans-serif">خط القاهرة العصري (Cairo)</option>
+                        <option value="Arial, sans-serif">خط أريال القياسي (Arial)</option>
+                        <option value="'Times New Roman', serif">تايمز الكلاسيكي (Times New Roman)</option>
+                    </select>
                 </div>
-
-                <div class="settings-section-card" style="background: #1f2937; border: 1px solid #374151; padding: 18px; border-radius: 12px; text-align: right; direction: rtl;">
-                    <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-                        <span>🔔</span> نظام تنبيهات دفع الويب
-                    </h3>
-                    <p style="font-size: 13px; color: #9ca3af; margin-bottom: 14px; line-height: 1.5;">قم بتفعيل الإشعارات ليصلك إشعار فوري وتلقائي بمجرد قيامنا بتحديث خوارزميات أو ميزات التطبيق.</p>
-                    <button id="enableNotificationsBtn" class="action-settings-btn" style="width: 100%; padding: 12px; background: #2563eb; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: inherit; font-size: 14px; transition: background 0.2s;">تفعيل الإشعارات الآن</button>
-                </div>
-
-                <div class="settings-section-card" style="background: #1f2937; border: 1px solid #374151; padding: 18px; border-radius: 12px; text-align: right; direction: rtl;">
-                    <h3 style="color: #10b981; font-size: 1rem; font-weight: 700; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-                        <span>🔒</span> سياسة الخصوصية والأمان
-                    </h3>
-                    <p style="font-size: 13px; color: #9ca3af; margin-bottom: 14px; line-height: 1.5;">نحن نحترم خصوصيتك بالكامل. كافة البيانات المدخلة لتوليد السير الذاتية تتم معالجتها لحظياً ولا يتم تخزينها على خوادمنا مطلقاً.</p>
-                    <a href="https://wp.me/Phj9fM-E" id="privacyPolicyLink" target="_blank" style="display: inline-block; color: #34d399; font-size: 13px; text-decoration: none; font-weight: 600;" rel="noopener noreferrer">قراءة سياسة الخصوصية الكاملة ←</a>
+                <div style="margin-top: 10px;">
+                    <label for="fontSizeSelect" style="font-size: 12px; color: #94a3b8;">حجم الخط الأساسي للمحتوى:</label>
+                    <select id="fontSizeSelect" style="width: 100%; padding: 8px; background: #1e293b; border: 1px solid #334155; border-radius: 4px; color: white; margin-top: 4px;">
+                        <option value="14px">صغير ومدمج (14px)</option>
+                        <option value="15px" selected>افتراضي متوازن (15px)</option>
+                        <option value="16px">كبير وواضح (16px)</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="modal-footer" style="padding: 20px 24px; background: #1f2937; border-top: 1px solid #374151; text-align: center; direction: rtl;">
-                <p id="copyrightText" style="margin: 0 0 12px 0; font-size: 14px; color: #cbd5e1;">
-                    تم التطوير بكل فخر بواسطة <strong style="color: #60a5fa;">علي حاتم علام</strong> © 2026
-                </p>
-
-                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px; color: #475569; font-size: 13px;">
-                    <a href="https://github.com/aliallamofficial" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">GitHub</a>
-                    <span>|</span>
-                    <a href="https://linkedin.com/in/aliallamofficial" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: bold;">LinkedIn</a>
-                    <span>|</span>
-                    <a href="mailto:prof.ali.hatem.cairo@gmail.com" style="color: #34d399; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
-                        ✉️ تواصل معي
-                    </a>
+            <div class="settings-section-card" style="text-align: right; direction: rtl; margin-bottom: 15px; background: #0f172a; padding: 15px; border-radius: 6px;">
+                <h3 style="color: #38bdf8; margin-top: 0; font-size: 15px;">📐 أبعاد الصفحة والمسافات الهامشية</h3>
+                <div style="margin-top: 10px;">
+                    <label for="lineHeightSelect" style="font-size: 12px; color: #94a3b8;">ارتفاع الأسطر ومسافة التباعد (Line Height):</label>
+                    <select id="lineHeightSelect" style="width: 100%; padding: 8px; background: #1e293b; border: 1px solid #334155; border-radius: 4px; color: white; margin-top: 4px;">
+                        <option value="1.4">مكثف (1.4)</option>
+                        <option value="1.6" selected>افتراضي مريح (1.6)</option>
+                        <option value="1.8">متسع (1.8)</option>
+                    </select>
                 </div>
-
-                <div class="crypto-verified-box" style="display: inline-flex; align-items: center; background: #1e293b; border: 1px solid #334155; border-radius: 6px; overflow: hidden; font-family: monospace; font-size: 11px; direction: ltr; box-shadow: 0 2px 8px rgba(0,0,0,0.2); max-width: 100%; flex-wrap: wrap;">
-                    <span style="background: #10b981; color: #0f172a; padding: 6px 10px; font-weight: bold; display: inline-block;">🔒 Verified</span>
-                    <span style="color: #cbd5e1; padding: 6px 12px; display: inline-block; letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis;">
-                        @aliallamofficial <span style="color: #64748b; margin: 0 4px;">|</span> <span style="color: #38bdf8; font-weight: bold;">GPG: 55392380FBF1C8F1</span>
-                    </span>
+                <div style="margin-top: 10px;">
+                    <label for="paddingSelect" style="font-size: 12px; color: #94a3b8;">الهوامش الداخلية لورقة الـ CV (Padding):</label>
+                    <select id="paddingSelect" style="width: 100%; padding: 8px; background: #1e293b; border: 1px solid #334155; border-radius: 4px; color: white; margin-top: 4px;">
+                        <option value="15px">هوامش نحيفة جداً (15px)</option>
+                        <option value="22px" selected>هوامش معيارية (22px)</option>
+                        <option value="30px">هوامش عريضة فاخرة (30px)</option>
+                    </select>
                 </div>
+            </div>
+
+            <div class="settings-section-card" style="text-align: right; direction: rtl; background: #0f172a; padding: 15px; border-radius: 6px;">
+                <h3 style="color: #38bdf8; margin-top: 0; font-size: 15px;">🔔 نظام التحديثات والإشعارات الفورية</h3>
+                <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">اشترك في نظام الخدمة السحابية لاستقبال إشعارات وتنبيهات فورية عند صدور أدوات ذكاء اصطناعي جديدة وقوالب حصرية متوافقة مع الـ ATS.</p>
+                <button id="enableNotificationsBtn" style="width: 100%; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">🔔 تفعيل الإشعارات الفورية مجاناً</button>
             </div>
         </div>
     </div>
 
-    <div id="appTourModal" class="tour-backdrop hidden">
-        <div class="tour-card">
-            <div class="tour-header">
-                <span id="tourProgress" class="tour-step-badge">خطوة 1 من 3</span>
-                <button id="skipTourBtn" class="tour-skip-link">تخطي الجولة</button>
-            </div>
-            <div class="tour-body">
-                <div id="tourIcon" class="tour-main-icon">🚀</div>
-                <h2 id="tourTitle" class="tour-main-title">مرحباً بك في مستقبلك المهني!</h2>
-                <p id="tourDescription" class="tour-main-desc">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.</p>
-            </div>
-            <div class="tour-footer">
-                <button id="nextTourBtn" class="tour-next-btn">ابدأ الرحلة الآن ←</button>
+    <div id="appTourModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 5000;">
+        <div style="background: #1e293b; border: 1px solid #334155; width: 90%; max-width: 440px; border-radius: 16px; padding: 30px; color: white; box-shadow: 0 20px 50px rgba(0,0,0,0.6); text-align: center; position: relative;">
+            <div id="tourProgress" style="position: absolute; top: 15px; right: 20px; font-size: 11px; font-weight: bold; color: #38bdf8; background: rgba(56,189,248,0.1); padding: 3px 10px; border-radius: 20px;">خطوة 1 من 3</div>
+            <div id="tourIcon" style="font-size: 3.5rem; margin: 15px 0 10px 0;">🚀</div>
+            <h2 id="tourTitle" style="font-size: 1.4rem; font-weight: 700; color: white; margin-bottom: 8px;">مرحباً بك في مستقبلك المهني!</h2>
+            <p id="tourDescription" style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 25px;">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.</p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button id="nextTourBtn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%); color: white; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; box-shadow: 0 4px 12px rgba(37,99,235,0.3);">ابدأ الرحلة الآن ←</button>
+                <button id="skipTourBtn" style="background: none; border: none; color: #64748b; font-size: 12px; cursor: pointer; font-weight: bold;">تخطي الجولة التعليمة وافتح التطبيق فوراً</button>
             </div>
         </div>
     </div>
 
-    <script src="app.js" defer></script>
-
+    <script src="app.js"></script>
     <script>
-        function onTurnstileSuccess() {
-            const splashScreen = document.getElementById('splash-screen');
-            if (splashScreen) {
-                splashScreen.style.opacity = '0';
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                }, 500);
-            }
-        }
-
         document.addEventListener("DOMContentLoaded", function() {
-            const CURRENT_APP_VERSION = "1.0.1"; 
-
-            const cacheBuster = new Date().getTime();
-            fetch(`version.json?v=${cacheBuster}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    const banner = document.getElementById('update-banner');
-                    const link = document.getElementById('update-link');
-                    
-                    if (data.latestVersion !== CURRENT_APP_VERSION) {
-                        if (banner && link) {
-                            link.href = data.updateUrl;
-                            banner.style.display = 'flex';
-                        }
-                    } else {
-                        if (banner) banner.style.display = 'none';
-                    }
-
-                    const isMedianApp = navigator.userAgent.toLowerCase().includes("median") || 
-                                        navigator.userAgent.toLowerCase().includes("gonative") || 
-                                        window.isMedian;
-
-                    if (isMedianApp) {
-                        const copyrightText = document.getElementById("copyrightText");
-                        if (copyrightText) {
-                            copyrightText.innerHTML = `تم التطوير بكل فخر بواسطة <strong style="color: #60a5fa;">علي حاتم علام</strong> © 2026 <span style="background: #3b82f6; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 6px; font-family: monospace;">v${data.latestVersion}</span>`;
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.log("نظام التحديث يعمل بشكل صامت لمنع التجميد...");
-                    const banner = document.getElementById('update-banner');
-                    if (banner) banner.style.display = 'none';
-                });
-
             const tipTextElement = document.getElementById("liveTipText");
-            if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
+            if (tipTextElement) {
                 const tips = [
-                    "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت, أدرت, حققت) بدلاً من الكلمات التقليدية.",
-                    "تجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
-                    "اجعل الكلمات المفتاحية الموجودة في إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
-                    "صياغة سيرة ذاتية من صفحة واحدة كافية جداً إذا كانت خبرتك المهنية أقل من 5 سنوات.",
+                    "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
+                    "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك المهنية أقل من 5 سنوات.",
                     "تأكد من كتابة معلومات الاتصال الخاصة برابط حسابك على LinkedIn في أعلى السيرة الذاتية وبشكل واضح."
                 ];
                 const randomTip = tips[Math.floor(Math.random() * tips.length)];
