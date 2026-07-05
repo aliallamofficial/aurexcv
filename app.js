@@ -232,7 +232,7 @@ function initThemeColorPicker() {
 
     document.getElementById('themePrimaryColor').addEventListener('input', (e) => {
         const selectedColor = e.target.value;
-        		localStorage.setItem('cv_theme_color', selectedColor);
+        localStorage.setItem('cv_theme_color', selectedColor);
         applyThemeColorToLiveCV();
     });
 }
@@ -309,7 +309,7 @@ function formatMarkdown(text) {
         .replace(/.*Support our mission.*/gi, '')
         .replace(/.*accessible for everyone.*/gi, '')
         .replace(/🌸\s*Ad\s*🌸/gi, '')
-        .replace(/Pollinations\.AI:/gi, '');
+        .replace(/Pollinations\.AI:/gi);
 
     return cleanedText
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
@@ -376,6 +376,9 @@ function generateCVQRCode(containerId, textToEncode) {
 
 // المستندات والتحميلات المستندة على الأحداث
 document.addEventListener("DOMContentLoaded", function () {
+    // تشغيل النصائح الحية فوراً عند تحميل التطبيق لحل المشكلة الأولى
+    displayRandomLiveTip();
+    
     initAppTour();
     initCVScoreGauge();
     initInlineAIWriters();
@@ -531,6 +534,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 } catch (err) {
                     alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
                 }
+            }
+        });
+    }
+
+    // ========================================================
+    // 🔔 الميزة المضافة حديثاً: تفعيل زر الإشعارات لحل المشكلة الثانية
+    // ========================================================
+    const notificationBtn = document.getElementById("notificationToggleBtn") || document.getElementById("enableNotificationsBtn");
+    if (notificationBtn) {
+        notificationBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (!("Notification" in window)) {
+                alert("عذراً، متصفحك الحالي لا يدعم ميزة الإشعارات.");
+                return;
+            }
+
+            if (Notification.permission === "granted") {
+                alert("🔔 الإشعارات مفعلة بالفعل ومصرح بها في متصفحك!");
+                new Notification("مُحسّن السيرة الذاتية", {
+                    body: "نظام التنبيهات يعمل بنجاح الآن! ✨",
+                    icon: "logo.png"
+                });
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(function (permission) {
+                    if (permission === "granted") {
+                        alert("🎉 تم تفعيل الإشعارات بنجاح! ستصلك التحديثات المهنية أولاً بأول.");
+                        new Notification("مُحسّن السيرة الذاتية", {
+                            body: "شكراً لتفعيلك التنبيهات المهنية المباشرة.",
+                            icon: "logo.png"
+                        });
+                    } else {
+                        alert("⚠️ لقد قمت برفض إذن الإشعارات. يمكنك تفعيلها يدوياً من إعدادات القفل في شريط المتصفح.");
+                    }
+                });
+            } else {
+                alert("⚠️ الإشعارات محظورة من إعدادات المتصفح. يرجى الضغط على علامة القفل بجانب رابط الموقع وتعديل الإذن إلى 'سماح'.");
             }
         });
     }
