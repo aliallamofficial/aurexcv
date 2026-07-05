@@ -73,11 +73,15 @@
         <header class="main-app-header" style="padding-top: 60px; text-align: center; margin-bottom: 30px;">
             <div class="logo-badge" style="display: inline-block; background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px;">🤖 AI POWERED PLATFORM</div>
             
-            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 4px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px; flex-wrap: wrap;">
                 <h1 class="app-title" style="margin: 0;">مُحسّن السيرة الذاتية الذكي</h1>
                 <span class="sparkle" style="font-size: 2rem;">✨</span>
+            </div>
+            
+            <div style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; max-width: 90%; margin: 5px auto 0 auto;">
+                <p class="app-subtitle" style="color: #94a3b8; margin: 0; line-height: 1.5;">صمم، حسّن، ووثق سيرتك الذاتية رقمياً بمعايير ATS العالمية</p>
                 
-                <button id="shareAppBtn" title="مشاركة التطبيق" style="padding: 8px; background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; color: #38bdf8; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; width: 42px; height: 42px; box-sizing: border-box;">
+                <button id="shareAppBtn" title="مشاركة التطبيق" style="padding: 8px; background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; color: #38bdf8; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; width: 42px; height: 42px; box-sizing: border-box; flex-shrink: 0;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="18" cy="5" r="3"></circle>
                         <circle cx="6" cy="12" r="3"></circle>
@@ -87,8 +91,6 @@
                     </svg>
                 </button>
             </div>
-            
-            <p class="app-subtitle" style="color: #94a3b8; margin: 5px 0 0 0;">صمم، حسّن، ووثق سيرتك الذاتية رقمياً بمعايير ATS العالمية</p>
         </header>
 
         <div id="liveTipBox" style="background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; padding: 15px; border-radius: 8px; margin-bottom: 25px; color: #e2e8f0;">
@@ -327,70 +329,7 @@
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
                     return response.json();
-                })
-                .then(data => {
-                    const banner = document.getElementById('update-banner');
-                    const link = document.getElementById('update-link');
-                    
-                    if (data.latestVersion !== CURRENT_APP_VERSION) {
-                        if (banner && link) {
-                            link.href = data.updateUrl;
-                            banner.style.display = 'flex';
-                        }
-                    } else {
-                        if (banner) banner.style.display = 'none';
-                    }
-
-                    const isMedianApp = navigator.userAgent.toLowerCase().includes("median") || 
-                                        navigator.userAgent.toLowerCase().includes("gonative") || 
-                                        window.isMedian;
-
-                    if (isMedianApp) {
-                        const copyrightText = document.getElementById("copyrightText");
-                        if (copyrightText) {
-                            copyrightText.innerHTML = `تم التطوير بكل فخر بواسطة <strong style="color: #60a5fa;">علي حاتم علام</strong> © 2026 <span style="background: #3b82f6; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 6px; font-family: monospace;">v${data.latestVersion}</span>`;
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.log("نظام التحديث يعمل بشكل صامت لمنع التجميد...");
-                    const banner = document.getElementById('update-banner');
-                    if (banner) banner.style.display = 'none';
                 });
-
-            const tipTextElement = document.getElementById("liveTipText");
-            if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
-                const tips = [
-                    "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت, أدرت, حققت) بدلاً من الكلمات التقليدية.",
-                    "تجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
-                    "اجعل الكلمات المفتاحية الموجودة في إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
-                    "صياغة سيرة ذاتية من صفحة واحدة كافية جداً إذا كانت خبرتك المهنية أقل من 5 سنوات.",
-                    "تأكد من كتابة معلومات الاتصال الخاصة برابط حسابك على LinkedIn في أعلى السيرة الذاتية وبشكل واضح."
-                ];
-                const randomTip = tips[Math.floor(Math.random() * tips.length)];
-                tipTextElement.innerText = randomTip;
-            }
-
-            const notifyBtn = document.getElementById("enableNotificationsBtn");
-            if (notifyBtn) {
-                notifyBtn.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    if (!("Notification" in window)) {
-                        alert("تنبيه: متصفحك الحالي لا يدعم طلب إشعارات دفع الويب.");
-                        return;
-                    }
-
-                    Notification.requestPermission().then(function(permission) {
-                        if (permission === "granted") {
-                            alert("🔔 ممتاز! تم تفعيل نظام التنبيهات بنجاح، ستصلك التحديثات فور صدورها.");
-                            notifyBtn.innerText = "✓ تم تفعيل الإشعارات";
-                            notifyBtn.style.background = "#10b981";
-                        } else if (permission === "denied") {
-                            alert("لقد قمت برفض الإشعارات مسبقاً. يمكنك إعادة تفعيلها عبر الضغط على أيقونة القفل بجانب رابط الموقع في شريط المتصفح.");
-                        }
-                    });
-                });
-            }
         });
     </script>
 </body>
