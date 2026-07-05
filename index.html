@@ -73,9 +73,10 @@
         <header class="main-app-header" style="padding-top: 60px; text-align: center; margin-bottom: 30px;">
             <div class="logo-badge" style="display: inline-block; background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px;">🤖 AI POWERED PLATFORM</div>
             
-            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 4px; flex-wrap: wrap;">
                 <h1 class="app-title" style="margin: 0;">مُحسّن السيرة الذاتية الذكي</h1>
                 <span class="sparkle" style="font-size: 2rem;">✨</span>
+                <button id="shareAppBtn" style="padding: 6px 12px; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; color: #10b981; border-radius: 20px; font-size: 12px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease; font-family: inherit;">🔗 مشاركة</button>
             </div>
             
             <p class="app-subtitle" style="color: #94a3b8; margin: 5px 0 0 0;">صمم، حسّن، ووثق سيرتك الذاتية رقمياً بمعايير ATS العالمية</p>
@@ -123,7 +124,7 @@
 
             <div style="margin-bottom: 25px; background: rgba(15, 23, 42, 0.4); padding: 15px; border: 1px dashed #475569; border-radius: 8px;">
                 <label style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">🎯 مطابقة الكلمات المفتاحية (إعلان الوظيفة المستهدفة):</label>
-                <textarea id="jobDescriptionInput" rows="3" placeholder="انسخ نص متطلبات أو شروط إعلان الوظيفة الشاغرة هنا، ليقوم النظام تلقائياً بمقارنتها وحقن المفردات الناقصة لتخطي الـ ATS..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 13px; resize: vertical;"></textarea>
+                <textarea id="jobDescriptionInput" rows="3" placeholder="انسخ نص متمتطلبات أو شروط إعلان الوظيفة الشاغرة هنا، ليقوم النظام تلقائياً بمقارنتها وحقن المفردات الناقصة لتخطي الـ ATS..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 13px; resize: vertical;"></textarea>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -351,7 +352,7 @@
             const tipTextElement = document.getElementById("liveTipText");
             if (tipTextElement && tipTextElement.innerText.includes("جاري جلب")) {
                 const tips = [
-                    "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت, أدرت, حققت) بدلاً من الكلمات التقليدية.",
+                    "احرص على استخدام أفعال قوية في وصف خبراتك مثل (طوّرت, أدرت, حققت) بدلاف من الكلمات التقليدية.",
                     "تجنب وضع صورتك الشخصية أو الرسوم البيانية المعقدة إذا كنت تستهدف شركات عالمية تستخدم نظام الـ ATS.",
                     "اجعل الكلمات المفتاحية الموجودة في إعلان الوظيفة جزءاً أساسياً من قسم المهارات والخبرات لديك.",
                     "صياغة سيرة ذاتية من صفحة واحدة كافية جداً إذا كانت خبرتك المهنية أقل من 5 سنوات.",
