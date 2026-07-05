@@ -232,7 +232,7 @@ function initThemeColorPicker() {
 
     document.getElementById('themePrimaryColor').addEventListener('input', (e) => {
         const selectedColor = e.target.value;
-        localStorage.setItem('cv_theme_color', selectedColor);
+        		localStorage.setItem('cv_theme_color', selectedColor);
         applyThemeColorToLiveCV();
     });
 }
@@ -268,7 +268,7 @@ function handleCVCreation() {
 }
 
 // ==========================================
-// 🤖 دالة عامة محمية للاتصال بالذكاء الاصطناعي
+// 🤖 دالة عامة محمية للاتصال بالذكاء الاصطناعي مباشرة من المتصفح دون سيرفر خارجي
 // ==========================================
 async function askAI(promptMessage, systemMessage, retries = 3) {
     const url = `https://text.pollinations.ai/`;
@@ -312,7 +312,7 @@ function formatMarkdown(text) {
         .replace(/Pollinations\.AI:/gi, '');
 
     return cleanedText
-        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>')
         .trim();
