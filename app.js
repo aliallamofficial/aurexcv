@@ -515,4 +515,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         document.addEventListener('click', () => downOpts.classList.add('hidden'));
     }
+
+    // ========================================================
+    // 🔗 الميزة الذكية المضافة حديثاً: زر المشاركة الذكي (Web Share API)
+    // ========================================================
+    const shareBtn = document.getElementById("shareAppBtn");
+    if (shareBtn) {
+        shareBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'مُحسّن وصانع السيرة الذاتية الذكي ✨',
+                        text: 'اصنع سيرتك الذاتية واجتز فحص الـ ATS فوراً بالذكاء الاصطناعي مجاناً وبدون حساب!',
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    console.log("تم إلغاء عملية المشاركة:", err);
+                }
+            } else {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert("📋 تم نسخ رابط التطبيق بنجاح! يمكنك الآن لصقه ومشاركته مع أصدقائك.");
+                } catch (err) {
+                    alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
+                }
+            }
+        });
+    }
 });
