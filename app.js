@@ -44,7 +44,7 @@ const tourSteps = [
     {
         icon: "📊",
         title: "مستشار الـ ATS الذكي لحظة بلحظة",
-        desc: "أثنائ كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
+        desc: "أثناء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
         btnText: "التالي مذهل كالعادة ←"
     },
     {
@@ -312,7 +312,7 @@ function formatMarkdown(text) {
         .replace(/Pollinations\.AI:/gi, '');
 
     return cleanedText
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>')
         .trim();
@@ -433,54 +433,47 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // تبديل القائمة المنسدلة للخيارات وتحميل الـ PDF الفوري الذكي المباشر دون طباعة
+    // تحميل الـ PDF
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function () {
             const element = document.getElementById('resultBox'); 
-            
             if (!element || element.innerText.trim().includes("المستند النهائي سيظهر هنا")) {
                 alert("رجاءً قم بإنشاء السيرة الذاتية أولاً قبل محاولة تحميلها!");
                 return;
             }
 
-            // جلب اسم المستخدم ديناميكياً لتسمية الملف بأناقة
             const nameInput = document.getElementById('fullName')?.value.trim();
             const fileNameOutput = nameInput ? `${nameInput}_CV.pdf` : 'Ali_CV_Document.pdf';
 
-            // إعدادات المكتبة لضمان التحميل السلس المباشر بخلفية سليمة
             const options = {
                 margin:       [12, 12, 12, 12],
                 filename:     fileNameOutput,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { 
-                    scale: 2.5, 
-                    useCORS: true, 
-                    backgroundColor: null, // الحفاظ على خلفيات القوالب الأساسية
-                    logging: false
-                },
+                html2canvas:  { scale: 2.5, useCORS: true, backgroundColor: null, logging: false },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // تحميل مباشر فوري دون فتح نافذة الطباعة
             html2pdf().set(options).from(element).save();
         });
     }
 
-    // تفعيل حفظ الملف النصي القياسي للـ ATS واكتشاف القوائم
-    const downloadTxtBtn = document.getElementById('downloadTxtBtn');
-    if (downloadTxtBtn) {
-        downloadTxtBtn.addEventListener('click', function () {
+    // إصلاح الخلل: تفعيل زر تحميل مستند Word النصي بصورة صحيحة ومتوافقة مع الـ ATS
+    const downloadWordBtn = document.getElementById('downloadWordBtn');
+    if (downloadWordBtn) {
+        downloadWordBtn.addEventListener('click', function () {
             const resultBox = document.getElementById('resultBox');
-            if (!resultBox || resultBox.innerText.trim().includes("المستند النهائي سيظهر هنا")) {
-                alert("يرجى إنشاء السيرة الذاتية أولاً!");
+            if (!resultBox || resultBox.innerText.trim() === "") {
+                alert("يرجى إنشاء السيرة الذاتية أولاً قبل تحميلها!");
                 return;
             }
             const textContent = resultBox.innerText;
-            const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([textContent], { type: 'application/msword;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'ATS_Friendly_Resume.txt';
+            
+            const nameInput = document.getElementById('fullName')?.value.trim();
+            link.download = nameInput ? `ATS_${nameInput}_CV.doc` : 'ATS_Friendly_Resume.doc';
             link.click();
         });
     }
@@ -516,9 +509,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener('click', () => downOpts.classList.add('hidden'));
     }
 
-    // ========================================================
-    // 🔗 الميزة الذكية المضافة حديثاً: زر المشاركة الذكي (Web Share API)
-    // ========================================================
+    // زر المشاركة الذكي
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async (e) => {
