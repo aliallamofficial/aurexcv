@@ -254,7 +254,8 @@
                         <span>🔔</span> نظام تنبيهات دفع الويب
                     </h3>
                     <p style="font-size: 13px; color: #9ca3af; margin-bottom: 14px; line-height: 1.5;">قم بتفعيل الإشعارات ليصلك إشعار فوري وتلقائي بمجرد قيامنا بتحديث خوارزميات أو ميزات التطبيق.</p>
-                    <button id="enableNotificationsBtn" class="action-settings-btn" style="width: 100%; padding: 12px; background: #2563eb; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: inherit; font-size: 14px; transition: background 0.2s;">تفعيل الإشعارات الآن</button>
+                    
+                    <button id="enableNotificationsBtn" class="action-settings-btn" style="display: none; width: 100%; padding: 12px; background: #2563eb; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: inherit; font-size: 14px; transition: background 0.2s;">تفعيل الإشعارات الآن</button>
                 </div>
 
                 <div class="settings-section-card" style="background: #1f2937; border: 1px solid #374151; padding: 18px; border-radius: 12px; text-align: right; direction: rtl;">
@@ -331,7 +332,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             const cacheBuster = new Date().getTime();
             
-            // 1. ميزة جلب رقم الإصدار تلقائياً من ملف التحديثات الخارجي
+            // 1. جلب رقم الإصدار تلقائياً من ملف التحديثات الخارجي version.json
             fetch(`version.json?v=${cacheBuster}`)
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
@@ -347,14 +348,40 @@
                 })
                 .catch(err => console.log("خطأ في جلب رقم الإصدار التلقائي:", err));
 
-            // 2. ميزة تفاعل زر الإشعارات وتغيير النص واللون فوراً عند الضغط
+            // 2. ميزة التحكم بظهور زر الإشعارات وتفاعله (المتصفحات المدعومة فقط)
             const notifyBtn = document.getElementById('enableNotificationsBtn');
             if (notifyBtn) {
+                // الفحص: إذا كان المتصفح الحالي يدعم خاصية الإشعارات
+                if ('Notification' in window) {
+                    notifyBtn.style.display = 'block'; // إظهار الزر فوراً
+                    
+                    // إذا كان المستخدم قد منح الإذن للتطبيق مسبقاً
+                    if (Notification.permission === 'granted') {
+                        notifyBtn.textContent = "تم تفعيل الإشعارات بنجاح! 🔔";
+                        notifyBtn.style.background = "#10b981";
+                        notifyBtn.style.cursor = "default";
+                        notifyBtn.disabled = true;
+                    }
+                } else {
+                    // إذا كان مفتوحاً من WebView داخلي أو متصفح قديم لا يدعمها، يبقى الزر مخفياً تماماً
+                    notifyBtn.style.display = 'none';
+                }
+
+                // برمجة حدث النقر لطلب الصلاحية من المتصفح وتعديل المظهر
                 notifyBtn.addEventListener('click', function() {
-                    notifyBtn.textContent = "تم تفعيل الإشعارات بنجاح! 🔔";
-                    notifyBtn.style.background = "#10b981"; // تغيير اللون للأخضر الناجح
-                    notifyBtn.style.cursor = "default";
-                    notifyBtn.disabled = true; // تعطيل الزر لمنع تكرار الضغط
+                    if ('Notification' in window) {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === 'granted') {
+                                notifyBtn.textContent = "تم تفعيل الإشعارات بنجاح! 🔔";
+                                notifyBtn.style.background = "#10b981";
+                                notifyBtn.style.cursor = "default";
+                                notifyBtn.disabled = true;
+                            } else if (permission === 'denied') {
+                                notifyBtn.textContent = "تم رفض الإشعارات ❌";
+                                notifyBtn.style.background = "#ef4444";
+                            }
+                        });
+                    }
                 });
             }
         });
