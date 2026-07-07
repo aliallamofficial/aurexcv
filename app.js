@@ -375,22 +375,21 @@ function generateCVQRCode(containerId, textToEncode) {
 }
 
 // ========================================================
-// 🔄 ميزة الفحص الذكي للتحديثات المخصصة للـ APK فقط
+// 🔄 ميزة الفحص والتنبيه المخصصة للـ APK فقط (تحديثات التطبيق)
 // ========================================================
-const CURRENT_APP_VERSION = "1.0.0"; // رقم الإصدار الحالي للتطبيق المرفوع داخل الـ APK
+const CURRENT_APP_VERSION = "1.0.1"; // رقم الإصدار الحالي الداخلي للتطبيق
 
 function checkAPKUpdates() {
-    // 🛡️ شرط التحقق الصارم: هل يُفتح التطبيق داخل WebView أندرويد (تطبيق APK)؟
+    // 🛡️ فحص البيئة الصارم: التحقق من وجود المعرفات الخاصة بالـ WebView على أندرويد (تطبيق APK)
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const isAndroidAPK = /Android/i.test(userAgent) && /wv|Version\/[\d.]+/i.test(userAgent);
-    const isStandalonePWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
-    // إذا لم يكن التطبيق مفتوحاً كـ APK أو PWA مثبت، أوقف الدالة فوراً ولا تبحث عن تحديثات
-    if (!isAndroidAPK && !isStandalonePWA) {
+    // إذا لم يكن المستخدم يفتح التطبيق من خلال ملف الـ APK، يتم تجاهل الفحص وإبقاء الإشعار مخفياً تماماً
+    if (!isAndroidAPK) {
         return; 
     }
 
-    // جلب ملف الإصدارات مع تيمستامب عشوائي لتخطي الكاش الصارم في الـ APK
+    // جلب ملف الإصدارات بصيغة جيسون ومقارنته بالإصدار الحالي للـ APK
     fetch(`version.json?v=${new Date().getTime()}`)
         .then(res => {
             if (!res.ok) throw new Error();
@@ -402,14 +401,15 @@ function checkAPKUpdates() {
                 const updateLink = document.getElementById('update-link');
                 
                 if (updateBanner) {
-                    updateBanner.style.setProperty('display', 'flex', 'important'); // إظهار الشريط بقوة
+                    // إظهار البانر المخفي عبر الـ CSS بتغيير خاصية العرض إلى مرنة
+                    updateBanner.style.setProperty('display', 'flex', 'important');
                 }
                 if (updateLink && data.updateUrl) {
-                    updateLink.href = data.updateUrl; // إدراج رابط التحديث المباشر
+                    updateLink.href = data.updateUrl; // إدراج رابط التحديث المباشر للمتجر أو السيرفر
                 }
             }
         })
-        .catch(err => console.log("إشعار: وضع عدم الاتصال أو ملف التحديث غير متاح حالياً."));
+        .catch(err => console.log("وضع عدم الاتصال بالإنترنت أو تعذر العثور على ملف التحديث."));
 }
 
 
@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initAIInterviewPrep();
     initThemeColorPicker();
     
-    // تشغيل فحص التحديثات الخاصة بالـ APK فقط فور التحميل
+    // 🔥 تشغيل فحص الإشعارات والبانر الخاص بالـ APK فقط فور تحميل الصفحة
     checkAPKUpdates();
 
     // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق
@@ -440,7 +440,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const jd = document.getElementById('jobDescriptionInput').value.trim();
 
             if (!fullName || !jobTitle) {
-                alert("الرجاء إدخال الاسم الكامل والمسمى الوظيفي على الأقل لتوليد المستند!");
+                alert("الرجاء إدخل الاسم الكامل والمسمى الوظيفي على الأقل لتوليد المستند!");
                 return;
             }
 
@@ -581,37 +581,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ========================================================
-    // 🔔 الميزة المضافة حديثاً: تفعيل زر الإشعارات لحل المشكلة الثانية
+    // 🔔 تفعيل زر الإشعارات الأصلي المتواجد داخل قائمة الإعدادات
     // ========================================================
-    const notificationBtn = document.getElementById("notificationToggleBtn") || document.getElementById("enableNotificationsBtn");
+    const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) {
         notificationBtn.addEventListener("click", function (e) {
             e.preventDefault();
             if (!("Notification" in window)) {
-                alert("عذراً، متصفحك الحالي لا يدعم ميزة الإشعارات.");
+                alert("عذراً، البيئة الحالية لا تدعم ميزة الإشعارات بشكل مباشر.");
                 return;
             }
 
             if (Notification.permission === "granted") {
-                alert("🔔 الإشعارات مفعلة بالفعل ومصرح بها في متصفحك!");
-                new Notification("مُحسّن السيرة الذاتية", {
-                    body: "نظام التنبيهات يعمل بنجاح الآن! ✨",
-                    icon: "logo.png"
-                });
+                alert("🔔 الإشعارات مفعلة بالفعل ومصرح بها بنجاح!");
             } else if (Notification.permission !== "denied") {
                 Notification.requestPermission().then(function (permission) {
                     if (permission === "granted") {
-                        alert("🎉 تم تفعيل الإشعارات بنجاح! ستصلك التحديثات المهنية أولاً بأول.");
-                        new Notification("مُحسّن السيرة الذاتية", {
-                            body: "شكراً لتفعيلك التنبيهات المهنية المباشرة.",
-                            icon: "logo.png"
-                        });
+                        alert("🎉 تم تفعيل الإشعارات بنجاح!");
                     } else {
-                        alert("⚠️ لقد قمت برفض إذن الإشعارات. يمكنك تفعيلها يدوياً من إعدادات القفل في شريط المتصفح.");
+                        alert("⚠️ تم رفض إذن الإشعارات.");
                     }
                 });
-            } else {
-                alert("⚠️ الإشعارات محظورة من إعدادات المتصفح. يرجى الضغط على علامة القفل بجانب رابط الموقع وتعديل الإذن إلى 'سماح'.");
             }
         });
     }
