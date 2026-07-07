@@ -279,8 +279,8 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
             body: JSON.stringify({ 
                 messages: [{ role: "user", content: promptMessage }],
                 system: systemMessage
-            })
-        });
+            }
+        )});
 
         if ((response.status === 429 || response.status === 503 || !response.ok) && retries > 0) {
             await new Promise(resolve => setTimeout(resolve, 2000)); 
@@ -374,6 +374,45 @@ function generateCVQRCode(containerId, textToEncode) {
     }
 }
 
+// ========================================================
+// 🔄 ميزة الفحص الذكي للتحديثات المخصصة للـ APK فقط
+// ========================================================
+const CURRENT_APP_VERSION = "1.0.0"; // رقم الإصدار الحالي للتطبيق المرفوع داخل الـ APK
+
+function checkAPKUpdates() {
+    // 🛡️ شرط التحقق الصارم: هل يُفتح التطبيق داخل WebView أندرويد (تطبيق APK)؟
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isAndroidAPK = /Android/i.test(userAgent) && /wv|Version\/[\d.]+/i.test(userAgent);
+    const isStandalonePWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    // إذا لم يكن التطبيق مفتوحاً كـ APK أو PWA مثبت، أوقف الدالة فوراً ولا تبحث عن تحديثات
+    if (!isAndroidAPK && !isStandalonePWA) {
+        return; 
+    }
+
+    // جلب ملف الإصدارات مع تيمستامب عشوائي لتخطي الكاش الصارم في الـ APK
+    fetch(`version.json?v=${new Date().getTime()}`)
+        .then(res => {
+            if (!res.ok) throw new Error();
+            return res.json();
+        })
+        .then(data => {
+            if (data && data.version !== CURRENT_APP_VERSION) {
+                const updateBanner = document.getElementById('update-banner');
+                const updateLink = document.getElementById('update-link');
+                
+                if (updateBanner) {
+                    updateBanner.style.setProperty('display', 'flex', 'important'); // إظهار الشريط بقوة
+                }
+                if (updateLink && data.updateUrl) {
+                    updateLink.href = data.updateUrl; // إدراج رابط التحديث المباشر
+                }
+            }
+        })
+        .catch(err => console.log("إشعار: وضع عدم الاتصال أو ملف التحديث غير متاح حالياً."));
+}
+
+
 // المستندات والتحميلات المستندة على الأحداث
 document.addEventListener("DOMContentLoaded", function () {
     // تشغيل النصائح الحية فوراً عند تحميل التطبيق لحل المشكلة الأولى
@@ -384,6 +423,9 @@ document.addEventListener("DOMContentLoaded", function () {
     initInlineAIWriters();
     initAIInterviewPrep();
     initThemeColorPicker();
+    
+    // تشغيل فحص التحديثات الخاصة بالـ APK فقط فور التحميل
+    checkAPKUpdates();
 
     // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق
     const optimizeBtn = document.getElementById('optimizeBtn');
