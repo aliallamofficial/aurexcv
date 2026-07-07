@@ -793,3 +793,39 @@ footer {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
 }
+
+/* ========================================================
+   🛠️ التحديث الجديد: تخصيص قالب الـ CV المولد (محاذاة المهارات والهوامش)
+   ======================================================== */
+
+/* 1. حل تداخل الرموز النقطية (•) والكلمات الإنجليزية في المهارات والقوائم المخرجة */
+#cvTemplateArea ul, 
+#cvTemplateArea li,
+#resultBox ul,
+#resultBox li {
+    direction: rtl !important;
+    text-align: right !important;
+    unicode-bidi: plaintext !important; /* تمنع اختلال ترتيب علامات الترقيم والنقاط مع الإنجليزية */
+    margin-bottom: 6px;
+}
+
+/* 2. زيادة المسافات الفاصلة (White Space) تحت وفوق العناوين الرئيسية للأقسام */
+#cvTemplateArea h1, 
+#cvTemplateArea h2, 
+#cvTemplateArea h3,
+#resultBox h1,
+#resultBox h2,
+#resultBox h3 {
+    margin-top: 18px !important;
+    margin-bottom: 14px !important; /* إعطاء مساحة مريحة للقراءة قبل الخط الفاصل أو النص */
+    padding-bottom: 4px;
+}
+
+/* 3. تنسيق الخطوط الفاصلة الرفيعة لزيادة الارتياح البصري */
+#cvTemplateArea hr,
+#resultBox hr {
+    margin-top: 4px !important;
+    margin-bottom: 18px !important; /* مسافة مريحة بعد الخط الفاصل وقبل بدء الفقرة التالية */
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
