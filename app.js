@@ -312,7 +312,7 @@ function formatMarkdown(text) {
         .replace(/Pollinations\.AI:/gi);
 
     return cleanedText
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>')
         .trim();
@@ -327,7 +327,13 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
     const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
 
     let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
-    styles += selectedLang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr";
+    
+    // تم إضافة ضبط الاتجاه و unicode-bidi لمنع اختلال الرموز النقطية في القسم العربي
+    if (selectedLang === 'ar') {
+        styles += " text-align: right; direction: rtl; unicode-bidi: plaintext;";
+    } else {
+        styles += " text-align: left; direction: ltr;";
+    }
     
     if (selectedTemplate === 'modern') {
         styles += ` background-color: #1e293b; color: #f8fafc; border-left: 6px solid ${activeColor}; border-right: none;`;
