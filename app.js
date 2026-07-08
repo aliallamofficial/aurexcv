@@ -111,6 +111,15 @@ function initCVScoreGauge() {
     });
 }
 
+// تشغيل الـ Service Worker لضمان العمل أوفلاين كـ PWA على الويب
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('PWA Service Worker registered successfully!'))
+            .catch(err => console.log('Service Worker registration failed:', err));
+    });
+}
+
 function calculateCVScore() {
     const fullName = document.getElementById('fullName')?.value.trim() || "";
     const jobTitle = document.getElementById('jobTitle')?.value.trim() || "";
@@ -312,7 +321,7 @@ function formatMarkdown(text) {
         .replace(/Pollinations\.AI:/gi);
 
     return cleanedText
-        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>')
         .trim();
@@ -328,7 +337,6 @@ function getTemplateStyles(selectedLang, selectedTemplate) {
 
     let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
     
-    // تم إضافة ضبط الاتجاه و unicode-bidi لمنع اختلال الرموز النقطية في القسم العربي
     if (selectedLang === 'ar') {
         styles += " text-align: right; direction: rtl; unicode-bidi: plaintext;";
     } else {
@@ -380,48 +388,9 @@ function generateCVQRCode(containerId, textToEncode) {
     }
 }
 
-// ========================================================
-// 🔄 ميزة الفحص والتنبيه المخصصة للـ APK فقط (تحديثات التطبيق)
-// ========================================================
-const CURRENT_APP_VERSION = "1.0.1"; // رقم الإصدار الحالي الداخلي للتطبيق
-
-function checkAPKUpdates() {
-    // 🛡️ فحص البيئة الصارم: التحقق من وجود المعرفات الخاصة بالـ WebView على أندرويد (تطبيق APK)
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isAndroidAPK = /Android/i.test(userAgent) && /wv|Version\/[\d.]+/i.test(userAgent);
-
-    // إذا لم يكن المستخدم يفتح التطبيق من خلال ملف الـ APK، يتم تجاهل الفحص وإبقاء الإشعار مخفياً تماماً
-    if (!isAndroidAPK) {
-        return; 
-    }
-
-    // جلب ملف الإصدارات بصيغة جيسون ومقارنته بالإصدار الحالي للـ APK
-    fetch(`version.json?v=${new Date().getTime()}`)
-        .then(res => {
-            if (!res.ok) throw new Error();
-            return res.json();
-        })
-        .then(data => {
-            if (data && data.version !== CURRENT_APP_VERSION) {
-                const updateBanner = document.getElementById('update-banner');
-                const updateLink = document.getElementById('update-link');
-                
-                if (updateBanner) {
-                    // إظهار البانر المخفي عبر الـ CSS بتغيير خاصية العرض إلى مرنة
-                    updateBanner.style.setProperty('display', 'flex', 'important');
-                }
-                if (updateLink && data.updateUrl) {
-                    updateLink.href = data.updateUrl; // إدراج رابط التحديث المباشر للمتجر أو السيرفر
-                }
-            }
-        })
-        .catch(err => console.log("وضع عدم الاتصال بالإنترنت أو تعذر العثور على ملف التحديث."));
-}
-
-
 // المستندات والتحميلات المستندة على الأحداث
 document.addEventListener("DOMContentLoaded", function () {
-    // تشغيل النصائح الحية فوراً عند تحميل التطبيق لحل المشكلة الأولى
+    // تشغيل النصائح الحية فوراً عند تحميل التطبيق
     displayRandomLiveTip();
     
     initAppTour();
@@ -429,9 +398,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initInlineAIWriters();
     initAIInterviewPrep();
     initThemeColorPicker();
-    
-    // 🔥 تشغيل فحص الإشعارات والبانر الخاص بالـ APK فقط فور تحميل الصفحة
-    checkAPKUpdates();
 
     // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق
     const optimizeBtn = document.getElementById('optimizeBtn');
@@ -509,7 +475,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // إصلاح الخلل: تفعيل زر تحميل مستند Word النصي بصورة صحيحة ومتوافقة مع الـ ATS
+    // زر تحميل مستند Word النصي بصورة صحيحة ومتوافقة مع الـ ATS
     const downloadWordBtn = document.getElementById('downloadWordBtn');
     if (downloadWordBtn) {
         downloadWordBtn.addEventListener('click', function () {
@@ -560,7 +526,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener('click', () => downOpts.classList.add('hidden'));
     }
 
-    // زر المشاركة الذكي
+    // زر المشاركة الذكي للويب
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async (e) => {
