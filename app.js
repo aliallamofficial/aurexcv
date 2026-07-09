@@ -321,7 +321,7 @@ function formatMarkdown(text) {
         .replace(/Pollinations\.AI:/gi);
 
     return cleanedText
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>')
         .trim();
@@ -450,12 +450,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // تحميل الـ PDF
+    // [تحديث مُصلح] تحميل الـ PDF لضمان عدم ظهور الصفحة البيضاء
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function () {
-            const element = document.getElementById('resultBox'); 
-            if (!element || element.innerText.trim().includes("المستند النهائي سيظهر هنا")) {
+            const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox'); 
+            if (!element || element.innerText.trim().includes("المستند النهائي سيظهر هنا") || element.innerHTML.trim() === "") {
                 alert("رجاءً قم بإنشاء السيرة الذاتية أولاً قبل محاولة تحميلها!");
                 return;
             }
@@ -463,15 +463,38 @@ document.addEventListener("DOMContentLoaded", function () {
             const nameInput = document.getElementById('fullName')?.value.trim();
             const fileNameOutput = nameInput ? `${nameInput}_CV.pdf` : 'Ali_CV_Document.pdf';
 
+            // تفعيل كلاس تمهيدي في الـ CSS للتوافق الكامل مع الطباعة قبل التوليد
+            element.classList.add('html2pdf-printing');
+
             const options = {
-                margin:       [12, 12, 12, 12],
+                margin:       [10, 10, 10, 10], // هوامش أمان محسنة بالمليمتر لمنع القطع
                 filename:     fileNameOutput,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2.5, useCORS: true, backgroundColor: null, logging: false },
+                html2canvas:  { 
+                    scale: 2,               // دقة عالية واضحة للنصوص
+                    useCORS: true,          // للسماح بجلب الخطوط والأيقونات الخارجية
+                    letterRendering: true,
+                    scrollX: 0,
+                    scrollY: 0
+                },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            html2pdf().set(options).from(element).save();
+            const originalText = downloadPdfBtn.textContent;
+            downloadPdfBtn.textContent = "⏳ جاري توليد PDF...";
+            downloadPdfBtn.disabled = true;
+
+            html2pdf().set(options).from(element).save().then(() => {
+                element.classList.remove('html2pdf-printing');
+                downloadPdfBtn.textContent = originalText;
+                downloadPdfBtn.disabled = false;
+            }).catch(err => {
+                console.error("PDF Export Error:", err);
+                element.classList.remove('html2pdf-printing');
+                downloadPdfBtn.textContent = originalText;
+                downloadPdfBtn.disabled = false;
+                alert("حدث خطأ أثناء تحميل ملف الـ PDF.");
+            });
         });
     }
 
