@@ -9,6 +9,34 @@ const cvTips = [
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
+// 🛠️ قاعدة البيانات المحلية للإرشادات النصية والمهام المقترحة بدقة بالغة لكل وظيفة إبداعية
+const jobGuidelines = {
+    "graphic_designer": {
+        title: "مصمم جرافيك",
+        tips: [
+            "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
+            "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
+            "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
+        ]
+    },
+    "content_creator": {
+        title: "صانع محتوى / كاتب محتوى",
+        tips: [
+            "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.",
+            "تحليل أداء المحتوى وتطوير استراتيجيات النشر بناءً على الأرقام والتفاعل.",
+            "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية تخدم أهداف الحملة التسويقية."
+        ]
+    },
+    "interior_designer": {
+        title: "مهندس ديكور / تصميم داخلي",
+        tips: [
+            "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية.",
+            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
+            "الإشراف الميداني على التنفيذ لضمان مطابقة الواقع للمخططات المعتمدة."
+        ]
+    }
+};
+
 // دالة مخصصة لعرض نصيحة عشوائية عند فتح التطبيق
 function displayRandomLiveTip() {
     const tipTextElement = document.getElementById('liveTipText');
@@ -288,8 +316,8 @@ async function askAI(promptMessage, systemMessage, retries = 3) {
             body: JSON.stringify({ 
                 messages: [{ role: "user", content: promptMessage }],
                 system: systemMessage
-            }
-        )});
+            })
+        });
 
         if ((response.status === 429 || response.status === 503 || !response.ok) && retries > 0) {
             await new Promise(resolve => setTimeout(resolve, 2000)); 
@@ -321,7 +349,7 @@ function formatMarkdown(text) {
         .replace(/Pollinations\.AI:/gi);
 
     return cleanedText
-        .replace(/\*\*(.*?)\*\/g, '<strong>$1</strong>') 
+        .replace(/\*\*(.*?)\*\//g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')          
         .replace(/\n/g, '<br>')
         .trim();
@@ -399,6 +427,60 @@ document.addEventListener("DOMContentLoaded", function () {
     initAIInterviewPrep();
     initThemeColorPicker();
 
+    // تشغيل وإعداد ميزة الإرشادات النصية واقتراحات الوظائف الإبداعية
+    const jobSelect = document.getElementById('jobSelect');
+    if (jobSelect) {
+        jobSelect.addEventListener('change', function() {
+            const jobKey = this.value;
+            const container = document.getElementById('suggestedTipsContainer');
+            const list = document.getElementById('tipsList');
+            
+            if (list) list.innerHTML = '';
+            
+            if (jobKey && jobGuidelines[jobKey]) {
+                if (container) container.style.display = 'block';
+                jobGuidelines[jobKey].tips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.textContent = tip;
+                    li.className = "suggested-tip-item";
+                    li.style.cssText = "cursor: pointer; padding: 8px; margin-bottom: 6px; background: rgba(56, 189, 248, 0.1); border-radius: 6px; font-size: 13px; color: #cbd5e1; transition: background 0.2s;";
+                    
+                    li.addEventListener('mouseenter', () => li.style.background = "rgba(56, 189, 248, 0.2)");
+                    li.addEventListener('mouseleave', () => li.style.background = "rgba(56, 189, 248, 0.1)");
+                    
+                    li.addEventListener('click', function() {
+                        navigator.clipboard.writeText(tip);
+                        alert("📋 تم نسخ الجملة الاحترافية بنجاح! يمكنك الآن لصقها مباشرة في صندوق الخبرات.");
+                    });
+                    if (list) list.appendChild(li);
+                });
+            } else {
+                if (container) container.style.display = 'none';
+            }
+        });
+    }
+
+    // تشغيل ميزة التحويل بين وضع الـ ATS والوضع الإبداعي البصري (Toggle Mode)
+    const btnAts = document.getElementById('btnAtsMode');
+    const btnCreative = document.getElementById('btnCreativeMode');
+    const cvAreaContainer = document.getElementById('resultBox');
+
+    if (btnAts && btnCreative && cvAreaContainer) {
+        btnCreative.addEventListener('click', function() {
+            btnAts.classList.remove('active');
+            btnCreative.classList.add('active');
+            const targetCv = document.getElementById('cvTemplateArea') || cvAreaContainer;
+            targetCv.classList.add('creative-layout');
+        });
+
+        btnAts.addEventListener('click', function() {
+            btnCreative.classList.remove('active');
+            btnAts.classList.add('active');
+            const targetCv = document.getElementById('cvTemplateArea') || cvAreaContainer;
+            targetCv.classList.remove('creative-layout');
+        });
+    }
+
     // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق
     const optimizeBtn = document.getElementById('optimizeBtn');
     if (optimizeBtn) {
@@ -437,6 +519,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     setTimeout(() => {
                         generateCVQRCode('cvTemplateArea', `https://github.com/aliallamofficial?verified_cv=${encodeURIComponent(fullName)}`);
+                        // إعادة تطبيق وضع التصميم المختار حالياً بعد إعادة التوليد
+                        if (btnCreative && btnCreative.classList.contains('active')) {
+                            document.getElementById('cvTemplateArea').classList.add('creative-layout');
+                        }
                     }, 200);
 
                     downloadContainer.classList.remove('hidden');
@@ -567,7 +653,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 try {
                     await navigator.clipboard.writeText(window.location.href);
-                    alert("📋 تم نسخ رابط التطبيق بنجاح! يمكنك الآن لصقه ومشاركته مع أصدقائك.");
+                    alert("📋 تم نسخ رابط التطبيق بنجاح! يمكنك الآن لصق ومشاركتة مع أصدقائك.");
                 } catch (err) {
                     alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
                 }
