@@ -186,7 +186,7 @@ function calculateCVScore() {
 }
 
 // ==========================================
-// 🚀 ميزة: مساعد الصياغة الذكي المباشر للحقول (Inline AI Writer)
+// 🚀 ميزة: مساعد الصياغة الذكي المباشر للحقول (Inline AI Writer) [مُحدّث بنظام التخزين المؤقت الكاش]
 // ==========================================
 function initInlineAIWriters() {
     document.querySelectorAll('.inline-ai-btn').forEach(aiBtn => {
@@ -198,12 +198,26 @@ function initInlineAIWriters() {
             
             if (!textValue) { alert('الرجاء كتابة نص أولاً ليقوم الذكاء الاصطناعي بتحسينه!'); return; }
             
+            // 💡 نظام التخزين المؤقت: التحقق من وجود صياغة مسبقة لنفس النص لتجنب استهلاك السيرفر
+            const cacheKey = `ai_cache_${btoa(unescape(encodeURIComponent(textValue)))}`;
+            const cachedResult = localStorage.getItem(cacheKey);
+            if (cachedResult) {
+                if (field) field.value = cachedResult;
+                calculateCVScore();
+                return;
+            }
+            
             const originalText = aiBtn.innerText;
             aiBtn.innerText = '⏳ جاري الصياغة...';
             aiBtn.disabled = true;
             try {
-                const optimized = await askAI(`قم بإعادة صياغة هذا النص المهني لجعله أكثر احترافية وقوة ومناسباً لأنظمة الـ ATS في نقاط واضحة ومباشرة: ${textValue}`, "أنت مستشار HR خبير تعيد صياغة العبارات بأسلوب قوي ومقنع.");
-                if (optimized && field) field.value = optimized.trim();
+                // تقليص الـ prompt هنا أيضاً لجعله سريعاً ومباشراً
+                const optimized = await askAI(`حسن هذا النص المهني لنظام ATS في نقاط مباشرة: ${textValue}`, "أنت مستشار HR. صغ العبارات بأسلوب قوي ومقنع.");
+                if (optimized && field) {
+                    field.value = optimized.trim();
+                    // حفظ النتيجة في المتصفح للاستخدام الفوري اللاحق
+                    localStorage.setItem(cacheKey, optimized.trim());
+                }
             } catch (err) {
                 alert('عذراً، الخادم مشغول حالياً. حاول مجدداً.');
             } finally {
@@ -481,7 +495,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق
+    // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق [مُحدثة بنظام محلي احتياطي + Prompt مختصر جداً]
     const optimizeBtn = document.getElementById('optimizeBtn');
     if (optimizeBtn) {
         optimizeBtn.addEventListener('click', async function () {
@@ -505,8 +519,9 @@ document.addEventListener("DOMContentLoaded", function () {
             optimizeBtn.disabled = true;
             loading.classList.remove('hidden');
 
-            const systemInstruction = "أنت كاتب سير ذاتية محترف وخبير بأنظمة الـ ATS. تولد مستندات جاهزة وممتازة مباشرة بصيغة HTML مهيأة داخل الصناديق.";
-            const userPrompt = `قم بإنشاء سيرة ذاتية احترافية بالكامل متوافقة مع الـ ATS للاسم: ${fullName} بمسمى: ${jobTitle}. الخبرات: ${experience}. المهارات: ${skills}. مع مراعاة هذا الوصف إن وجد: ${jd}. وزع الأقسام بعناية متناهية وجذابة.`;
+            // ⚡ تم تقليص حجم الـ Prompt والـ System Instructions هنا لأقصى درجة لتسريع الأداء وتوفير الموارد
+            const systemInstruction = "أنت خبير ATS. اكتب الـ CV مباشرة بصيغة HTML نظيفة ومقسمة داخل الصناديق.";
+            const userPrompt = `صمم CV احترافي ATS لـ: ${fullName}، وظيفته: ${jobTitle}، خبرته: ${experience}، مهاراته: ${skills}. متوافق مع: ${jd}`;
 
             try {
                 const aiResult = await askAI(userPrompt, systemInstruction);
@@ -519,7 +534,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     setTimeout(() => {
                         generateCVQRCode('cvTemplateArea', `https://github.com/aliallamofficial?verified_cv=${encodeURIComponent(fullName)}`);
-                        // إعادة تطبيق وضع التصميم المختار حالياً بعد إعادة التوليد
                         if (btnCreative && btnCreative.classList.contains('active')) {
                             document.getElementById('cvTemplateArea').classList.add('creative-layout');
                         }
@@ -528,7 +542,36 @@ document.addEventListener("DOMContentLoaded", function () {
                     downloadContainer.classList.remove('hidden');
                 }
             } catch (err) {
-                alert("فشلت عملية التوليد الذكي، يرجى المحاولة بعد قليل.");
+                // ⚡ ميزة المحسن الاحتياطي الفوري: يتم تشغيلها محلياً فوراً لمنع توقف الأداء عند تعطل الاتصال أو حدوث ضغط خوادم
+                console.warn("فشلت عملية التوليد عبر الخادم الرئيسي، يتم الآن تشغيل المولد الاحتياطي الفوري السريع...");
+                
+                let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, document.getElementById('templateSelect').value);
+                let fallbackHtml = `
+                    <div style="font-size: 22px; font-weight: bold; margin-bottom: 5px; color: inherit;">${fullName}</div>
+                    <div style="font-size: 16px; font-weight: 500; margin-bottom: 20px; opacity: 0.85;">${jobTitle}</div>
+                    <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+                    <div style="font-weight: bold; font-size: 15px; margin-bottom: 8px;">الخبرات والمهام المهنية:</div>
+                    <p style="font-size: 14px; white-space: pre-line;">${experience ? experience : 'لم يتم توفير تفاصيل الخبرة المهنية بعد.'}</p>
+                    <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+                    <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;">المهارات والقدرات الأساسية:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${skills ? skills.split(',').map(s => `<span style="background: rgba(148, 163, 184, 0.15); padding: 5px 10px; border-radius: 4px; font-size: 13px; font-weight: 500;">${s.trim()}</span>`).join('') : '<span style="font-size: 13px;">لم تضاف مهارات.</span>'}
+                    </div>
+                `;
+                
+                let processedHtml = `<div id="cvTemplateArea" style="${templateStyles}">${fallbackHtml}</div>`;
+                processedHtml = appendCryptoSignatureToCV(processedHtml);
+                resultBox.innerHTML = processedHtml;
+
+                setTimeout(() => {
+                    generateCVQRCode('cvTemplateArea', `https://github.com/aliallamofficial?verified_cv=${encodeURIComponent(fullName)}`);
+                    if (btnCreative && btnCreative.classList.contains('active')) {
+                        document.getElementById('cvTemplateArea').classList.add('creative-layout');
+                    }
+                }, 200);
+
+                downloadContainer.classList.remove('hidden');
+                alert("✨ تم توليد السيرة الذاتية بنجاح عبر النظام السريع المحلي المتوازن نتيجة ضغط مؤقت في الخوادم السحابية.");
             } finally {
                 loading.classList.add('hidden');
                 optimizeBtn.disabled = false;
