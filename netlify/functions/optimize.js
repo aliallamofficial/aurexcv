@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
         const { promptMessage } = JSON.parse(event.body);
 
         // الاتصال بسيرفر مجاني مفتوح تماماً لا يحتاج تسجيل دخول أو مفاتيح
-        const url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct";
+        const url = "[https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct](https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct)";
 
         const response = await fetch(url, {
             method: 'POST',
@@ -28,6 +28,12 @@ exports.handler = async (event, context) => {
             if (aiText.includes(promptMessage)) {
                 aiText = aiText.replace(promptMessage, "").trim();
             }
+
+            // ✨ إصلاح المشكلة: إزالة كلمة html أو وسوم الأكواد المكسورة التي تسبب الشاشة البيضاء
+            aiText = aiText.replace(/^```html/i, '')
+                           .replace(/^html/i, '')
+                           .replace(/```$/, '')
+                           .trim();
 
             return {
                 statusCode: 200,
