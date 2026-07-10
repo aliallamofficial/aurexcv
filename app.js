@@ -13,31 +13,55 @@ const cvTips = [
 const jobGuidelines = {
     "graphic_designer": {
         title: "مصمم جرافيك",
-        tips: [\n            "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",\n            "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",\n            "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."\n        ]
+        tips: [
+            "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
+            "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
+            "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
+        ]
     },
     "content_creator": {
         title: "صانع محتوى / كاتب محتوى",
-        tips: [\n            "كتابة سيناريوهات ومحتوى تفاعلي لمنصات التواصل الاجتماعي ساهم في زيادة المشاهدات بنسبة %X.",\n            "إعداد خطط محتوى شهرية مبنية على تحليل سلوك الجمهور واهتماماتهم المستهدفة.",\n            "تحسين جودة النصوص لتتوافق مع قواعد السيو (SEO) لزيادة الظهور المجاني في محركات البحث."\n        ]
+        tips: [
+            "كتابة سيناريوهات ومحتوى تفاعلي لمنصات التواصل الاجتماعي ساهم في زيادة المشاهدات بنسبة %X.",
+            "إعداد خطط محتوى شهرية مبنية على تحليل سلوك الجمهور واهتماماتهم المستهدفة.",
+            "تحسين جودة النصوص لتتوافق مع قواعد السيو (SEO) لزيادة الظهور المجاني في محركات البحث."
+        ]
     },
     "digital_marketer": {
         title: "أخصائي تسويق رقمي",
-        tips: [\n            "إدارة الحملات الإعلانية المدفوعة على منصات (Meta, Google, TikTok) وتحقيق عائد استثماري ROAS يبلغ X.",\n            "تحليل بيانات المواقع والحملات باستخدام Google Analytics لتقديم تقارير دورية ومقترحات تحسين.",\n            "بناء استراتيجيات التسويق عبر البريد الإلكتروني والأتمتة لرفع نسبة الاحتفاظ بالعملاء بنسبة %X."\n        ]
+        tips: [
+            "إدارة الحملات الإعلانية المدفوعة على منصات (Meta, Google, TikTok) وتحقيق عائد استثماري ROAS يبلغ X.",
+            "تحليل بيانات المواقع والحملات باستخدام Google Analytics لتقديم تقارير دورية ومقترحات تحسين.",
+            "بناء استراتيجيات التسويق عبر البريد الإلكتروني والأتمتة لرفع نسبة الاحتفاظ بالعملاء بنسبة %X."
+        ]
     },
     "video_editor": {
         title: "محرر فيديو / مونتير",
-        tips: [\n            "تعديل وقص مقاطع الفيديو الطويلة والقصيرة (Reels/Shorts) بأسلوب ديناميكي يزيد من معدل الاحتفاظ بالجمهور.",\n            "إضافة المؤثرات الصوتية والبصرية والتصحيح اللوني المتقدم باستخدام Premiere و After Effects.",\n            "تنظيم المواد المصورة والعمل مع صناع المحتوى لترجمة الأفكار إلى قصص بصرية ملهمة وجذابة."\n        ]
+        tips: [
+            "تعديل وقص مقاطع الفيديو الطويلة والقصيرة (Reels/Shorts) بأسلوب ديناميكي يزيد من معدل الاحتفاظ بالجمهور.",
+            "إضافة المؤثرات الصوتية والبصرية والتصحيح اللوني المتقدم باستخدام Premiere و After Effects.",
+            "تنظيم المواد المصورة والعمل مع صناع المحتوى لترجمة الأفكار إلى قصص بصرية ملهمة وجذابة."
+        ]
     },
     "sales_specialist": {
         title: "أخصائي مبيعات / خدمة عملاء",
-        tips: [\n            "تحقيق وإغلاق الصفقات البيعية الشهرية وتخطي الأهداف المطلوبة (KPIs) بنسبة %X باستمرار.",\n            "بناء علاقات قوية ومستدامة مع العملاء الحاليين والمحتملين وتقديم حلول مخصصة لاحتياجاتهم.",\n            "التعامل الاحترافي مع الاعتراضات وحل مشكلات العملاء المعقدة بسرعة وكفاءة لضمان رضاهم التام."\n        ]
+        tips: [
+            "تحقيق وإغلاق الصفقات البيعية الشهرية وتخطي الأهداف المطلوبة (KPIs) بنسبة %X باستمرار.",
+            "بناء علاقات قوية ومستدامة مع العملاء الحاليين والمحتملين وتقديم حلول مخصصة لاحتياجاتهم.",
+            "التعامل الاحترافي مع الاعتراضات وحل مشكلات العملاء المعقدة بسرعة وكفاءة لضمان رضاهم التام."
+        ]
     }
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-    // 🌍 تحديث تفاعلي للنصائح الجاهزة في أسفل الواجهة
+    // 🌍 تحديث تفاعلي فوري للنصائح الجاهزة في أسفل الواجهة دون انتظار الـ Delay
     const tipElement = document.getElementById("cvTipText");
     if (tipElement) {
         let currentTipIndex = 0;
+        
+        // ✨ تفعيل فوري: عرض النصيحة الأولى مباشرة فور تحميل الصفحة لمنع بقاء الجملة القديمة معلقة
+        tipElement.textContent = cvTips[currentTipIndex];
+        
         setInterval(() => {
             currentTipIndex = (currentTipIndex + 1) % cvTips.length;
             tipElement.style.opacity = 0;
@@ -46,6 +70,36 @@ document.addEventListener("DOMContentLoaded", function () {
                 tipElement.style.opacity = 1;
             }, 300);
         }, 7000);
+    }
+
+    // ⚙️ نظام التحكم بفتح وإغلاق نافذة الإعدادات والمظهر (Modal System)
+    const settingsModal = document.getElementById("settingsPageModal");
+    const openSettingsBtn = document.getElementById("openSettingsBtn"); 
+    const closeSettingsBtn = document.getElementById("closeSettingsBtn"); 
+
+    // فتح النافذة عند الضغط على زر الإعدادات
+    if (openSettingsBtn && settingsModal) {
+        openSettingsBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            settingsModal.classList.remove("hidden"); 
+        });
+    }
+
+    // إغلاق النافذة عند الضغط على زر الإغلاق (X)
+    if (closeSettingsBtn && settingsModal) {
+        closeSettingsBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            settingsModal.classList.add("hidden"); 
+        });
+    }
+
+    // إغلاق النافذة تلقائياً عند الضغط في أي مكان خارجي بعيداً عن صندوق الإعدادات
+    if (settingsModal) {
+        settingsModal.addEventListener("click", function (e) {
+            if (e.target === settingsModal) {
+                settingsModal.classList.add("hidden");
+            }
+        });
     }
 
     // 💼 تفعيل ذكي ومؤتمت للاقتراحات المخصصة حسب اسم الوظيفة المختار
@@ -165,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const email = document.getElementById("email").value.trim();
 
             if (!name || !jobTitle) {
-                alert("يرجى ملء الاسم المربع والوظيفة المستهدفة على الأقل لتتمكن الذكاء الاصطناعي من صياغتها!");
+                alert("يرجى ملء الاسم الكامل والوظيفة المستهدفة على الأقل لتتمكن الذكاء الاصطناعي من صياغتها!");
                 return;
             }
 
@@ -190,23 +244,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: JSON.stringify({ promptMessage })
                 });
 
-                if (!response.ok) throw new Error("فشل الاتصال بخادم الذاء الاصطناعي.");
+                if (!response.ok) throw new Error("فشل الاتصال بخادم الذكاء الاصطناعي.");
 
                 const data = await response.json();
                 if (data && data.choices && data.choices[0] && data.choices[0].message) {
                     let aiResult = data.choices[0].message.content;
 
-                    // تنظيف أي وسوم أو أكواد مكسورة قد ترجع بالخطأ من الذكاء الاصطناعي
                     aiResult = aiResult.replace(/^```html/i, '')
                                        .replace(/^html/i, '')
                                        .replace(/```$/, '')
                                        .trim();
 
-                    // ✨ تم الإصلاح هنا: استبدال innerHTML بـ value وتحديث الـ textarea بشكل آمن يمنع الشاشة البيضاء
                     const outputBox = document.getElementById("outputBox");
                     if (outputBox) {
                         outputBox.value = aiResult;
-                        // إطلاق حدث التحديث للمزامنة الفورية
                         outputBox.dispatchEvent(new Event('input'));
                     }
                     
@@ -242,7 +293,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const nameInput = document.getElementById("name").value.trim() || "السيرة_الذاتية";
 
-            // إعدادات مكتبة html2pdf لتوليد ملف فائق الجودة ومتناسق الأبعاد للهواتف والحواسب
             const opt = {
                 margin: [15, 15, 15, 15],
                 filename: `${nameInput}_CV.pdf`,
@@ -251,7 +301,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // إنشاء هيكل HTML مؤقت ومصمم بأعلى معايير الأناقة لتوليد الـ PDF منه مباشرة
             const workerContainer = document.createElement("div");
             workerContainer.style.dir = "rtl";
             workerContainer.style.textAlign = "right";
@@ -261,10 +310,8 @@ document.addEventListener("DOMContentLoaded", function () {
             workerContainer.style.whiteSpace = "pre-wrap";
             workerContainer.style.padding = "10px";
 
-            // معالجة السطور وعرضها بتنسيق نظيف جداً داخل ملف الـ PDF
             workerContainer.textContent = cvContent;
 
-            // إطلاق معالج التحميل الفوري وتدمير العنصر المؤقت بعد الانتهاء للحفاظ على الذاكرة
             html2pdf().set(opt).from(workerContainer).save().then(() => {
                 console.log("PDF downloaded successfully.");
             });
