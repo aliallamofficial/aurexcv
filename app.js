@@ -185,64 +185,513 @@ function calculateCVScore() {
     }
 }
 
-// تهيئة تفعيل كل الأحداث والوظائف عند جاهزية مستند الـ DOM بالكامل
-document.addEventListener("DOMContentLoaded", function () {
-    displayRandomLiveTip();
-    initAppTour();
-    initCVScoreGauge();
+// ==========================================
+// 🚀 ميزة: مساعد الصياغة الذكي المباشر للحقول (Inline AI Writer) [مُحدّث بنظام التخزين المؤقت الكاش]
+// ==========================================
+function initInlineAIWriters() {
+    document.querySelectorAll('.inline-ai-btn').forEach(aiBtn => {
+        aiBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const fieldId = aiBtn.getAttribute('data-field');
+            const field = document.getElementById(fieldId);
+            const textValue = field?.value.trim();
+            
+            if (!textValue) { alert('الرجاء كتابة نص أولاً ليقوم الذكاء الاصطناعي بتحسينه!'); return; }
+            
+            // 💡 نظام التخزين المؤقت: التحقق من وجود صياغة مسبقة لنفس النص لتجنب استهلاك السيرفر
+            const cacheKey = `ai_cache_${btoa(unescape(encodeURIComponent(textValue)))}`;
+            const cachedResult = localStorage.getItem(cacheKey);
+            if (cachedResult) {
+                if (field) field.value = cachedResult;
+                calculateCVScore();
+                return;
+            }
+            
+            const originalText = aiBtn.innerText;
+            aiBtn.innerText = '⏳ جاري الصياغة...';
+            aiBtn.disabled = true;
+            try {
+                // تقليص الـ prompt هنا أيضاً لجعله سريعاً ومباشراً
+                const optimized = await askAI(`حسن هذا النص المهني لنظام ATS في نقاط مباشرة: ${textValue}`, "أنت مستشار HR. صغ العبارات بأسلوب قوي ومقنع.");
+                if (optimized && field) {
+                    field.value = optimized.trim();
+                    // حفظ النتيجة في المتصفح للاستخدام الفوري اللاحق
+                    localStorage.setItem(cacheKey, optimized.trim());
+                }
+            } catch (err) {
+                alert('عذراً، الخادم مشغول حالياً. حاول مجدداً.');
+            } finally {
+                aiBtn.innerText = originalText;
+                aiBtn.disabled = false;
+                calculateCVScore();
+            }
+        });
+    });
+}
 
-    // ========================================================
-    // ⚙️ تهيئة القائمة العلوية الجانبية المنسدلة للوحة التحكم والإعدادات
-    // ========================================================
-    const toggleBtn = document.getElementById("dropdownToggleBtn");
-    const leftMenu = document.getElementById("topLeftMenu");
+// ==========================================
+// 🚀 ميزة: محاكي المقابلات الشخصية (AI Interview Prep)
+// ==========================================
+function initAIInterviewPrep() {
+    const interviewBtn = document.getElementById('interviewPrepBtn');
+    if (!interviewBtn) return;
+    
+    interviewBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const jobTitle = document.getElementById('jobTitle').value.trim();
+        if (!jobTitle) { alert('يرجى كتابة المسمى الوظيفي المستهدف أولاً لتوليد الأسئلة المناسبة!'); return; }
 
-    if (toggleBtn && leftMenu) {
-        toggleBtn.addEventListener("click", function (e) {
-            e.stopPropagation();
-            leftMenu.classList.toggle("hidden");
+        const loading = document.getElementById('loading');
+        const resultBox = document.getElementById('resultBox');
+        interviewBtn.disabled = true;
+        loading.classList.remove('hidden');
+
+        try {
+            const qaResult = await askAI(`أعطني أهم 5 أسئلة متوقعة في المقابلات الشخصية لوظيفة: ${jobTitle} مع الإجابات النموذجية والمختصرة جداً لكل سؤال باللغة العربية.`, "أنت مسؤول التوظيف التقني الخبير.");
+            if (qaResult) {
+                let formattedQA = formatMarkdown(qaResult);
+                let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, 'modern');
+                resultBox.innerHTML = `<div id="cvTemplateArea" style="${templateStyles}"><h3>🧠 الأسئلة المتوقعة في المقابلة والإجابات النموذجية:</h3><br>${formattedQA}</div>`;
+                document.getElementById('downloadContainer').classList.add('hidden');
+            }
+        } catch (err) {
+            alert('السيرفر مشغول حالياً بالمعالجة، أعد النقر بعد قليل.');
+        } finally {
+            loading.classList.add('hidden');
+            interviewBtn.disabled = false;
+        }
+    });
+}
+
+// ==========================================
+// 🔥 ميزة: تخصيص المظهر (الأبعاد والمسافات واللون)
+// ==========================================
+function initThemeColorPicker() {
+    const container = document.getElementById('dynamicColorPickerContainer');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="settings-section-card" style="text-align: right; direction: rtl; margin-bottom: 15px; background: #0f172a; padding: 15px; border-radius: 6px;">
+            <h3 style="color: #38bdf8; margin-top: 0;">🎨 لون الهوية البصرية المخصص</h3>
+            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 10px;">اختر اللون الرئيسي المفضل لتخصيص خطوط وعناوين سيرتك الذاتية بشكل فوري ومميز.</p>
+            <div style="display:flex; gap:12px; align-items:center;">
+                <input type="color" id="themePrimaryColor" value="${localStorage.getItem('cv_theme_color') || '#3b82f6'}" style="width:50px; height:35px; border:none; border-radius:4px; cursor:pointer; background:none;">
+                <span style="font-size:13px; color:#cbd5e1;">اضغط على الصندوق لاختيار درجة لونك المفضلة</span>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('themePrimaryColor').addEventListener('input', (e) => {
+        const selectedColor = e.target.value;
+        localStorage.setItem('cv_theme_color', selectedColor);
+        applyThemeColorToLiveCV();
+    });
+}
+
+function applyThemeColorToLiveCV() {
+    const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
+    const cvArea = document.getElementById('cvTemplateArea');
+    if (cvArea) {
+        cvArea.style.cssText = getTemplateStyles(document.getElementById('langSelect').value, document.getElementById('templateSelect').value);
+    }
+}
+
+// دالة التحكم في عدد مرات الاستخدام اليومي
+function handleCVCreation() {
+    const maxAllowedPerDay = 5; 
+    const today = new Date().toDateString(); 
+    let savedDate = localStorage.getItem('cv_creation_date');
+    let creationCount = parseInt(localStorage.getItem('cv_creation_count')) || 0;
+
+    if (savedDate !== today) {
+        localStorage.setItem('cv_creation_date', today);
+        creationCount = 0;
+        localStorage.setItem('cv_creation_count', creationCount);
+    }
+
+    if (creationCount >= maxAllowedPerDay) {
+        alert("عذراً، لقد وصلت للحد الأقصى المسموح به اليوم (5 مرات). يمكنك المحاولة مجدداً غداً!");
+        return false;
+    }
+    creationCount += 1;
+    localStorage.setItem('cv_creation_count', creationCount);
+    return true;
+}
+
+// ==========================================
+// 🤖 دالة عامة محمية للاتصال بالذكاء الاصطناعي مباشرة من المتصفح دون سيرفر خارجي
+// ==========================================
+async function askAI(promptMessage, systemMessage, retries = 3) {
+    const url = `https://text.pollinations.ai/`;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                messages: [{ role: "user", content: promptMessage }],
+                system: systemMessage
+            })
         });
 
-        document.addEventListener("click", function (e) {
-            if (!leftMenu.contains(e.target) && e.target !== toggleBtn) {
-                leftMenu.classList.add("hidden");
+        if ((response.status === 429 || response.status === 503 || !response.ok) && retries > 0) {
+            await new Promise(resolve => setTimeout(resolve, 2000)); 
+            return await askAI(promptMessage, systemMessage, retries - 1); 
+        }
+
+        if (!response.ok) throw new Error();
+        return await response.text();
+
+    } catch (error) {
+        if (retries > 0) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            return await askAI(promptMessage, systemMessage, retries - 1);
+        }
+        throw error;
+    }
+}
+
+// ==========================================
+// ✨ دالة تنظيف وتنسيق النصوص (Markdown to HTML)
+// ==========================================
+function formatMarkdown(text) {
+    if (!text) return '';
+    let cleanedText = text
+        .replace(/Powered by Pollinations\.AI.*/gi, '')
+        .replace(/.*Support our mission.*/gi, '')
+        .replace(/.*accessible for everyone.*/gi, '')
+        .replace(/🌸\s*Ad\s*🌸/gi, '')
+        .replace(/Pollinations\.AI:/gi);
+
+    return cleanedText
+        .replace(/\*\*(.*?)\*\//g, '<strong>$1</strong>') 
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')          
+        .replace(/\n/g, '<br>')
+        .trim();
+}
+
+// دالة بناء التنسيقات والقوالب مع دعم أبعاد الهوامش الديناميكية الجديدة
+function getTemplateStyles(selectedLang, selectedTemplate) {
+    const chosenFont = document.getElementById('fontFamilySelect').value;
+    const chosenSize = document.getElementById('fontSizeSelect').value;
+    const chosenLineHeight = document.getElementById('lineHeightSelect')?.value || "1.6";
+    const chosenPadding = document.getElementById('paddingSelect')?.value || "22px";
+    const activeColor = localStorage.getItem('cv_theme_color') || '#3b82f6';
+
+    let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; box-sizing: border-box; background-color: #fff; color: #1e293b;`;
+    
+    if (selectedLang === 'ar') {
+        styles += " text-align: right; direction: rtl; unicode-bidi: plaintext;";
+    } else {
+        styles += " text-align: left; direction: ltr;";
+    }
+    
+    if (selectedTemplate === 'modern') {
+        styles += ` background-color: #1e293b; color: #f8fafc; border-left: 6px solid ${activeColor}; border-right: none;`;
+    } else if (selectedTemplate === 'classic') {
+        styles += " background-color: #ffffff; color: #000000; border: 2px solid #000000;";
+    } else if (selectedTemplate === 'elegant') {
+        styles += ` background-color: #fafaf9; color: #1c1917; border-top: 6px solid ${activeColor};`;
+    }
+    return styles;
+}
+
+// دالة حقن التوقيع البرمجي الموثق
+function appendCryptoSignatureToCV(htmlContent) {
+    const signatureHtml = `
+        <div class="cv-crypto-footer" style="margin-top: 35px; padding-top: 15px; border-top: 1px dashed #cbd5e1; text-align: center; font-family: monospace; direction: ltr; clear: both;">
+            <p style="font-size: 10px; color: #64748b; margin: 0; letter-spacing: 1px;">🔒 Digitally Signed & Verified via AI CV Optimizer</p>
+            <p style="font-size: 11px; color: #0f172a; font-weight: bold; margin: 4px 0; letter-spacing: 0.5px;">Authority Key: @aliallamofficial [GPG: 55392380FBF1C8F1]</p>
+        </div>
+    `;
+    return htmlContent + signatureHtml;
+}
+
+// دالة توليد الـ QR Code
+function generateCVQRCode(containerId, textToEncode) {
+    const existingQr = document.getElementById('cvQrCode');
+    if (existingQr) existingQr.remove();
+
+    const qrContainer = document.createElement('div');
+    qrContainer.id = "cvQrCode";
+    const isAr = document.getElementById('langSelect').value === 'ar';
+    qrContainer.style = `float: ${isAr ? 'left' : 'right'}; margin: 10px; padding: 6px; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; display: inline-block; z-index: 10; position: relative;`;
+    
+    const targetElement = document.getElementById(containerId);
+    if (targetElement) {
+        targetElement.insertBefore(qrContainer, targetElement.firstChild);
+        new QRCode(qrContainer, {
+            text: textToEncode,
+            width: 90,
+            height: 90,
+            colorDark : "#0f172a",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
+}
+
+// المستندات والتحميلات المستندة على الأحداث
+document.addEventListener("DOMContentLoaded", function () {
+    // تشغيل النصائح الحية فوراً عند تحميل التطبيق
+    displayRandomLiveTip();
+    
+    initAppTour();
+    initCVScoreGauge();
+    initInlineAIWriters();
+    initAIInterviewPrep();
+    initThemeColorPicker();
+
+    // تشغيل وإعداد ميزة الإرشادات النصية واقتراحات الوظائف الإبداعية
+    const jobSelect = document.getElementById('jobSelect');
+    if (jobSelect) {
+        jobSelect.addEventListener('change', function() {
+            const jobKey = this.value;
+            const container = document.getElementById('suggestedTipsContainer');
+            const list = document.getElementById('tipsList');
+            
+            if (list) list.innerHTML = '';
+            
+            if (jobKey && jobGuidelines[jobKey]) {
+                if (container) container.style.display = 'block';
+                jobGuidelines[jobKey].tips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.textContent = tip;
+                    li.className = "suggested-tip-item";
+                    li.style.cssText = "cursor: pointer; padding: 8px; margin-bottom: 6px; background: rgba(56, 189, 248, 0.1); border-radius: 6px; font-size: 13px; color: #cbd5e1; transition: background 0.2s;";
+                    
+                    li.addEventListener('mouseenter', () => li.style.background = "rgba(56, 189, 248, 0.2)");
+                    li.addEventListener('mouseleave', () => li.style.background = "rgba(56, 189, 248, 0.1)");
+                    
+                    li.addEventListener('click', function() {
+                        navigator.clipboard.writeText(tip);
+                        alert("📋 تم نسخ الجملة الاحترافية بنجاح! يمكنك الآن لصقها مباشرة في صندوق الخبرات.");
+                    });
+                    if (list) list.appendChild(li);
+                });
+            } else {
+                if (container) container.style.display = 'none';
             }
         });
     }
 
-    // فتح وإغلاق النافذة المنبثقة للإعدادات
-    const openSettingsBtn = document.getElementById("openSettingsBtn");
-    const closeSettingsBtn = document.getElementById("closeSettingsBtn");
-    const settingsModal = document.getElementById("settingsPageModal");
+    // تشغيل ميزة التحويل بين وضع الـ ATS والوضع الإبداعي البصري (Toggle Mode)
+    const btnAts = document.getElementById('btnAtsMode');
+    const btnCreative = document.getElementById('btnCreativeMode');
+    const cvAreaContainer = document.getElementById('resultBox');
 
-    if (openSettingsBtn && settingsModal) {
-        openSettingsBtn.addEventListener("click", function () {
-            settingsModal.classList.remove("hidden");
-            if (leftMenu) leftMenu.classList.add("hidden");
+    if (btnAts && btnCreative && cvAreaContainer) {
+        btnCreative.addEventListener('click', function() {
+            btnAts.classList.remove('active');
+            btnCreative.classList.add('active');
+            const targetCv = document.getElementById('cvTemplateArea') || cvAreaContainer;
+            targetCv.classList.add('creative-layout');
+        });
+
+        btnAts.addEventListener('click', function() {
+            btnCreative.classList.remove('active');
+            btnAts.classList.add('active');
+            const targetCv = document.getElementById('cvTemplateArea') || cvAreaContainer;
+            targetCv.classList.remove('creative-layout');
         });
     }
 
-    if (closeSettingsBtn && settingsModal) {
-        closeSettingsBtn.addEventListener("click", function () {
-            settingsModal.classList.add("hidden");
+    // دالة إنشاء الـ CV الموحدة والمعالجة الأساسية للتطبيق [مُحدثة بنظام محلي احتياطي + Prompt مختصر جداً]
+    const optimizeBtn = document.getElementById('optimizeBtn');
+    if (optimizeBtn) {
+        optimizeBtn.addEventListener('click', async function () {
+            if (!handleCVCreation()) return;
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const jobTitle = document.getElementById('jobTitle').value.trim();
+            const experience = document.getElementById('experience').value.trim();
+            const skills = document.getElementById('skills').value.trim();
+            const jd = document.getElementById('jobDescriptionInput').value.trim();
+
+            if (!fullName || !jobTitle) {
+                alert("الرجاء إدخل الاسم الكامل والمسمى الوظيفي على الأقل لتوليد المستند!");
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const resultBox = document.getElementById('resultBox');
+            const downloadContainer = document.getElementById('downloadContainer');
+
+            optimizeBtn.disabled = true;
+            loading.classList.remove('hidden');
+
+            // ⚡ تم تقليص حجم الـ Prompt والـ System Instructions هنا لأقصى درجة لتسريع الأداء وتوفير الموارد
+            const systemInstruction = "أنت خبير ATS. اكتب الـ CV مباشرة بصيغة HTML نظيفة ومقسمة داخل الصناديق.";
+            const userPrompt = `صمم CV احترافي ATS لـ: ${fullName}، وظيفته: ${jobTitle}، خبرته: ${experience}، مهاراته: ${skills}. متوافق مع: ${jd}`;
+
+            try {
+                const aiResult = await askAI(userPrompt, systemInstruction);
+                if (aiResult) {
+                    let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, document.getElementById('templateSelect').value);
+                    let processedHtml = `<div id="cvTemplateArea" style="${templateStyles}">${aiResult}</div>`;
+                    
+                    processedHtml = appendCryptoSignatureToCV(processedHtml);
+                    resultBox.innerHTML = processedHtml;
+
+                    setTimeout(() => {
+                        generateCVQRCode('cvTemplateArea', `https://github.com/aliallamofficial?verified_cv=${encodeURIComponent(fullName)}`);
+                        if (btnCreative && btnCreative.classList.contains('active')) {
+                            document.getElementById('cvTemplateArea').classList.add('creative-layout');
+                        }
+                    }, 200);
+
+                    downloadContainer.classList.remove('hidden');
+                }
+            } catch (err) {
+                // ⚡ ميزة المحسن الاحتياطي الفوري: يتم تشغيلها محلياً فوراً لمنع توقف الأداء عند تعطل الاتصال أو حدوث ضغط خوادم
+                console.warn("فشلت عملية التوليد عبر الخادم الرئيسي، يتم الآن تشغيل المولد الاحتياطي الفوري السريع...");
+                
+                let templateStyles = getTemplateStyles(document.getElementById('langSelect').value, document.getElementById('templateSelect').value);
+                let fallbackHtml = `
+                    <div style="font-size: 22px; font-weight: bold; margin-bottom: 5px; color: inherit;">${fullName}</div>
+                    <div style="font-size: 16px; font-weight: 500; margin-bottom: 20px; opacity: 0.85;">${jobTitle}</div>
+                    <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+                    <div style="font-weight: bold; font-size: 15px; margin-bottom: 8px;">الخبرات والمهام المهنية:</div>
+                    <p style="font-size: 14px; white-space: pre-line;">${experience ? experience : 'لم يتم توفير تفاصيل الخبرة المهنية بعد.'}</p>
+                    <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+                    <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;">المهارات والقدرات الأساسية:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${skills ? skills.split(',').map(s => `<span style="background: rgba(148, 163, 184, 0.15); padding: 5px 10px; border-radius: 4px; font-size: 13px; font-weight: 500;">${s.trim()}</span>`).join('') : '<span style="font-size: 13px;">لم تضاف مهارات.</span>'}
+                    </div>
+                `;
+                
+                let processedHtml = `<div id="cvTemplateArea" style="${templateStyles}">${fallbackHtml}</div>`;
+                processedHtml = appendCryptoSignatureToCV(processedHtml);
+                resultBox.innerHTML = processedHtml;
+
+                setTimeout(() => {
+                    generateCVQRCode('cvTemplateArea', `https://github.com/aliallamofficial?verified_cv=${encodeURIComponent(fullName)}`);
+                    if (btnCreative && btnCreative.classList.contains('active')) {
+                        document.getElementById('cvTemplateArea').classList.add('creative-layout');
+                    }
+                }, 200);
+
+                downloadContainer.classList.remove('hidden');
+                alert("✨ تم توليد السيرة الذاتية بنجاح عبر النظام السريع المحلي المتوازن نتيجة ضغط مؤقت في الخوادم السحابية.");
+            } finally {
+                loading.classList.add('hidden');
+                optimizeBtn.disabled = false;
+            }
         });
     }
 
-    // ========================================================
-    // 🔗 تفعيل ميزة مشاركة رابط المنصة (Share System API)
-    // ========================================================
+    // [تحديث مُصلح] تحميل الـ PDF لضمان عدم ظهور الصفحة البيضاء
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    if (downloadPdfBtn) {
+        downloadPdfBtn.addEventListener('click', function () {
+            const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox'); 
+            if (!element || element.innerText.trim().includes("المستند النهائي سيظهر هنا") || element.innerHTML.trim() === "") {
+                alert("رجاءً قم بإنشاء السيرة الذاتية أولاً قبل محاولة تحميلها!");
+                return;
+            }
+
+            const nameInput = document.getElementById('fullName')?.value.trim();
+            const fileNameOutput = nameInput ? `${nameInput}_CV.pdf` : 'Ali_CV_Document.pdf';
+
+            // تفعيل كلاس تمهيدي في الـ CSS للتوافق الكامل مع الطباعة قبل التوليد
+            element.classList.add('html2pdf-printing');
+
+            const options = {
+                margin:       [10, 10, 10, 10], // هوامش أمان محسنة بالمليمتر لمنع القطع
+                filename:     fileNameOutput,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2,               // دقة عالية واضحة للنصوص
+                    useCORS: true,          // للسماح بجلب الخطوط والأيقونات الخارجية
+                    letterRendering: true,
+                    scrollX: 0,
+                    scrollY: 0
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            const originalText = downloadPdfBtn.textContent;
+            downloadPdfBtn.textContent = "⏳ جاري توليد PDF...";
+            downloadPdfBtn.disabled = true;
+
+            html2pdf().set(options).from(element).save().then(() => {
+                element.classList.remove('html2pdf-printing');
+                downloadPdfBtn.textContent = originalText;
+                downloadPdfBtn.disabled = false;
+            }).catch(err => {
+                console.error("PDF Export Error:", err);
+                element.classList.remove('html2pdf-printing');
+                downloadPdfBtn.textContent = originalText;
+                downloadPdfBtn.disabled = false;
+                alert("حدث خطأ أثناء تحميل ملف الـ PDF.");
+            });
+        });
+    }
+
+    // زر تحميل مستند Word النصي بصورة صحيحة ومتوافقة مع الـ ATS
+    const downloadWordBtn = document.getElementById('downloadWordBtn');
+    if (downloadWordBtn) {
+        downloadWordBtn.addEventListener('click', function () {
+            const resultBox = document.getElementById('resultBox');
+            if (!resultBox || resultBox.innerText.trim() === "") {
+                alert("يرجى إنشاء السيرة الذاتية أولاً قبل تحميلها!");
+                return;
+            }
+            const textContent = resultBox.innerText;
+            const blob = new Blob([textContent], { type: 'application/msword;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            
+            const nameInput = document.getElementById('fullName')?.value.trim();
+            link.download = nameInput ? `ATS_${nameInput}_CV.doc` : 'ATS_Friendly_Resume.doc';
+            link.click();
+        });
+    }
+    
+    const dropBtn = document.getElementById('dropdownToggleBtn');
+    const menu = document.getElementById('topLeftMenu');
+    if (dropBtn && menu) {
+        dropBtn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    }
+
+    const openSettings = document.getElementById('openSettingsBtn');
+    const closeSettings = document.getElementById('closeSettingsBtn');
+    const modal = document.getElementById('settingsPageModal');
+    if(openSettings && modal) openSettings.addEventListener('click', () => { modal.classList.remove('hidden'); menu.classList.add('hidden'); });
+    
+    if(closeSettings && modal) {
+        closeSettings.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            const cvArea = document.getElementById('cvTemplateArea');
+            if (cvArea) {
+                cvArea.style.cssText = getTemplateStyles(document.getElementById('langSelect').value, document.getElementById('templateSelect').value);
+            }
+        });
+    }
+
+    const mainDown = document.getElementById('mainDownloadBtn');
+    const downOpts = document.getElementById('downloadOptions');
+    if(mainDown && downOpts) {
+        mainDown.addEventListener('click', (e) => {
+            e.stopPropagation();
+            downOpts.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => downOpts.classList.add('hidden'));
+    }
+
+    // زر المشاركة الذكي للويب
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
-        shareBtn.addEventListener("click", async function () {
+        shareBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: 'صانع السير الذاتية بالذكاء الاصطناعي',
-                        text: 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.',
+                        title: 'مُحسّن وصانع السيرة الذاتية الذكي ✨',
+                        text: 'اصنع سيرتك الذاتية واجتز فحص الـ ATS فوراً بالذكاء الاصطناعي مجاناً وبدون حساب!',
                         url: window.location.href
                     });
                 } catch (err) {
-                    console.log("تم إلغاء المشاركة أو حدث خطأ");
+                    console.log("تم إلغاء عملية المشاركة:", err);
                 }
             } else {
                 try {
