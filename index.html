@@ -109,26 +109,54 @@
                 <p id="cvScoreFeedback" style="margin: 8px 0 0 0; font-size: 12px; color: #64748b; line-height: 1.4;">ابدأ بكتابة بياناتك ليقوم مستشار الذكاء الاصطناعي بتقييمها لحظياً...</p>
             </div>
 
+            <div style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; background: rgba(15, 23, 42, 0.6); padding: 12px 18px; border-radius: 8px; border: 1px solid #334155;">
+                <div>
+                    <span style="display: block; color: #fff; font-weight: bold; font-size: 14px;">🎯 وضعية التصميم الذكي:</span>
+                    <span id="modeDescription" style="color: #94a3b8; font-size: 12px;">المسار القياسي المتوافق مع الفلترة الإلكترونية وأنظمة الشركات.</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span id="atsModeLabel" style="color: #38bdf8; font-size: 13px; font-weight: bold;">ATS Mode</span>
+                    <label class="switch" style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                        <input type="checkbox" id="creativeModeToggle" style="opacity: 0; width: 0; height: 0;">
+                        <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #475569; transition: .3s; border-radius: 24px;"></span>
+                    </label>
+                    <span id="creativeModeLabel" style="color: #64748b; font-size: 13px; font-weight: bold;">Creative Mode</span>
+                </div>
+            </div>
+
             <div style="margin-bottom: 15px;">
                 <label for="fullName" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الاسم الكامل:</label>
                 <input type="text" id="fullName" placeholder="مثال: علي علام" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label for="jobTitle" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المسمى الوظيفي المستهدف:</label>
-                <input type="text" id="jobTitle" placeholder="مثال: مهندس برمجيات" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
+                <label for="jobTitleSelect" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المسمى الوظيفي المستهدف:</label>
+                <select id="jobTitleSelect" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; margin-bottom: 10px;">
+                    <option value="" disabled selected>-- اختر مجال وظيفتك لتوليد إرشادات مخصصة --</option>
+                    <option value="software">تطوير البرمجيات وتكنولوجيا المعلومات (Software Engineering)</option>
+                    <option value="marketing">التسويق الرقمي وصناعة المحتوى (Digital Marketing)</option>
+                    <option value="design">التصميم الجرافيكي والواجهات (Graphic & UI/UX Design)</option>
+                    <option value="sales">المبيعات وتطوير الأعمال (Sales & Business Development)</option>
+                    <option value="hr">الموارد البشرية والتوظيف (HR & Recruitment)</option>
+                </select>
+                <input type="text" id="jobTitle" placeholder="أو اكتب مسمى وظيفي مخصص هنا..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
+                
+                <div id="jobSuggestionsBox" class="hidden" style="margin-top: 10px; background: #0f172a; border: 1px solid #38bdf8; border-radius: 6px; padding: 12px;">
+                    <span style="font-size: 12px; color: #38bdf8; font-weight: bold; display: block; margin-bottom: 8px;">✨ مه صياغات ATS جاهزة ومقترحة لوظيفتك (انقر للإضافة فوراً):</span>
+                    <div id="suggestionsList" style="display: flex; flex-direction: column; gap: 6px;"></div>
+                </div>
             </div>
 
             <div style="margin-bottom: 15px;">
                 <label for="experience" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">الخبرات المهنية السابقة:</label>
-                <textarea id="experience" rows="4" placeholder="اذكر الشركات والمهام الرئيسية التي قمت بها باختصار..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; resize: vertical;"></textarea>
+                <textarea id="experience" rows="4" placeholder="اذكر الشركات والمهام الرئيسية التي قمت بها باختصار أو انقر على العبارات المقترحة بالأعلى..." style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; resize: vertical;"></textarea>
                 <button class="inline-ai-btn" data-field="experience" style="margin-top: 6px; padding: 5px 12px; background: #0f172a; border: 1px solid #38bdf8; color: #38bdf8; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;">🪄 تحسين صياغة الخبرات ذكياً (Action Verbs)</button>
             </div>
 
             <div style="margin-bottom: 20px;">
                 <label for="skills" style="display: block; color: #cbd5e1; margin-bottom: 8px; font-weight: bold;">المهارات (افصل بينها بفاصلة):</label>
                 <input type="text" id="skills" placeholder="JavaScript, Python, حل المشكلات, العمل الجماعي" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box;">
-                <button class="inline-ai-btn" data-field="skills" style="margin-top: 6px; padding: 5px 12px; background: #0f172a; border: 1px solid #38bdf8; color: #38bdf8; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;">🪄 تحسين وتتدقيق قسم المهارات ذكياً</button>
+                <button class="inline-ai-btn" data-field="skills" style="margin-top: 6px; padding: 5px 12px; background: #0f172a; border: 1px solid #38bdf8; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;">🪄 تحسين وتتدقيق قسم المهارات ذكياً</button>
             </div>
 
             <div style="margin-bottom: 25px; background: rgba(15, 23, 42, 0.4); padding: 15px; border: 1px dashed #475569; border-radius: 8px;">
@@ -266,18 +294,11 @@
             </div>
 
             <div class="modal-footer" style="padding: 20px 24px; background: #1f2937; border-top: 1px solid #374151; text-align: center; direction: rtl;">
-                <p id="copyrightText" style="margin: 0 0 12px 0; font-size: 14px; color: #cbd5e1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <p id="copyrightText" style="margin: 0; font-size: 14px; color: #cbd5e1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
                     <span>تم التطوير بكل فخر بواسطة <strong style="color: #60a5fa;">علي حاتم علام</strong> © 2026</span>
-                    
-                    <style>
-                        @media (min-width: 601px) {
-                            .mobile-only-badge { display: none !important; }
-                        }
-                    </style>
-                    <span class="mobile-only-badge" style="background: #2563eb; color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; font-family: monospace; display: inline-block; width: fit-content;">v1.0.1</span>
                 </p>
 
-                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px; color: #475569; font-size: 13px;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; margin-bottom: 15px; color: #475569; font-size: 13px;">
                     <a href="https://github.com/aliallamofficial" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">GitHub</a>
                     <span>|</span>
                     <a href="https://linkedin.com/in/aliallamofficial" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: bold;">LinkedIn</a>
@@ -328,32 +349,11 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            const cacheBuster = new Date().getTime();
-            
-            // 1. جلب رقم الإصدار تلقائياً من ملف التحديثات الخارجي version.json
-            fetch(`version.json?v=${cacheBuster}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    if (data && data.version) {
-                        const versionBadge = document.querySelector('.mobile-only-badge');
-                        if (versionBadge) {
-                            versionBadge.textContent = `v${data.version}`;
-                        }
-                    }
-                })
-                .catch(err => console.log("خطأ في جلب رقم الإصدار التلقائي:", err));
-
-            // 2. ميزة التحكم بظهور زر الإشعارات وتفاعله (المتصفحات المدعومة فقط)
+            // 1. ميزة التحكم بظهور زر الإشعارات وتفاعله
             const notifyBtn = document.getElementById('enableNotificationsBtn');
             if (notifyBtn) {
-                // الفحص: إذا كان المتصفح الحالي يدعم خاصية الإشعارات
                 if ('Notification' in window) {
-                    notifyBtn.style.display = 'block'; // إظهار الزر فوراً
-                    
-                    // إذا كان المستخدم قد منح الإذن للتطبيق مسبقاً
+                    notifyBtn.style.display = 'block';
                     if (Notification.permission === 'granted') {
                         notifyBtn.textContent = "تم تفعيل الإشعارات بنجاح! 🔔";
                         notifyBtn.style.background = "#10b981";
@@ -361,11 +361,9 @@
                         notifyBtn.disabled = true;
                     }
                 } else {
-                    // إذا كان مفتوحاً من WebView داخلي أو متصفح قديم لا يدعمها، يبقى الزر مخفياً تماماً
                     notifyBtn.style.display = 'none';
                 }
 
-                // برمجة حدث النقر لطلب الصلاحية من المتصفح وتعديل المظهر
                 notifyBtn.addEventListener('click', function() {
                     if ('Notification' in window) {
                         Notification.requestPermission().then(permission => {
@@ -382,6 +380,108 @@
                     }
                 });
             }
+
+            // 2. برمجة زر وضع القوالب (Creative Mode vs ATS Mode)
+            const creativeToggle = document.getElementById('creativeModeToggle');
+            const modeDesc = document.getElementById('modeDescription');
+            const atsLabel = document.getElementById('atsModeLabel');
+            const creativeLabel = document.getElementById('creativeModeLabel');
+
+            creativeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    modeDesc.textContent = "المسار الإبداعي المطور بصرياً، يركز على الألوان الجذابة والهندسة الرائعة لإبهار مسؤولي التوظيف.";
+                    creativeLabel.style.color = "#ec4899"; // لون وردي إبداعي
+                    atsLabel.style.color = "#64748b";
+                    document.body.classList.add('creative-layout-active'); // يتم التحكم بالتصميم في ملف الـ CSS الخاص بك بناءً على هذا الكلاس
+                } else {
+                    modeDesc.textContent = "المسار القياسي المتوافق مع الفلترة الإلكترونية وأنظمة الشركات.";
+                    atsLabel.style.color = "#38bdf8";
+                    creativeLabel.style.color = "#64748b";
+                    document.body.classList.remove('creative-layout-active');
+                }
+            });
+
+            // 3. قاعدة بيانات وصياغات المهام الجاهزة للـ ATS حسب نوع الوظيفة
+            const jobSuggestions = {
+                software: [
+                    "تطوير وبناء تطبيقات ويب متكاملة باستخدام React.js و Node.js بكفاءة وسرعة عالية.",
+                    "تحسين أداء قواعد البيانات وتقليل زمن الاستجابة بنسبة 30% من خلال مراجعة الاستعلامات.",
+                    "تصميم بنية برمجية نظيفة (Clean Architecture) لسهولة الصيانة والتوسع مستقبلياً."
+                ],
+                marketing: [
+                    "إدارة وإطلاق حملات إعلانية مدفوعة على Google و Meta بميزانية كبرى ورفع العائد ROI بنسبة 25%.",
+                    "تحسين محركات البحث (SEO) للموقع الإلكتروني مما ضاعف الزيارات المجانية خلال 6 أشهر.",
+                    "صياغة استراتيجيات محتوى متكاملة تهدف إلى زيادة التفاعل وبناء ولاء قوي للعلامة التجارية."
+                ],
+                design: [
+                    "تصميم واجهات مستخدم (UI/UX) مبتكرة للمنصات الرقمية بناءً على أبحاث تجربة المستخدم واختبارات الأداء.",
+                    "إعداد الهويات البصرية والشعارات المتكاملة للشركات الناشئة لتعزيز حضورها السوقي.",
+                    "التعاون مع فرق التطوير لضمان دقة تنفيذ التصاميم بصرياً وتقنياً بنسبة 100%."
+                ],
+                sales: [
+                    "تحقيق وتجاوز الأهداف البيعية الربع سنوية بنسبة تفوق 15% بانتظام عبر بناء علاقات قوية.",
+                    "تفاوض وإبرام اتفاقيات تجارية استراتيجية مع عملاء شركات كبرى لزيادة الحصة السوقية.",
+                    "تحليل بيانات السوق وسلوك المستهلكين لتحديد فرص البيع المتبادل والارتقاء بالصفقات."
+                ],
+                hr: [
+                    "إدارة دورة التوظيف الكاملة واستقطاب الكفاءات العالية لتقليص وقت ملء الشواغر بنسبة 20%.",
+                    "تطوير برامج تدريبية وتأهيلية متطورة للموظفين الجدد لرفع مستوى الإنتاجية والرضا الوظيفي.",
+                    "تحديث وصياغة اللوائح الداخلية وبناء بيئة عمل محفزة تقلل من معدل دوران الموظفين."
+                ]
+            };
+
+            const jobSelect = document.getElementById('jobTitleSelect');
+            const jobInput = document.getElementById('jobTitle');
+            const suggestionsBox = document.getElementById('jobSuggestionsBox');
+            const suggestionsList = document.getElementById('suggestionsList');
+            const experienceTextarea = document.getElementById('experience');
+
+            jobSelect.addEventListener('change', function() {
+                const selectedJob = this.value;
+                const selectedText = this.options[this.selectedIndex].text.split(' (')[0];
+                
+                // ملء حقل المسمى الوظيفي تلقائياً
+                jobInput.value = selectedText;
+                
+                // تفريغ وعرض المقترحات
+                suggestionsList.innerHTML = '';
+                if (jobSuggestions[selectedJob]) {
+                    jobSuggestions[selectedJob].forEach(text => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.textContent = text;
+                        btn.style.width = '100%';
+                        btn.style.padding = '8px 12px';
+                        btn.style.background = '#1e293b';
+                        btn.style.border = '1px solid #475569';
+                        btn.style.borderRadius = '4px';
+                        btn.style.color = '#e2e8f0';
+                        btn.style.textAlign = 'right';
+                        btn.style.cursor = 'pointer';
+                        btn.style.fontSize = '12px';
+                        btn.style.transition = 'background 0.2s';
+                        
+                        btn.addEventListener('mouseenter', () => btn.style.background = '#334155');
+                        btn.addEventListener('mouseleave', () => btn.style.background = '#1e293b');
+                        
+                        // عند الضغط على المقترح يتم حقنه في صندوق الخبرات
+                        btn.addEventListener('click', function() {
+                            if (experienceTextarea.value.trim() === '') {
+                                experienceTextarea.value = `• ${text}`;
+                            } else {
+                                experienceTextarea.value += `\n• ${text}`;
+                            }
+                            // إطلاق حدث التغيير لضمان تفاعل الـ Score bar إذا كان مبرمجاً عليه
+                            experienceTextarea.dispatchEvent(new Event('input'));
+                        });
+                        
+                        suggestionsList.appendChild(btn);
+                    });
+                    suggestionsBox.classList.remove('hidden');
+                } else {
+                    suggestionsBox.classList.add('hidden');
+                }
+            });
         });
     </script>
 </body>
