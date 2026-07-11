@@ -252,7 +252,7 @@ function initInlineAIWriters() {
                 }
             } catch (err) {
                 alert('عذراً، الخادم مشغول حالياً. حاول مجدداً.');
-            } {
+            } finally {
                 aiBtn.innerText = originalText;
                 aiBtn.disabled = false;
                 calculateCVScore();
@@ -262,12 +262,14 @@ function initInlineAIWriters() {
 }
 
 // ==========================================
-// ⚡ ربط الأزرار الرئيسية في واجهة التطبيق
+// ⚡ ربط الأزرار الرئيسية وإضافة ميزة التحميل المفقودة
 // ==========================================
 function initMainActionButtons() {
     const loading = document.getElementById('loading');
     const resultBox = document.getElementById('resultBox');
     const downloadContainer = document.getElementById('downloadContainer');
+    const mainDownloadBtn = document.getElementById('mainDownloadBtn');
+    const downloadOptions = document.getElementById('downloadOptions');
 
     const getInputs = () => ({
         fullName: document.getElementById('fullName')?.value.trim(),
@@ -282,6 +284,52 @@ function initMainActionButtons() {
         if (show) { loading?.classList.remove('hidden'); resultBox.innerHTML = ''; downloadContainer?.classList.add('hidden'); }
         else { loading?.classList.add('hidden'); }
     };
+
+    // إظهار وإخفاء خيارات القائمة المنسدلة للتحميل عند النقر على الزر الرئيسي
+    if (mainDownloadBtn && downloadOptions) {
+        mainDownloadBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            downloadOptions.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => {
+            downloadOptions.classList.add('hidden');
+        });
+    }
+
+    // تفعيل التحميل كـ PDF جاهز للطباعة بدقة عالية
+    document.getElementById('downloadPdfBtn')?.addEventListener('click', () => {
+        const element = document.getElementById('cvTemplateArea');
+        if (!element) { alert('الرجاء إنشاء السيرة الذاتية أولاً قبل التحميل!'); return; }
+        
+        const options = {
+            margin:       10,
+            filename:     `${getInputs().fullName || 'CV'}_Professional_Resume.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().set(options).from(element).save();
+    });
+
+    // تفعيل التحميل كـ ملف Word قابل للتعديل (.doc)
+    document.getElementById('downloadWordBtn')?.addEventListener('click', () => {
+        const element = document.getElementById('cvTemplateArea');
+        if (!element) { alert('الرجاء إنشاء السيرة الذاتية أولاً قبل التحميل!'); return; }
+        
+        const htmlContent = element.innerHTML;
+        const blob = new Blob(['\ufeff' + htmlContent], {
+            type: 'application/msword;charset=utf-8'
+        });
+        
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${getInputs().fullName || 'CV'}_Editable_Resume.doc`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
 
     // 1. زر إنشاء وتحسين السيرة الذاتية الذكية
     document.getElementById('optimizeBtn')?.addEventListener('click', async (e) => {
@@ -313,6 +361,7 @@ function initMainActionButtons() {
             const res = await askAI(`اكتب رسالة تغطية (Cover Letter) احترافية ومقنعة لوظيفة ${data.jobTitle} باسم ${data.fullName || 'المتقدم للوظيفة'}.`, "أنت كاتب رسائل توظيف محترف.");
             if (res && resultBox) {
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}"><h3>✉️ رسالة التغطية الاحترافية:</h3><br>${formatMarkdown(res)}</div>`;
+                downloadContainer?.classList.remove('hidden');
             }
         } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
         finally { triggerLoading(false); }
