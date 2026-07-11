@@ -200,7 +200,6 @@ async function askAI(promptMessage, systemMessage) {
         if (!response.ok) throw new Error();
         let rawText = await response.text();
         
-        // تنظيف وحجب كافة التذييلات الترويجية والملاحظات نهائياً من Pollinations
         let cleanText = rawText
             .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '')
             .replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '')
@@ -231,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initAppTour();
     initCVScoreGauge();
 
-    // عناصر لوحة التحكم والتحميل
     const loading = document.getElementById('loading');
     const resultBox = document.getElementById('resultBox');
     const downloadContainer = document.getElementById('downloadContainer');
@@ -255,109 +253,164 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // 1️⃣ [تفعيل] زر إنشاء وتحسين السيرة الذاتية الذكية 
-    document.getElementById('optimizeBtn')?.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const data = getInputs();
-        if (!data.fullName || !data.jobTitle) { 
-            alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً لكي يستطيع الذكاء الاصطناعي العمل!'); 
-            return; 
-        }
-
-        triggerLoading(true);
-        try {
-            const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
-            const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية فقط بشكل منسق وجاهز دون أي هوامش أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
-            if (res && resultBox) {
-                resultBox.innerHTML = `<div id="cvTemplateArea">${formatMarkdown(res)}</div>`;
-                if(downloadContainer) downloadContainer.classList.remove('hidden');
+    // 1️⃣ زر إنشاء وتحسين السيرة الذاتية الذكية 
+    const optimizeBtn = document.getElementById('optimizeBtn');
+    if (optimizeBtn) {
+        optimizeBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const data = getInputs();
+            if (!data.fullName || !data.jobTitle) { 
+                alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً لكي يستطيع الذكاء الاصطناعي العمل!'); 
+                return; 
             }
-        } catch (err) {
-            alert('حدث خطأ أثناء الاتصال بالخادم، يرجى إعادة المحاولة.');
-        } finally { 
-            triggerLoading(false); 
-        }
-    });
 
-    // 2️⃣ [تفعيل] زر تحميل الـ PDF القاطع والمانع للصفحات البيضاء
-    document.getElementById('downloadPdfBtn')?.addEventListener('click', function (e) {
-        e.preventDefault();
-        const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox');
-        if (!element || element.innerText.trim() === "") { 
-            alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
-            return; 
-        }
+            triggerLoading(true);
+            try {
+                const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
+                const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية فقط بشكل منسق وجاهز دون أي هوامش أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
+                if (res && resultBox) {
+                    resultBox.innerHTML = `<div id="cvTemplateArea">${formatMarkdown(res)}</div>`;
+                    if(downloadContainer) downloadContainer.classList.remove('hidden');
+                }
+            } catch (err) {
+                alert('حدث خطأ أثناء الاتصال بالخادم، يرجى إعادة المحاولة.');
+            } finally { 
+                triggerLoading(false); 
+            }
+        });
+    }
 
-        const originalBtnText = this.innerHTML;
-        this.innerText = "⏳ جاري تحضير ملف الـ PDF...";
-        this.disabled = true;
+    // 2️⃣ [إصلاح حاسم للتحميل] - برمجة فتح القائمة المنسدلة للتحميل وضمان عمل الأزرار الداخلية
+    const mainDownloadBtn = document.getElementById('mainDownloadBtn');
+    const downloadOptions = document.getElementById('downloadOptions');
 
-        // إنشاء إطار مخفي مستقل تماماً لفرض ستايل الطباعة والنصوص الداكنة الصارمة
-        const iframe = document.createElement('iframe');
-        iframe.style.position = 'fixed';
-        iframe.style.width = '800px'; 
-        iframe.style.height = '1130px';
-        iframe.style.visibility = 'hidden';
-        iframe.style.left = '-9999px';
-        document.body.appendChild(iframe);
+    if (mainDownloadBtn && downloadOptions) {
+        // فتح وإغلاق القائمة عند الضغط على الزر الرئيسي
+        mainDownloadBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            downloadOptions.classList.toggle('hidden');
+        });
 
-        const iframeDoc = iframe.contentWindow.document;
-        iframeDoc.open();
-        iframeDoc.write(`
-            <!DOCTYPE html>
-            <html dir="rtl" lang="ar">
-            <head>
-                <meta charset="utf-8">
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-                    body {
-                        background-color: #ffffff !important;
-                        color: #1e293b !important;
-                        font-family: 'Cairo', sans-serif;
-                        padding: 40px;
-                        margin: 0;
-                        box-sizing: border-box;
-                        font-size: 14px;
-                        line-height: 1.7;
-                    }
-                    h1, h2, h3, h4, strong { color: #0f172a !important; font-weight: bold; margin-top: 15px; margin-bottom: 10px; }
-                    h1 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
-                    h2 { font-size: 18px; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
-                    p, span, div, li { color: #334155 !important; }
-                    ul, ol { padding-right: 25px; margin: 10px 0; }
-                    li { margin-bottom: 6px; }
-                </style>
-            </head>
-            <body><div>${element.innerHTML}</div></body>
-            </html>
-        `);
-        iframeDoc.close();
+        // إغلاق القائمة إذا تم الضغط في أي مكان خارجها
+        document.addEventListener('click', function () {
+            downloadOptions.classList.add('hidden');
+        });
+    }
 
-        setTimeout(() => {
+    // 3️⃣ زر تحميل الـ PDF القاطع والمانع للصفحات البيضاء (داخل القائمة المنسدلة)
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    if (downloadPdfBtn) {
+        downloadPdfBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox');
+            if (!element || element.innerText.trim() === "") { 
+                alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
+                return; 
+            }
+
+            const originalBtnText = this.innerHTML;
+            this.innerText = "⏳ جاري التحضير...";
+            this.disabled = true;
+
+            const iframe = document.createElement('iframe');
+            iframe.style.position = 'fixed';
+            iframe.style.width = '800px'; 
+            iframe.style.height = '1130px';
+            iframe.style.visibility = 'hidden';
+            iframe.style.left = '-9999px';
+            document.body.appendChild(iframe);
+
+            const iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(`
+                <!DOCTYPE html>
+                <html dir="rtl" lang="ar">
+                <head>
+                    <meta charset="utf-8">
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+                        body {
+                            background-color: #ffffff !important;
+                            color: #1e293b !important;
+                            font-family: 'Cairo', sans-serif;
+                            padding: 40px;
+                            margin: 0;
+                            box-sizing: border-box;
+                            font-size: 14px;
+                            line-height: 1.7;
+                        }
+                        h1, h2, h3, h4, strong { color: #0f172a !important; font-weight: bold; margin-top: 15px; margin-bottom: 10px; }
+                        h1 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+                        h2 { font-size: 18px; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
+                        p, span, div, li { color: #334155 !important; }
+                        ul, ol { padding-right: 25px; margin: 10px 0; }
+                        li { margin-bottom: 6px; }
+                    </style>
+                </head>
+                <body><div>${element.innerHTML}</div></body>
+                </html>
+            `);
+            iframeDoc.close();
+
+            setTimeout(() => {
+                const fullNameInput = document.getElementById('fullName')?.value.trim();
+                const pdfFileName = fullNameInput ? `${fullNameInput}_CV.pdf` : 'My_Resume.pdf';
+
+                const options = {
+                    margin:       10,
+                    filename:     pdfFileName,
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                
+                html2pdf().set(options).from(iframeDoc.body).save().then(() => {
+                    document.body.removeChild(iframe); 
+                    this.innerHTML = originalBtnText;
+                    this.disabled = false;
+                }).catch((err) => {
+                    document.body.removeChild(iframe);
+                    this.innerHTML = originalBtnText;
+                    this.disabled = false;
+                });
+            }, 300);
+        });
+    }
+
+    // 4️⃣ زر تحميل ملف الـ Word (داخل القائمة المنسدلة)
+    const downloadWordBtn = document.getElementById('downloadWordBtn');
+    if (downloadWordBtn) {
+        downloadWordBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox');
+            if (!element || element.innerText.trim() === "") { 
+                alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
+                return; 
+            }
+
             const fullNameInput = document.getElementById('fullName')?.value.trim();
-            const pdfFileName = fullNameInput ? `${fullNameInput}_CV.pdf` : 'My_Resume.pdf';
-
-            const options = {
-                margin:       10,
-                filename:     pdfFileName,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            const wordFileName = fullNameInput ? `${fullNameInput}_CV.doc` : 'My_Resume.doc';
             
-            html2pdf().set(options).from(iframeDoc.body).save().then(() => {
-                document.body.removeChild(iframe); 
-                this.innerHTML = originalBtnText;
-                this.disabled = false;
-            }).catch((err) => {
-                document.body.removeChild(iframe);
-                this.innerHTML = originalBtnText;
-                this.disabled = false;
-            });
-        }, 300);
-    });
+            const htmlContent = `
+              <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+              <head><title>CV</title><meta charset="utf-8"><style>body { font-family: Arial, sans-serif; direction: rtl; text-align: right; }</style></head>
+              <body>${element.innerHTML}</body>
+              </html>
+            `;
 
-    // ⚙️ تهيئة القائمة العلوية الجانبية المنسدلة للوحة التحكم والإعدادات
+            const blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = wordFileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    }
+
+    // القائمة العلوية المنسدلة للإعدادات
     const toggleBtn = document.getElementById("dropdownToggleBtn");
     const leftMenu = document.getElementById("topLeftMenu");
 
@@ -373,7 +426,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // فتح وإغلاق النافذة المنبثقة للإعدادات
+    // إعدادات النوافذ المنبثقة
     const openSettingsBtn = document.getElementById("openSettingsBtn");
     const closeSettingsBtn = document.getElementById("closeSettingsBtn");
     const settingsModal = document.getElementById("settingsPageModal");
@@ -390,7 +443,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // تفعيل ميزة مشاركة رابط المنصة 
+    // ميزة المشاركة
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async function () {
@@ -409,29 +462,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 } catch (err) {
                     alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
                 }
-            }
-        });
-    }
-
-    // تفعيل زر الإشعارات 
-    const notificationBtn = document.getElementById("enableNotificationsBtn");
-    if (notificationBtn) {
-        notificationBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            if (!("Notification" in window)) {
-                alert("عذراً، البيئة الحالية لا تدعم ميزة الإشعارات بشكل مباشر.");
-                return;
-            }
-            if (Notification.permission === "granted") {
-                alert("🔔 الإشعارات مفعلة بالفعل ومصرح بها بنجاح!");
-            } else if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(function (permission) {
-                    if (permission === "granted") {
-                        alert("🎉 تم تفعيل الإشعارات بنجاح!");
-                    } else {
-                        alert("⚠️ تم رفض إذن الإشعارات.");
-                    }
-                });
             }
         });
     }
