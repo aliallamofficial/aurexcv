@@ -349,7 +349,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. ميزة التحكم بظهور زر الإشعارات وتفاعله
             const notifyBtn = document.getElementById('enableNotificationsBtn');
             if (notifyBtn) {
                 if ('Notification' in window) {
@@ -381,7 +380,6 @@
                 });
             }
 
-            // 2. برمجة زر وضع القوالب (Creative Mode vs ATS Mode)
             const creativeToggle = document.getElementById('creativeModeToggle');
             const modeDesc = document.getElementById('modeDescription');
             const atsLabel = document.getElementById('atsModeLabel');
@@ -401,7 +399,6 @@
                 }
             });
 
-            // 3. قاعدة بيانات وصياغات المهام الجاهزة للـ ATS حسب نوع الوظيفة
             const jobSuggestions = {
                 software: [
                     "تطوير وبناء تطبيقات ويب متكاملة باستخدام React.js و Node.js بكفاءة وسرعة عالية.",
