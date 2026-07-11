@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 3️⃣ زر تحميل الـ PDF المطور (تم التخلص من الـ iframe لإنهاء مشكلة الصفحة البيضاء تماماً)
+    // 3️⃣ زر تحميل الـ PDF المطور بتنسيق فخم واحترافي 100% ومتوافق مع ATS
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -308,32 +308,103 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const originalBtnText = this.innerHTML;
-            this.innerText = "⏳ جاري التحضير...";
+            this.innerText = "⏳ جاري تنسيق وتحميل الـ CV...";
             this.disabled = true;
 
-            // 🚀 إنشاء حاوية مؤقتة داخل الـ DOM الرئيسي (خارج نطاق الشؤية لمنع قفز الصفحة)
+            // 🚀 إنشاء حاوية مؤقتة داخل الـ DOM الرئيسي لتطبيق التنسيق الفاخر
             const printArea = document.createElement('div');
             printArea.style.position = 'absolute';
             printArea.style.left = '-9999px';
             printArea.style.top = '0';
-            printArea.style.width = '794px'; // عرض صفحة A4 القياسي بـ البكسل
+            printArea.style.width = '794px'; // عرض صفحة A4 القياسي
             printArea.style.background = '#ffffff';
             printArea.style.color = '#1e293b';
-            printArea.style.padding = '40px';
+            printArea.style.padding = '50px 60px'; // هوامش مريحة للطباعة
             printArea.style.direction = 'rtl';
             printArea.style.fontFamily = 'Cairo, sans-serif';
 
-            // حقن التنسيقات والمحتوى مباشرة لضمان قراءتها بواسطة المعالج الرسومي
+            // حقن التنسيقات الفاخرة والمحتوى مباشرة لضمان أعلى جودة ودقة
             printArea.innerHTML = `
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-                    .pdf-render-box { font-family: 'Cairo', sans-serif; background-color: #ffffff !important; color: #1e293b !important; line-height: 1.7; font-size: 14px; }
-                    .pdf-render-box h1, .pdf-render-box h2, .pdf-render-box h3, .pdf-render-box strong { color: #0f172a !important; font-weight: bold; margin-top: 15px; margin-bottom: 10px; }
-                    .pdf-render-box h1 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
-                    .pdf-render-box h2 { font-size: 18px; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
-                    .pdf-render-box p, .pdf-render-box span, .pdf-render-box div, .pdf-render-box li { color: #334155 !important; }
-                    .pdf-render-box ul, .pdf-render-box ol { padding-right: 25px; margin: 10px 0; }
-                    .pdf-render-box li { margin-bottom: 6px; }
+                    
+                    /* التنسيق العام للمستند */
+                    .pdf-render-box { 
+                        font-family: 'Cairo', sans-serif; 
+                        background-color: #ffffff !important; 
+                        color: #2d3748 !important; 
+                        line-height: 1.8; 
+                        font-size: 14px; 
+                    }
+                    
+                    /* تخصيص الهيدر الرئيسي (الاسم والمعلومات) */
+                    .pdf-render-box h1 { 
+                        font-size: 28px; 
+                        font-weight: 700; 
+                        color: #1a365d !important; /* أزرق ملكي فاخر */
+                        text-align: center; 
+                        margin-bottom: 5px;
+                        margin-top: 0;
+                        letter-spacing: 0.5px;
+                    }
+                    
+                    /* المسمى الوظيفي */
+                    .pdf-render-box p:first-of-type, 
+                    .pdf-render-box strong:first-of-type {
+                        font-size: 16px;
+                        color: #4a5568 !important;
+                        text-align: center;
+                        font-weight: 600;
+                        margin-bottom: 15px;
+                    }
+                    
+                    /* تنسيق أقسام العناوين الرئيسية (مثل الخبرة المهنية، المهارات) */
+                    .pdf-render-box h2 { 
+                        font-size: 16px; 
+                        font-weight: 700;
+                        color: #1a365d !important;
+                        border-bottom: 2px solid #e2e8f0; 
+                        padding-bottom: 5px; 
+                        margin-top: 30px; 
+                        margin-bottom: 15px; 
+                        position: relative;
+                    }
+                    
+                    /* إضافة لمسة جمالية تحت العنوان الرئيسي */
+                    .pdf-render-box h2::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -2px;
+                        right: 0;
+                        width: 60px;
+                        height: 2px;
+                        background-color: #3182ce; /* لون أزرق مميز */
+                    }
+                    
+                    /* العناوين الفرعية (أسماء الشركات أو المهارات الفرعية) */
+                    .pdf-render-box h3, .pdf-render-box strong { 
+                        color: #2d3748 !important; 
+                        font-weight: 600; 
+                        font-size: 14px;
+                    }
+                    
+                    /* النصوص والفقرات الدخلية */
+                    .pdf-render-box p, .pdf-render-box span, .pdf-render-box div { 
+                        color: #4a5568 !important; 
+                        font-size: 14px;
+                    }
+                    
+                    /* تنسيق القوائم النقطية للخبرات والإنجازات */
+                    .pdf-render-box ul { 
+                        padding-right: 20px; 
+                        margin: 10px 0; 
+                        list-style-type: square; /* نقاط مربعة احترافية */
+                    }
+                    
+                    .pdf-render-box li { 
+                        margin-bottom: 8px; 
+                        color: #4a5568 !important;
+                    }
                 </style>
                 <div class="pdf-render-box">${element.innerHTML}</div>
             `;
@@ -341,17 +412,17 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.appendChild(printArea);
 
             const fullNameInput = document.getElementById('fullName')?.value.trim();
-            const pdfFileName = fullNameInput ? `${fullNameInput}_CV.pdf` : 'My_Resume.pdf';
+            const pdfFileName = fullNameInput ? `${fullNameInput}_Professional_CV.pdf` : 'My_Resume.pdf';
 
             const options = {
-                margin:       10,
+                margin:       15,
                 filename:     pdfFileName,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
+                html2canvas:  { scale: 3, useCORS: true, logging: false, backgroundColor: '#ffffff' }, // رفع الـ scale لضمان وضوح خارق للنصوص عند الطباعة
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
-            // التشغيل المباشر من الـ DOM الرئيسي يضمن عدم التصدير الفارغ
+            // توليد وحفظ الملف ثم تنظيف الـ DOM
             html2pdf().set(options).from(printArea).save().then(() => {
                 document.body.removeChild(printArea); 
                 this.innerHTML = originalBtnText;
@@ -449,6 +520,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 } catch (err) {
                     alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
                 }
+            }
+        });
+    }
+
+    // ========================================================
+    // 🔔 تفعيل زر الإشعارات الأصلي المتواجد داخل قائمة الإعدادات
+    // ========================================================
+    const notificationBtn = document.getElementById("enableNotificationsBtn");
+    if (notificationBtn) {
+        notificationBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (!("Notification" in window)) {
+                alert("عذراً، البيئة الحالية لا تدعم ميزة الإشعارات بشكل مباشر.");
+                return;
+            }
+
+            if (Notification.permission === "granted") {
+                alert("🔔 الإشعارات مفعلة بالفعل ومصرح بها بنجاح!");
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(function (permission) {
+                    if (permission === "granted") {
+                        alert("🎉 تم تفعيل الإشعارات بنجاح!");
+                    } else {
+                        alert("⚠️ تم رفض إذن الإشعارات.");
+                    }
+                });
             }
         });
     }
