@@ -59,7 +59,7 @@ function onTurnstileSuccess(token) {
 window.onTurnstileSuccess = onTurnstileSuccess;
 
 // ========================================================
-// 🚀 نظام تشغيل وإدارة جولة التطبيق الترحيبية
+// 🚀 نظام تشغيل وإدارة جولة التطبيق الترحيبية (App Tour)
 // ========================================================
 const tourSteps = [
     {
@@ -184,7 +184,7 @@ function calculateCVScore() {
 }
 
 // ==========================================
-// 🤖 دالة الاتصال بالذكاء الاصطناعي مع التطهير التام للمخرجات والإعلانات
+// 🤖 دالة الاتصال بالذكاء الاصطناعي وتصفية النصوص من الإعلانات
 // ==========================================
 async function askAI(promptMessage, systemMessage) {
     const url = `https://text.pollinations.ai/`;
@@ -200,7 +200,7 @@ async function askAI(promptMessage, systemMessage) {
         if (!response.ok) throw new Error();
         let rawText = await response.text();
         
-        // تنظيف وحجب كافة التذييلات الترويجية والملاحظات نهائياً
+        // تنظيف وحجب كافة التذييلات الترويجية والملاحظات نهائياً من Pollinations
         let cleanText = rawText
             .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '')
             .replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '')
@@ -224,9 +224,14 @@ function formatMarkdown(text) {
 }
 
 // ==========================================
-// ⚡ ربط وتشغيل كافة أزرار لوحة التحكم والذكاء الاصطناعي
+// 🎉 تهيئة الأحداث والـ DOM بالكامل عند التشغيل
 // ==========================================
-function initMainActionButtons() {
+document.addEventListener("DOMContentLoaded", function () {
+    displayRandomLiveTip();
+    initAppTour();
+    initCVScoreGauge();
+
+    // عناصر لوحة التحكم والتحميل
     const loading = document.getElementById('loading');
     const resultBox = document.getElementById('resultBox');
     const downloadContainer = document.getElementById('downloadContainer');
@@ -250,78 +255,33 @@ function initMainActionButtons() {
         }
     };
 
-    // 1. زر إنشاء وتحسين السيرة الذاتية الذكية (تم تفعيله بالكامل)
+    // 1️⃣ [تفعيل] زر إنشاء وتحسين السيرة الذاتية الذكية 
     document.getElementById('optimizeBtn')?.addEventListener('click', async (e) => {
         e.preventDefault();
         const data = getInputs();
-        if (!data.fullName || !data.jobTitle) { alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً!'); return; }
+        if (!data.fullName || !data.jobTitle) { 
+            alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً لكي يستطيع الذكاء الاصطناعي العمل!'); 
+            return; 
+        }
 
         triggerLoading(true);
         try {
             const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
-            const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية بشكل منسق وجاهز دون أي مقدمات أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
+            const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية فقط بشكل منسق وجاهز دون أي هوامش أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
             if (res && resultBox) {
                 resultBox.innerHTML = `<div id="cvTemplateArea">${formatMarkdown(res)}</div>`;
                 if(downloadContainer) downloadContainer.classList.remove('hidden');
             }
         } catch (err) {
             alert('حدث خطأ أثناء الاتصال بالخادم، يرجى إعادة المحاولة.');
-        } finally { triggerLoading(false); }
+        } finally { 
+            triggerLoading(false); 
+        }
     });
 
-    // 2. زر صانع رسالة التغطية (Cover Letter)
-    document.getElementById('coverLetterBtn')?.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const data = getInputs();
-        if (!data.jobTitle) { alert('يرجى تحديد المسمى الوظيفي أولاً!'); return; }
-
-        triggerLoading(true);
-        try {
-            const res = await askAI(`اكتب رسالة تغطية (Cover Letter) احترافية ومقنعة لوظيفة ${data.jobTitle} باسم ${data.fullName || 'المتقدم'}.`, "أنت كاتب رسائل توظيف محترف.");
-            if (res && resultBox) {
-                resultBox.innerHTML = `<div id="cvTemplateArea"><h3>✉️ رسالة التغطية الاحترافية:</h3><br>${formatMarkdown(res)}</div>`;
-                if(downloadContainer) downloadContainer.classList.remove('hidden');
-            }
-        } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
-        finally { triggerLoading(false); }
-    });
-
-    // 3. زر أسئلة المقابلة الشخصية
-    document.getElementById('interviewPrepBtn')?.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const data = getInputs();
-        if (!data.jobTitle) { alert('يرجى تحديد المسمى الوظيفي أولاً!'); return; }
-
-        triggerLoading(true);
-        try {
-            const res = await askAI(`أعطني أهم 5 أسئلة متوقعة في المقابلات الشخصية لوظيفة: ${data.jobTitle} مع الإجابات النموذجية.`, "أنت مسؤول توظيف تقني خبير.");
-            if (res && resultBox) {
-                resultBox.innerHTML = `<div id="cvTemplateArea"><h3>🧠 الاستعداد للمقابلة الشخصية:</h3><br>${formatMarkdown(res)}</div>`;
-            }
-        } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
-        finally { triggerLoading(false); }
-    });
-
-    // 4. زر محاكاة فحص ATS
-    document.getElementById('atsCheckBtn')?.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const data = getInputs();
-        triggerLoading(true);
-        try {
-            const res = await askAI(`قم بعمل فحص محاكاة ATS للسيرة الذاتية التالية وأعطني نقاط الضعف والكلمات الناقصة بناءً على متطلبات الوظيفة الشاغرة: ${data.jobDesc}. الخبرات المتاحة: ${data.experience}. المهارات: ${data.skills}.`, "أنت برنامج فحص ATS ذكي ومستشار دقيق.");
-            if (res && resultBox) {
-                resultBox.innerHTML = `<div id="cvTemplateArea"><h3>🔍 تحليل ومحاكاة نظام ATS العالمي:</h3><br>${formatMarkdown(res)}</div>`;
-            }
-        } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
-        finally { triggerLoading(false); }
-    });
-
-    // ========================================================
-    // 📄 نظام تحميل الـ PDF المعزول (الحل النهائي لمنع الصفحة البيضاء)
-    // ========================================================
+    // 2️⃣ [تفعيل] زر تحميل الـ PDF القاطع والمانع للصفحات البيضاء
     document.getElementById('downloadPdfBtn')?.addEventListener('click', function (e) {
         e.preventDefault();
-
         const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox');
         if (!element || element.innerText.trim() === "") { 
             alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
@@ -332,6 +292,7 @@ function initMainActionButtons() {
         this.innerText = "⏳ جاري تحضير ملف الـ PDF...";
         this.disabled = true;
 
+        // إنشاء إطار مخفي مستقل تماماً لفرض ستايل الطباعة والنصوص الداكنة الصارمة
         const iframe = document.createElement('iframe');
         iframe.style.position = 'fixed';
         iframe.style.width = '800px'; 
@@ -395,17 +356,8 @@ function initMainActionButtons() {
             });
         }, 300);
     });
-}
 
-// ==========================================
-// 🎉 تهيئة الأحداث والـ DOM بالكامل عند التشغيل
-// ==========================================
-document.addEventListener("DOMContentLoaded", function () {
-    displayRandomLiveTip();
-    initAppTour();
-    initCVScoreGauge();
-    initMainActionButtons(); // تشغيل وربط الأزرار بالكامل
-
+    // ⚙️ تهيئة القائمة العلوية الجانبية المنسدلة للوحة التحكم والإعدادات
     const toggleBtn = document.getElementById("dropdownToggleBtn");
     const leftMenu = document.getElementById("topLeftMenu");
 
@@ -421,6 +373,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // فتح وإغلاق النافذة المنبثقة للإعدادات
     const openSettingsBtn = document.getElementById("openSettingsBtn");
     const closeSettingsBtn = document.getElementById("closeSettingsBtn");
     const settingsModal = document.getElementById("settingsPageModal");
@@ -437,6 +390,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // تفعيل ميزة مشاركة رابط المنصة 
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async function () {
@@ -459,6 +413,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // تفعيل زر الإشعارات 
     const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) {
         notificationBtn.addEventListener("click", function (e) {
