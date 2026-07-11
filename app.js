@@ -269,7 +269,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
                 const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية فقط بشكل منسق وجاهز دون أي هوامش أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
                 if (res && resultBox) {
-                    resultBox.innerHTML = `<div id="cvTemplateArea">${formatMarkdown(res)}</div>`;
+                    // جعل البيانات تضاف مباشرة داخل الـ resultBox الخاص بك
+                    resultBox.innerHTML = formatMarkdown(res);
                     if(downloadContainer) downloadContainer.classList.remove('hidden');
                 }
             } catch (err) {
@@ -280,29 +281,29 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 2️⃣ [إصلاح حاسم للتحميل] - برمجة فتح القائمة المنسدلة للتحميل وضمان عمل الأزرار الداخلية
+    // 2️⃣ برمجة فتح القائمة المنسدلة للتحميل وضمان عمل الأزرار الداخلية
     const mainDownloadBtn = document.getElementById('mainDownloadBtn');
     const downloadOptions = document.getElementById('downloadOptions');
 
     if (mainDownloadBtn && downloadOptions) {
-        // فتح وإغلاق القائمة عند الضغط على الزر الرئيسي
         mainDownloadBtn.addEventListener('click', function (e) {
             e.stopPropagation();
             downloadOptions.classList.toggle('hidden');
         });
 
-        // إغلاق القائمة إذا تم الضغط في أي مكان خارجها
         document.addEventListener('click', function () {
             downloadOptions.classList.add('hidden');
         });
     }
 
-    // 3️⃣ زر تحميل الـ PDF القاطع والمانع للصفحات البيضاء (داخل القائمة المنسدلة)
+    // 3️⃣ زر تحميل الـ PDF المصحح (يقرأ من resultBox مباشرة لحل مشكلة الصفحة البيضاء)
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox');
+            
+            // إصلاح حاسم: القراءة من الحاوية الصحيحة الموجودة بملف الـ HTML الخاص بك
+            const element = document.getElementById('resultBox');
             if (!element || element.innerText.trim() === "") { 
                 alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
                 return; 
@@ -377,12 +378,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 4️⃣ زر تحميل ملف الـ Word (داخل القائمة المنسدلة)
+    // 4️⃣ زر تحميل ملف الـ Word 
     const downloadWordBtn = document.getElementById('downloadWordBtn');
     if (downloadWordBtn) {
         downloadWordBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            const element = document.getElementById('cvTemplateArea') || document.getElementById('resultBox');
+            const element = document.getElementById('resultBox');
             if (!element || element.innerText.trim() === "") { 
                 alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
                 return; 
