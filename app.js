@@ -269,7 +269,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
                 const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية فقط بشكل منسق وجاهز دون أي هوامش أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
                 if (res && resultBox) {
-                    // جعل البيانات تضاف مباشرة داخل الـ resultBox الخاص بك
                     resultBox.innerHTML = formatMarkdown(res);
                     if(downloadContainer) downloadContainer.classList.remove('hidden');
                 }
@@ -296,13 +295,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 3️⃣ زر تحميل الـ PDF المصحح (يقرأ من resultBox مباشرة لحل مشكلة الصفحة البيضاء)
+    // 3️⃣ زر تحميل الـ PDF المطور (تم التخلص من الـ iframe لإنهاء مشكلة الصفحة البيضاء تماماً)
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
             e.preventDefault();
             
-            // إصلاح حاسم: القراءة من الحاوية الصحيحة الموجودة بملف الـ HTML الخاص بك
             const element = document.getElementById('resultBox');
             if (!element || element.innerText.trim() === "") { 
                 alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
@@ -313,68 +311,56 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerText = "⏳ جاري التحضير...";
             this.disabled = true;
 
-            const iframe = document.createElement('iframe');
-            iframe.style.position = 'fixed';
-            iframe.style.width = '800px'; 
-            iframe.style.height = '1130px';
-            iframe.style.visibility = 'hidden';
-            iframe.style.left = '-9999px';
-            document.body.appendChild(iframe);
+            // 🚀 إنشاء حاوية مؤقتة داخل الـ DOM الرئيسي (خارج نطاق الشؤية لمنع قفز الصفحة)
+            const printArea = document.createElement('div');
+            printArea.style.position = 'absolute';
+            printArea.style.left = '-9999px';
+            printArea.style.top = '0';
+            printArea.style.width = '794px'; // عرض صفحة A4 القياسي بـ البكسل
+            printArea.style.background = '#ffffff';
+            printArea.style.color = '#1e293b';
+            printArea.style.padding = '40px';
+            printArea.style.direction = 'rtl';
+            printArea.style.fontFamily = 'Cairo, sans-serif';
 
-            const iframeDoc = iframe.contentWindow.document;
-            iframeDoc.open();
-            iframeDoc.write(`
-                <!DOCTYPE html>
-                <html dir="rtl" lang="ar">
-                <head>
-                    <meta charset="utf-8">
-                    <style>
-                        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-                        body {
-                            background-color: #ffffff !important;
-                            color: #1e293b !important;
-                            font-family: 'Cairo', sans-serif;
-                            padding: 40px;
-                            margin: 0;
-                            box-sizing: border-box;
-                            font-size: 14px;
-                            line-height: 1.7;
-                        }
-                        h1, h2, h3, h4, strong { color: #0f172a !important; font-weight: bold; margin-top: 15px; margin-bottom: 10px; }
-                        h1 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
-                        h2 { font-size: 18px; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
-                        p, span, div, li { color: #334155 !important; }
-                        ul, ol { padding-right: 25px; margin: 10px 0; }
-                        li { margin-bottom: 6px; }
-                    </style>
-                </head>
-                <body><div>${element.innerHTML}</div></body>
-                </html>
-            `);
-            iframeDoc.close();
+            // حقن التنسيقات والمحتوى مباشرة لضمان قراءتها بواسطة المعالج الرسومي
+            printArea.innerHTML = `
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+                    .pdf-render-box { font-family: 'Cairo', sans-serif; background-color: #ffffff !important; color: #1e293b !important; line-height: 1.7; font-size: 14px; }
+                    .pdf-render-box h1, .pdf-render-box h2, .pdf-render-box h3, .pdf-render-box strong { color: #0f172a !important; font-weight: bold; margin-top: 15px; margin-bottom: 10px; }
+                    .pdf-render-box h1 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+                    .pdf-render-box h2 { font-size: 18px; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
+                    .pdf-render-box p, .pdf-render-box span, .pdf-render-box div, .pdf-render-box li { color: #334155 !important; }
+                    .pdf-render-box ul, .pdf-render-box ol { padding-right: 25px; margin: 10px 0; }
+                    .pdf-render-box li { margin-bottom: 6px; }
+                </style>
+                <div class="pdf-render-box">${element.innerHTML}</div>
+            `;
+            
+            document.body.appendChild(printArea);
 
-            setTimeout(() => {
-                const fullNameInput = document.getElementById('fullName')?.value.trim();
-                const pdfFileName = fullNameInput ? `${fullNameInput}_CV.pdf` : 'My_Resume.pdf';
+            const fullNameInput = document.getElementById('fullName')?.value.trim();
+            const pdfFileName = fullNameInput ? `${fullNameInput}_CV.pdf` : 'My_Resume.pdf';
 
-                const options = {
-                    margin:       10,
-                    filename:     pdfFileName,
-                    image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
-                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-                
-                html2pdf().set(options).from(iframeDoc.body).save().then(() => {
-                    document.body.removeChild(iframe); 
-                    this.innerHTML = originalBtnText;
-                    this.disabled = false;
-                }).catch((err) => {
-                    document.body.removeChild(iframe);
-                    this.innerHTML = originalBtnText;
-                    this.disabled = false;
-                });
-            }, 300);
+            const options = {
+                margin:       10,
+                filename:     pdfFileName,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // التشغيل المباشر من الـ DOM الرئيسي يضمن عدم التصدير الفارغ
+            html2pdf().set(options).from(printArea).save().then(() => {
+                document.body.removeChild(printArea); 
+                this.innerHTML = originalBtnText;
+                this.disabled = false;
+            }).catch((err) => {
+                document.body.removeChild(printArea);
+                this.innerHTML = originalBtnText;
+                this.disabled = false;
+            });
         });
     }
 
