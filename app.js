@@ -184,7 +184,7 @@ function calculateCVScore() {
 }
 
 // ==========================================
-// 🤖 دالة الاتصال بالذكاء الاصطناعي مجاناً وبأمان
+// 🤖 دالة محاكاة الاتصال بالذكاء الاصطناعي وصياغة البيانات
 // ==========================================
 async function askAI(promptMessage, systemMessage) {
     const url = `https://text.pollinations.ai/`;
@@ -204,9 +204,6 @@ async function askAI(promptMessage, systemMessage) {
     }
 }
 
-// ==========================================
-// ✨ دالة معالجة النصوص البرمجية وتحويل التنسيقات
-// ==========================================
 function formatMarkdown(text) {
     if (!text) return '';
     return text
@@ -221,10 +218,9 @@ function getTemplateStyles() {
     const chosenSize = document.getElementById('fontSizeSelect')?.value || "15px";
     const chosenLineHeight = document.getElementById('lineHeightSelect')?.value || "1.6";
     const chosenPadding = document.getElementById('paddingSelect')?.value || "22px";
-    const activeColor = localStorage.getItem('cv_theme_color') || '#2563eb';
     const lang = document.getElementById('langSelect')?.value || 'ar';
 
-    let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; border-radius:8px; margin-top:15px; background-color:#fff; color:#1e293b; border-top: 5px solid ${activeColor}; box-shadow: 0 4px 12px rgba(0,0,0,0.05);`;
+    let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; background-color:#ffffff; color:#1e293b; width: 100%; box-sizing: border-box;`;
     styles += lang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr;";
     return styles;
 }
@@ -262,7 +258,7 @@ function initInlineAIWriters() {
 }
 
 // ==========================================
-// ⚡ ربط الأزرار الرئيسية وإضافة ميزة التحميل المفقودة
+// ⚡ ربط الأزرار الرئيسية وإضافة ميزات التحميل المفقودة وحل مشكلة الصفحة البيضاء
 // ==========================================
 function initMainActionButtons() {
     const loading = document.getElementById('loading');
@@ -281,8 +277,13 @@ function initMainActionButtons() {
     });
 
     const triggerLoading = (show) => {
-        if (show) { loading?.classList.remove('hidden'); resultBox.innerHTML = ''; downloadContainer?.classList.add('hidden'); }
-        else { loading?.classList.add('hidden'); }
+        if (show) { 
+            loading?.classList.remove('hidden'); 
+            if(resultBox) resultBox.innerHTML = ''; 
+            downloadContainer?.classList.add('hidden'); 
+        } else { 
+            loading?.classList.add('hidden'); 
+        }
     };
 
     // إظهار وإخفاء خيارات القائمة المنسدلة للتحميل عند النقر على الزر الرئيسي
@@ -296,25 +297,33 @@ function initMainActionButtons() {
         });
     }
 
-    // تفعيل التحميل كـ PDF جاهز للطباعة بدقة عالية
+    // تفعيل التحميل كـ PDF جاهز للطباعة بدقة عالية وحل مشكلة الصفحة البيضاء
     document.getElementById('downloadPdfBtn')?.addEventListener('click', () => {
         const element = document.getElementById('cvTemplateArea');
-        if (!element) { alert('الرجاء إنشاء السيرة الذاتية أولاً قبل التحميل!'); return; }
+        if (!element) { 
+            alert('الرجاء الضغط على زر "إنشاء وتحسين السيرة الذاتية الذكية" أولاً قبل محاولة التحميل!'); 
+            return; 
+        }
         
         const options = {
-            margin:       10,
+            margin:       15,
             filename:     `${getInputs().fullName || 'CV'}_Professional_Resume.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true },
+            html2canvas:  { scale: 2, useCORS: true, logging: false },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
+        
+        // تشغيل مكتبة html2pdf لتحويل عنصر السيرة الذاتية الناتج مباشرة
         html2pdf().set(options).from(element).save();
     });
 
     // تفعيل التحميل كـ ملف Word قابل للتعديل (.doc)
     document.getElementById('downloadWordBtn')?.addEventListener('click', () => {
         const element = document.getElementById('cvTemplateArea');
-        if (!element) { alert('الرجاء إنشاء السيرة الذاتية أولاً قبل التحميل!'); return; }
+        if (!element) { 
+            alert('الرجاء الضغط على زر "إنشاء وتحسين السيرة الذاتية الذكية" أولاً قبل محاولة التحميل!'); 
+            return; 
+        }
         
         const htmlContent = element.innerHTML;
         const blob = new Blob(['\ufeff' + htmlContent], {
@@ -342,6 +351,7 @@ function initMainActionButtons() {
             const prompt = `قم بإنشاء سيرة ذاتية احترافية بالكامل ومتوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم: ${data.fullName}\nالوظيفة: ${data.jobTitle}\nالخبرات: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة المستهدفة للمطابقة: ${data.jobDesc}`;
             const res = await askAI(prompt, "أنت خبير محترف ومستشار توظيف عالمي صياغاتك متوافقة تماماً مع مرشحات التوظيف الإلكترونية.");
             if (res && resultBox) {
+                // هنا نقوم بحقن عنصر cvTemplateArea الذي تعتمد عليه عملية تحميل الـ PDF والـ Word
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}">${formatMarkdown(res)}</div>`;
                 downloadContainer?.classList.remove('hidden');
             }
@@ -378,6 +388,7 @@ function initMainActionButtons() {
             const res = await askAI(`أعطني أهم 5 أسئلة متوقعة في المقابلات الشخصية لوظيفة: ${data.jobTitle} مع الإجابات النموذجية باللغة العربية.`, "أنت مسؤول توظيف تقني خبير.");
             if (res && resultBox) {
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}"><h3>🧠 الاستعداد للمقابلة الشخصية:</h3><br>${formatMarkdown(res)}</div>`;
+                downloadContainer?.classList.add('hidden'); // إخفاء التحميل لأنها أسئلة وليست مستند توظيفي
             }
         } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
         finally { triggerLoading(false); }
@@ -399,6 +410,7 @@ function initMainActionButtons() {
             const res = await askAI(`قم بعمل فحص محاكاة ATS للسيرة الذاتية التالية وأعطني نقاط الضعف والكلمات الناقصة بناءً على متطلبات الوظيفة الشاغرة: ${data.jobDesc}. الخبرات المتاحة: ${data.experience}. المهارات: ${data.skills}.`, "أنت برنامج فحص ATS ذكي ومستشار دقيق.");
             if (res && resultBox) {
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}"><h3>🔍 تحليل ومحاكاة نظام ATS العالمي:</h3><br>${formatMarkdown(res)}</div>`;
+                downloadContainer?.classList.add('hidden');
             }
         } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
         finally { triggerLoading(false); }
@@ -412,31 +424,6 @@ function initMainActionButtons() {
 }
 
 // ==========================================
-// 🎨 تخصيص مظهر لوحة الألوان الديناميكية
-// ==========================================
-function initThemeColorPicker() {
-    const container = document.getElementById('dynamicColorPickerContainer');
-    if (!container) return;
-
-    container.innerHTML = `
-        <div class="settings-section-card" style="text-align: right; direction: rtl; margin-bottom: 15px; background: #1f2937; padding: 15px; border-radius: 12px; border: 1px solid #374151;">
-            <h3 style="color: #60a5fa; margin-top: 0; font-size: 1rem;">🎨 لون الهوية البصرية المخصص</h3>
-            <p style="font-size: 13px; color: #9ca3af; margin-bottom: 10px;">اختر اللون الرئيسي المفضل لتخصيص خطوط وعناوين سيرتك الذاتية بشكل فوري ومميز.</p>
-            <div style="display:flex; gap:12px; align-items:center;">
-                <input type="color" id="themePrimaryColor" value="${localStorage.getItem('cv_theme_color') || '#2563eb'}" style="width:50px; height:35px; border:none; border-radius:4px; cursor:pointer; background:none;">
-                <span style="font-size:13px; color:#cbd5e1;">اضغط على الصندوق لاختيار درجة لونك المفضلة</span>
-            </div>
-        </div>
-    `;
-
-    document.getElementById('themePrimaryColor')?.addEventListener('input', (e) => {
-        localStorage.setItem('cv_theme_color', e.target.value);
-        const cvArea = document.getElementById('cvTemplateArea');
-        if (cvArea) cvArea.style.cssText = getTemplateStyles();
-    });
-}
-
-// ==========================================
 // 🎉 تهيئة الأحداث والـ DOM بالكامل عند التشغيل
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
@@ -445,7 +432,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initCVScoreGauge();
     initInlineAIWriters();
     initMainActionButtons();
-    initThemeColorPicker();
 
     // تشغيل القائمة العلوية المنسدلة للإعدادات
     const toggleBtn = document.getElementById("dropdownToggleBtn");
