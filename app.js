@@ -200,7 +200,7 @@ async function askAI(promptMessage, systemMessage) {
         if (!response.ok) throw new Error();
         let rawText = await response.text();
         
-        // تنظيف وحجب كافة التذييلات الترويجية والملاحظات نهائياً
+        // تنظيف وحجب كافة التذييلات الترويجية والملاحظات نهائياً من Pollinations
         let cleanText = rawText
             .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '')
             .replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '')
@@ -267,7 +267,7 @@ function initInlineAIWriters() {
 }
 
 // ==========================================
-// ⚡ إدارة الأزرار وتصدير الملفات (حل نهائي للصفحة البيضاء)
+// ⚡ إدارة الأزرار وتصدير الملفات (الحل النهائي القاطع للصفحة البيضاء)
 // ==========================================
 function initMainActionButtons() {
     const loading = document.getElementById('loading');
@@ -305,7 +305,7 @@ function initMainActionButtons() {
         });
     }
 
-    // 📄 الحل النهائي الحاسم للصفحة البيضاء: وضع مهلة تأخير للرسم
+    // 📄 تصدير كـ PDF مصلح ومحمي بشكل نهائي وقاطع من مشكلة الصفحة البيضاء
     document.getElementById('downloadPdfBtn')?.addEventListener('click', () => {
         const element = document.getElementById('cvTemplateArea');
         if (!element) { 
@@ -313,9 +313,17 @@ function initMainActionButtons() {
             return; 
         }
 
-        // إشعار المستخدم ببدء التجهيز والانتظار قليلاً لمنع التجميد والصفحات البيضاء
         const originalBtnText = document.getElementById('downloadPdfBtn').innerText;
         document.getElementById('downloadPdfBtn').innerText = "⏳ جاري تحضير ملف الـ PDF...";
+
+        // [الحل الجذري القاطع]: استنساخ العنصر بالكامل وفصل تنسيقاته خارج الـ DOM الفعلي للموقع أثناء الالتقاط لمنع أي تداخل
+        const clone = element.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.top = '-9999px';
+        clone.style.left = '-9999px';
+        clone.style.backgroundColor = '#ffffff';
+        clone.style.color = '#1e293b';
+        document.body.appendChild(clone);
 
         setTimeout(() => {
             const options = {
@@ -331,11 +339,15 @@ function initMainActionButtons() {
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
-            // التشغيل والتصدير
-            html2pdf().set(options).from(element).save().then(() => {
+            // تصدير العنصر المستنسخ والنظيف تماماً، ثم حذفه فور انتهاء التصدير
+            html2pdf().set(options).from(clone).save().then(() => {
+                document.body.removeChild(clone);
+                document.getElementById('downloadPdfBtn').innerText = originalBtnText;
+            }).catch(() => {
+                document.body.removeChild(clone);
                 document.getElementById('downloadPdfBtn').innerText = originalBtnText;
             });
-        }, 500); // مهلة 500ms لتأكيد معالجة وحقن المتصفح للخطوط والنصوص
+        }, 600); 
     });
 
     // 📝 تحميل ملف Word قابل للتعديل
@@ -372,7 +384,7 @@ function initMainActionButtons() {
             const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
             const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية فقط بشكل منسق وجاهز دون أي هوامش أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
             if (res && resultBox) {
-                // فرض لون الخطوط الداكن الصارم بالـ inline لمنع التداخل مع ألوان الموقع الإفتراضية
+                // فرض لون الخطوط الداكن الصارم بالـ inline ومحددات الـ CSS لمنع تداخل ألوان الموقع الافتراضية
                 resultBox.innerHTML = `
                     <div id="cvTemplateArea" style="${getTemplateStyles()}">
                         <style>
@@ -494,7 +506,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (openSettingsBtn && settingsModal) {
         openSettingsBtn.addEventListener("click", function () {
-            settingsModal.remove("hidden");
+            settingsModal.classList.remove("hidden");
             if (leftMenu) leftMenu.classList.add("hidden");
         });
     }
