@@ -184,7 +184,7 @@ function calculateCVScore() {
 }
 
 // ==========================================
-// 🤖 دالة محاكاة الاتصال بالذكاء الاصطناعي وصياغة البيانات
+// 🤖 دالة الاتصال بالذكاء الاصطناعي
 // ==========================================
 async function askAI(promptMessage, systemMessage) {
     const url = `https://text.pollinations.ai/`;
@@ -198,12 +198,23 @@ async function askAI(promptMessage, systemMessage) {
             })
         });
         if (!response.ok) throw new Error();
-        return await response.text();
+        let rawText = await response.text();
+        
+        // ✨ حل المشكلة الثانية: تنظيف وحذف إعلانات وروابط وتذييلات موقع Pollinations نهائياً
+        let cleanText = rawText
+            .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '')
+            .replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '')
+            .replace(/Powered by Pollinations\.AI free text APIs\./gi, '')
+            .replace(/Support our mission to keep AI accessible for everyone\./gi, '')
+            .trim();
+            
+        return cleanText;
     } catch (error) {
         throw error;
     }
 }
 
+// تحويل كود ماركداون إلى HTML نظيف ومتناسق بصرياً في ملف الـ PDF والـ Word
 function formatMarkdown(text) {
     if (!text) return '';
     return text
@@ -213,6 +224,7 @@ function formatMarkdown(text) {
         .trim();
 }
 
+// جلب التنسيقات والخلفية البيضاء لضمان عدم ظهور صفحة فارغة في الطباعة
 function getTemplateStyles() {
     const chosenFont = document.getElementById('fontFamilySelect')?.value || "Cairo, sans-serif";
     const chosenSize = document.getElementById('fontSizeSelect')?.value || "15px";
@@ -220,14 +232,12 @@ function getTemplateStyles() {
     const chosenPadding = document.getElementById('paddingSelect')?.value || "22px";
     const lang = document.getElementById('langSelect')?.value || 'ar';
 
-    let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; background-color:#ffffff; color:#1e293b; width: 100%; box-sizing: border-box;`;
+    let styles = `padding:${chosenPadding}; line-height:${chosenLineHeight}; font-size:${chosenSize}; font-family:${chosenFont}; background-color:#ffffff !important; color:#1e293b; width: 100%; box-sizing: border-box; display: block;`;
     styles += lang === 'ar' ? " text-align: right; direction: rtl;" : " text-align: left; direction: ltr;";
     return styles;
 }
 
-// ==========================================
 // 🪄 تشغيل المساعد الذكي للحقول (Inline AI Writer)
-// ==========================================
 function initInlineAIWriters() {
     document.querySelectorAll('.inline-ai-btn').forEach(aiBtn => {
         aiBtn.addEventListener('click', async (e) => {
@@ -258,7 +268,7 @@ function initInlineAIWriters() {
 }
 
 // ==========================================
-// ⚡ ربط الأزرار الرئيسية وإضافة ميزات التحميل المفقودة وحل مشكلة الصفحة البيضاء
+// ⚡ ربط الأزرار الرئيسية المفقودة وتفعيل معالجة الـ PDF بنجاح
 // ==========================================
 function initMainActionButtons() {
     const loading = document.getElementById('loading');
@@ -278,15 +288,15 @@ function initMainActionButtons() {
 
     const triggerLoading = (show) => {
         if (show) { 
-            loading?.classList.remove('hidden'); 
+            if(loading) loading.classList.remove('hidden'); 
             if(resultBox) resultBox.innerHTML = ''; 
-            downloadContainer?.classList.add('hidden'); 
+            if(downloadContainer) downloadContainer.classList.add('hidden'); 
         } else { 
-            loading?.classList.add('hidden'); 
+            if(loading) loading.classList.add('hidden'); 
         }
     };
 
-    // إظهار وإخفاء خيارات القائمة المنسدلة للتحميل عند النقر على الزر الرئيسي
+    // التحكم بالقائمة المنسدلة للتحميل
     if (mainDownloadBtn && downloadOptions) {
         mainDownloadBtn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -297,31 +307,30 @@ function initMainActionButtons() {
         });
     }
 
-    // تفعيل التحميل كـ PDF جاهز للطباعة بدقة عالية وحل مشكلة الصفحة البيضاء
+    // 📄 تصدير كـ PDF جاهز ومصلح (بدون صفحة بيضاء)
     document.getElementById('downloadPdfBtn')?.addEventListener('click', () => {
         const element = document.getElementById('cvTemplateArea');
         if (!element) { 
-            alert('الرجاء الضغط على زر "إنشاء وتحسين السيرة الذاتية الذكية" أولاً قبل محاولة التحميل!'); 
+            alert('الرجاء الضغط على زر "إنشاء وتحسين السيرة الذاتية الذكية" أولاً حتى تظهر البيانات!'); 
             return; 
         }
         
         const options = {
-            margin:       15,
-            filename:     `${getInputs().fullName || 'CV'}_Professional_Resume.pdf`,
+            margin:       10,
+            filename:     `${getInputs().fullName || 'CV'}_Resume.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2, useCORS: true, logging: false },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         
-        // تشغيل مكتبة html2pdf لتحويل عنصر السيرة الذاتية الناتج مباشرة
         html2pdf().set(options).from(element).save();
     });
 
-    // تفعيل التحميل كـ ملف Word قابل للتعديل (.doc)
+    // 📝 تحميل ملف Word قابل للتعديل (.doc)
     document.getElementById('downloadWordBtn')?.addEventListener('click', () => {
         const element = document.getElementById('cvTemplateArea');
         if (!element) { 
-            alert('الرجاء الضغط على زر "إنشاء وتحسين السيرة الذاتية الذكية" أولاً قبل محاولة التحميل!'); 
+            alert('الرجاء الضغط على زر "إنشاء وتحسين السيرة الذاتية الذكية" أولاً!'); 
             return; 
         }
         
@@ -348,15 +357,15 @@ function initMainActionButtons() {
 
         triggerLoading(true);
         try {
-            const prompt = `قم بإنشاء سيرة ذاتية احترافية بالكامل ومتوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم: ${data.fullName}\nالوظيفة: ${data.jobTitle}\nالخبرات: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة المستهدفة للمطابقة: ${data.jobDesc}`;
-            const res = await askAI(prompt, "أنت خبير محترف ومستشار توظيف عالمي صياغاتك متوافقة تماماً مع مرشحات التوظيف الإلكترونية.");
+            const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
+            const res = await askAI(prompt, "أنت مستشار توظيف بارع، قم بإنشاء محتوى السيرة الذاتية دون أي ترحيب أو تذييل خارجي وبصياغة قوية.");
             if (res && resultBox) {
-                // هنا نقوم بحقن عنصر cvTemplateArea الذي تعتمد عليه عملية تحميل الـ PDF والـ Word
+                // حقن الـ ID الأساسي لحل مشكلة الصفحة البيضاء
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}">${formatMarkdown(res)}</div>`;
-                downloadContainer?.classList.remove('hidden');
+                if(downloadContainer) downloadContainer.classList.remove('hidden');
             }
         } catch (err) {
-            alert('حدث خطأ أثناء صياغة السيرة الذاتية. يرجى إعادة المحاولة.');
+            alert('حدث خطأ أثناء الاتصال بالخادم. أعد المحاولة.');
         } finally { triggerLoading(false); }
     });
 
@@ -371,7 +380,7 @@ function initMainActionButtons() {
             const res = await askAI(`اكتب رسالة تغطية (Cover Letter) احترافية ومقنعة لوظيفة ${data.jobTitle} باسم ${data.fullName || 'المتقدم للوظيفة'}.`, "أنت كاتب رسائل توظيف محترف.");
             if (res && resultBox) {
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}"><h3>✉️ رسالة التغطية الاحترافية:</h3><br>${formatMarkdown(res)}</div>`;
-                downloadContainer?.classList.remove('hidden');
+                if(downloadContainer) downloadContainer.classList.remove('hidden');
             }
         } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
         finally { triggerLoading(false); }
@@ -385,10 +394,9 @@ function initMainActionButtons() {
 
         triggerLoading(true);
         try {
-            const res = await askAI(`أعطني أهم 5 أسئلة متوقعة في المقابلات الشخصية لوظيفة: ${data.jobTitle} مع الإجابات النموذجية باللغة العربية.`, "أنت مسؤول توظيف تقني خبير.");
+            const res = await askAI(`أعطني أهم 5 أسئلة متوقعة في المقابلات الشخصية لوظيفة: ${data.jobTitle} مع الإجابات النموذجية.`, "أنت مسؤول توظيف تقني خبير.");
             if (res && resultBox) {
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}"><h3>🧠 الاستعداد للمقابلة الشخصية:</h3><br>${formatMarkdown(res)}</div>`;
-                downloadContainer?.classList.add('hidden'); // إخفاء التحميل لأنها أسئلة وليست مستند توظيفي
             }
         } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
         finally { triggerLoading(false); }
@@ -398,7 +406,7 @@ function initMainActionButtons() {
     document.getElementById('rateBtn')?.addEventListener('click', (e) => {
         e.preventDefault();
         calculateCVScore();
-        alert('تم تحديث التقييم وعرض النتيجة في العداد العلوي بنجاح!');
+        alert('تم تحديث التقييم وعرض النتيجة في العداد بنجاح!');
     });
 
     // 5. زر محاكاة فحص ATS
@@ -410,7 +418,6 @@ function initMainActionButtons() {
             const res = await askAI(`قم بعمل فحص محاكاة ATS للسيرة الذاتية التالية وأعطني نقاط الضعف والكلمات الناقصة بناءً على متطلبات الوظيفة الشاغرة: ${data.jobDesc}. الخبرات المتاحة: ${data.experience}. المهارات: ${data.skills}.`, "أنت برنامج فحص ATS ذكي ومستشار دقيق.");
             if (res && resultBox) {
                 resultBox.innerHTML = `<div id="cvTemplateArea" style="${getTemplateStyles()}"><h3>🔍 تحليل ومحاكاة نظام ATS العالمي:</h3><br>${formatMarkdown(res)}</div>`;
-                downloadContainer?.classList.add('hidden');
             }
         } catch (err) { alert('فشلت العملية، يرجى المحاولة لاحقاً.'); }
         finally { triggerLoading(false); }
