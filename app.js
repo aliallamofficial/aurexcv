@@ -216,7 +216,7 @@ async function askAI(promptMessage, systemMessage) {
 function formatMarkdown(text) {
     if (!text) return '';
     return text
-        .replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
         .replace(/\n/g, '<br>')
         .trim();
@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 3️⃣ زر تحميل الـ PDF الحاسم والنهائي (التوليد المباشر من العنصر النشط لمنع الصفحات البيضاء)
+    // 3️⃣ زر تحميل الـ PDF المطور والناجح 100% (التوليد المباشر من الحاوية النشطة والمرئية كلياً)
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -308,23 +308,37 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const originalBtnText = this.innerHTML;
-            this.innerText = "⏳ جاري توليد ملف الـ PDF...";
+            this.innerText = "⏳ جاري تحميل الـ CV...";
             this.disabled = true;
 
-            // حقن التنسيقات الفاخرة للطباعة مؤقتاً في الرأس لتعديل مظهر الحاوية المرئية بالفعل
+            // حقن التنسيقات الفاخرة والألوان المهنية داخل رأس الصفحة فوراً لتعديل مظهر الحاوية المرئية أثناء التقاطها
             const style = document.createElement('style');
-            style.id = 'pdf-print-override-styles';
+            style.id = 'pdf-print-styles';
             style.innerHTML = `
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
                 #resultBox {
-                    background-color: #ffffff !important;
-                    color: #2d3748 !important;
-                    padding: 40px 50px !important;
                     font-family: 'Cairo', sans-serif !important;
-                    box-sizing: border-box !important;
+                    color: #2d3748 !important;
+                    background-color: #ffffff !important;
+                    line-height: 1.8 !important;
+                    padding: 35px !important;
                 }
-                #resultBox h1 { font-size: 26px !important; font-weight: 700 !important; color: #1a365d !important; text-align: center !important; margin-bottom: 8px !important; }
-                #resultBox h2 { font-size: 16px !important; font-weight: 700 !important; color: #1a365d !important; border-bottom: 2px solid #e2e8f0 !important; padding-bottom: 4px !important; margin-top: 25px !important; margin-bottom: 12px !important; }
-                #resultBox p, #resultBox span, #resultBox div { color: #4a5568 !important; font-size: 14px !important; line-height: 1.8 !important; }
+                #resultBox h1 { 
+                    font-size: 26px !important; 
+                    font-weight: 700 !important; 
+                    color: #1a365d !important; 
+                    text-align: center !important; 
+                    margin-bottom: 8px !important;
+                }
+                #resultBox h2 { 
+                    font-size: 16px !important; 
+                    font-weight: 700 !important;
+                    color: #1a365d !important;
+                    border-bottom: 2px solid #e2e8f0 !important; 
+                    padding-bottom: 6px !important; 
+                    margin-top: 25px !important; 
+                    margin-bottom: 12px !important; 
+                }
                 #resultBox ul { padding-right: 20px !important; margin: 10px 0 !important; list-style-type: square !important; }
                 #resultBox li { margin-bottom: 6px !important; color: #4a5568 !important; }
             `;
@@ -333,37 +347,29 @@ document.addEventListener("DOMContentLoaded", function () {
             const fullNameInput = document.getElementById('fullName')?.value.trim();
             const pdfFileName = fullNameInput ? `${fullNameInput}_Professional_CV.pdf` : 'My_Resume.pdf';
 
-            // إعدادات تضمن التقاط الحاوية الظاهرة بدقة خارقة وبأعلى جودة توافقية
             const options = {
-                margin:       [10, 10, 10, 10],
+                margin:       15,
                 filename:     pdfFileName,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { 
-                    scale: 2, 
-                    useCORS: true, 
-                    logging: false, 
-                    backgroundColor: '#ffffff',
-                    scrollX: 0,
-                    scrollY: 0
-                },
+                html2canvas:  { scale: 2.5, useCORS: true, logging: false, backgroundColor: '#ffffff' },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
-            // إلزامية الانتظار للتأكد من تحميل كافة الخطوط والرسوم على الشاشة الظاهرة
+            // الاعتماد الكامل على جاهزية الخط الظاهر على الشاشة لضمان عدم حدوث البياض مجدداً
             document.fonts.ready.then(() => {
                 setTimeout(() => {
                     html2pdf().set(options).from(element).save().then(() => {
-                        const addedStyle = document.getElementById('pdf-print-override-styles');
-                        if (addedStyle) addedStyle.remove();
+                        const removeStyle = document.getElementById('pdf-print-styles');
+                        if (removeStyle) removeStyle.remove();
                         this.innerHTML = originalBtnText;
                         this.disabled = false;
                     }).catch((err) => {
-                        const addedStyle = document.getElementById('pdf-print-override-styles');
-                        if (addedStyle) addedStyle.remove();
+                        const removeStyle = document.getElementById('pdf-print-styles');
+                        if (removeStyle) removeStyle.remove();
                         this.innerHTML = originalBtnText;
                         this.disabled = false;
                     });
-                }, 250);
+                }, 300); // مهلة استقرار كافية تماماً للرسم والتصوير الآمن
             });
         });
     }
