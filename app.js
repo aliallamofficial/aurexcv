@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 3️⃣ زر تحميل الـ PDF الحاسم والنهائي (التوليد المباشر من العنصر النشط لمنع الصفحات البيضاء)
+    // 3️⃣ زر تحميل الـ PDF المطور كلياً بمظهر فخم ومنسق واحترافي مستوحى من القوالب المرفقة
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -311,22 +311,71 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerText = "⏳ جاري توليد ملف الـ PDF...";
             this.disabled = true;
 
-            // حقن التنسيقات الفاخرة للطباعة مؤقتاً في الرأس لتعديل مظهر الحاوية المرئية بالفعل
+            // حقن التنسيقات العصرية والفاخرة مؤقتاً في الرأس لتعديل مظهر الحاوية المرئية
             const style = document.createElement('style');
             style.id = 'pdf-print-override-styles';
             style.innerHTML = `
                 #resultBox {
                     background-color: #ffffff !important;
-                    color: #2d3748 !important;
-                    padding: 40px 50px !important;
-                    font-family: 'Cairo', sans-serif !important;
+                    color: #1e293b !important;
+                    padding: 50px 55px !important;
+                    font-family: system-ui, -apple-system, sans-serif !important;
                     box-sizing: border-box !important;
                 }
-                #resultBox h1 { font-size: 26px !important; font-weight: 700 !important; color: #1a365d !important; text-align: center !important; margin-bottom: 8px !important; }
-                #resultBox h2 { font-size: 16px !important; font-weight: 700 !important; color: #1a365d !important; border-bottom: 2px solid #e2e8f0 !important; padding-bottom: 4px !important; margin-top: 25px !important; margin-bottom: 12px !important; }
-                #resultBox p, #resultBox span, #resultBox div { color: #4a5568 !important; font-size: 14px !important; line-height: 1.8 !important; }
-                #resultBox ul { padding-right: 20px !important; margin: 10px 0 !important; list-style-type: square !important; }
-                #resultBox li { margin-bottom: 6px !important; color: #4a5568 !important; }
+                /* الترويسة العلوية الفخمة للاسم والمسمى الوظيفي */
+                #resultBox h1 { 
+                    font-size: 28px !important; 
+                    font-weight: 800 !important; 
+                    color: #0f172a !important; 
+                    text-align: right !important; 
+                    margin-bottom: 4px !important;
+                    letter-spacing: -0.5px !important;
+                }
+                #resultBox p:first-of-type, 
+                #resultBox strong:first-of-type {
+                    font-size: 16px !important;
+                    color: #2563eb !important; /* لون أزرق ملكي عصري للمسمى الوظيفي */
+                    font-weight: 600 !important;
+                    display: block !important;
+                    margin-bottom: 25px !important;
+                }
+                /* تنسيق العناوين الرئيسية الفرعية بشرائط سفلية ممتدة وأنيقة */
+                #resultBox h2 { 
+                    font-size: 16px !important; 
+                    font-weight: 700 !important; 
+                    color: #0f172a !important; 
+                    border-bottom: 2px solid #e2e8f0 !important; 
+                    padding-bottom: 6px !important; 
+                    margin-top: 30px !important; 
+                    margin-bottom: 14px !important;
+                    text-transform: uppercase !important;
+                }
+                /* تنسيق النصوص والقوائم لتكون مرتبة جداً وسهلة التصفح */
+                #resultBox p, #resultBox span, #resultBox div { 
+                    color: #334155 !important; 
+                    font-size: 13.5px !important; 
+                    line-height: 1.8 !important; 
+                }
+                #resultBox ul { 
+                    padding-right: 18px !important; 
+                    margin: 10px 0 !important; 
+                    list-style-type: none !important; 
+                }
+                #resultBox li { 
+                    position: relative !important;
+                    margin-bottom: 8px !important; 
+                    color: #334155 !important; 
+                    font-size: 13.5px !important;
+                }
+                /* إضافة رصاصات مربعة صغيرة ملونة أمام نقاط القائمة بشكل منسق */
+                #resultBox li::before {
+                    content: "■" !important;
+                    color: #2563eb !important;
+                    font-size: 8px !important;
+                    position: absolute !important;
+                    right: -15px !important;
+                    top: 2px !important;
+                }
             `;
             document.head.appendChild(style);
 
@@ -335,11 +384,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // إعدادات تضمن التقاط الحاوية الظاهرة بدقة خارقة وبأعلى جودة توافقية
             const options = {
-                margin:       [10, 10, 10, 10],
+                margin:       [12, 12, 12, 12],
                 filename:     pdfFileName,
-                image:        { type: 'jpeg', quality: 0.98 },
+                image:        { type: 'jpeg', quality: 0.99 },
                 html2canvas:  { 
-                    scale: 2, 
+                    scale: 2.5, 
                     useCORS: true, 
                     logging: false, 
                     backgroundColor: '#ffffff',
