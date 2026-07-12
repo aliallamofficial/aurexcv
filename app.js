@@ -31,7 +31,7 @@ const jobGuidelines = {
         title: "مهندس ديكور / تصميم داخلي",
         tips: [
             "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية.",
-            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
+            "اختيار الخامات, الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
             "الإشراف الميداني على التنفيذ لضمان مطابقة الواقع للمخططات المعتمدة."
         ]
     }
@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 3️⃣ زر تحميل الـ PDF المطور بتنسيق فخم واحترافي 100% ومتوافق مع ATS
+    // 3️⃣ زر تحميل الـ PDF المطور بتنسيق فخم واحترافي 100% ومتوافق مع ATS (حل مشكلة الصفحة البيضاء)
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -311,98 +311,93 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerText = "⏳ جاري تنسيق وتحميل الـ CV...";
             this.disabled = true;
 
-            // 🚀 إنشاء حاوية مؤقتة داخل الـ DOM الرئيسي لتفادي مشكلة المساحات الصفراء والصفحات البيضاء
+            // 🚀 إنشاء حاوية مرئية للمتصفح ولكنها مخفية عن عين المستخدم لتلافي الأبعاد الصفرية (سبب بياض الصفحة)
             const printArea = document.createElement('div');
-            printArea.style.position = 'absolute';
-            printArea.style.left = '-9999px';
+            printArea.style.position = 'fixed';
+            printArea.style.right = '-9999px';
             printArea.style.top = '0';
-            printArea.style.width = '794px'; // عرض صفحة A4 القياسي
+            printArea.style.width = '794px'; // عرض صفحة A4 القياسي بدقة ومقاييس حقيقية
             printArea.style.background = '#ffffff';
-            printArea.style.color = '#1e293b';
-            printArea.style.padding = '50px 60px'; // هوامش متناسقة ومريحة للطباعة
+            printArea.style.color = '#2d3748';
+            printArea.style.padding = '45px 55px';
             printArea.style.direction = 'rtl';
-            printArea.style.fontFamily = 'Cairo, sans-serif';
+            printArea.style.opacity = '1';
+            printArea.style.zIndex = '-999';
 
-            // حقن التنسيقات الفاخرة والمحتوى مباشرة لضمان أعلى جودة ودقة
+            // حقن التنسيقات الفاخرة والمحتوى مباشرة لضمان أعلى جودة ودقة لـ ATS والتنسيق الجمالي
             printArea.innerHTML = `
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
                     
-                    /* التنسيق العام للمستند */
                     .pdf-render-box { 
-                        font-family: 'Cairo', sans-serif; 
+                        font-family: 'Cairo', sans-serif !important; 
                         background-color: #ffffff !important; 
                         color: #2d3748 !important; 
-                        line-height: 1.8; 
-                        font-size: 14px; 
+                        line-height: 1.8 !important; 
+                        font-size: 14px !important; 
                     }
                     
                     /* تخصيص الهيدر الرئيسي (الاسم والمعلومات) */
                     .pdf-render-box h1 { 
-                        font-size: 28px; 
-                        font-weight: 700; 
+                        font-size: 26px !important; 
+                        font-weight: 700 !important; 
                         color: #1a365d !important; /* أزرق ملكي فاخر */
-                        text-align: center; 
-                        margin-bottom: 5px;
-                        margin-top: 0;
-                        letter-spacing: 0.5px;
+                        text-align: center !important; 
+                        margin-bottom: 6px !important;
+                        margin-top: 0 !important;
                     }
                     
                     /* المسمى الوظيفي */
                     .pdf-render-box p:first-of-type, 
                     .pdf-render-box strong:first-of-type {
-                        font-size: 16px;
+                        font-size: 16px !important;
                         color: #4a5568 !important;
-                        text-align: center;
-                        font-weight: 600;
-                        margin-bottom: 15px;
+                        text-align: center !important;
+                        font-weight: 600 !important;
+                        margin-bottom: 20px !important;
                     }
                     
-                    /* تنسيق أقسام العناوين الرئيسية (مثل الخبرة المهنية، المهارات) */
+                    /* تنسيق أقسام العناوين الرئيسية */
                     .pdf-render-box h2 { 
-                        font-size: 16px; 
-                        font-weight: 700;
+                        font-size: 16px !important; 
+                        font-weight: 700 !important;
                         color: #1a365d !important;
-                        border-bottom: 2px solid #e2e8f0; 
-                        padding-bottom: 5px; 
-                        margin-top: 30px; 
-                        margin-bottom: 15px; 
-                        position: relative;
+                        border-bottom: 2px solid #e2e8f0 !important; 
+                        padding-bottom: 4px !important; 
+                        margin-top: 25px !important; 
+                        margin-bottom: 12px !important; 
+                        position: relative !important;
                     }
                     
-                    /* إضافة لمسة جمالية تحت العنوان الرئيسي */
+                    /* خط الفصل تحت العنوان */
                     .pdf-render-box h2::after {
-                        content: '';
-                        position: absolute;
-                        bottom: -2px;
-                        right: 0;
-                        width: 60px;
-                        height: 2px;
-                        background-color: #3182ce; /* لون أزرق مميز */
+                        content: '' !important;
+                        position: absolute !important;
+                        bottom: -2px !important;
+                        right: 0 !important;
+                        width: 50px !important;
+                        height: 2px !important;
+                        background-color: #3182ce !important;
                     }
                     
-                    /* العناوين الفرعية */
                     .pdf-render-box h3, .pdf-render-box strong { 
-                        color: #2d3748 !important; 
-                        font-weight: 600; 
-                        font-size: 14px;
+                        color: #1a202c !important; 
+                        font-weight: 600 !important; 
                     }
                     
-                    /* النصوص والفقرات الدخلية */
                     .pdf-render-box p, .pdf-render-box span, .pdf-render-box div { 
                         color: #4a5568 !important; 
-                        font-size: 14px;
                     }
                     
-                    /* تنسيق القوائم النقطية للخبرات والإنجازات */
+                    /* تنسيق القوائم النقطية */
                     .pdf-render-box ul { 
-                        padding-right: 20px; 
-                        margin: 10px 0; 
-                        list-style-type: square; /* نقاط مربعة احترافية */
+                        padding-right: 20px !important; 
+                        margin: 10px 0 !important; 
+                        list-style-type: square !important; 
                     }
                     
                     .pdf-render-box li { 
-                        margin-bottom: 8px; 
+                        margin-bottom: 6px !important; 
                         color: #4a5568 !important;
                     }
                 </style>
@@ -418,19 +413,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 margin:       15,
                 filename:     pdfFileName,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 3, useCORS: true, logging: false, backgroundColor: '#ffffff' }, // رفع الـ scale لضمان وضوح نقي لمنع التشويش عند الطباعة ورقياً
+                html2canvas:  { scale: 2.5, useCORS: true, logging: false, backgroundColor: '#ffffff' },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
-            // توليد وحفظ الملف ثم تنظيف الـ DOM
-            html2pdf().set(options).from(printArea).save().then(() => {
-                document.body.removeChild(printArea); 
-                this.innerHTML = originalBtnText;
-                this.disabled = false;
-            }).catch((err) => {
-                document.body.removeChild(printArea);
-                this.innerHTML = originalBtnText;
-                this.disabled = false;
+            // الانتظار حتى يتأكد المتصفح من جهوزية وتحميل الخطوط لإنهاء مشكلة بياض الصفحة تماماً
+            document.fonts.ready.then(() => {
+                setTimeout(() => {
+                    html2pdf().set(options).from(printArea).save().then(() => {
+                        document.body.removeChild(printArea); 
+                        this.innerHTML = originalBtnText;
+                        this.disabled = false;
+                    }).catch((err) => {
+                        document.body.removeChild(printArea);
+                        this.innerHTML = originalBtnText;
+                        this.disabled = false;
+                    });
+                }, 300); // مهلة 300 مللي ثانية لاستقرار بناء الشجرة الرسومية
             });
         });
     }
