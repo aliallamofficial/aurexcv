@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerText = "⏳ جاري تنسيق وتحميل الـ CV...";
             this.disabled = true;
 
-            // 🚀 إنشاء حاوية مؤقتة داخل الـ DOM الرئيسي لتطبيق التنسيق الفاخر
+            // 🚀 إنشاء حاوية مؤقتة داخل الـ DOM الرئيسي لتفادي مشكلة المساحات الصفراء والصفحات البيضاء
             const printArea = document.createElement('div');
             printArea.style.position = 'absolute';
             printArea.style.left = '-9999px';
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
             printArea.style.width = '794px'; // عرض صفحة A4 القياسي
             printArea.style.background = '#ffffff';
             printArea.style.color = '#1e293b';
-            printArea.style.padding = '50px 60px'; // هوامش مريحة للطباعة
+            printArea.style.padding = '50px 60px'; // هوامش متناسقة ومريحة للطباعة
             printArea.style.direction = 'rtl';
             printArea.style.fontFamily = 'Cairo, sans-serif';
 
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         background-color: #3182ce; /* لون أزرق مميز */
                     }
                     
-                    /* العناوين الفرعية (أسماء الشركات أو المهارات الفرعية) */
+                    /* العناوين الفرعية */
                     .pdf-render-box h3, .pdf-render-box strong { 
                         color: #2d3748 !important; 
                         font-weight: 600; 
@@ -418,7 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 margin:       15,
                 filename:     pdfFileName,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 3, useCORS: true, logging: false, backgroundColor: '#ffffff' }, // رفع الـ scale لضمان وضوح خارق للنصوص عند الطباعة
+                html2canvas:  { scale: 3, useCORS: true, logging: false, backgroundColor: '#ffffff' }, // رفع الـ scale لضمان وضوح نقي لمنع التشويش عند الطباعة ورقياً
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
