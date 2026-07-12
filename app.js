@@ -31,7 +31,7 @@ const jobGuidelines = {
         title: "مهندس ديكور / تصميم داخلي",
         tips: [
             "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية.",
-            "اختيار الخامات, الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
+            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
             "الإشراف الميداني على التنفيذ لضمان مطابقة الواقع للمخططات المعتمدة."
         ]
     }
@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 3️⃣ زر تحميل الـ PDF المطور بتنسيق فخم واحترافي 100% ومتوافق مع ATS (حل مشكلة الصفحة البيضاء)
+    // 3️⃣ زر تحميل الـ PDF المطور والمنسق بنجاح (حل نهائي ومؤكد لمشكلة الصفحة البيضاء)
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -308,103 +308,41 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const originalBtnText = this.innerHTML;
-            this.innerText = "⏳ جاري تنسيق وتحميل الـ CV...";
+            this.innerText = "⏳ جاري تحميل الـ CV...";
             this.disabled = true;
 
-            // 🚀 إنشاء حاوية مرئية للمتصفح ولكنها مخفية عن عين المستخدم لتلافي الأبعاد الصفرية (سبب بياض الصفحة)
-            const printArea = document.createElement('div');
-            printArea.style.position = 'fixed';
-            printArea.style.right = '-9999px';
-            printArea.style.top = '0';
-            printArea.style.width = '794px'; // عرض صفحة A4 القياسي بدقة ومقاييس حقيقية
-            printArea.style.background = '#ffffff';
-            printArea.style.color = '#2d3748';
-            printArea.style.padding = '45px 55px';
-            printArea.style.direction = 'rtl';
-            printArea.style.opacity = '1';
-            printArea.style.zIndex = '-999';
-
-            // حقن التنسيقات الفاخرة والمحتوى مباشرة لضمان أعلى جودة ودقة لـ ATS والتنسيق الجمالي
-            printArea.innerHTML = `
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-                    
-                    .pdf-render-box { 
-                        font-family: 'Cairo', sans-serif !important; 
-                        background-color: #ffffff !important; 
-                        color: #2d3748 !important; 
-                        line-height: 1.8 !important; 
-                        font-size: 14px !important; 
-                    }
-                    
-                    /* تخصيص الهيدر الرئيسي (الاسم والمعلومات) */
-                    .pdf-render-box h1 { 
-                        font-size: 26px !important; 
-                        font-weight: 700 !important; 
-                        color: #1a365d !important; /* أزرق ملكي فاخر */
-                        text-align: center !important; 
-                        margin-bottom: 6px !important;
-                        margin-top: 0 !important;
-                    }
-                    
-                    /* المسمى الوظيفي */
-                    .pdf-render-box p:first-of-type, 
-                    .pdf-render-box strong:first-of-type {
-                        font-size: 16px !important;
-                        color: #4a5568 !important;
-                        text-align: center !important;
-                        font-weight: 600 !important;
-                        margin-bottom: 20px !important;
-                    }
-                    
-                    /* تنسيق أقسام العناوين الرئيسية */
-                    .pdf-render-box h2 { 
-                        font-size: 16px !important; 
-                        font-weight: 700 !important;
-                        color: #1a365d !important;
-                        border-bottom: 2px solid #e2e8f0 !important; 
-                        padding-bottom: 4px !important; 
-                        margin-top: 25px !important; 
-                        margin-bottom: 12px !important; 
-                        position: relative !important;
-                    }
-                    
-                    /* خط الفصل تحت العنوان */
-                    .pdf-render-box h2::after {
-                        content: '' !important;
-                        position: absolute !important;
-                        bottom: -2px !important;
-                        right: 0 !important;
-                        width: 50px !important;
-                        height: 2px !important;
-                        background-color: #3182ce !important;
-                    }
-                    
-                    .pdf-render-box h3, .pdf-render-box strong { 
-                        color: #1a202c !important; 
-                        font-weight: 600 !important; 
-                    }
-                    
-                    .pdf-render-box p, .pdf-render-box span, .pdf-render-box div { 
-                        color: #4a5568 !important; 
-                    }
-                    
-                    /* تنسيق القوائم النقطية */
-                    .pdf-render-box ul { 
-                        padding-right: 20px !important; 
-                        margin: 10px 0 !important; 
-                        list-style-type: square !important; 
-                    }
-                    
-                    .pdf-render-box li { 
-                        margin-bottom: 6px !important; 
-                        color: #4a5568 !important;
-                    }
-                </style>
-                <div class="pdf-render-box">${element.innerHTML}</div>
+            // تطبيق التنسيقات الفخمة مباشرة داخل ستايل مخصص للطباعة لمنع الصفحات البيضاء الناتجة عن العناصر الوهمية
+            const style = document.createElement('style');
+            style.id = 'pdf-print-styles';
+            style.innerHTML = `
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+                #resultBox {
+                    font-family: 'Cairo', sans-serif !important;
+                    color: #2d3748 !important;
+                    background-color: #ffffff !important;
+                    line-height: 1.8 !important;
+                    padding: 30px !important;
+                }
+                #resultBox h1 { 
+                    font-size: 26px !important; 
+                    font-weight: 700 !important; 
+                    color: #1a365d !important; 
+                    text-align: center !important; 
+                    margin-bottom: 10px !important;
+                }
+                #resultBox h2 { 
+                    font-size: 16px !important; 
+                    font-weight: 700 !important;
+                    color: #1a365d !important;
+                    border-bottom: 2px solid #e2e8f0 !important; 
+                    padding-bottom: 4px !important; 
+                    margin-top: 25px !important; 
+                    margin-bottom: 12px !important; 
+                }
+                #resultBox ul { padding-right: 20px !important; margin: 10px 0 !important; list-style-type: square !important; }
+                #resultBox li { margin-bottom: 6px !important; color: #4a5568 !important; }
             `;
-            
-            document.body.appendChild(printArea);
+            document.head.appendChild(style);
 
             const fullNameInput = document.getElementById('fullName')?.value.trim();
             const pdfFileName = fullNameInput ? `${fullNameInput}_Professional_CV.pdf` : 'My_Resume.pdf';
@@ -417,19 +355,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
-            // الانتظار حتى يتأكد المتصفح من جهوزية وتحميل الخطوط لإنهاء مشكلة بياض الصفحة تماماً
+            // التوليد المباشر من الحاوية النشطة والمرئية بالكامل أمام المستخدم لمنع البياض
             document.fonts.ready.then(() => {
-                setTimeout(() => {
-                    html2pdf().set(options).from(printArea).save().then(() => {
-                        document.body.removeChild(printArea); 
-                        this.innerHTML = originalBtnText;
-                        this.disabled = false;
-                    }).catch((err) => {
-                        document.body.removeChild(printArea);
-                        this.innerHTML = originalBtnText;
-                        this.disabled = false;
-                    });
-                }, 300); // مهلة 300 مللي ثانية لاستقرار بناء الشجرة الرسومية
+                html2pdf().set(options).from(element).save().then(() => {
+                    const removeStyle = document.getElementById('pdf-print-styles');
+                    if (removeStyle) removeStyle.remove();
+                    this.innerHTML = originalBtnText;
+                    this.disabled = false;
+                }).catch((err) => {
+                    const removeStyle = document.getElementById('pdf-print-styles');
+                    if (removeStyle) removeStyle.remove();
+                    this.innerHTML = originalBtnText;
+                    this.disabled = false;
+                });
             });
         });
     }
