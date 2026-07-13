@@ -11,33 +11,32 @@ const cvTips = [
 
 // 🛠️ قاعدة البيانات المحلية للإرشادات النصية والمهام المقترحة بدقة بالغة لكل وظيفة إبداعية
 const jobGuidelines = {
-    "graphic": {
-        title: "مصمم جرافيك / Graphic Designer",
+    "graphic_designer": {
+        title: "مصمم جرافيك",
         tips: [
             "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
-            "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %20.",
+            "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
             "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
         ]
     },
-    "content": {
-        title: "صانع محتوى / Content Creator",
+    "content_creator": {
+        title: "صانع محتوى / كاتب محتوى",
         tips: [
-            "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.",
-            "تحليل أداء المحتوى وتطوير استراتيجيات النشر بناءً على الأرقام والتفاعل.",
-            "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية تخدم أهداف الحملة التسويقية."
+            "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية لمدونتك وصحفتك.",
+            "تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل والتأثير.",
+            "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية تخدم أهداف الحملة التسويقية."
         ]
     },
-    "designer": {
-        title: "مهندس ديكور / Interior Designer",
+    "interior_designer": {
+        title: "مهندس ديكور / مصمم داخلي",
         tips: [
-            "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية.",
-            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
-            "الإشراف الميداني على التنفيذ لضمان مطابقة الواقع للمخططات المعتمدة."
+            "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
+            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.", // تم إصلاح الخطأ الإملائي هنا
+            "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات والرسومات المعتمدة."
         ]
     }
 };
 
-// دالة مخصصة لعرض نصيحة عشوائية عند فتح التطبيق
 function displayRandomLiveTip() {
     const tipTextElement = document.getElementById('cvTipText');
     if (tipTextElement) {
@@ -47,7 +46,7 @@ function displayRandomLiveTip() {
 }
 
 // ========================================================
-// 🛡️ دالة نجاح التحقق من Cloudflare Turnstile
+// 🛡️ دالة نجاح التحقق من Cloudflare Turnstile الأصلي
 // ========================================================
 function onTurnstileSuccess(token) {
     const splash = document.getElementById('splash-screen');
@@ -64,7 +63,7 @@ window.onTurnstileSuccess = onTurnstileSuccess;
 const tourSteps = [
     {
         icon: "🚀",
-        title: "مرحباً بك في مستقبلك المهني!",
+        title: "مرحباً بك في مستقبلك المهني الجديد!",
         desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.",
         btnText: "ابدأ الرحلة الآن ←"
     },
@@ -247,7 +246,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return; 
             }
 
-            // إظهار حالة التحميل بشكل أنيق على نفس الزر
             const originalBtnText = aiOptimizeBtn.innerHTML;
             aiOptimizeBtn.innerHTML = "⏳ جاري التحسين الذكي وصياغة الـ ATS...";
             aiOptimizeBtn.disabled = true;
@@ -284,7 +282,6 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerText = "⏳ جاري إصدار وتجهيز المستند الرقمي...";
             this.disabled = true;
 
-            // إنشاء عنصر مؤقت لعرض النص بهيئة HTML أنيقة للطباعة بدلاً من مجرد طباعة textarea عادي
             const printElement = document.createElement('div');
             printElement.style.padding = '40px';
             printElement.style.color = '#1e293b';
@@ -294,7 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
             printElement.style.direction = 'rtl';
             printElement.style.textAlign = 'right';
 
-            // تحويل السطور المكسورة في النص العادي لوسوم فقرات لكي تظهر بشكل مذهل في الـ PDF
             printElement.innerHTML = outputBox.value.replace(/\n/g, '<br>');
 
             const data = getInputs();
@@ -329,68 +325,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
-    // 💡 برمجة الاقتراحات والصياغات الذكية للوظائف تلقائياً
-    // ==========================================
-    const jobTitleInput = document.getElementById('jobTitle');
-    const suggestionsBox = document.getElementById('jobSuggestionsBox');
-    const suggestionsList = document.getElementById('suggestionsList');
-
-    if (jobTitleInput && suggestionsBox && suggestionsList) {
-        jobTitleInput.addEventListener('input', function() {
-            const val = this.value.toLowerCase().trim();
-            suggestionsList.innerHTML = '';
-            
-            let matched = null;
-            if (val.includes('تصميم') || val.includes('ديزاين') || val.includes('graphic') || val.includes('رسام')) {
-                matched = jobGuidelines.graphic;
-            } else if (val.includes('محتوى') || val.includes('كاتب') || val.includes('content') || val.includes('صانع')) {
-                matched = jobGuidelines.content;
-            } else if (val.includes('ديكور') || val.includes('مهندس') || val.includes('interior') || val.includes('داخلي')) {
-                matched = jobGuidelines.designer;
-            }
-
-            if (matched) {
-                matched.tips.forEach(text => {
-                    const btn = document.createElement('button');
-                    btn.innerText = `➕ ${text}`;
-                    btn.style.width = '100%';
-                    btn.style.marginBottom = '8px';
-                    btn.style.padding = '8px 12px';
-                    btn.style.background = '#1e293b';
-                    btn.style.border = '1px solid #475569';
-                    btn.style.borderRadius = '6px';
-                    btn.style.color = '#cbd5e1';
-                    btn.style.textAlign = 'right';
-                    btn.style.cursor = 'pointer';
-                    btn.style.fontSize = '12px';
-                    btn.style.transition = 'background 0.2s';
-                    
-                    btn.addEventListener('mouseenter', () => btn.style.background = '#334155');
-                    btn.addEventListener('mouseleave', () => btn.style.background = '#1e293b');
-                    
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const experienceArea = document.getElementById('experience');
-                        if (experienceArea) {
-                            if (experienceArea.value.trim() === '') {
-                                experienceArea.value = `• ${text}`;
-                            } else {
-                                experienceArea.value += `\n• ${text}`;
-                            }
-                            // إطلاق حدث التحديث لإعادة قياس نقاط الـ ATS تلقائياً
-                            experienceArea.dispatchEvent(new Event('input'));
-                        }
-                    });
-                    suggestionsList.appendChild(btn);
-                });
-                suggestionsBox.classList.remove('hidden');
-            } else {
-                suggestionsBox.classList.add('hidden');
-            }
-        });
-    }
-
-    // ==========================================
     // 🎨 ميزة تغيير القوالب وثيم الألوان ديناميكياً
     // ==========================================
     const themeSelect = document.getElementById('themeSelect');
@@ -420,7 +354,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.documentElement.lang = currentLang;
             toggleLanguageBtn.innerText = currentLang === 'ar' ? '🔄 English' : '🔄 العربية';
 
-            // ترجمة تلميحات وصياغات الواجهة مباشرة لخدمة المستخدمين العالميين
             const labels = document.querySelectorAll('.form-section label');
             const placeholders = {
                 name: currentLang === 'ar' ? 'الاسم الكامل' : 'Full Name',
@@ -469,7 +402,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب.");
                 
                 if (summary && outputBox) {
-                    // حقن الملخص المهني في بداية صندوق استعراض ومراجعة المحتوى
                     if (outputBox.value.trim() === "") {
                         outputBox.value = `الملخص المهني:\n${summary}\n\n`;
                     } else {
@@ -520,7 +452,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ميزة مشاركة التطبيق
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async function () {
@@ -543,7 +474,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ميزة تنبيهات التوظيف
     const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) {
         notificationBtn.addEventListener("click", function (e) {
