@@ -18,10 +18,9 @@ body {
     align-items: center;
 }
 
-/* تحسين الحاوية لتدعم أحجام الشاشات المختلفة بشكل مرن وبأقصى اتساع مدروس */
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     background: rgba(30, 41, 59, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -32,7 +31,7 @@ body {
 }
 
 /* ==========================================
-    تنسيق الهيدر المتجاوب والفاخر
+    تنسيق الهيدر الاحترافي الفاخر
    ========================================== */
 .header {
     text-align: center;
@@ -55,11 +54,11 @@ body {
 }
 
 /* ==========================================
-    النظام الشبكي الذكي الشامل للوحة التحكم والمعاينة
+    النظام الشبكي الذكي (Grid System)
    ========================================== */
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* لوحتان متساويتان بجانب بعضهما على أجهزة الكمبيوتر */
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
     align-items: start;
 }
@@ -114,7 +113,7 @@ body {
 }
 
 /* ==========================================
-    مستشار تقييم الجودة والـ ATS الذكي
+    مستشار تقييم الجودة والـ ATS
    ========================================== */
 .score-gauge-box {
     background: rgba(30, 41, 59, 0.5);
@@ -169,7 +168,7 @@ body {
 }
 
 /* ==========================================
-    تصميم الأزرار الاحترافية والتأثيرات التفاعلية
+    الأزرار والتأثيرات التفاعلية
    ========================================== */
 .btn-primary {
     width: 100%;
@@ -199,7 +198,7 @@ body {
 }
 
 /* ==========================================
-    تصميم لوحة المعاينة اليمنى الثكيفية والملتزمة بالمكان
+    تصميم لوحة المعاينة اليمنى التكيفية
    ========================================== */
 .preview-panel {
     display: flex;
@@ -209,8 +208,19 @@ body {
     top: 40px;
 }
 
+/* ورقة السيرة الذاتية البيضاء الفاخرة المعتمدة للـ ATS */
+#resultBox {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    padding: 40px !important;
+    border-radius: 16px;
+    min-height: 600px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: none !important;
+}
+
 /* ==========================================
-    قائمة التحميل الذكية المنسدلة (Download Menu)
+    قائمة التحميل المنسدلة (Dropdown Menu)
    ========================================== */
 .download-wrapper {
     position: relative;
@@ -310,7 +320,7 @@ body {
 .hidden { display: none !important; }
 
 /* ==========================================
-    قائمة الإعدادات المنبثقة العلوية والأزرار الدائرية
+    قائمة الإعدادات المنبثقة والأزرار العلوية
    ========================================== */
 .top-actions-bar {
     position: absolute;
@@ -353,7 +363,7 @@ body {
     z-index: 100;
 }
 
-/* 💡 شريط النصائح الحية التفاعلي الممتد أسفل التطبيق */
+/* شريط النصائح السفلي */
 .live-tips-ribbon {
     margin-top: 40px;
     background: linear-gradient(90deg, rgba(37, 99, 235, 0.15) 0%, rgba(30, 41, 59, 0.4) 100%);
@@ -381,7 +391,7 @@ body {
     line-height: 1.5;
 }
 
-/* 🎉 شاشة الترحيب السريعة وجولة التطبيق الذكية (Splash & Tour) */
+/* شاشات الترحيب والجولات */
 #splash-screen {
     position: fixed;
     top: 0;
@@ -435,17 +445,25 @@ body {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-/* صياغات الـ ATS والمهام المقترحة لوظيفتك */
+/* صياغات الـ ATS والمهام المقترحة وظيفتك */
 #jobSuggestionsBox {
     animation: fadeInSlide 0.3s ease-out forwards;
 }
 
 @keyframes fadeInSlide {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* ⚙️ النظام المتمركز والآمن لنافذة إعدادات التطبيق والمظهر (Modal System) */
+/* ========================================================
+    ⚙️ النظام المصلح المتمركز لنافذة إعدادات التطبيق والمظهر (Modal System)
+   ======================================================== */
 #settingsPageModal {
     position: fixed;
     top: 0;
@@ -472,91 +490,12 @@ body {
     overflow: hidden;
 }
 
+
 /* ====================================================================
-   ✨ التنسيق الاحترافي المتكامل لورقة المعاينة البيضاء الفاخرة (#resultBox)
-   مستقلة تماماً، متجاوبة كلياً، وتضمن التباعد التام بين الأسطر لجميع الأجهزة
+   🆕 الميزات الاحترافية الجديدة المضافة أسفل ملفك لتطوير التجاوب الكامل 🆕
    ==================================================================== */
-#resultBox {
-    background-color: #ffffff !important; /* فرض الخلفية البيضاء النقية للأوراق الرسمية */
-    color: #1e293b !important; /* نصوص داكنة مهنية صديقة للـ ATS والطباعة */
-    border-radius: 16px !important;
-    padding: 40px 45px !important;
-    min-height: 500px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
-    border: none !important;
-    box-sizing: border-box !important;
-    text-align: right !important;
-    direction: rtl !important;
-    overflow-x: hidden !important;
-}
 
-/* تمييز الاسم بالشريط الجانبي البصري الملون */
-#resultBox h1 {
-    font-size: 26px !important;
-    font-weight: 800 !important;
-    color: #1e3a8a !important; /* اللون الأزرق الملكي المعتمد */
-    margin-bottom: 6px !important;
-    border-right: 5px solid #2563eb !important; 
-    padding-right: 12px !important;
-    line-height: 1.4 !important;
-}
-
-/* المسمى الوظيفي أسفل الاسم */
-#resultBox .cv-subtitle, 
-#resultBox p:first-of-type {
-    font-size: 15px !important;
-    color: #4b5563 !important;
-    font-weight: 600 !important;
-    margin-bottom: 25px !important;
-    padding-right: 18px !important;
-    display: block !important;
-}
-
-/* الأقسام والعناوين الفرعية (الخبرات، المهارات) مع أرضية ناعمة لتحديد الأقسام */
-#resultBox h2 {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    color: #1e3a8a !important;
-    background-color: #f1f5f9 !important;
-    padding: 6px 14px !important;
-    border-bottom: 2px solid #cbd5e1 !important;
-    margin-top: 25px !important;
-    margin-bottom: 14px !important;
-    border-radius: 4px !important;
-}
-
-#resultBox p, #resultBox span, #resultBox div {
-    color: #334155 !important;
-    font-size: 13.5px !important;
-    line-height: 1.8 !important; /* حماية تامة للسطور لمنع التداخل البصري */
-}
-
-#resultBox ul {
-    padding-right: 18px !important;
-    margin: 10px 0 !important;
-    list-style-type: none !important;
-}
-
-#resultBox li {
-    position: relative !important;
-    margin-bottom: 8px !important;
-    color: #334155 !important;
-    line-height: 1.7 !important;
-}
-
-/* حقن المربعات الزرقاء المنظمة بدلاً من النقاط التقليدية الدائرية */
-#resultBox li::before {
-    content: "■" !important;
-    color: #2563eb !important;
-    font-size: 7px !important;
-    position: absolute !important;
-    right: -15px !important;
-    top: 4px !important;
-}
-
-/* ========================================================
-   📱 1️⃣ الشاشات المتوسطة وأجهزة التابلت (Tablets - أقل من 1024px)
-   ======================================================== */
+/* 📱 1️⃣ عند تصفح التطبيق من أجهزة التابلت والشاشات المتوسطة */
 @media (max-width: 1024px) {
     body {
         padding: 20px 10px;
@@ -566,17 +505,15 @@ body {
         border-radius: 16px;
     }
     .grid {
-        grid-template-columns: 1fr; /* ترتيب المدخلات والمعاينة رأسياً لراحة فائقة في الكتابة والقراءة */
+        grid-template-columns: 1fr; /* تحويل لوحتي المدخلات والمعاينة فوق بعضهما بدلاً من التداخل */
         gap: 30px;
     }
     .preview-panel {
-        position: static; /* إلغاء التثبيت الجانبي لتنساب لوحة المعاينة لأسفل بمرونة */
+        position: static; /* إلغاء التثبيت الجانبي لتنزلق لوحة المعاينة لأسفل بشكل مرن */
     }
 }
 
-/* ========================================================
-   📱 2️⃣ شاشات الهواتف الذكية (Smartphones - أقل من 600px)
-   ======================================================== */
+/* 📱 2️⃣ عند تصفح التطبيق من الهواتف المحمولة الذكية (أقل من 600px) */
 @media (max-width: 600px) {
     .header h1 {
         font-size: 24px;
@@ -593,20 +530,10 @@ body {
         justify-content: center;
         margin-bottom: 25px;
     }
-    /* ملاءمة أبعاد ورقة المعاينة وخطوطها لتناسب الشاشات الصغيرة للموبايل تماماً */
+    /* جعل أوراق المعاينة مرنة ومريحة للقراءة داخل الهاتف دون الحاجة لعمل سكرول جانبي */
     #resultBox {
         padding: 25px 20px !important;
         min-height: 400px;
-    }
-    #resultBox h1 {
-        font-size: 20px !important;
-    }
-    #resultBox h2 {
-        font-size: 14px !important;
-        padding: 5px 10px !important;
-    }
-    #resultBox p, #resultBox span, #resultBox div, #resultBox li {
-        font-size: 12.5px !important;
     }
     .live-tips-ribbon {
         flex-direction: column;
