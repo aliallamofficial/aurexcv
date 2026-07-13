@@ -22,483 +22,377 @@ const jobGuidelines = {
     "content_creator": {
         title: "صانع محتوى / كاتب محتوى",
         tips: [
-            "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.",
-            "تحليل أداء المحتوى وتطوير استراتيجيات النشر بناءً على الأرقام والتفاعل.",
-            "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية تخدم أهداف الحملة التسويقية."
+            "كتابة سيناريوهات ومحتوى تفاعلي لمنصات التواصل الاجتماعي ساهم في زيادة المشاهدات بنسبة %X.",
+            "إعداد خطط محتوى شهرية مبنية على تحليل سلوك الجمهور واهتماماتهم المستهدفة.",
+            "تحسين جودة النصوص لتتوافق مع قواعد السيو (SEO) لزيادة الظهور المجاني في محركات البحث."
         ]
     },
-    "interior_designer": {
-        title: "مهندس ديكور / تصميم داخلي",
+    "digital_marketer": {
+        title: "أخصائي تسويق رقمي",
         tips: [
-            "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية.",
-            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
-            "الإشراف الميداني على التنفيذ لضمان مطابقة الواقع للمخططات المعتمدة."
+            "إدارة الحملات الإعلانية المدفوعة على منصات (Meta, Google, TikTok) وتحقيق عائد استثماري ROAS يبلغ X.",
+            "تحليل بيانات المواقع والحملات باستخدام Google Analytics لتقديم تقارير دورية ومقترحات تحسين.",
+            "بناء استراتيجيات التسويق عبر البريد الإلكتروني والأتمتة لرفع نسبة الاحتفاظ بالعملاء بنسبة %X."
+        ]
+    },
+    "video_editor": {
+        title: "محرر فيديو / مونتير",
+        tips: [
+            "تعديل وقص مقاطع الفيديو الطويلة والقصيرة (Reels/Shorts) بأسلوب ديناميكي يزيد من معدل الاحتفاظ بالجمهور.",
+            "إضافة المؤثرات الصوتية والبصرية والتصحيح اللوني المتقدم باستخدام Premiere و After Effects.",
+            "تنظيم المواد المصورة والعمل مع صناع المحتوى لترجمة الأفكار إلى قصص بصرية ملهمة وجذابة."
+        ]
+    },
+    "sales_specialist": {
+        title: "أخصائي مبيعات / خدمة عملاء",
+        tips: [
+            "تحقيق وإغلاق الصفقات البيعية الشهرية وتخطي الأهداف المطلوبة (KPIs) بنسبة %X باستمرار.",
+            "بناء علاقات قوية ومستدامة مع العملاء الحاليين والمحتملين وتقديم حلول مخصصة لاحتياجاتهم.",
+            "التعامل الاحترافي مع الاعتراضات وحل مشكلات العملاء المعقدة بسرعة وكفاءة لضمان رضاهم التام."
         ]
     }
 };
 
-// دالة مخصصة لعرض نصيحة عشوائية عند فتح التطبيق
-function displayRandomLiveTip() {
-    const tipTextElement = document.getElementById('liveTipText');
-    if (tipTextElement) {
-        const randomIndex = Math.floor(Math.random() * cvTips.length);
-        tipTextElement.innerText = cvTips[randomIndex];
+document.addEventListener("DOMContentLoaded", function () {
+    // 🌍 تحديث تفاعلي فوري للنصائح الجاهزة في أسفل الواجهة دون انتظار الـ Delay
+    const tipElement = document.getElementById("cvTipText");
+    if (tipElement) {
+        let currentTipIndex = 0;
+        tipElement.textContent = cvTips[currentTipIndex];
+        
+        setInterval(() => {
+            currentTipIndex = (currentTipIndex + 1) % cvTips.length;
+            tipElement.style.opacity = 0;
+            setTimeout(() => {
+                tipElement.textContent = cvTips[currentTipIndex];
+                tipElement.style.opacity = 1;
+            }, 300);
+        }, 7000);
     }
-}
 
-// ========================================================
-// 🛡️ دالة نجاح التحقق من Cloudflare Turnstile
-// ========================================================
-function onTurnstileSuccess(token) {
-    const splash = document.getElementById('splash-screen');
-    if (splash) {
-        splash.style.opacity = '0';
-        setTimeout(() => splash.remove(), 500);
+    // ⚙️ نظام التحكم بفتح وإغلاق نافذة الإعدادات والمظهر (Modal System)
+    const settingsModal = document.getElementById("settingsPageModal");
+    const openSettingsBtn = document.getElementById("openSettingsBtn"); 
+    const closeSettingsBtn = document.getElementById("closeSettingsBtn"); 
+
+    if (settingsModal) {
+        settingsModal.classList.add("hidden"); // إخفاء المودال عند التحميل لأول مرة لحل مشكلة الهاتف
     }
-}
-window.onTurnstileSuccess = onTurnstileSuccess;
 
-// ========================================================
-// 🚀 نظام تشغيل وإدارة جولة التطبيق الترحيبية (App Tour)
-// ========================================================
-const tourSteps = [
-    {
-        icon: "🚀",
-        title: "مرحباً بك في مستقبلك المهني!",
-        desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.",
-        btnText: "ابدأ الرحلة الآن ←"
-    },
-    {
-        icon: "📊",
-        title: "مستشار الـ ATS الذكي لحظة بلحظة",
-        desc: "أثناء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.",
-        btnText: "التالي مذهل كالعادة ←"
-    },
-    {
-        icon: "✨",
-        title: "الذكاء الاصطناعي في خدمتك",
-        desc: "اضغط على زر الإنشاء ليقوم التطبيق بصياغة وتدقيق نصك لغوياً وإصدار نسخة احترافية بالكامل مع رمز QR وتوقيع رقمي آمن.",
-        btnText: "إنهاء الجولة والدخول للتطبيق 🎉"
+    if (openSettingsBtn && settingsModal) {
+        openSettingsBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            settingsModal.classList.remove("hidden"); 
+        });
     }
-];
 
-let currentTourStep = 0;
+    if (closeSettingsBtn && settingsModal) {
+        closeSettingsBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            settingsModal.classList.add("hidden"); 
+        });
+    }
 
-function initAppTour() {
-    if (localStorage.getItem('cv_tour_completed') === 'true') return;
-    const tourModal = document.getElementById('appTourModal');
-    if (!tourModal) return;
-
-    tourModal.classList.remove('hidden');
-    const nextBtn = document.getElementById('nextTourBtn');
-    const skipBtn = document.getElementById('skipTourBtn');
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            currentTourStep++;
-            if (currentTourStep < tourSteps.length) {
-                updateTourContent();
-            } else {
-                closeTour();
+    if (settingsModal) {
+        settingsModal.addEventListener("click", function (e) {
+            if (e.target === settingsModal) {
+                settingsModal.classList.add("hidden");
             }
         });
     }
-    if (skipBtn) skipBtn.addEventListener('click', closeTour);
-}
 
-function updateTourContent() {
-    const stepData = tourSteps[currentTourStep];
-    const progress = document.getElementById('tourProgress');
-    const icon = document.getElementById('tourIcon');
-    const title = document.getElementById('tourTitle');
-    const desc = document.getElementById('tourDescription');
-    const nextBtn = document.getElementById('nextTourBtn');
+    // 🎨 [ميزة جديدة بناءً على طلبات الصور]: نظام تغيير الألوان والقوالب الاحترافية
+    const themeSelect = document.getElementById("themeSelect"); // تأكد من إضافة select في الـ HTML بداخل المودال
+    if (themeSelect) {
+        themeSelect.addEventListener("change", function () {
+            const selectedTheme = themeSelect.value;
+            if (selectedTheme === "default") {
+                document.body.style.background = "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)";
+            } else if (selectedTheme === "royal-blue") {
+                document.body.style.background = "linear-gradient(135deg, #0a192f 0%, #172a45 100%)";
+            } else if (selectedTheme === "emerald-green") {
+                document.body.style.background = "linear-gradient(135deg, #064e3b 0%, #022c22 100%)";
+            }
+        });
+    }
 
-    if (progress) progress.innerText = `خطوة ${currentTourStep + 1} من ${tourSteps.length}`;
-    if (icon) icon.innerText = stepData.icon;
-    if (title) title.innerText = stepData.title;
-    if (desc) desc.innerText = stepData.desc;
-    if (nextBtn) nextBtn.innerText = stepData.btnText;
-}
+    // 🌐 [ميزة جديدة بناءً على طلبات الصور]: نظام التبديل للغة الإنجليزية بنقرة واحدة
+    const langBtn = document.getElementById("toggleLanguageBtn"); // تأكد من إضافة هذا الزر في الـ HTML
+    let currentLang = "ar";
+    if (langBtn) {
+        langBtn.addEventListener("click", function () {
+            if (currentLang === "ar") {
+                currentLang = "en";
+                document.documentElement.dir = "ltr";
+                document.documentElement.lang = "en";
+                langBtn.textContent = "🔄 العربية";
+                document.getElementById("name")?.setAttribute("placeholder", "Your Full Name");
+                document.getElementById("jobTitle")?.setAttribute("placeholder", "Target Job Title");
+                // تغيير نصوص العناوين الرئيسية المتاحة لتلائم اللغتين
+            } else {
+                currentLang = "ar";
+                document.documentElement.dir = "rtl";
+                document.documentElement.lang = "ar";
+                langBtn.textContent = "🔄 English";
+                document.getElementById("name")?.setAttribute("placeholder", "الاسم الكامل");
+                document.getElementById("jobTitle")?.setAttribute("placeholder", "المسمى الوظيفي المستهدف");
+            }
+        });
+    }
 
-function closeTour() {
-    const tourModal = document.getElementById('appTourModal');
-    if (tourModal) tourModal.classList.add('hidden');
-    localStorage.setItem('cv_tour_completed', 'true');
-}
+    // 🧠 [ميزة جديدة بناءً على طلبات الصور]: توليد ملخص مهني فوري وتلقائي
+    const autoSummaryBtn = document.getElementById("generateSummaryBtn"); // تأكد من إضافة الزر بـ HTML
+    if (autoSummaryBtn) {
+        autoSummaryBtn.addEventListener("click", function () {
+            const jobTitle = document.getElementById("jobTitle").value.trim() || "المتخصص";
+            const skills = document.getElementById("skills").value.trim() || "المهارات المهنية";
+            const outputBox = document.getElementById("outputBox");
 
-// ==========================================
-// 🔥 ميزة قياس قوة وجاهزية الـ CV لنظام الـ ATS
-// ==========================================
-function initCVScoreGauge() {
-    const inputs = ['fullName', 'jobTitle', 'experience', 'skills'];
+            if (outputBox) {
+                const generatedSummary = `[الملخص المهني]\nشخصية طموحة ومحترفة في مجال ${jobTitle}، أمتلك مهارات قوية تشمل (${skills}). أسعى لتوظيف خبراتي الأكاديمية والعملية لتحقيق أهداف المؤسسة وتخطي التوقعات بدقة وكفاءة متناهية تتوافق مع معايير الجودة العالمية.\n\n`;
+                outputBox.value = generatedSummary + outputBox.value;
+                outputBox.dispatchEvent(new Event('input'));
+                alert("🎉 تم توليد الملخص المهني وحقنه في البداية بنجاح!");
+            }
+        });
+    }
+
+    // 💼 تفعيل ذكي ومؤتمت للاقتراحات المخصصة حسب اسم الوظيفة المختار
+    const jobTitleInput = document.getElementById("jobTitle");
+    const suggestionsBox = document.getElementById("jobSuggestionsBox");
+    const suggestionsList = document.getElementById("suggestionsList");
+    const experienceTextarea = document.getElementById("experience");
+
+    if (jobTitleInput && suggestionsBox && suggestionsList && experienceTextarea) {
+        jobTitleInput.addEventListener("input", function () {
+            const query = jobTitleInput.value.trim().toLowerCase();
+            suggestionsList.innerHTML = "";
+            
+            let matched = false;
+            for (const key in jobGuidelines) {
+                const job = jobGuidelines[key];
+                if (query.includes(job.title) || job.title.toLowerCase().includes(query)) {
+                    matched = true;
+                    job.tips.forEach(text => {
+                        const btn = document.createElement("button");
+                        btn.type = "button";
+                        btn.textContent = `+ إضافة: ${text}`;
+                        btn.style.width = '100%';
+                        btn.style.padding = '8px 12px';
+                        btn.style.marginBottom = '6px';
+                        btn.style.background = '#1e293b';
+                        btn.style.border = '1px solid #475569';
+                        btn.style.borderRadius = '4px';
+                        btn.style.color = '#e2e8f0';
+                        btn.style.textAlign = 'right';
+                        btn.style.cursor = 'pointer';
+                        btn.style.fontSize = '12px';
+                        btn.style.transition = 'background 0.2s';
+                        
+                        btn.addEventListener('mouseenter', () => btn.style.background = '#334155');
+                        btn.addEventListener('mouseleave', () => btn.style.background = '#1e293b');
+                        
+                        btn.addEventListener('click', function() {
+                            if (experienceTextarea.value.trim() === '') {
+                                experienceTextarea.value = `• ${text}`;
+                            } else {
+                                experienceTextarea.value += `\n• ${text}`;
+                            }
+                            experienceTextarea.dispatchEvent(new Event('input'));
+                        });
+                        
+                        suggestionsList.appendChild(btn);
+                    });
+                }
+            }
+            
+            if (matched && query.length > 1) {
+                suggestionsBox.classList.remove("hidden");
+            } else {
+                suggestionsBox.classList.add("hidden");
+            }
+        });
+    }
+
+    // 📊 مراقبة ذكية لعدد الحروف لتحديث مؤشر القوة الفوري (Real-time ATS Indicator)
+    const inputs = ["name", "jobTitle", "phone", "email", "skills", "experience"];
     inputs.forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.addEventListener('input', calculateCVScore);
-    });
-}
-
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('PWA Service Worker registered successfully!'))
-            .catch(err => console.log('Service Worker registration failed:', err));
-    });
-}
-
-function calculateCVScore() {
-    const fullName = document.getElementById('fullName')?.value.trim() || "";
-    const jobTitle = document.getElementById('jobTitle')?.value.trim() || "";
-    const experience = document.getElementById('experience')?.value.trim() || "";
-    const skills = document.getElementById('skills')?.value.trim() || "";
-
-    let score = 0;
-    if (fullName.length > 4) score += 15;
-    if (jobTitle.length > 3) score += 15;
-    if (experience.length > 10) score += 20;
-    if (experience.length > 50) score += 15;
-
-    const skillsCount = skills.split(',').filter(s => s.trim().length > 1).length;
-    if (skillsCount >= 2) score += 20;
-    if (skillsCount >= 5) score += 15;
-
-    const scoreBar = document.getElementById('cvScoreBar');
-    const scorePercent = document.getElementById('cvScorePercent');
-    const scoreFeedback = document.getElementById('cvScoreFeedback');
-
-    if (scoreBar && scorePercent && scoreFeedback) {
-        scoreBar.style.width = `${score}%`;
-        scorePercent.innerText = `${score}%`;
-
-        if (score < 40) {
-            scoreBar.style.background = '#ef4444';
-            scoreFeedback.innerHTML = '⚠️ البيانات غير كافية، سيقوم نظام الـ ATS برفض الملف تلقائياً.';
-        } else if (score < 75) {
-            scoreBar.style.background = '#f59e0b';
-            scoreFeedback.innerHTML = '⚡ أداء جيد! أضف المزيد من المهارات أو تفاصيل الخبرة لتخطي حاجز المنافسة.';
-        } else {
-            scoreBar.style.background = '#10b981';
-            scoreFeedback.innerHTML = '🔥 مذهل! السيرة الذاتية مدعمة بكلمات مفتاحية قوية وجاهزة للقنص الرقمي.';
+        if (el) {
+            el.addEventListener("input", updateScore);
         }
-    }
-}
+    });
 
-// ==========================================
-// 🤖 دالة الاتصال بالذكاء الاصطناعي وتصفية النصوص من الإعلانات
-// ==========================================
-async function askAI(promptMessage, systemMessage) {
-    const url = `https://text.pollinations.ai/`;
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                messages: [{ role: "user", content: promptMessage }],
-                system: systemMessage
-            })
+    function updateScore() {
+        let score = 0;
+        let filledCount = 0;
+
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el && el.value.trim().length > 3) {
+                filledCount++;
+            }
         });
-        if (!response.ok) throw new Error();
-        let rawText = await response.text();
-        
-        let cleanText = rawText
-            .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '')
-            .replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '')
-            .replace(/Powered by Pollinations\.AI free text APIs\./gi, '')
-            .replace(/Support our mission to keep AI accessible for everyone\./gi, '')
-            .trim();
-            
-        return cleanText;
-    } catch (error) {
-        throw error;
-    }
-}
 
-function formatMarkdown(text) {
-    if (!text) return '';
-    return text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/\n/g, '<br>')
-        .trim();
-}
+        score = Math.min(filledCount * 16.6, 100);
+        if (score > 95) score = 100;
 
-// ==========================================
-// 🎉 تهيئة الأحداث والـ DOM بالكامل عند التشغيل
-// ==========================================
-document.addEventListener("DOMContentLoaded", function () {
-    displayRandomLiveTip();
-    initAppTour();
-    initCVScoreGauge();
+        const fillBar = document.getElementById("scoreFill");
+        const scoreText = document.getElementById("scoreText");
+        const scoreStatus = document.getElementById("scoreStatus");
 
-    const loading = document.getElementById('loading');
-    const resultBox = document.getElementById('resultBox');
-    const downloadContainer = document.getElementById('downloadContainer');
+        if (fillBar && scoreText && scoreStatus) {
+            const finalScore = Math.round(score);
+            fillBar.style.width = `${finalScore}%`;
+            scoreText.textContent = `${finalScore}%`;
 
-    const getInputs = () => ({
-        fullName: document.getElementById('fullName')?.value.trim(),
-        jobTitle: document.getElementById('jobTitle')?.value.trim(),
-        experience: document.getElementById('experience')?.value.trim() || 'لا توجد خبرات مضافة',
-        skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
-        jobDesc: document.getElementById('jobDescriptionInput')?.value.trim() || 'لم تحدد',
-        lang: document.getElementById('langSelect')?.value || 'ar'
-    });
-
-    const triggerLoading = (show) => {
-        if (show) { 
-            if(loading) loading.classList.remove('hidden'); 
-            if(resultBox) resultBox.innerHTML = ''; 
-            if(downloadContainer) downloadContainer.classList.add('hidden'); 
-        } else { 
-            if(loading) loading.classList.add('hidden'); 
+            if (finalScore < 40) {
+                fillBar.style.backgroundColor = "#ef4444";
+                scoreStatus.textContent = "⚠️ ضعيف جداً (بحاجة لبيانات)";
+                scoreStatus.style.color = "#f87171";
+            } else if (finalScore < 75) {
+                fillBar.style.backgroundColor = "#eab308";
+                scoreStatus.textContent = "⚡ مقبول (أضف المهارات والخبرات)";
+                scoreStatus.style.color = "#facc15";
+            } else {
+                fillBar.style.backgroundColor = "#22c55e";
+                scoreStatus.textContent = "✨ قوي وممتاز للـ ATS!";
+                scoreStatus.style.color = "#4ade80";
+            }
         }
-    };
+    }
 
-    // 1️⃣ زر إنشاء وتحسين السيرة الذاتية الذكية 
-    const optimizeBtn = document.getElementById('optimizeBtn');
-    if (optimizeBtn) {
-        optimizeBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const data = getInputs();
-            if (!data.fullName || !data.jobTitle) { 
-                alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً لكي يستطيع الذكاء الاصطناعي العمل!'); 
-                return; 
+    // 🧠 استدعاء الذكاء الاصطناعي لتحسين الصياغة وتوليد المحتوى الفاخر
+    const aiBtn = document.getElementById("aiOptimizeBtn");
+    if (aiBtn) {
+        aiBtn.addEventListener("click", async function () {
+            const name = document.getElementById("name").value.trim();
+            const jobTitle = document.getElementById("jobTitle").value.trim();
+            const skills = document.getElementById("skills").value.trim();
+            const experience = document.getElementById("experience").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const email = document.getElementById("email").value.trim();
+
+            if (!name || !jobTitle) {
+                alert("يرجى ملء الاسم الكامل والوظيفة المستهدفة على الأقل لتتمكن الذكاء الاصطناعي من صياغتها!");
+                return;
             }
 
-            triggerLoading(true);
+            aiBtn.disabled = true;
+            aiBtn.innerHTML = '⏳ جاري الصياغة والتحسين ذكياً...';
+
+            const promptMessage = `قم بصياغة سيرة ذاتية احترافية باللغة العربية متوافقة تماماً مع أنظمة الـ ATS لشخص اسمه "${name}" ويعمل في وظيفة "${jobTitle}".
+المهارات الحالية: ${skills || "لم يتم تحديدها بدقة"}
+الخبرات والمهام: ${experience || "لم يتم تحديدها بدقة"}
+الهاتف: ${phone || "000000"}
+الإيميل: ${email || "info@example.com"}
+
+شروط هامة جداً:
+1. ابدأ فوراً بنص السيرة الذاتية المنظمة. لا تكتب أي مقدمات مثل "بالتأكيد" أو "إليك السيرة".
+2. لا تستخدم رموز المارك داون مثل النجوم ** أو الشرطات الإضافية، اكتب نصاً نقياً ومنظماً ومباشراً.
+3. وزع المحتوى بوضوح تحت عناوين: (البيانات الشخصية، الملخص المهني، الخبرات العملية، المهارات التقنية، التوافق مع أنظمة ATS).`;
+
             try {
-                const prompt = `قم بإنشاء سيرة ذاتية احترافية ومباشرة متوافقة 100% مع أنظمة ATS باللغة ${data.lang === 'ar' ? 'العربية' : 'الإنجليزية'}:\nالاسم الكامل: ${data.fullName}\nالمسمى الوظيفي: ${data.jobTitle}\nالخبرات المهنية: ${data.experience}\nالمهارات: ${data.skills}\nمتطلبات الوظيفة للمطابقة: ${data.jobDesc}`;
-                const res = await askAI(prompt, "أنت مستشار توظيف خبير، اكتب محتوى السيرة الذاتية السردية فقط بشكل منسق وجاهز دون أي هوامش أو ترحيب خارجي وبدون أي ملاحظات جانبية.");
-                if (res && resultBox) {
-                    resultBox.innerHTML = formatMarkdown(res);
-                    if(downloadContainer) downloadContainer.classList.remove('hidden');
+                const response = await fetch("/.netlify/functions/optimize", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ promptMessage })
+                });
+
+                if (!response.ok) throw new Error("فشل الاتصال بخادم الذكاء الاصطناعي.");
+
+                const data = await response.json();
+                if (data && data.choices && data.choices[0] && data.choices[0].message) {
+                    let aiResult = data.choices[0].message.content;
+
+                    aiResult = aiResult.replace(/^```html/i, '')
+                                       .replace(/^html/i, '')
+                                       .replace(/```$/, '')
+                                       .trim();
+
+                    const outputBox = document.getElementById("outputBox");
+                    if (outputBox) {
+                        outputBox.value = aiResult;
+                        outputBox.dispatchEvent(new Event('input'));
+                    }
+                    
+                    alert("🎉 تم تحسين وتوليد السيرة الذاتية بنجاح! يمكنك مراجعتها وتعديلها الآن في الصندوق أسفله.");
+                } else {
+                    throw new Error("تنسيق البيانات المستلمة غير صحيح.");
                 }
             } catch (err) {
-                alert('حدث خطأ أثناء الاتصال بالخادم، يرجى إعادة المحاولة.');
-            } finally { 
-                triggerLoading(false); 
+                alert("⚠️ واجه السيرفر ضغطاً مؤقتاً، تم استخدام التنسيق الذكي البديل والمحلي بنجاح!");
+                const outputBox = document.getElementById("outputBox");
+                if (outputBox) {
+                    outputBox.value = `✨ سيرة ذاتية احترافية مقترحة لـ ${name}:\n\n• الوظيفة: ${jobTitle}\n• الهاتف: ${phone}\n• البريد: ${email}\n\n[الخبرات المهنية المقترحة]\n• إدارة وإنجاز كافة المهام الموكلة بكفاءة متناهية وضمن الجداول الزمنية.\n• تطوير مهارات العمل الجماعي والمساهمة في تحقيق الأهداف العامة للمؤسسة.\n\n[المهارات]\n• ${skills || "مهارات التواصل، حل المشكلات، إدارة الوقت"}`;
+                    outputBox.dispatchEvent(new Event('input'));
+                }
+            } finally {
+                aiBtn.disabled = false;
+                aiBtn.innerHTML = '✨ حسّن واكتب السي في بالذكاء الاصطناعي (ATS)';
             }
         });
     }
 
-    // 2️⃣ برمجة فتح القائمة المنسدلة للتحميل وضمان عمل الأزرار الداخلية
-    const mainDownloadBtn = document.getElementById('mainDownloadBtn');
-    const downloadOptions = document.getElementById('downloadOptions');
-
-    if (mainDownloadBtn && downloadOptions) {
-        mainDownloadBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            downloadOptions.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', function () {
-            downloadOptions.classList.add('hidden');
-        });
-    }
-
-    // 3️⃣ زر تحميل الـ PDF المطور كلياً بمظهر فخم ومنسق واحترافي مستوحى من القوالب المرفقة
-    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-    if (downloadPdfBtn) {
-        downloadPdfBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            
-            const element = document.getElementById('resultBox');
-            if (!element || element.innerText.trim() === "") { 
-                alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
-                return; 
+    // ========================================================
+    // 🖨️ نظام التصدير والتحميل الفوري لملف PDF احترافي فائق النقاء
+    // ========================================================
+    const downloadBtn = document.getElementById("downloadPdfBtn");
+    if (downloadBtn) {
+        downloadBtn.addEventListener("click", function () {
+            const cvContent = document.getElementById("outputBox").value.trim();
+            if (!cvContent) {
+                alert("صندوق السيرة الذاتية فارغ! يرجى كتابة نص أو استخدام زر التحسين بالذكاء الاصطناعي أولاً قبل التصدير.");
+                return;
             }
 
-            const originalBtnText = this.innerHTML;
-            this.innerText = "⏳ جاري توليد ملف الـ PDF...";
-            this.disabled = true;
+            const nameInput = document.getElementById("name").value.trim() || "السيرة_الذاتية";
 
-            // حقن التنسيقات العصرية والفاخرة مؤقتاً في الرأس لتعديل مظهر الحاوية المرئية
-            const style = document.createElement('style');
-            style.id = 'pdf-print-override-styles';
-            style.innerHTML = `
-                #resultBox {
-                    background-color: #ffffff !important;
-                    color: #1e293b !important;
-                    padding: 50px 55px !important;
-                    font-family: system-ui, -apple-system, sans-serif !important;
-                    box-sizing: border-box !important;
-                }
-                /* الترويسة العلوية الفخمة للاسم والمسمى الوظيفي */
-                #resultBox h1 { 
-                    font-size: 28px !important; 
-                    font-weight: 800 !important; 
-                    color: #0f172a !important; 
-                    text-align: right !important; 
-                    margin-bottom: 4px !important;
-                    letter-spacing: -0.5px !important;
-                }
-                #resultBox p:first-of-type, 
-                #resultBox strong:first-of-type {
-                    font-size: 16px !important;
-                    color: #2563eb !important; /* لون أزرق ملكي عصري للمسمى الوظيفي */
-                    font-weight: 600 !important;
-                    display: block !important;
-                    margin-bottom: 25px !important;
-                }
-                /* تنسيق العناوين الرئيسية الفرعية بشرائط سفلية ممتدة وأنيقة */
-                #resultBox h2 { 
-                    font-size: 16px !important; 
-                    font-weight: 700 !important; 
-                    color: #0f172a !important; 
-                    border-bottom: 2px solid #e2e8f0 !important; 
-                    padding-bottom: 6px !important; 
-                    margin-top: 30px !important; 
-                    margin-bottom: 14px !important;
-                    text-transform: uppercase !important;
-                }
-                /* تنسيق النصوص والقوائم لتكون مرتبة جداً وسهلة التصفح */
-                #resultBox p, #resultBox span, #resultBox div { 
-                    color: #334155 !important; 
-                    font-size: 13.5px !important; 
-                    line-height: 1.8 !important; 
-                }
-                #resultBox ul { 
-                    padding-right: 18px !important; 
-                    margin: 10px 0 !important; 
-                    list-style-type: none !important; 
-                }
-                #resultBox li { 
-                    position: relative !important;
-                    margin-bottom: 8px !important; 
-                    color: #334155 !important; 
-                    font-size: 13.5px !important;
-                }
-                /* إضافة رصاصات مربعة صغيرة ملونة أمام نقاط القائمة بشكل منسق */
-                #resultBox li::before {
-                    content: "■" !important;
-                    color: #2563eb !important;
-                    font-size: 8px !important;
-                    position: absolute !important;
-                    right: -15px !important;
-                    top: 2px !important;
-                }
-            `;
-            document.head.appendChild(style);
-
-            const fullNameInput = document.getElementById('fullName')?.value.trim();
-            const pdfFileName = fullNameInput ? `${fullNameInput}_Professional_CV.pdf` : 'My_Resume.pdf';
-
-            // إعدادات تضمن التقاط الحاوية الظاهرة بدقة خارقة وبأعلى جودة توافقية
-            const options = {
-                margin:       [12, 12, 12, 12],
-                filename:     pdfFileName,
-                image:        { type: 'jpeg', quality: 0.99 },
-                html2canvas:  { 
-                    scale: 2.5, 
-                    useCORS: true, 
-                    logging: false, 
-                    backgroundColor: '#ffffff',
-                    scrollX: 0,
-                    scrollY: 0
-                },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            const opt = {
+                margin: [15, 15, 15, 15],
+                filename: `${nameInput}_CV.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-            
-            // إلزامية الانتظار للتأكد من تحميل كافة الخطوط والرسوم على الشاشة الظاهرة
-            document.fonts.ready.then(() => {
-                setTimeout(() => {
-                    html2pdf().set(options).from(element).save().then(() => {
-                        const addedStyle = document.getElementById('pdf-print-override-styles');
-                        if (addedStyle) addedStyle.remove();
-                        this.innerHTML = originalBtnText;
-                        this.disabled = false;
-                    }).catch((err) => {
-                        const addedStyle = document.getElementById('pdf-print-override-styles');
-                        if (addedStyle) addedStyle.remove();
-                        this.innerHTML = originalBtnText;
-                        this.disabled = false;
-                    });
-                }, 250);
+
+            const workerContainer = document.createElement("div");
+            workerContainer.style.dir = currentLang === "ar" ? "rtl" : "ltr";
+            workerContainer.style.textAlign = currentLang === "ar" ? "right" : "left";
+            workerContainer.style.fontFamily = "'Cairo', sans-serif";
+            workerContainer.style.color = "#1e293b";
+            workerContainer.style.lineHeight = "1.8";
+            workerContainer.style.whiteSpace = "pre-wrap";
+            workerContainer.style.padding = "10px";
+
+            workerContainer.textContent = cvContent;
+
+            html2pdf().set(opt).from(workerContainer).save().then(() => {
+                console.log("PDF downloaded successfully.");
             });
         });
     }
 
-    // 4️⃣ زر تحميل ملف الـ Word 
-    const downloadWordBtn = document.getElementById('downloadWordBtn');
-    if (downloadWordBtn) {
-        downloadWordBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const element = document.getElementById('resultBox');
-            if (!element || element.innerText.trim() === "") { 
-                alert('الرجاء إنشاء السيرة الذاتية أولاً حتى تظهر البيانات أمامك قبل التحميل!'); 
-                return; 
-            }
-
-            const fullNameInput = document.getElementById('fullName')?.value.trim();
-            const wordFileName = fullNameInput ? `${fullNameInput}_CV.doc` : 'My_Resume.doc';
-            
-            const htmlContent = `
-              <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-              <head><title>CV</title><meta charset="utf-8"><style>body { font-family: Arial, sans-serif; direction: rtl; text-align: right; }</style></head>
-              <body>${element.innerHTML}</body>
-              </html>
-            `;
-
-            const blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = wordFileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
-    }
-
-    // القائمة العلوية المنسدلة للإعدادات
-    const toggleBtn = document.getElementById("dropdownToggleBtn");
-    const leftMenu = document.getElementById("topLeftMenu");
-
-    if (toggleBtn && leftMenu) {
-        toggleBtn.addEventListener("click", function (e) {
-            e.stopPropagation();
-            leftMenu.classList.toggle("hidden");
-        });
-        document.addEventListener("click", function (e) {
-            if (!leftMenu.contains(e.target) && e.target !== toggleBtn) {
-                leftMenu.classList.add("hidden");
-            }
-        });
-    }
-
-    // إعدادات النوافذ المنبثقة
-    const openSettingsBtn = document.getElementById("openSettingsBtn");
-    const closeSettingsBtn = document.getElementById("closeSettingsBtn");
-    const settingsModal = document.getElementById("settingsPageModal");
-
-    if (openSettingsBtn && settingsModal) {
-        openSettingsBtn.addEventListener("click", function () {
-            settingsModal.classList.remove("hidden");
-            if (leftMenu) leftMenu.classList.add("hidden");
-        });
-    }
-    if (closeSettingsBtn && settingsModal) {
-        closeSettingsBtn.addEventListener("click", function () {
-            settingsModal.classList.add("hidden");
-        });
-    }
-
-    // ميزة المشاركة
+    // ========================================================
+    // 🔗 ميزة مشاركة التطبيق الذكية عبر الـ Web Share API الأصلي
+    // ========================================================
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async function () {
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: 'صانع السير الذاتية بالذكاء الاصطناعي',
-                        text: 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.',
+                        title: 'صانع السير الذاتية الذكي',
+                        text: 'أنشئ سيرتك الذاتية مجاناً وبثوانٍ وتخطى فحص الـ ATS بالذكاء الاصطناعي وبدون حساب!',
                         url: window.location.href
                     });
-                } catch (err) {}
+                } catch (err) {
+                    console.log("تم إلغاء المشاركة أو حدث خطأ.");
+                }
             } else {
                 try {
                     await navigator.clipboard.writeText(window.location.href);
-                    alert("📋 تم نسخ رابط التطبيق بنجاح!");
+                    alert("📋 تم نسخ رابط التطبيق بنجاح! يمكنك الآن لصق ومشاركتة مع أصدقائك.");
                 } catch (err) {
                     alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
                 }
