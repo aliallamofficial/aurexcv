@@ -33,293 +33,324 @@ body {
 /* ==========================================
     تنسيق الهيدر الاحترافي الفاخر
    ========================================== */
+.main-app-header {
+    text-align: center;
+    margin-bottom: 35px;
+    margin-top: 20px;
+}
+
+/* 1. شارة الـ AI الذكية علوية */
+.logo-badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #38bdf8;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+/* 2. اسم التطبيق بالتدرج اللوني الانسيابي */
+.app-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* 3. البراندينج الفرعي الإنجليزي */
+.branding-sub {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #38bdf8;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    opacity: 0.95;
+}
+
+/* الوصف الفرعي */
+.app-subtitle {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    margin: 0 auto;
+    max-width: 500px;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+/* تأثير حركة النجوم التفاعلية */
+.sparkle {
+    display: inline-block;
+    animation: sparkleFloat 2s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
 header {
     text-align: center;
     margin-bottom: 40px;
-    position: relative;
 }
 
 header h1 {
-    font-size: 2.5rem;
+    font-size: 32px;
     font-weight: 700;
-    background: linear-gradient(to right, #38bdf8, #818cf8);
+    background: linear-gradient(to left, #38bdf8, #818cf8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 header p {
     color: #94a3b8;
-    font-size: 1.1rem;
-}
-
-/* زر الترس المتمركز في الأعلى لفتح الإعدادات */
-.settings-trigger-btn {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px;
-    border-radius: 12px;
-    color: #94a3b8;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.settings-trigger-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #f8fafc;
-    transform: rotate(30deg);
+    font-size: 16px;
+    font-weight: 300;
 }
 
 /* ==========================================
-    تقسيم الواجهة (المدخلات والمخرجات)
+    تقسيم العناصر والأزرار الأساسية للمنصة
    ========================================== */
-.main-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+main {
+    display: flex;
     gap: 40px;
 }
 
-@media (max-width: 968px) {
-    .main-content {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* لوحة النموذج والمدخلات */
-.input-panel {
+section {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+}
+
+h2 {
+    color: #38bdf8;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    position: relative;
+    padding-right: 15px;
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 4px;
+    background: #38bdf8;
+    border-radius: 2px;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    position: relative;
+    margin-bottom: 20px;
 }
 
-.form-group label {
-    font-size: 0.95rem;
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
     font-weight: 600;
     color: #cbd5e1;
 }
 
-.form-group input,
-.form-group textarea {
+input[type="text"], textarea, select {
     width: 100%;
-    background: #0f172a;
-    border: 1px solid #334155;
     padding: 14px 16px;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     color: #f8fafc;
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.2s;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: left 16px center;
+    cursor: pointer;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+[dir="rtl"] select {
+    background-position: left 16px center;
+    padding-left: 45px;
+}
+
+input[type="text"]:focus, textarea:focus, select:focus {
     border-color: #38bdf8;
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    background: #0f172a;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
 }
 
-/* لوحة المخرجات والسي في الجاهز */
-.output-panel {
+input[type="text"]::placeholder, textarea::placeholder {
+    color: #64748b;
+}
+
+select option {
+    background: #1e293b;
+    color: #f8fafc;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+    background: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.result-box {
+    min-height: 320px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    color: #e2e8f0;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.placeholder-text {
+    color: #64748b;
+    text-align: center;
+    margin-top: 130px;
+    font-weight: 300;
+}
+
+#loading {
+    color: #fbbf24;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========================================================
+    🛠️ التعديل المضاف لمنع وحل مشكلة تصدير صفحة بيضاء في الـ PDF
+   ======================================================== */
+.html2pdf-printing {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+.html2pdf-printing * {
+    color: #000000 !important;
+    text-shadow: none !important;
+}
+
+/* ==========================================
+    تذييل الصفحة الاحترافي (Footer)
+   ========================================== */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    padding-bottom: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 14px;
+    color: #64748b;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    height: 100%;
 }
 
-.output-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* ========================================================
+    ➕ التنسيقات الجديدة المضافة للميزات الإبداعية والاقتراحات
+   ======================================================== */
+
+/* مفتاح التحويل (Toggle Switch) */
+.switch .slider::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
 }
 
-.output-header h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #e2e8f0;
+input:checked + .slider {
+    background-image: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    background-color: #ec4899;
 }
 
-/* صندوق استعراض وتعديل النص الناتج */
-#outputBox {
-    width: 100%;
-    flex-grow: 1;
-    min-height: 480px;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 16px;
-    padding: 24px;
-    color: #f1f5f9;
-    font-size: 1.05rem;
-    line-height: 1.8;
-    resize: none;
-    outline: none;
-    font-family: 'Cairo', sans-serif;
-    transition: border-color 0.2s;
+input:checked + .slider::before {
+    transform: translateX(24px);
 }
 
-#outputBox:focus {
-    border-color: #818cf8;
+[dir="rtl"] input:checked + .slider::before {
+    transform: translateX(-24px);
 }
 
-/* ==========================================
-    مؤشر قوة السيرة الذاتية (Real-time ATS Indicator)
-   ========================================== */
-.score-container {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid #334155;
-    padding: 20px;
-    border-radius: 16px;
+/* تأثيرات وضع التصميم الإبداعي (Creative Layout Mode) */
+.creative-layout-active {
+    background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%) !important;
 }
 
-.score-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+.creative-layout-active .container {
+    background: rgba(45, 20, 60, 0.6) !important;
+    border-color: rgba(236, 72, 153, 0.2) !important;
+    box-shadow: 0 20px 40px rgba(236, 72, 153, 0.15) !important;
 }
 
-.score-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #cbd5e1;
+.creative-layout-active h2 {
+    color: #ec4899 !important;
 }
 
-#scoreText {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #38bdf8;
+.creative-layout-active h2::before {
+    background: #ec4899 !important;
 }
 
-.score-bar-bg {
-    width: 100%;
-    height: 10px;
-    background: #1e293b;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 10px;
+.creative-layout-active button {
+    background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%) !important;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3) !important;
 }
 
-#scoreFill {
-    width: 0%;
-    height: 100%;
-    background-color: #ef4444;
-    border-radius: 999px;
-    transition: width 0.5s ease-out, background-color 0.3s ease;
-}
-
-#scoreStatus {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #94a3b8;
-}
-
-/* ==========================================
-    تنسيق الأزرار (Buttons Styling)
-   ========================================== */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 14px 24px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    width: 100%;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.btn-primary:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
-}
-
-.btn-primary:disabled {
-    background: #334155;
-    color: #64748b;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-.action-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.btn-success {
-    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-}
-
-.btn-success:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
-}
-
-.btn-secondary {
-    background: #334155;
-    color: #f1f5f9;
-    border: 1px solid #475569;
-}
-
-.btn-secondary:hover {
-    background: #475569;
-}
-
-/* ==========================================
-    صندوق النصائح المتحرك ذكياً في الأسفل
-   ========================================== */
-.tips-marquee-container {
-    margin-top: 40px;
-    background: rgba(30, 41, 59, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 16px 24px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    overflow: hidden;
-}
-
-.tips-label {
-    background: rgba(234, 179, 8, 0.15);
-    color: #facc15;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-#cvTipText {
-    font-size: 0.95rem;
-    color: #cbd5e1;
-    transition: opacity 0.3s ease-in-out;
-}
-
-/* صندوق اقتراحات صياغات الـ ATS والمهام المقترحة لوظيفتك */
+/* صندوق صياغات الـ ATS والمهام المقترحة لوظيفتك */
 #jobSuggestionsBox {
     animation: fadeInSlide 0.3s ease-out forwards;
 }
@@ -360,90 +391,22 @@ header p {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     width: 100%;
-    max-width: 440px;
-    padding: 28px;
+    max-width: 500px;
+    padding: 30px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    direction: rtl;
+    text-align: right;
     position: relative;
+    animation: modalAppear 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* هيدر نافذة الإعدادات */
-.settings-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    border-bottom: 1px solid #1e293b;
-    padding-bottom: 14px;
-}
-
-.settings-header h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #f1f5f9;
-}
-
-.settings-close-btn {
-    background: none;
-    border: none;
-    color: #64748b;
-    font-size: 1.3rem;
-    cursor: pointer;
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.settings-close-btn:hover {
-    color: #ef4444;
-}
-
-/* خيارات وعناصر الإعدادات الداخلية */
-.setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.setting-item:last-of-type {
-    border-bottom: none;
-    margin-bottom: 10px;
-}
-
-.setting-info h4 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #e2e8f0;
-    margin-bottom: 4px;
-}
-
-.setting-info p {
-    font-size: 0.8rem;
-    color: #64748b;
-}
-
-/* الأزرار المخصصة للمودال */
-.modal-action-btn {
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #cbd5e1;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.modal-action-btn:hover {
-    background: #334155;
-    color: #f8fafc;
-    border-color: #475569;
-}
-
-/* لتأكيد الإخفاء البرمجي بشكل فوري */
-.hidden {
-    display: none !important;
-}
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    }
