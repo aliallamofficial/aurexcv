@@ -60,7 +60,7 @@ body {
     font-weight: 700;
     margin: 0;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+    background: linear-gradient(135deg, #ffffff 40%, #94a3b8 font-weight: 700; 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -410,3 +410,36 @@ input:checked + .slider::before {
         transform: scale(1) translateY(0);
     }
 }
+
+
+/* ========================================================
+   📱 إضافات احترافية مستقلة لدعم التجاوب (Media Queries)
+   ======================================================== */
+
+@media (max-width: 1024px) {
+    body {
+        padding: 20px 10px;
+    }
+    .container {
+        padding: 25px 20px;
+    }
+    main {
+        flex-direction: column; /* جعل الصناديق تنساب عمودياً لتجنب ضيق المساحة */
+        gap: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .app-title {
+        font-size: 1.8rem;
+    }
+    .branding-sub {
+        font-size: 0.9rem;
+    }
+    header h1 {
+        font-size: 24px;
+    }
+    section {
+        padding: 20px 15px;
+    }
+                     }
