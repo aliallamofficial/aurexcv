@@ -208,7 +208,7 @@ body {
     top: 40px;
 }
 
-/* ورقة السيرة الذاتية البيضاء الفاخرة المعتمدة للـ ATS */
+/* ورقة السيرة الذاتية البيضاء الفاخرة */
 #resultBox {
     background: #ffffff !important;
     color: #1e293b !important;
@@ -445,7 +445,6 @@ body {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-/* صياغات الـ ATS والمهام المقترحة وظيفتك */
 #jobSuggestionsBox {
     animation: fadeInSlide 0.3s ease-out forwards;
 }
@@ -461,9 +460,7 @@ body {
     }
 }
 
-/* ========================================================
-    ⚙️ النظام المصلح المتمركز لنافذة إعدادات التطبيق والمظهر (Modal System)
-   ======================================================== */
+/* ⚙️ النظام المتمركز لنافذة إعدادات التطبيق والمظهر (Modal System) */
 #settingsPageModal {
     position: fixed;
     top: 0;
@@ -490,54 +487,28 @@ body {
     overflow: hidden;
 }
 
+/* ========================================================
+   اضافات التوافق مع الشاشات المختلفة دون المساس بتصميمك الاصلي
+   ======================================================== */
 
-/* ====================================================================
-   🆕 الميزات الاحترافية الجديدة المضافة أسفل ملفك لتطوير التجاوب الكامل 🆕
-   ==================================================================== */
-
-/* 📱 1️⃣ عند تصفح التطبيق من أجهزة التابلت والشاشات المتوسطة */
 @media (max-width: 1024px) {
-    body {
-        padding: 20px 10px;
-    }
-    .container {
-        padding: 25px 20px;
-        border-radius: 16px;
-    }
     .grid {
-        grid-template-columns: 1fr; /* تحويل لوحتي المدخلات والمعاينة فوق بعضهما بدلاً من التداخل */
-        gap: 30px;
+        grid-template-columns: 1fr;
     }
     .preview-panel {
-        position: static; /* إلغاء التثبيت الجانبي لتنزلق لوحة المعاينة لأسفل بشكل مرن */
+        position: static;
     }
 }
 
-/* 📱 2️⃣ عند تصفح التطبيق من الهواتف المحمولة الذكية (أقل من 600px) */
 @media (max-width: 600px) {
-    .header h1 {
-        font-size: 24px;
-    }
-    .header p {
-        font-size: 14px;
-    }
-    .form-panel {
-        padding: 20px 15px;
-    }
     .top-actions-bar {
         position: relative;
         top: 0;
         justify-content: center;
         margin-bottom: 25px;
     }
-    /* جعل أوراق المعاينة مرنة ومريحة للقراءة داخل الهاتف دون الحاجة لعمل سكرول جانبي */
-    #resultBox {
-        padding: 25px 20px !important;
-        min-height: 400px;
-    }
     .live-tips-ribbon {
         flex-direction: column;
         text-align: center;
-        gap: 8px;
     }
     }
