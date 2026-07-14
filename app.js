@@ -125,7 +125,7 @@ function checkJobMatch() {
     const resultDiv = document.getElementById('matchResult');
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
     if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
-    const cvText = (skills + " " + experience).toLowerCase(); // مصحح
+    const cvText = (skills + " " + experience).toLowerCase();
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
     const stopWords = ['في', 'من', 'على', 'إلى', 'مع', 'the', 'and', 'for', 'with'];
@@ -278,7 +278,26 @@ document.addEventListener("DOMContentLoaded", function () {
     if (closeSettingsBtn && settingsModal) { closeSettingsBtn.addEventListener("click", function () { settingsModal.classList.add("hidden"); }); }
 
     const shareBtn = document.getElementById("shareAppBtn");
-    if (shareBtn) { shareBtn.addEventListener("click", async function () { if (navigator.share) { try { await navigator.share({ title: 'صانع السير الذاتية بالذكاء الاصطناعي', text: 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.', url: window.location.href }); } catch (err) {} } else { try { await navigator.clipboard.writeText(window.location.href); alert("📋 تم نسخ رابط التطبيق بنجاح!"); } catch (err) { alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً."); } }); }
+    if (shareBtn) {
+        shareBtn.addEventListener("click", async function () {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'صانع السير الذاتية بالذكاء الاصطناعي',
+                        text: 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.',
+                        url: window.location.href
+                    });
+                } catch (err) {}
+            } else {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert("📋 تم نسخ رابط التطبيق بنجاح!");
+                } catch (err) {
+                    alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
+                }
+            }
+        });
+    } // <-- القوس ده هو اللي كان ناقص
 
     const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) {
