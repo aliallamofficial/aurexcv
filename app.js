@@ -12,7 +12,7 @@ const cvTips = [
 const jobGuidelines = {
     "graphic_designer": { title: "مصمم جرافيك", keywords: ["مصمم", "جرافيك", "designer"], tips: ["ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.","تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.","إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."] },
     "content_creator": { title: "صانع محتوى / كاتب محتوى", keywords: ["محتوى", "كاتب", "content", "writer"], tips: ["كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.","تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.","التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."] },
-    "interior_designer": { title: "مهندس ديكور / مصمم داخلي", keywords: ["ديكور", "داخلي", "interior"], tips: ["إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."] }
+    "interior_designer": { title: "مهندس ديكور / مصمم داخلي", keywords: ["ديكور", "داخلي", "interior"], tips: ["إعداد مخطات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."] }
 };
 
 function displayRandomLiveTip() {
@@ -128,7 +128,7 @@ function showJobSuggestions() {
 
     if (matchedJob) {
         suggestionsList.innerHTML = matchedJob.tips.map(tip =>
-            `<button class="suggestion-item" style="background:rgba(56,189,248,0.2); border:1px solid #38bdf8; color:#fff; padding:8px; border-radius:6px; margin-bottom:8px; width:100%; text-align:right; cursor:pointer; font-family:'Cairo', sans-serif;" onclick="addTipToExperience('${tip.replace(/'/g, "\\'")}')">${tip}</button>`
+            `<button class="suggestion-item" onclick="addTipToExperience('${tip.replace(/'/g, "\\'")}')">${tip}</button>`
         ).join('');
         suggestionsBox.classList.remove('hidden');
     } else {
@@ -171,8 +171,8 @@ function checkJobMatch() {
     const matchPercent = uniqueKeywords.length > 0? Math.round((matched / uniqueKeywords.length) * 100) : 0;
     if (resultDiv) {
         resultDiv.innerHTML = `
-            <div style="margin-top:15px; padding:15px; background:#0f172a; border-radius:10px; border:1px solid #334155;">
-                <h4 style="margin:0 0 10px 0; color:#fff;">نسبة التطابق مع الإعلان: ${matchPercent}%</h4>
+            <div style="margin-top:15px; padding:15px; background:#1e293b; border-radius:10px; border:1px solid #334155;">
+                <h4 style="margin:0 0 10px 0;">نسبة التطابق مع الإعلان: ${matchPercent}%</h4>
                 <div style="height:10px; background:#334155; border-radius:5px; margin:10px 0; overflow:hidden;">
                     <div style="height:100%; width:${matchPercent}%; background:${matchPercent > 70? '#10b981' : matchPercent > 40? '#f59e0b' : '#ef4444'}; border-radius:5px; transition:width 0.5s;"></div>
                 </div>
@@ -315,13 +315,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (toggleLanguageBtn) { toggleLanguageBtn.addEventListener('click', function(e) { e.preventDefault(); currentLang = currentLang === 'ar'? 'en' : 'ar'; document.documentElement.dir = currentLang === 'ar'? 'rtl' : 'ltr'; document.documentElement.lang = currentLang; toggleLanguageBtn.innerText = currentLang === 'ar'? '🔄 English' : '🔄 العربية'; }); }
 
     const generateSummaryBtn = document.getElementById('generateSummaryBtn');
-    if (generateSummaryBtn) { generateSummaryBtn.addEventListener('click', async function(e) { e.preventDefault(); if (isGenerating) return; const data = getInputs(); if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } isGenerating = true; const originalBtnText = generateSummaryBtn.innerHTML; generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; generateSummaryBtn.disabled = true; try { const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); if (summary && outputBox) { if (outputBox.value.trim() === "") { outputBox.value = `الملخص المهني:\n${summary}\n\n`; } else { outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; } alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); } } catch (err) { alert(`لم نتمكن من الاتصال: ${err.message}`); } finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } }); }
+    if (generateSummaryBtn) { generateSummaryBtn.addEventListener('click', async function(e) { e.preventDefault(); if (isGenerating) return; const data = getInputs(); if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } isGenerating = true; const originalBtnText = generateSummaryBtn.innerHTML; generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; generateSummaryBtn.disabled = true; try { const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); if (summary && outputBox) { if (outputBox.value.trim() === "") { outputBox.value = `الملخص المهني:\n${summary}\n\n`; } else { outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; } alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); } catch (err) { alert(`لم نتمكن من الاتصال: ${err.message}`); } finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } }); }
 
     const toggleBtn = document.getElementById("dropdownToggleBtn"); const leftMenu = document.getElementById("topLeftMenu");
     if (toggleBtn && leftMenu) { toggleBtn.addEventListener("click", function (e) { e.stopPropagation(); leftMenu.classList.toggle("hidden"); }); document.addEventListener("click", function (e) { if (!leftMenu.contains(e.target) && e.target!== toggleBtn) { leftMenu.classList.add("hidden"); } }); }
 
     const openSettingsBtn = document.getElementById("openSettingsBtn"); const closeSettingsBtn = document.getElementById("closeSettingsBtn"); const settingsModal = document.getElementById("settingsPageModal");
-    if (openSettingsBtn && settingsModal) { openSettingsBtn.addEventListener("click", function (e) { e.preventDefault(); settingsModal.classList.remove("hidden"); if (leftMenu) leftMenu.classList.add("hidden"); }); }
+    if (openSettingsBtn && settingsModal) { openSettingsBtn.addEventListener("click", function () { settingsModal.classList.remove("hidden"); if (leftMenu) leftMenu.classList.add("hidden"); }); }
     if (closeSettingsBtn && settingsModal) { closeSettingsBtn.addEventListener("click", function () { settingsModal.classList.add("hidden"); }); }
 
     const shareBtn = document.getElementById("shareAppBtn");
