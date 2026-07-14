@@ -12,7 +12,7 @@ const cvTips = [
 const jobGuidelines = {
     "graphic_designer": { title: "مصمم جرافيك", keywords: ["مصمم", "جرافيك", "designer"], tips: ["ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.","تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.","إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."] },
     "content_creator": { title: "صانع محتوى / كاتب محتوى", keywords: ["محتوى", "كاتب", "content", "writer"], tips: ["كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.","تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.","التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."] },
-    "interior_designer": { title: "مهندس ديكور / مصمم داخلي", keywords: ["ديكور", "داخلي", "interior"], tips: ["إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."] }
+    "interior_designer": { title: "مهندس ديكور / مصمم داخلي", keywords: ["ديكور", "داخلي", "interior"], tips: ["إعداد مخطات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."] }
 };
 
 function displayRandomLiveTip() {
@@ -23,7 +23,10 @@ function displayRandomLiveTip() {
     }
 }
 
+// حل مشكلة التيرنستايل - مسح الكاش القديم
 function onTurnstileSuccess(token) {
+    console.log("Turnstile Success:", token);
+    localStorage.removeItem('cf-turnstile-response');
     const splash = document.getElementById('splash-screen');
     if (splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 500); }
 }
@@ -79,7 +82,7 @@ function initCVScoreGauge() {
         if (el) {
             el.addEventListener('input', calculateCVScore);
             el.addEventListener('input', autoSave);
-            if(id === 'jobTitle') el.addEventListener('input', showJobSuggestions); // شغلنا الاقتراحات
+            if(id === 'jobTitle') el.addEventListener('input', showJobSuggestions);
         }
     });
     loadSavedData();
@@ -146,12 +149,12 @@ function addTipToExperience(tip) {
     const expField = document.getElementById('experience');
     if (expField) {
         expField.value += (expField.value? '\n• ' : '• ') + tip;
-        expField.dispatchEvent(new Event('input')); // عشان يحسب الاسكور
+        expField.dispatchEvent(new Event('input'));
     }
 }
 
 // ==========================================
-// 🎯 ميزة مطابقة إعلان الوظيفة الجديدة
+// 🎯 ميزة مطابقة إعلان الوظيفة
 // ==========================================
 function initJobMatchChecker() {
     const btn = document.getElementById('checkMatchBtn');
@@ -164,7 +167,7 @@ function checkJobMatch() {
     const experience = document.getElementById('experience')?.value.trim() || "";
     const resultDiv = document.getElementById('matchResult');
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
-    if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; } // صلحت المسافة هنا
+    if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
     const cvText = (skills + " " + experience).toLowerCase();
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
@@ -191,7 +194,7 @@ function checkJobMatch() {
 }
 
 // ==========================================
-// 💾 الحفظ التلقائي - متعدلة عشان تبدأ من 0%
+// 💾 الحفظ التلقائي - امان كامل
 // ==========================================
 function autoSave() {
     ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription'].forEach(id => {
@@ -212,7 +215,7 @@ function loadSavedData() {
 
     if(hasData) {
         calculateCVScore();
-        showJobSuggestions(); // نعرض الاقتراحات لو فيه داتا متخزنة
+        showJobSuggestions();
     } else {
         document.getElementById('scoreFill')?.style.width = '0%';
         document.getElementById('scoreText')?.innerText = '0%';
@@ -263,6 +266,16 @@ document.addEventListener("DOMContentLoaded", function () {
     initCVScoreGauge();
     initJobMatchChecker();
 
+    // كود طوارئ: لو التيرنستايل معلق افتح التطبيق بعد 5 ثواني
+    setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        if (splash && getComputedStyle(splash).opacity!== '0') {
+            console.log("Turnstile timeout - forcing open");
+            splash.style.opacity = '0';
+            setTimeout(() => splash.remove(), 500);
+        }
+    }, 5000);
+
     const outputBox = document.getElementById('outputBox');
     const getInputs = () => ({
         name: document.getElementById('name')?.value.trim(),
@@ -279,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             if (isGenerating) return;
             const data = getInputs();
-            if (!data.name ||!data.jobTitle) { alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً!'); return; } // صلحت المسافة
+            if (!data.name ||!data.jobTitle) { alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً!'); return; }
             isGenerating = true;
             const originalBtnText = aiOptimizeBtn.innerHTML;
             aiOptimizeBtn.innerHTML = "⏳ جاري التحسين الذكي وصياغة الـ ATS...";
