@@ -151,7 +151,7 @@ function checkJobMatch() {
 }
 
 // ==========================================
-// 💾 الحفظ التلقائي
+// 💾 الحفظ التلقائي - متعدلة عشان تبدأ من 0%
 // ==========================================
 function autoSave() {
     ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription'].forEach(id => {
@@ -161,10 +161,23 @@ function autoSave() {
 }
 function loadSavedData() {
     ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription'].forEach(id => {
-        const el = document.getElementById(id); const saved = localStorage.getItem(`cv_${id}`);
+        const el = document.getElementById(id);
+        const saved = localStorage.getItem(`cv_${id}`);
         if (el && saved) el.value = saved;
     });
-    calculateCVScore();
+
+    // لو فيه بيانات نعمل حساب، لو مفيش نخليه 0
+    const hasData = ['name', 'jobTitle', 'experience', 'skills'].some(id => {
+        return document.getElementById(id)?.value.trim().length > 0;
+    });
+
+    if(hasData) {
+        calculateCVScore();
+    } else {
+        document.getElementById('scoreFill').style.width = '0%';
+        document.getElementById('scoreText').innerText = '0%';
+        document.getElementById('scoreStatus').innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...';
+    }
 }
 
 // Service Worker
@@ -297,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         });
-    } // <-- القوس ده هو اللي كان ناقص
+    }
 
     const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) {
