@@ -125,7 +125,7 @@ function checkJobMatch() {
     const resultDiv = document.getElementById('matchResult');
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
     if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
-    const cvText = (skills + " + experience).toLowerCase();
+    const cvText = (skills + " " + experience).toLowerCase(); // تم التصحيح هنا
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
     const stopWords = ['في', 'من', 'على', 'إلى', 'مع', 'the', 'and', 'for', 'with'];
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
     displayRandomLiveTip();
     initAppTour();
     initCVScoreGauge();
-    initJobMatchChecker(); // تفعيل ميزة المطابقة
+    initJobMatchChecker();
 
     const outputBox = document.getElementById('outputBox');
     const getInputs = () => ({
@@ -220,7 +220,6 @@ document.addEventListener("DOMContentLoaded", function () {
         skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
     });
 
-    // زر إنشاء CV
     const aiOptimizeBtn = document.getElementById('aiOptimizeBtn');
     if (aiOptimizeBtn) {
         aiOptimizeBtn.addEventListener('click', async (e) => {
@@ -242,7 +241,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // زر تحميل PDF
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -262,21 +260,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // باقي الأكواد: الثيم + اللغة + الملخص + القوائم
     const themeSelect = document.getElementById('themeSelect');
     if (themeSelect) { themeSelect.addEventListener('change', function() { const theme = this.value; if (theme === 'royal-blue') { document.body.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)'; } else if (theme === 'emerald-green') { document.body.style.background = 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)'; } else { document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'; } }); }
     let currentLang = 'ar';
     const toggleLanguageBtn = document.getElementById('toggleLanguageBtn');
     if (toggleLanguageBtn) { toggleLanguageBtn.addEventListener('click', function(e) { e.preventDefault(); currentLang = currentLang === 'ar'? 'en' : 'ar'; document.documentElement.dir = currentLang === 'ar'? 'rtl' : 'ltr'; document.documentElement.lang = currentLang; toggleLanguageBtn.innerText = currentLang === 'ar'? '🔄 English' : '🔄 العربية'; }); }
     const generateSummaryBtn = document.getElementById('generateSummaryBtn');
-    if (generateSummaryBtn) { generateSummaryBtn.addEventListener('click', async function(e) { e.preventDefault(); if (isGenerating) return; const data = getInputs(); if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } isGenerating = true; const originalBtnText = generateSummaryBtn.innerHTML; generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; generateSummaryBtn.disabled = true; try { const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); if (summary && outputBox) { if (outputBox.value.trim() === "") { outputBox.value = `الملخص المهني:\n${summary}\n\n`; } else { outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; } alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); } } catch (err) { alert(`لم نتمكن من الاتصال: ${err.message}`); } finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } }); }
+    if (generateSummaryBtn) { generateSummaryBtn.addEventListener('click', async function(e) { e.preventDefault(); if (isGenerating) return; const data = getInputs(); if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } isGenerating = true; const originalBtnText = generateSummaryBtn.innerHTML; generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; generateSummaryBtn.disabled = true; try { const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); if (summary && outputBox) { if (outputBox.value.trim() === "") { outputBox.value = `الملخص المهني:\n${summary}\n\n`; } else { outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; } alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); } catch (err) { alert(`لم نتمكن من الاتصال: ${err.message}`); } finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } }); }
     const toggleBtn = document.getElementById("dropdownToggleBtn"); const leftMenu = document.getElementById("topLeftMenu");
     if (toggleBtn && leftMenu) { toggleBtn.addEventListener("click", function (e) { e.stopPropagation(); leftMenu.classList.toggle("hidden"); }); document.addEventListener("click", function (e) { if (!leftMenu.contains(e.target) && e.target!== toggleBtn) { leftMenu.classList.add("hidden"); } }); }
     const openSettingsBtn = document.getElementById("openSettingsBtn"); const closeSettingsBtn = document.getElementById("closeSettingsBtn"); const settingsModal = document.getElementById("settingsPageModal");
     if (openSettingsBtn && settingsModal) { openSettingsBtn.addEventListener("click", function () { settingsModal.classList.remove("hidden"); if (leftMenu) leftMenu.classList.add("hidden"); }); }
     if (closeSettingsBtn && settingsModal) { closeSettingsBtn.addEventListener("click", function () { settingsModal.classList.add("hidden"); }); }
     const shareBtn = document.getElementById("shareAppBtn");
-    if (shareBtn) { shareBtn.addEventListener("click", async function () { if (navigator.share) { try { await navigator.share({ title: 'صانع السير الذاتية بالذكاء الاصطناعي', text: 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.', url: window.location.href }); } catch (err) {} } else { try { await navigator.clipboard.writeText(window.location.href); alert("📋 تم نسخ رابط التطبيق بنجاح!"); } catch (err) { alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً."); } } }); }
+    if (shareBtn) { shareBtn.addEventListener("click", async function () { if (navigator.share) { try { await navigator.share({ title: 'صانع السير الذاتية بالذكاء الاصطناعي', text: 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.', url: window.location.href }); } catch (err) {} } else { try { await navigator.clipboard.writeText(window.location.href); alert("📋 تم نسخ رابط التطبيق بنجاح!"); } catch (err) { alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً."); } }); }
     const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) { notificationBtn.addEventListener("click", function (e) { e.preventDefault(); if (!("Notification" in window)) { alert("عذراً، البيئة الحالية لا تدعم ميزة الإشعارات."); return; } if (Notification.permission === "granted") { alert("🔔 الإشعارات مفعلة بالفعل!"); } else if (Notification.permission!== "denied") { Notification.requestPermission().then(function (permission) { if (permission === "granted") { alert("🎉 تم تفعيل الإشعارات بنجاح!"); } else { alert("⚠️ تم رفض إذن الإشعارات."); } }); } }); }
 });
