@@ -10,9 +10,9 @@ const cvTips = [
 ];
 
 const jobGuidelines = {
-    "graphic_designer": { title: "مصمم جرافيك", tips: ["ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.","تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.","إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."] },
-    "content_creator": { title: "صانع محتوى / كاتب محتوى", tips: ["كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.","تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.","التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."] },
-    "interior_designer": { title: "مهندس ديكور / مصمم داخلي", tips: ["إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."] }
+    "graphic_designer": { title: "مصمم جرافيك", keywords: ["مصمم", "جرافيك", "designer"], tips: ["ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.","تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.","إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."] },
+    "content_creator": { title: "صانع محتوى / كاتب محتوى", keywords: ["محتوى", "كاتب", "content", "writer"], tips: ["كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.","تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.","التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."] },
+    "interior_designer": { title: "مهندس ديكور / مصمم داخلي", keywords: ["ديكور", "داخلي", "interior"], tips: ["إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."] }
 };
 
 function displayRandomLiveTip() {
@@ -76,7 +76,11 @@ function initCVScoreGauge() {
     const inputs = ['name', 'jobTitle', 'experience', 'skills'];
     inputs.forEach(id => {
         const el = document.getElementById(id);
-        if (el) { el.addEventListener('input', calculateCVScore); el.addEventListener('input', autoSave); }
+        if (el) {
+            el.addEventListener('input', calculateCVScore);
+            el.addEventListener('input', autoSave);
+            if(id === 'jobTitle') el.addEventListener('input', showJobSuggestions); // شغلنا الاقتراحات
+        }
     });
     loadSavedData();
 }
@@ -111,6 +115,42 @@ function calculateCVScore() {
 }
 
 // ==========================================
+// 💡 اقتراحات المهام من jobGuidelines
+// ==========================================
+function showJobSuggestions() {
+    const jobTitle = document.getElementById('jobTitle')?.value.toLowerCase().trim() || "";
+    const suggestionsBox = document.getElementById('jobSuggestionsBox');
+    const suggestionsList = document.getElementById('suggestionsList');
+    if (!suggestionsBox ||!suggestionsList) return;
+
+    let matchedJob = null;
+    for (const key in jobGuidelines) {
+        const job = jobGuidelines[key];
+        if (job.keywords.some(kw => jobTitle.includes(kw))) {
+            matchedJob = job;
+            break;
+        }
+    }
+
+    if (matchedJob) {
+        suggestionsList.innerHTML = matchedJob.tips.map(tip =>
+            `<button class="suggestion-item" onclick="addTipToExperience('${tip.replace(/'/g, "\\'")}')">${tip}</button>`
+        ).join('');
+        suggestionsBox.classList.remove('hidden');
+    } else {
+        suggestionsBox.classList.add('hidden');
+    }
+}
+
+function addTipToExperience(tip) {
+    const expField = document.getElementById('experience');
+    if (expField) {
+        expField.value += (expField.value? '\n• ' : '• ') + tip;
+        expField.dispatchEvent(new Event('input')); // عشان يحسب الاسكور
+    }
+}
+
+// ==========================================
 // 🎯 ميزة مطابقة إعلان الوظيفة الجديدة
 // ==========================================
 function initJobMatchChecker() {
@@ -124,7 +164,7 @@ function checkJobMatch() {
     const experience = document.getElementById('experience')?.value.trim() || "";
     const resultDiv = document.getElementById('matchResult');
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
-    if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
+    if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; } // صلحت المسافة هنا
     const cvText = (skills + " " + experience).toLowerCase();
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
@@ -166,17 +206,17 @@ function loadSavedData() {
         if (el && saved) el.value = saved;
     });
 
-    // لو فيه بيانات نعمل حساب، لو مفيش نخليه 0
     const hasData = ['name', 'jobTitle', 'experience', 'skills'].some(id => {
         return document.getElementById(id)?.value.trim().length > 0;
     });
 
     if(hasData) {
         calculateCVScore();
+        showJobSuggestions(); // نعرض الاقتراحات لو فيه داتا متخزنة
     } else {
-        document.getElementById('scoreFill').style.width = '0%';
-        document.getElementById('scoreText').innerText = '0%';
-        document.getElementById('scoreStatus').innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...';
+        document.getElementById('scoreFill')?.style.width = '0%';
+        document.getElementById('scoreText')?.innerText = '0%';
+        document.getElementById('scoreStatus')?.innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...';
     }
 }
 
@@ -239,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             if (isGenerating) return;
             const data = getInputs();
-            if (!data.name ||!data.jobTitle) { alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً!'); return; }
+            if (!data.name ||!data.jobTitle) { alert('يرجى ملء الاسم الكامل والمسمى الوظيفي أولاً!'); return; } // صلحت المسافة
             isGenerating = true;
             const originalBtnText = aiOptimizeBtn.innerHTML;
             aiOptimizeBtn.innerHTML = "⏳ جاري التحسين الذكي وصياغة الـ ATS...";
