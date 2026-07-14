@@ -159,7 +159,7 @@ function checkJobMatch() {
     const resultDiv = document.getElementById('matchResult');
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
     if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
-    const cvText = (skills + " " + experience).toLowerCase();
+    const cvText = (skills + " + experience).toLowerCase();
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
     const stopWords = ['في', 'من', 'على', 'إلى', 'مع', 'the', 'and', 'for', 'with'];
