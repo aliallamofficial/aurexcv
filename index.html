@@ -18,9 +18,7 @@
     <meta name="author" content="@aliallamofficial">
 
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
@@ -150,6 +148,16 @@
                     <textarea id="experience" rows="6" placeholder="اكتب خبراتك أو المهام التي قمت بها في وظائفك السابقة..."></textarea>
                 </div>
 
+                <!-- ========================================== -->
+                <!-- 🎯 صندوق مطابقة إعلان الوظيفة الجديد -->
+                <!-- ========================================== -->
+                <div class="form-group" style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 18px;">
+                    <label for="jobDescription">🎯 الصق إعلان الوظيفة لحساب نسبة التطابق</label>
+                    <textarea id="jobDescription" rows="4" placeholder="الصق نص الإعلان كامل من لينكدإن أو أي موقع توظيف..."></textarea>
+                    <button id="checkMatchBtn" type="button" style="margin-top:12px; padding:10px; font-size:13px; background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);">احسب نسبة التطابق الآن</button>
+                    <div id="matchResult"></div>
+                </div>
+
                 <button id="generateSummaryBtn" style="margin-bottom: 15px; padding: 12px; font-size:14px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #818cf8; box-shadow: none;">🧠 توليد الملخص المهني بالذكاء الاصطناعي</button>
 
                 <button id="aiOptimizeBtn">🚀 تحسين السيرة الذاتية الآن</button>
@@ -179,7 +187,6 @@
         document.addEventListener("DOMContentLoaded", function () {
             const toggle = document.getElementById("creativeLayoutToggle");
             if (toggle) {
-                // تذكر حالة المظهر التي يفضلها المستخدم محلياً
                 if (localStorage.getItem('creative_layout') === 'active') {
                     document.body.classList.add('creative-layout-active');
                     toggle.checked = true;
@@ -195,29 +202,15 @@
                 });
             }
 
-            // نظام تصفية ومعالجة الصياغات الذكية والمهام المقترحة مباشرة من الـ DOM
             const experienceTextarea = document.getElementById('experience');
             const suggestionsBox = document.getElementById('jobSuggestionsBox');
             const suggestionsList = document.getElementById('suggestionsList');
             const jobTitleInput = document.getElementById('jobTitle');
 
-            // قائمة المهام لتطوير تفاعل أسرع مع المستخدم دون انتظار الاتصال بالسيرفر
             const jobTipsMap = {
-                "تصميم": [
-                    "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
-                    "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
-                    "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
-                ],
-                "محتوى": [
-                    "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية لمدونتك وصحفتك.",
-                    "تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل والتأثير.",
-                    "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية تخدم أهداف الحملة التسويقية."
-                ],
-                "ديكور": [
-                    "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
-                    "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
-                    "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات والرسومات المعتمدة."
-                ]
+                "تصميم": ["ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.","تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.","إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."],
+                "محتوى": ["كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية لمدونتك وصحفتك.","تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل والتأثير.","التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية تخدم أهداف الحملة التسويقية."],
+                "ديكور": ["إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات والرسومات المعتمدة."]
             };
 
             if (!jobTitleInput || !suggestionsBox || !suggestionsList) return;
@@ -226,51 +219,28 @@
                 const query = this.value.trim().toLowerCase();
                 suggestionsList.innerHTML = '';
                 let matchedTips = null;
-
-                if (query.includes('تصميم') || query.includes('ديزاين') || query.includes('graphic')) {
-                    matchedTips = jobTipsMap["تصميم"];
-                } else if (query.includes('محتوى') || query.includes('كاتب') || query.includes('content')) {
-                    matchedTips = jobTipsMap["محتوى"];
-                } else if (query.includes('ديكور') || query.includes('مهندس') || query.includes('interior')) {
-                    matchedTips = jobTipsMap["ديكور"];
-                }
+                if (query.includes('تصميم') || query.includes('ديزاين') || query.includes('graphic')) { matchedTips = jobTipsMap["تصميم"]; }
+                else if (query.includes('محتوى') || query.includes('كاتب') || query.includes('content')) { matchedTips = jobTipsMap["محتوى"]; }
+                else if (query.includes('ديكور') || query.includes('مهندس') || query.includes('interior')) { matchedTips = jobTipsMap["ديكور"]; }
 
                 if (matchedTips) {
                     matchedTips.forEach(text => {
                         const btn = document.createElement('button');
                         btn.innerText = `➕ ${text}`;
-                        btn.style.width = '100%';
-                        btn.style.marginBottom = '8px';
-                        btn.style.padding = '8px 12px';
-                        btn.style.background = '#1e293b';
-                        btn.style.border = '1px solid #475569';
-                        btn.style.borderRadius = '4px';
-                        btn.style.color = '#e2e8f0';
-                        btn.style.textAlign = 'right';
-                        btn.style.cursor = 'pointer';
-                        btn.style.fontSize = '12px';
-                        btn.style.transition = 'background 0.2s';
-                        
+                        btn.style.width = '100%'; btn.style.marginBottom = '8px'; btn.style.padding = '8px 12px'; btn.style.background = '#1e293b'; btn.style.border = '1px solid #475569'; btn.style.borderRadius = '4px'; btn.style.color = '#e2e8f0'; btn.style.textAlign = 'right'; btn.style.cursor = 'pointer'; btn.style.fontSize = '12px'; btn.style.transition = 'background 0.2s';
                         btn.addEventListener('mouseenter', () => btn.style.background = '#334155');
                         btn.addEventListener('mouseleave', () => btn.style.background = '#1e293b');
-                        
                         btn.addEventListener('click', function() {
-                            if (experienceTextarea.value.trim() === '') {
-                                experienceTextarea.value = `• ${text}`;
-                            } else {
-                                experienceTextarea.value += `\n• ${text}`;
-                            }
+                            if (experienceTextarea.value.trim() === '') { experienceTextarea.value = `• ${text}`; }
+                            else { experienceTextarea.value += `\n• ${text}`; }
                             experienceTextarea.dispatchEvent(new Event('input'));
                         });
-                        
                         suggestionsList.appendChild(btn);
                     });
                     suggestionsBox.classList.remove('hidden');
-                } else {
-                    suggestionsBox.classList.add('hidden');
-                }
+                } else { suggestionsBox.classList.add('hidden'); }
             });
         });
     </script>
 </body>
-                    </html>
+                </html>
