@@ -5,7 +5,7 @@ const cvTips = [
     "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
     "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك أقل من 5 سنوات.",
     "استخدم أرقاماً ونسباً مئوية حقيقية لإثبات إنجازاتك (مثال: زيادة المبيعات بنسبة 20%).",
-    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقي، ابتعد تماماً عن الأسماء مستعارة.",
+    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء مستعارة.",
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
@@ -67,7 +67,7 @@ function closeTour() {
 // 🔥 مستشار ATS v2.0
 // ==========================================
 function initCVScoreGauge() {
-    const inputs = ['name', 'jobTitle', 'experience', 'skills'];
+    const inputs = ['name', 'jobTitle', 'experience', 'skills', 'phone', 'email'];
     inputs.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
@@ -128,7 +128,7 @@ function showJobSuggestions() {
 
     if (matchedJob) {
         suggestionsList.innerHTML = matchedJob.tips.map(tip =>
-            `<button class="suggestion-item" onclick="addTipToExperience('${tip.replace(/'/g, "\\'")}')">${tip}</button>`
+            `<button class="suggestion-item" style="display:block; width:100%; text-align:right; margin-bottom:5px; padding:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; cursor:pointer;" onclick="addTipToExperience('${tip.replace(/'/g, "\\'")}')">${tip}</button>`
         ).join('');
         suggestionsBox.classList.remove('hidden');
     } else {
@@ -159,7 +159,7 @@ function checkJobMatch() {
     const resultDiv = document.getElementById('matchResult');
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
     if (!skills &&!experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
-    const cvText = (skills + " + experience).toLowerCase();
+    const cvText = (skills + " " + experience).toLowerCase(); // تصحيح الخطأ السطري هنا
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
     const stopWords = ['في', 'من', 'على', 'إلى', 'مع', 'the', 'and', 'for', 'with'];
@@ -208,9 +208,12 @@ function loadSavedData() {
         calculateCVScore();
         showJobSuggestions();
     } else {
-        document.getElementById('scoreFill')?.style.width = '0%';
-        document.getElementById('scoreText')?.innerText = '0%';
-        document.getElementById('scoreStatus')?.innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...';
+        const scoreFill = document.getElementById('scoreFill');
+        if (scoreFill) scoreFill.style.width = '0%';
+        const scoreText = document.getElementById('scoreText');
+        if (scoreText) scoreText.innerText = '0%';
+        const scoreStatus = document.getElementById('scoreStatus');
+        if (scoreStatus) scoreStatus.innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...';
     }
 }
 
@@ -249,7 +252,7 @@ async function askAI(promptMessage, systemMessage) {
 }
 
 // ==========================================
-// 🎉 تهيئة الأحداث
+// 🎉 تهيئة الأحداث عند تحميل المستند
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     displayRandomLiveTip();
@@ -266,6 +269,19 @@ document.addEventListener("DOMContentLoaded", function () {
         experience: document.getElementById('experience')?.value.trim() || 'لا توجد خبرات مضافة',
         skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
     });
+
+    // تشغيل نظام Creative Layout التبادلي الفعلي
+    const creativeToggle = document.getElementById('creativeLayoutToggle');
+    const mainContainer = document.querySelector('.container');
+    if (creativeToggle && mainContainer) {
+        creativeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                mainContainer.classList.add('creative-layout-active');
+            } else {
+                mainContainer.classList.remove('creative-layout-active');
+            }
+        });
+    }
 
     const aiOptimizeBtn = document.getElementById('aiOptimizeBtn');
     if (aiOptimizeBtn) {
@@ -367,4 +383,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-});
+});؟ 
