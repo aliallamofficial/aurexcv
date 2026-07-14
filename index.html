@@ -26,14 +26,15 @@
 </head>
 <body>
 
-    <div id="splash-screen" style="position: fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; z-index:999; display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff; font-family:'Cairo', sans-serif; transition: opacity 0.5s ease;">
+    <!-- شاشة التحميل - عليت ال z-index عشان تغطي الترس -->
+    <div id="splash-screen" style="position: fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff; font-family:'Cairo', sans-serif; transition: opacity 0.5s ease;">
         <div style="font-size: 50px; margin-bottom: 20px; animation: pulse 1.5s infinite;">🚀</div>
         <h2 style="font-size: 22px; margin-bottom: 8px; font-weight:700; color:#f8fafc; text-align:center; padding:0 20px;">جاري تأمين الاتصال السحابي...</h2>
         <p style="font-size: 13px; color:#94a3b8; margin-bottom: 25px; text-align:center; padding:0 20px;">يرجى إكمال التحقق البشري الآمن للدخول الفوري للتطبيق مجاناً</p>
         <div class="cf-turnstile" data-sitekey="0x4AAAAAADuAQFHr8h4hey-o" data-callback="onTurnstileSuccess"></div>
     </div>
 
-    <div id="appTourModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.85); backdrop-filter:blur(8px); z-index:99999; display:flex; justify-content:center; align-items:center; padding:20px;">
+    <div id="appTourModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.85); backdrop-filter:blur(8px); z-index:99998; display:flex; justify-content:center; align-items:center; padding:20px;">
         <div style="background:#1e293b; border:1px solid rgba(255, 255, 255, 0.1); border-radius:20px; padding:35px; width:100%; max-width:480px; text-align:center; box-shadow:0 25px 50px -12px rgba(0, 0, 0, 0.5);">
             <div id="tourProgress" style="font-size:11px; font-weight:bold; color:#38bdf8; text-transform:uppercase; margin-bottom:15px; letter-spacing:1px;">خطوة 1 من 3</div>
             <div id="tourIcon" style="font-size:48px; margin-bottom:20px;">🚀</div>
@@ -185,6 +186,20 @@
     <script src="app.js"></script>
 
     <script>
+        // ==========================================
+        // الكود المهم اللي كان ناقص
+        // ==========================================
+        function onTurnstileSuccess(token) {
+            console.log("Turnstile Success! Token:", token);
+            const splash = document.getElementById("splash-screen");
+            if (splash) {
+                splash.style.opacity = '0';
+                setTimeout(() => { 
+                    splash.style.display = 'none'; 
+                }, 500);
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const toggle = document.getElementById("creativeLayoutToggle");
             if (toggle) {
@@ -202,6 +217,21 @@
                     }
                 });
             }
+
+            // كود قائمة الترس
+            const dropdownBtn = document.getElementById("dropdownToggleBtn");
+            const topLeftMenu = document.getElementById("topLeftMenu");
+
+            if(dropdownBtn) {
+                dropdownBtn.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    topLeftMenu.classList.toggle("hidden");
+                });
+            }
+
+            document.addEventListener("click", function() {
+                if(topLeftMenu) topLeftMenu.classList.add("hidden");
+            });
 
             const experienceTextarea = document.getElementById('experience');
             const suggestionsBox = document.getElementById('jobSuggestionsBox');
@@ -244,4 +274,4 @@
         });
     </script>
 </body>
-            </html>
+                </html>
