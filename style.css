@@ -1,427 +1,85 @@
 /* استيراد خط 'Cairo' العصري والمميز للمواقع الحديثة */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Cairo', sans-serif;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
 body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    color: #f8fafc;
-    min-height: 100vh;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #f8fafc; min-height: 100vh; padding: 40px 20px;
+    display: flex; justify-content: center; align-items: center;
 }
 
 .container {
-    width: 100%;
-    max-width: 1100px;
-    background: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    width: 100%; max-width: 1100px; background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px;
+    border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* ==========================================
-    تنسيق الهيدر الاحترافي الفاخر
-   ========================================== */
-.main-app-header {
-    text-align: center;
-    margin-bottom: 35px;
-    margin-top: 20px;
-}
+.main-app-header { text-align: center; margin-bottom: 35px; margin-top: 20px; }
+.logo-badge { display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); color: #38bdf8; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.app-title { font-size: 2.4rem; font-weight: 700; margin: 0; letter-spacing: -0.5px; background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+.branding-sub { font-size: 1.1rem; font-weight: 700; color: #38bdf8; letter-spacing: 1.5px; margin-bottom: 10px; text-transform: uppercase; opacity: 0.95; }
+.app-subtitle { color: #94a3b8; font-size: 1.05rem; margin: 0 auto; max-width: 500px; line-height: 1.5; font-weight: 300; }
+.sparkle { display: inline-block; animation: sparkleFloat 2s ease-in-out infinite; }
+@keyframes sparkleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 
-.logo-badge {
-    display: inline-block;
-    background: rgba(56, 189, 248, 0.1);
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    color: #38bdf8;
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
+main { display: flex; gap: 40px; }
+section { flex: 1; background: rgba(15, 23, 42, 0.6); padding: 30px; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; display: flex; flex-direction: column; }
+h2 { color: #38bdf8; font-size: 20px; font-weight: 600; margin-bottom: 25px; position: relative; padding-right: 15px; }
+h2::before { content: ''; position: absolute; right: 0; top: 25%; height: 50%; width: 4px; background: #38bdf8; border-radius: 2px; }
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #cbd5e1; }
+input[type="text"], textarea, select { width: 100%; padding: 14px 16px; background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #f8fafc; font-size: 14px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+input[type="text"]:focus, textarea:focus, select:focus { border-color: #38bdf8; background: #0f172a; outline: none; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+input[type="text"]::placeholder, textarea::placeholder { color: #64748b; }
+button { width: 100%; padding: 16px; background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%); color: #ffffff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); transition: all 0.3s ease; margin-top: auto; }
+button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4); background: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%); }
+button:disabled { opacity: 0.6; cursor: not-allowed; transform: none!important; }
+.hidden { display: none!important; }
 
-.app-title {
-    font-size: 2.4rem;
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
+#jobDescription { min-height: 120px; resize: vertical; }
+#checkMatchBtn { background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%); box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3); padding: 12px; font-size: 14px; margin-top: 12px; }
+#checkMatchBtn:hover { box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5); }
+#matchResult { animation: fadeInSlide 0.4s ease-out forwards; }
 
-.branding-sub {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #38bdf8;
-    letter-spacing: 1.5px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    opacity: 0.95;
-}
+.html2pdf-printing { background-color: #ffffff!important; color: #000!important; box-shadow: none!important; border: none!important; }
+.html2pdf-printing * { color: #000!important; text-shadow: none!important; }
 
-.app-subtitle {
-    color: #94a3b8;
-    font-size: 1.05rem;
-    margin: 0 auto;
-    max-width: 500px;
-    line-height: 1.5;
-    font-weight: 300;
-}
+footer { text-align: center; margin-top: 40px; padding-top: 20px; padding-bottom: 25px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 14px; color: #64748b; display: flex; flex-direction: column; }
 
-.sparkle {
-    display: inline-block;
-    animation: sparkleFloat 2s ease-in-out infinite;
-}
+.switch { position: relative; display: inline-block; width: 48px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition:.3s; border-radius: 24px; }
+.slider::before { content: ""; position: absolute; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition:.3s; border-radius: 50%; }
+input:checked +.slider { background-image: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); }
+input:checked +.slider::before { transform: translateX(24px); }
+[dir="rtl"] input:checked +.slider::before { transform: translateX(-24px); }
 
-@keyframes sparkleFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-}
+.creative-layout-active { background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%)!important; }
+.creative-layout-active .container { background: rgba(45, 20, 60, 0.6)!important; border-color: rgba(236, 72, 153, 0.2)!important; }
+.creative-layout-active h2 { color: #ec4899!important; }
+.creative-layout-active h2::before { background: #ec4899!important; }
 
-main {
-    display: flex;
-    gap: 40px;
-}
+#jobSuggestionsBox { animation: fadeInSlide 0.3s ease-out forwards; }
+@keyframes fadeInSlide { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-section {
-    flex: 1;
-    background: rgba(15, 23, 42, 0.6);
-    padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-}
-
-h2 {
-    color: #38bdf8;
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 25px;
-    position: relative;
-    padding-right: 15px;
-}
-
-h2::before {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 25%;
-    height: 50%;
-    width: 4px;
-    background: #38bdf8;
-    border-radius: 2px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #cbd5e1;
-}
-
-input[type="text"], textarea, select {
-    width: 100%;
-    padding: 14px 16px;
-    background: #1e293b;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    color: #f8fafc;
-    font-size: 14px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-input[type="text"]:focus, textarea:focus, select:focus {
-    border-color: #38bdf8;
-    background: #0f172a;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-}
-
-input[type="text"]::placeholder, textarea::placeholder {
-    color: #64748b;
-}
-
-button {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-    transition: all 0.3s ease;
-    margin-top: auto;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
-    background: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%);
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none !important;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* ========================================================
-    🎯 تنسيق صندوق مطابقة إعلان الوظيفة الجديد
-   ======================================================== */
-#jobDescription {
-    min-height: 120px;
-    resize: vertical;
-}
-
-#checkMatchBtn {
-    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
-    padding: 12px;
-    font-size: 14px;
-    margin-top: 12px;
-}
-
-#checkMatchBtn:hover {
-    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
-}
-
-#matchResult {
-    animation: fadeInSlide 0.4s ease-out forwards;
-}
-
-/* ========================================================
-    🛠️ منع مشكلة صفحة بيضاء في الـ PDF
-   ======================================================== */
-.html2pdf-printing {
-    background-color: #ffffff !important;
-    color: #000 !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-.html2pdf-printing * {
-    color: #000 !important;
-    text-shadow: none !important;
-}
-
-/* ==========================================
-    تذييل الصفحة الاحترافي
-   ========================================== */
-footer {
-    text-align: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    padding-bottom: 25px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 14px;
-    color: #64748b;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ========================================================
-    ➕ الميزات الإبداعية والاقتراحات
-   ======================================================== */
-
-/* مفتاح التحويل */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 24px;
-}
-.switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #334155;
-    transition: .3s;
-    border-radius: 24px;
-}
-.slider::before {
-    content: "";
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .3s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-image: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-}
-
-input:checked + .slider::before {
-    transform: translateX(24px);
-}
-
-[dir="rtl"] input:checked + .slider::before {
-    transform: translateX(-24px);
-}
-
-/* وضع التصميم الإبداعي */
-.creative-layout-active {
-    background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%) !important;
-}
-
-.creative-layout-active .container {
-    background: rgba(45, 20, 60, 0.6) !important;
-    border-color: rgba(236, 72, 153, 0.2) !important;
-}
-
-.creative-layout-active h2 {
-    color: #ec4899 !important;
-}
-
-.creative-layout-active h2::before {
-    background: #ec4899 !important;
-}
-
-/* صندوق الاقتراحات */
-#jobSuggestionsBox {
-    animation: fadeInSlide 0.3s ease-out forwards;
-}
-
-@keyframes fadeInSlide {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ========================================================
-    ⚙️ نافذة الإعدادات
-   ======================================================== */
-#settingsPageModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    padding: 20px;
-}
-
-#settingsPageModal > div {
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    width: 100%;
-    max-width: 500px;
-    padding: 30px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    direction: rtl;
-    text-align: right;
-    position: relative;
-    animation: modalAppear 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modalAppear {
-    from { opacity: 0; transform: scale(0.95) translateY(10px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.settings-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 12px;
-}
-
-.settings-header h3 {
-    color: #f8fafc;
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.settings-close-btn {
-    background: transparent;
-    border: none;
-    color: #64748b;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: none;
-    width: auto;
-    padding: 0;
-    margin: 0;
-}
-
-.settings-close-btn:hover {
-    color: #ef4444;
-    transform: none;
-    box-shadow: none;
-    background: transparent;
-}
-
-/* ========================================================
-   📱 التجاوب مع الموبايل
-   ======================================================== */
+#settingsPageModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 99999; padding: 20px; }
+#settingsPageModal > div { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; width: 100%; max-width: 500px; padding: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); direction: rtl; text-align: right; position: relative; animation: modalAppear 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes modalAppear { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 12px; }
+.settings-header h3 { color: #f8fafc; font-size: 18px; font-weight: 700; }
+.settings-close-btn { background: transparent; border: none; color: #64748b; font-size: 24px; cursor: pointer; box-shadow: none; width: auto; padding: 0; margin: 0; }
+.settings-close-btn:hover { color: #ef4444; transform: none; box-shadow: none; background: transparent; }
 
 @media (max-width: 1024px) {
-    body {
-        padding: 20px 10px;
-    }
-    .container {
-        padding: 25px 20px;
-    }
-    main {
-        flex-direction: column;
-        gap: 30px;
-    }
+    body { padding: 20px 10px; }
+    .container { padding: 25px 20px; }
+    main { flex-direction: column; gap: 30px; }
 }
 
 @media (max-width: 600px) {
-    .app-title {
-        font-size: 1.8rem;
+    .app-title { font-size: 1.8rem; }
+    .branding-sub { font-size: 0.9rem; }
+    section { padding: 20px 15px; }
     }
-    .branding-sub {
-        font-size: 0.9rem;
-    }
-    section {
-        padding: 20px 15px;
-    }
-} /* قفل ميديا 600px */
-} /* قفل ملف ال CSS */
