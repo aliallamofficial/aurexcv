@@ -2,116 +2,203 @@
 <html lang="ar" dir="rtl">
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5WP8H9FKZS"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-5WP8H9FKZS');</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5WP8H9FKZS');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صانع السيرة الذاتية بالذكاء الاصطناعي مجاناً وبدون حساب | Ali CV Builder</title>
+    
     <meta name="google-site-verification" content="L3tPSb-jmutxwf_FTcPCVK69TdAetKEoSoTS7JME" />
     <meta name="description" content="أسهل صانع سيرة ذاتية بالذكاء الاصطناعي مجاناً وبدون حساب. صمم سي في احترافي جاهز للطباعة وتخطى فحص الـ ATS فوراً مع مستشار التوظيف الذكي.">
+    <meta name="keywords" content="صانع سير ذاتية بدون حساب, تطبيق cv مجاني, ذكاء اصطناعي للتوظيف, ats checker free, ali cv builder, سيرة ذاتية ذكية بدون فيزا, محسن السيرة الذاتية, عمل سي في مجاني">
+    <meta name="author" content="@aliallamofficial">
+
     <link rel="stylesheet" href="style.css">
-    <style>@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }</style>
+    <style>
+        @keyframes pulse { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.1); } 
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-    <div id="appTourModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.85); backdrop-filter:blur(8px); z-index:99998; display:flex; justify-content:center; align-items:center; padding:20px;">
-        <div style="background:#1e293b; border:1px solid rgba(255, 255, 255, 0.1); border-radius:20px; padding:35px; width:100%; max-width:480px; text-align:center;">
-            <div id="tourProgress" style="font-size:11px; font-weight:bold; color:#38bdf8; margin-bottom:15px;">خطوة 1 من 3</div>
-            <div id="tourIcon" style="font-size:48px; margin-bottom:20px;">🚀</div>
-            <h3 id="tourTitle" style="font-size:20px; font-weight:700; color:#f8fafc; margin-bottom:12px;">مرحباً بك في مستقبلك المهني الجديد!</h3>
-            <p id="tourDescription" style="font-size:14px; color:#94a3b8; line-height:1.6; margin-bottom:30px;">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة.</p>
-            <div style="display:flex; gap:12px; justify-content:center;">
-                <button id="nextTourBtn" style="padding:12px 24px; background:linear-gradient(135deg, #38bdf8 0%, #6366f1 100%); border-radius:10px; width:auto;">ابدأ الرحلة الآن ←</button>
-                <button id="skipTourBtn" style="padding:12px 18px; color:#94a3b8; background:transparent; border:none; cursor:pointer; width:auto; box-shadow:none;">تخطي</button>
+    <div id="splash-screen" style="position: fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; z-index:999999; display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff; font-family:'Cairo', sans-serif; transition: opacity 0.5s ease;">
+        <div style="font-size: 50px; margin-bottom: 20px; animation: pulse 1.5s infinite;">🚀</div>
+        <h2 style="font-size: 22px; margin-bottom: 8px; font-weight:700; color:#f8fafc; text-align:center; padding:0 20px;">جاري تأمين الاتصال السحابي...</h2>
+        <p style="font-size: 13px; color:#94a3b8; margin-bottom: 25px; text-align:center; padding:0 20px;">يرجى إكمال التحقق البشري الآمن للدخول الفوري للتطبيق مجاناً</p>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAADuAQFHr8h4hey-o" data-callback="onTurnstileSuccess"></div>
+    </div>
+
+    <script>
+        function onTurnstileSuccess() {
+            const splash = document.getElementById('splash-screen');
+            if (splash) {
+                splash.style.opacity = '0';
+                setTimeout(() => splash.remove(), 500);
+            }
+        }
+        
+        // تخطي تلقائي لضمان عمل التطبيق فوراً حتى لو لم يستجب مفتاح Cloudflare التجريبي
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.remove(), 500);
+                }
+            }, 2000); 
+        });
+    </script>
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <div id="appTourModal" class="settings-modal hidden">
+        <div style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; width: 100%; max-width: 450px; padding: 30px; text-align: center; position: relative;">
+            <div id="tourIcon" style="font-size: 45px; margin-bottom: 15px;">🚀</div>
+            <h3 id="tourTitle" style="font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px;">مرحباً بك في مستقبلك المهني الجديد!</h3>
+            <p id="tourDescription" style="font-size: 14px; color: #94a3b8; line-height: 1.6; margin-bottom: 25px;">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.</p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                <button id="skipTourBtn" style="background: transparent; color: #64748b; box-shadow: none; font-size: 14px;">تخطي الجولة</button>
+                <button id="nextTourBtn" style="flex: 1; padding: 10px 20px; font-size: 14px;">ابدأ الرحلة الآن ←</button>
             </div>
+            <div id="tourProgress" style="font-size: 11px; color: #475569; margin-top: 15px; font-weight: bold;">خطوة 1 من 3</div>
         </div>
     </div>
 
-    <div id="settingsPageModal" class="hidden">
+    <div id="settingsPageModal" class="settings-modal hidden">
         <div>
             <div class="settings-header">
-                <h3>إعدادات المنصة والمظهر</h3>
+                <h3>⚙️ الإعدادات والتحكم</h3>
                 <button id="closeSettingsBtn" class="settings-close-btn">&times;</button>
             </div>
-            <div style="margin-bottom:20px;">
-                <label style="font-size:13px; color:#94a3b8; display:block; margin-bottom:8px;">مظهر التطبيق الفاخر (Themes):</label>
-                <select id="themeSelect">
-                    <option value="default">الوضع الليلي الكوني (افتراضي)</option>
-                    <option value="royal-blue">الأزرق الملكي الهادئ</option>
-                    <option value="emerald-green">الأخضر الزمردي الخلاب</option>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="themeSelect">🎨 اختر مظهر الواجهة الأنسب لك:</label>
+                <select id="themeSelect" style="background: #0f172a; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); font-family: 'Cairo', sans-serif; width: 100%;">
+                    <option value="classic-dark">الوضع المظلم الكلاسيكي (الافتراضي)</option>
+                    <option value="royal-blue">الأزرق الملكي السحابي (جذاب)</option>
+                    <option value="emerald-green">الأخضر الزمردي الهادئ (احترافي)</option>
                 </select>
             </div>
-            <div style="margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; background:rgba(30,41,59,0.5); padding:12px; border-radius:10px;">
-                <div><h4 style="font-size:14px; color:#f8fafc; margin-bottom:2px;">وضع التصميم الإبداعي</h4></div>
-                <label class="switch"><input type="checkbox" id="creativeLayoutToggle"><span class="slider"></span></label>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" id="creativeLayoutToggle" style="width: 18px; height: 18px; cursor: pointer;">
+                    <span>✨ تفعيل نمط التصميم الإبداعي العصري (Creative Layout)</span>
+                </label>
             </div>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-                <button id="enableNotificationsBtn" style="background:#1e293b; border:1px solid rgba(255,255,255,0.1); font-size:13px; padding:12px; border-radius:8px; width:100%;">🔔 تفعيل الإشعارات</button>
-                <button id="shareAppBtn" style="background:linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); font-size:13px; padding:12px; border-radius:8px; width:100%; border:none;">🔗 مشاركة التطبيق</button>
-            </div>
+
+            <button id="enableNotificationsBtn" style="width: 100%; margin-bottom: 15px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #818cf8;">🔔 تفعيل الإشعارات وتنبيهات التحديثات</button>
+            <button id="shareAppBtn" style="width: 100%; background: #334155;">🔗 مشاركة التطبيق مع الأصدقاء والزملاء</button>
         </div>
     </div>
 
     <div class="container">
+        
         <header class="main-app-header">
-            <button id="dropdownToggleBtn">⚙️</button>
-            <div id="topLeftMenu" class="hidden">
-                <button class="menu-item" id="openSettingsBtn">⚙️ الإعدادات</button>
+            <button id="dropdownToggleBtn" class="settings-trigger">⚙️</button>
+            <div id="topLeftMenu" class="dropdown-menu hidden">
+                <button class="menu-item" id="openSettingsBtn">⚙️ الإعدادات المتقدمة</button>
                 <button class="menu-item" id="toggleLanguageBtn">🔄 English</button>
             </div>
 
-            <span class="logo-badge">Ali AI Platform 2.0</span>
-            <h1 class="app-title">صانع السيرة الذاتية الذكي</h1>
-            <div class="branding-sub">Ali CV Builder Pro</div>
-            <p class="app-subtitle">صمم سي في قوي بالذكاء الاصطناعي مجاناً وتخطى فلترة الـ ATS</p>
+            <div class="branding-container">
+                <h1 class="app-title">صانع السيرة الذاتية الذكي</h1>
+                <p class="branding-sub">بوابتك لإنشاء سيرة ذاتية لا تهزم متوافقة مع أنظمة التوظيف الـ ATS</p>
+            </div>
         </header>
 
-        <div id="scoreGaugeContainer" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 14px; margin-bottom: 30px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                <span style="font-size:14px; font-weight:700; color:#cbd5e1;">🎯 مستشار جاهزية الـ ATS:</span>
-                <span id="scoreText" style="font-size:16px; font-weight:800; color:#38bdf8;">0%</span>
-            </div>
-            <div style="width:100%; height:8px; background:#475569; border-radius:4px;"><div id="scoreFill" style="width:0%; height:100%; background:#38bdf8; transition: width 0.4s;"></div></div>
-            <p id="scoreStatus" style="font-size:12px; color:#94a3b8; margin:10px 0 0 0;">⚠️ الصندوق فارغ، يرجى تعبئة بياناتك</p>
-        </div>
-
         <main>
-            <section class="form-section">
-                <h2>أدخل معلوماتك المهنية</h2>
-                <div class="form-group"><label for="name">الاسم الكامل</label><input type="text" id="name" placeholder="مثال: علي علام" required></div>
-                <div class="form-group"><label for="jobTitle">المسمى الوظيفي المستهدف</label><input type="text" id="jobTitle" placeholder="مثال: مصمم جرافيك" required></div>
-                <div id="jobSuggestionsBox" class="hidden" style="margin-bottom: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 10px; padding: 15px;"><h4 style="font-size: 13px; color: #38bdf8; margin-bottom: 10px;">💡 مهام مجهزة للـ ATS</h4><div id="suggestionsList"></div></div>
-                <div style="display: flex; gap: 15px;">
-                    <div class="form-group" style="flex: 1;"><label for="phone">رقم الهاتف</label><input type="text" id="phone" placeholder="0000"></div>
-                    <div class="form-group" style="flex: 1;"><label for="email">البريد الإلكتروني</label><input type="email" id="email" placeholder="info@example.com"></div>
+            <section class="inputs-section">
+                <h2>✍️ بياناتك المهنية</h2>
+                
+                <div class="score-card">
+                    <div class="score-header">
+                        <span class="score-title">📊 مستشار الـ ATS التلقائي:</span>
+                        <span id="scoreText" class="score-badge">0%</span>
+                    </div>
+                    <div class="score-bar-container">
+                        <div id="scoreFill" class="score-bar-fill"></div>
+                    </div>
+                    <p id="scoreStatus" class="score-feedback">⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...</p>
                 </div>
-                <div class="form-group"><label for="skills">المهارات (افصل بينها بفاصلة,)</label><input type="text" id="skills" placeholder="التواصل، حل المشكلات، Excel..."></div>
-                <div class="form-group"><label for="experience">الخبرات والمهام العملية</label><textarea id="experience" rows="6" placeholder="اكتب خبراتك..."></textarea></div>
-                <div class="form-group" style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 18px;">
-                    <label for="jobDescription">🎯 الصق إعلان الوظيفة لحساب نسبة التطابق</label>
-                    <textarea id="jobDescription" rows="4" placeholder="الصق نص الإعلان كامل..."></textarea>
-                    <button id="checkMatchBtn" type="button" style="margin-top:12px; padding:10px; font-size:13px;">احسب نسبة التطابق الآن</button>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="fullName">الاسم الكامل</label>
+                        <input type="text" id="name" placeholder="مثال: علي علام">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="jobTitle">المسمى الوظيفي المستهدف</label>
+                        <input type="text" id="jobTitle" placeholder="مثال: مصمم جرافيك">
+                    </div>
+                </div>
+
+                <div id="jobSuggestionsBox" class="form-group hidden" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                    <label style="color: #818cf8; font-weight: bold; margin-bottom: 8px; display: block;">💡 مهام مقترحة لوظيفتك (انقر للإضافة للخبرات):</label>
+                    <div id="suggestionsList" style="max-height: 120px; overflow-y: auto; padding-left: 5px;"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="phone">الهاتف</label>
+                        <input type="tel" id="phone" placeholder="05xxxxxxxx">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" placeholder="info@example.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="skills">المهارات والتقنيات (افصل بينها بفاصلة ,)</label>
+                    <textarea id="skills" placeholder="مثال: Photoshop, Illustrator, UI/UX, الإبداع"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">الخبرات العملية والإنجازات السابقة</label>
+                    <textarea id="experience" style="min-height: 120px;" placeholder="اكتب أماكن العمل والمهام التي قمت بها بالتفصيل..."></textarea>
+                </div>
+
+                <div class="form-group" style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                    <label for="jobDescription" style="color: #38bdf8; font-weight: bold; margin-bottom: 8px;">🎯 قارن سيرتك الذاتية مع إعلان الوظيفة (اختياري):</label>
+                    <textarea id="jobDescription" style="min-height: 80px; margin-bottom: 10px;" placeholder="الصق متطلبات الوظيفة الشاغرة هنا لمعرفة نسبة التوافق الفورية..."></textarea>
+                    <button id="checkMatchBtn" style="width: 100%; padding: 10px; font-size: 13px; background: #334155;">تحليل نسبة المطابقة 🔍</button>
                     <div id="matchResult"></div>
                 </div>
-                <button id="generateSummaryBtn" style="margin-bottom: 15px; padding: 12px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #818cf8;">🧠 توليد الملخص المهني</button>
-                <button id="aiOptimizeBtn">🚀 تحسين السيرة الذاتية الآن</button>
+
+                <button id="generateSummaryBtn" style="margin-bottom: 15px; padding: 12px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #818cf8;">🧠 توليد الملخص المهني بالذكاء الاصطناعي</button>
+                <button id="aiOptimizeBtn">🚀 تحسين السيرة الذاتية وصياغة الـ ATS</button>
             </section>
+
             <section class="result-section">
                 <h2>السيرة الذاتية المحسنة والجاهزة</h2>
                 <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
-                    <textarea id="outputBox" style="flex: 1; min-height: 400px;" placeholder="اضغط على زر التحسين..."></textarea>
+                    <textarea id="outputBox" style="flex: 1; min-height: 400px;" placeholder="املأ بياناتك في اليمين ثم اضغط على زر التحسين لتبدأ صياغة السيرة الذاتية الاحترافية هنا..."></textarea>
                 </div>
                 <button id="downloadPdfBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">📥 تحميل السيرة الذاتية كملف PDF</button>
             </section>
         </main>
+
         <footer>
             <div id="cvLiveTipBox" style="background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; margin-bottom: 25px; text-align: center;">
-                <span style="font-size: 12px; color: #fbbf24; font-weight: 700;">💡 نصيحة خبير التوظيف:</span>
-                <p id="cvTipText" style="font-size: 13px; color: #e2e8f0; margin: 0;">تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية.</p>
+                <p style="font-size: 12px; color: #94a3b8; font-weight: bold; margin-bottom: 5px;">💡 نصيحة مهنية سريعة:</p>
+                <p id="cvTipText" style="font-size: 13px; color: #e2e8f0; line-height: 1.5;">جاري تحميل نصيحة اليوم...</p>
             </div>
-            <p>جميع الحقوق محفوظة © 2026 Ali CV Builder</p>
+            <div class="footer-credits">
+                تم التطوير بحب وشغف بواسطة <a href="https://linkedin.com/in/aliallamofficial" target="_blank">علي علام</a> © 2026
+            </div>
         </footer>
     </div>
+
     <script src="app.js"></script>
 </body>
         </html>
