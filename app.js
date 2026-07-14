@@ -23,15 +23,6 @@ function displayRandomLiveTip() {
     }
 }
 
-// حل مشكلة التيرنستايل - مسح الكاش القديم
-function onTurnstileSuccess(token) {
-    console.log("Turnstile Success:", token);
-    localStorage.removeItem('cf-turnstile-response');
-    const splash = document.getElementById('splash-screen');
-    if (splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 500); }
-}
-window.onTurnstileSuccess = onTurnstileSuccess;
-
 // ========================================================
 // 🚀 نظام جولة التطبيق
 // ========================================================
@@ -82,7 +73,7 @@ function initCVScoreGauge() {
         if (el) {
             el.addEventListener('input', calculateCVScore);
             el.addEventListener('input', autoSave);
-            if(id === 'jobTitle') el.addEventListener('input', showJobSuggestions);
+            if (id === 'jobTitle') el.addEventListener('input', showJobSuggestions);
         }
     });
     loadSavedData();
@@ -213,7 +204,7 @@ function loadSavedData() {
         return document.getElementById(id)?.value.trim().length > 0;
     });
 
-    if(hasData) {
+    if (hasData) {
         calculateCVScore();
         showJobSuggestions();
     } else {
@@ -265,16 +256,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initAppTour();
     initCVScoreGauge();
     initJobMatchChecker();
-
-    // كود طوارئ: لو التيرنستايل معلق افتح التطبيق بعد 5 ثواني
-    setTimeout(() => {
-        const splash = document.getElementById('splash-screen');
-        if (splash && getComputedStyle(splash).opacity!== '0') {
-            console.log("Turnstile timeout - forcing open");
-            splash.style.opacity = '0';
-            setTimeout(() => splash.remove(), 500);
-        }
-    }, 5000);
 
     const outputBox = document.getElementById('outputBox');
     const getInputs = () => ({
