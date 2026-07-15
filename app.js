@@ -613,7 +613,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            if (!outputBox || outputBox.value.trim() === "") { alert('الرجاء صياغة السيرة الذاتية أو توليدها بالذكاء الاصطناعي أولاً!'); return; }
+            if (!outputBox || outputBox.value.trim() === "") { 
+                alert('الرجاء صياغة السيرة الذاتية أو توليدها بالذكاء الاصطناعي أولاً!'); 
+                return; 
+            }
             
             if (typeof html2pdf === 'undefined') {
                 alert('⚠️ نعتذر، تعذر العثور على مكتبة التصدير الرقمي. يرجى التأكد من اتصالك بالإنترنت.');
@@ -626,38 +629,62 @@ document.addEventListener("DOMContentLoaded", function () {
             
             const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
             
+            // 1. إنشاء حاوية الطباعة المؤقتة
             const printElement = document.createElement('div');
-            printElement.style.padding = '35px'; 
+            printElement.id = 'temp-pdf-render';
+            
+            // تنسيق فائق الثبات لعملية الريندر (Rendering) في محرك html2pdf
+            printElement.style.position = 'absolute';
+            printElement.style.left = '-9999px'; // نقل العنصر خارج الواجهة المرئية لئلا يشوش التصميم
+            printElement.style.top = '0';
+            printElement.style.width = '790px';  // المقاس النموذجي الآمن لعرض A4
+            printElement.style.padding = '40px'; 
             printElement.style.color = '#111827'; 
-            printElement.style.background = '#ffffff'; 
+            printElement.style.backgroundColor = '#ffffff'; // إجبار الخلفية البيضاء
             printElement.style.fontFamily = selectedFont; 
             printElement.style.lineHeight = '1.8'; 
             printElement.style.direction = 'rtl'; 
             printElement.style.textAlign = 'right';
             printElement.style.fontSize = '14px';
+            
+            // تحويل الأسطر الجديدة لمعرفات فنية ومقروءة
             printElement.innerHTML = outputBox.value.replace(/\n/g, '<br>');
+            
+            // 2. ربط وإدراج العنصر المؤقت في جسم الصفحة ليرسمه المتصفح بشكل كامل
+            document.body.appendChild(printElement);
             
             const data = getInputs(); 
             const pdfFileName = data.name ? `${data.name}_Professional_CV.pdf` : 'My_Professional_CV.pdf';
             const options = { 
-                margin: [12, 12, 12, 12], 
+                margin: [10, 10, 10, 10], 
                 filename: pdfFileName, 
                 image: { type: 'jpeg', quality: 0.99 }, 
-                html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' }, 
+                html2canvas: { 
+                    scale: 2.5,           // دقة وضوح ممتازة لخطوط السيرة
+                    useCORS: true,        // لسحب الخطوط الخارجية العربية مثل Cairo بنجاح دون مربعات فارغة
+                    logging: false, 
+                    backgroundColor: '#ffffff' 
+                }, 
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
             
+            // الانتظار حتى تكون الخطوط جاهزة بالمتصفح ثم التصدير والتنظيف فوراً
             document.fonts.ready.then(() => {
                 setTimeout(() => {
                     html2pdf().set(options).from(printElement).save().then(() => { 
+                        // حذف عنصر الطباعة فوراً لتجنب تراكم العناصر
+                        document.body.removeChild(printElement);
                         this.innerHTML = originalBtnText; 
                         this.disabled = false; 
                     }).catch((err) => { 
+                        if (document.getElementById('temp-pdf-render')) {
+                            document.body.removeChild(printElement);
+                        }
                         alert('حدث خطأ أثناء تصدير ملف الـ PDF.'); 
                         this.innerHTML = originalBtnText; 
                         this.disabled = false; 
                     });
-                }, 200);
+                }, 350); // إعطاء المتصفح 350 مللي ثانية إضافية لإنهاء رسم الهيكل والخطوط
             });
         });
     }
