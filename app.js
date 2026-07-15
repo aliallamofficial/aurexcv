@@ -48,7 +48,7 @@ function displayRandomLiveTip() {
 }
 
 // ========================================================
-// 🚀 نظام جولة التطبيق والتحكم في ظهور الواجهات (مطابق للـ HTML الخاص بك)
+// 🚀 نظام جولة التطبيق والتحكم في ظهور الواجهات
 // ========================================================
 const tourSteps = [
     { icon: "🚀", title: "مرحباً بك في مستقبلك المهني الجديد!", desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.", btnText: "ابدأ الرحلة الآن ←" },
@@ -60,7 +60,7 @@ let isGenerating = false;
 
 function initAppTour() {
     const tourModal = document.getElementById('appTourModal');
-    const mainAppContent = document.getElementById('mainAppContent'); // متطابق مع الـ ID في الـ HTML الخاص بك
+    const mainAppContent = document.getElementById('mainAppContent'); 
     
     if (!tourModal) return;
 
@@ -85,7 +85,8 @@ function initAppTour() {
     if (localStorage.getItem('cv_tour_completed') === 'true') {
         tourModal.classList.add('hidden');
         if (mainAppContent) {
-            mainAppContent.classList.remove('main-content-hidden'); // إظهار الواجهة الأساسية فوراً
+            mainAppContent.classList.remove('main-content-hidden'); 
+            mainAppContent.style.opacity = 1;
         }
         return;
     }
@@ -110,12 +111,10 @@ function closeTour() {
     const tourModal = document.getElementById('appTourModal');
     const mainAppContent = document.getElementById('mainAppContent');
     
-    // إخفاء نافذة الجولة
     if (tourModal) {
         tourModal.classList.add('hidden');
     }
     
-    // إظهار الواجهة الأساسية للتطبيق بسلاسة تامة
     if (mainAppContent) {
         mainAppContent.classList.remove('main-content-hidden');
         mainAppContent.style.opacity = 0;
@@ -125,7 +124,6 @@ function closeTour() {
         }, 50);
     }
     
-    // تخزين اكتمال الجولة محلياً لمنع تكرارها عند التحديث
     localStorage.setItem('cv_tour_completed', 'true');
 }
 
@@ -252,10 +250,18 @@ function showJobSuggestions() {
     }
 
     if (matchedJob) {
-        suggestionsList.innerHTML = matchedJob.tips.map(tip => {
-            const escapedTip = tip.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            return `<button type="button" class="suggestion-item" onclick="addTipToExperience('${escapedTip}')">${tip}</button>`;
-        }).join('');
+        suggestionsList.innerHTML = ''; // تفريغ القائمة أولاً
+        matchedJob.tips.forEach(tip => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'suggestion-item';
+            btn.innerText = tip;
+            // استخدام المستمع الديناميكي الآمن بدلاً من onclick العشوائي
+            btn.addEventListener('click', () => {
+                addTipToExperience(tip);
+            });
+            suggestionsList.appendChild(btn);
+        });
         suggestionsBox.classList.remove('hidden');
     } else {
         suggestionsBox.classList.add('hidden');
@@ -269,7 +275,6 @@ function addTipToExperience(tip) {
         expField.dispatchEvent(new Event('input'));
     }
 }
-window.addTipToExperience = addTipToExperience;
 
 // ==========================================
 // 🎯 مطابقة إعلان الوظيفة الذاتي (ATS Match)
