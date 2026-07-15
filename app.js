@@ -424,18 +424,19 @@ function clearAllFields() {
 // ========================================================
 
 const cloudTokens = [
-    "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" // التوكن الأساسي (يمكنك إضافة توكنات أخرى هنا مفصولة بفاصلة)
+    "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", // التوكن الأول (الأساسي)
+    "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"  // التوكن الثاني الجديد (الاحتياطي السحابي)
 ];
 
 async function askAI(promptMessage, systemMessage, userInputs = null) {
-    // خط الدفاع الأول: تجربة السحابة عبر الرموز الدوارة (في حال توفر الإنترنت)
+    // خط الدفاع الأول: تجربة السحابة عبر الرموز الدوارة المتعددة (في حال توفر الإنترنت)
     if (navigator.onLine) {
         for (let i = 0; i < cloudTokens.length; i++) {
             const currentToken = cloudTokens[i];
             try {
                 console.log(`☁️ محاولة الصياغة عبر السحابة باستخدام التوكن الرقم [${i + 1}]...`);
                 const responseText = await callCloudAI(promptMessage, systemMessage, currentToken);
-                return responseText;
+                return responseText; // نجحت المحاولة السحابية!
             } catch (cloudError) {
                 console.warn(`⚠️ فشل التوكن [${i + 1}] بسبب:`, cloudError.message);
             }
