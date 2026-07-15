@@ -40,15 +40,28 @@ body.creative-layout-active {
     text-align: center;
     margin-bottom: 35px;
     margin-top: 15px;
+    position: relative;
 }
-.main-app-header h1 { font-size: 32px; font-weight: 700; color: #f8fafc; margin-bottom: 5px; }
-.main-app-header .subtitle { color: #94a3b8; font-size: 15px; }
+.app-title { font-size: 32px; font-weight: 700; color: #f8fafc; margin-bottom: 5px; }
+.branding-sub { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #38bdf8; margin-bottom: 8px; font-weight: 700; }
+.app-subtitle { color: #94a3b8; font-size: 15px; }
+.logo-badge {
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    display: inline-block;
+    margin-bottom: 15px;
+}
 
 /* ===== التنسيق الخاص بقسم الإعدادات والقائمة المنسدلة للترس ===== */
 .settings-wrapper {
     position: absolute;
-    top: 25px;
-    left: 25px;
+    top: 0;
+    left: 0;
     z-index: 50;
 }
 
@@ -80,7 +93,7 @@ body.creative-layout-active {
     transition: opacity 0.2s, transform 0.2s;
 }
 .dropdown-menu.hidden {
-    display: none;
+    display: none !important;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-5px);
@@ -125,7 +138,7 @@ body.creative-layout-active {
 .score-fill {
     height: 100%;
     width: 0%;
-    background: #6366f1;
+    background: #38bdf8;
     border-radius: 6px;
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
 }
@@ -135,21 +148,21 @@ body.creative-layout-active {
     align-items: center;
     margin-bottom: 8px;
 }
-.score-label { font-size: 13px; color: #94a3b8; }
+.score-label { font-size: 13px; color: #94a3b8; font-weight: 700; }
 .score-value { font-size: 15px; font-weight: 700; color: #f8fafc; }
 .score-status { font-size: 13px; color: #e2e8f0; line-height: 1.5; }
 
 /* ===== ميزة الاقتراحات التفاعلية للمجالات الوظيفية ===== */
 .suggestions-box {
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px dashed rgba(16, 185, 129, 0.3);
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px dashed rgba(56, 189, 248, 0.3);
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 25px;
     transition: opacity 0.3s;
 }
-.suggestions-box.hidden { display: none; }
-.suggestions-box h4 { font-size: 14px; font-weight: 700; color: #34d399; margin-bottom: 10px; }
+.suggestions-box.hidden { display: none !important; }
+.suggestions-box h4 { font-size: 14px; font-weight: 700; color: #38bdf8; margin-bottom: 10px; }
 .suggestions-list {
     display: flex;
     flex-direction: column;
@@ -158,9 +171,9 @@ body.creative-layout-active {
 .suggestion-item {
     display: block;
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
     padding: 10px 14px;
     font-size: 12px;
     border-radius: 8px;
@@ -169,8 +182,8 @@ body.creative-layout-active {
     text-align: right;
 }
 .suggestion-item:hover {
-    background: rgba(16, 185, 129, 0.15);
-    border-color: #34d399;
+    background: rgba(56, 189, 248, 0.15);
+    border-color: #38bdf8;
     color: #ffffff;
 }
 
@@ -267,6 +280,34 @@ button:disabled {
     box-shadow: none;
 }
 
+/* ===== مفتاح سويتش التبديل (Switch Toggle) لـ Creative Mode ===== */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #475569;
+    transition: .4s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider { background-color: #ec4899; }
+input:checked + .slider:before { transform: translateX(22px); }
+
 /* ===== النوافذ المنبثقة والـ Modals لخيارات الإعدادات والترحيب ===== */
 .modal-overlay {
     position: fixed;
@@ -317,11 +358,6 @@ button:disabled {
     line-height: 1;
 }
 .settings-close-btn:hover { color: #ef4444; background: transparent; transform: none; box-shadow: none; }
-.settings-body { display: flex; flex-direction: column; gap: 20px; }
-.setting-item { display: flex; flex-direction: column; gap: 8px; }
-
-/* تنسيق خاص بالجولة التعريفية والترحيبية */
-.text-center { text-align: center; }
 
 /* ===== التجاوب والتوافق الهاتفي واللوحي (Responsive Design) ===== */
 @media (max-width: 900px) {
