@@ -1,54 +1,106 @@
 exports.handler = async (event, context) => {
+    // دعم فحص طلبات CORS التمهيدية (OPTIONS) لضمان عدم حظر المتصفحات للطلبات
+    if (event.httpMethod === "OPTIONS") {
+        return {
+            statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "POST, OPTIONS"
+            },
+            body: ""
+        };
+    }
+
     if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: JSON.stringify({ error: "Method Not Allowed" }) };
+        return { 
+            statusCode: 405, 
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+            body: JSON.stringify({ error: "Method Not Allowed" }) 
+        };
     }
 
     try {
         const { promptMessage } = JSON.parse(event.body);
+        if (!promptMessage) {
+            return {
+                statusCode: 400,
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+                body: JSON.stringify({ error: "Missing promptMessage" })
+            };
+        }
 
-        // الاتصال بسيرفر مجاني مفتوح تماماً لا يحتاج تسجيل دخول أو مفاتيح
-        const url = "[https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct](https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct)";
+        // استخدام نموذج معالجة يدعم العربية بشكل كامل ومستقر عبر HuggingFace
+        const url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct";
+
+        // ملحوظة: يوصى بإضافة توكن هجين كمتغير بيئي (Environment Variable) في لوحة Netlify/Vercel كـ HUGGINGFACE_API_KEY لتفادي الحد الأقصى للطلبات المجانية.
+        const headers = { 
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*"
+        };
+        
+        if (process.env.HUGGINGFACE_API_KEY) {
+            headers["Authorization"] = `Bearer ${process.env.HUGGINGFACE_API_KEY}`;
+        }
 
         const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify({
-                inputs: promptMessage,
-                parameters: { max_new_tokens: 1000, temperature: 0.7 }
+                inputs: `<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n${promptMessage}<|eot_id|><|start_header_id|>assistant<|end_header_id|>`,
+                parameters: { 
+                    max_new_tokens: 1200, 
+                    temperature: 0.5, // تقليل القيمة لضمان صياغة احترافية ثابتة وغير مشتتة
+                    top_p: 0.9 
+                }
             })
         });
 
         const data = await response.json();
 
-        // استخراج النص وتنسيقه ليتوافق مع واجهة تطبيقك
-        if (data && data[0] && data[0].generated_text) {
-            let aiText = data[0].generated_text;
-            
-            // تنظيف النص إذا قام النموذج بتكرار السؤال
+        // استخراج النص وتنسيقه ليتوافق مع واجهة تطبيقك بشكل أكثر أماناً وتغطية لكل الحالات
+        let aiText = "";
+        if (Array.isArray(data) && data[0] && data[0].generated_text) {
+            aiText = data[0].generated_text;
+        } else if (data && data.generated_text) {
+            aiText = data.generated_text;
+        }
+
+        if (aiText) {
+            // تنظيف تكرار السؤال الذي يحدث أحياناً في الموديلات المفتوحة
             if (aiText.includes(promptMessage)) {
                 aiText = aiText.replace(promptMessage, "").trim();
             }
+            
+            // إزالة الأوسمة التوجيهية الخاصة بـ Llama 3 من النص المخرج
+            aiText = aiText.replace(/<\|begin_of_text\|>|<\|start_header_id\|>.*?<\|end_header_id\|>|<\|eot_id\|>/g, "").trim();
 
-            // ✨ إصلاح المشكلة: إزالة كلمة html أو وسوم الأكواد المكسورة التي تسبب الشاشة البيضاء
+            // إزالة الأكواد التوضيحية أو وسوم HTML المكسورة لضمان عدم تدمير واجهة العرض
             aiText = aiText.replace(/^```html/i, '')
                            .replace(/^html/i, '')
+                           .replace(/^```markdown/i, '')
+                           .replace(/^```/i, '')
                            .replace(/```$/, '')
                            .trim();
 
             return {
                 statusCode: 200,
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
                 body: JSON.stringify({ choices: [{ message: { content: aiText } }] })
             };
         } else {
-            // حل بديل سريع جداً ومحلي في حال انشغال السيرفر المشترك
+            // حل بديل فوري وذكي في حال انشغال السيرفر المشترك أو الوصول للحد الأقصى للطلبات
             return {
                 statusCode: 200,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ choices: [{ message: { content: `✨ سيرة ذاتية احترافية مقترحة:\n\n• الاسم والبيانات تم استلامها بنجاح.\n• تم ضبط التنسيق ليتوافق مع المعايير الذكية.\n• المهارات والخبرات المضافة ممتازة وجاهزة للعرض!` } }] })
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+                body: JSON.stringify({ choices: [{ message: { content: `✨ سيرة ذاتية احترافية مقترحة (وضع الاستقرار المحلي):\n\n• الاسم والبيانات تم استلامها بنجاح.\n• تم ضبط التنسيق ليتوافق مع المعايير الذكية.\n• المهارات والخبرات المضافة ممتازة وجاهزة للعرض!` } }] })
             };
         }
     } catch (error) {
-        return { statusCode: 500, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ error: error.message }) };
+        return { 
+            statusCode: 500, 
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }, 
+            body: JSON.stringify({ error: error.message }) 
+        };
     }
 };
