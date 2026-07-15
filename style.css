@@ -7,6 +7,16 @@ body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: #f8fafc; min-height: 100vh; padding: 40px 20px;
     display: flex; justify-content: center; align-items: center;
+    transition: background 0.5s ease;
+}
+
+/* نمط وضع التصميم الإبداعي المحسن */
+body.creative-layout-active {
+    background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%) !important;
+}
+body.creative-layout-active .container {
+    border-color: rgba(168, 85, 247, 0.3) !important;
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
 }
 
 .container {
@@ -14,317 +24,57 @@ body {
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px;
     border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    position: relative; /* عشان الترس يبقى جواه */
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .main-app-header {
-    position: relative;
     text-align: center;
     margin-bottom: 35px;
-    margin-top: 10px;
 }
+.main-app-header h1 { font-size: 32px; font-weight: 700; color: #f8fafc; margin-bottom: 5px; }
+.main-app-header .subtitle { color: #94a3b8; font-size: 15px; }
 
-/* ==========================================\n    تنسيق الهيدر الاحترافي الفاخر\n   ========================================== */
-.branding-container {
-    display: inline-block;
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 12px 30px;
-    border-radius: 50px;
-    margin-bottom: 15px;
-}
-
-.app-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
-}
-
-.branding-sub {
-    font-size: 1rem;
-    color: #94a3b8;
-    margin-top: 5px;
-    font-weight: 400;
-}
-
-/* ==========================================\n    تخطيط الواجهة والشبكة ثنائية الأعمدة\n   ========================================== */
-main {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-section {
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: 18px;
-    display: flex;
-    flex-direction: column;
-}
-
-section h2 {
-    font-size: 1.25rem;
-    color: #f1f5f9;
-    margin-bottom: 25px;
-    border-bottom: 2px dashed rgba(255, 255, 255, 0.1);
-    padding-bottom: 12px;
-    font-weight: 600;
-}
-
-/* ==========================================\n    عناصر الإدخال والنموذج الذكي\n   ========================================== */
-.form-row {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-size: 0.9rem;
-    color: #cbd5e1;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-input, textarea {
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 16px;
-    border-radius: 10px;
-    color: #f8fafc;
-    font-size: 0.95rem;
-    outline: none;
-    transition: all 0.25s ease;
-    resize: none;
-}
-
-input:focus, textarea:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-}
-
-/* أزرار الإجراءات */
-button {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    color: white;
-    font-weight: 700;
-    padding: 14px 24px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.4);
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* ==========================================\n    عداد مستشار ATS ومقاييس الأداء\n   ========================================== */
-.score-card {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 25px;
-}
-
-.score-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.score-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #e2e8f0;
-}
-
-.score-badge {
-    background: #1e293b;
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.2);
-}
-
-.score-bar-container {
-    height: 8px;
-    background: #0f172a;
-    border-radius: 50px;
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-
-.score-bar-fill {
-    height: 100%;
-    width: 0%;
-    background: #475569;
-    border-radius: 50px;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
-}
-
-.score-feedback {
-    font-size: 0.8rem;
-    color: #94a3b8;
-    line-height: 1.6;
-}
-
-/* ==========================================\n    صندوق النتائج والفصل النهائي\n   ========================================== */
-.result-section textarea {
-    background: #0f172a;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    padding: 20px;
-    font-family: 'Cairo', sans-serif;
-}
-
-/* ==========================================\n    تذييل الصفحة و صندوق النصائح المباشرة\n   ========================================== */
-footer {
-    margin-top: 35px;
-}
-
-.tip-card {
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 14px;
-    padding: 15px 20px;
-    text-align: center;
-    color: #94a3b8;
-    font-size: 0.85rem;
-    line-height: 1.6;
-}
-
-.footer-credits {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #475569;
-    margin-top: 20px;
-}
-
-.footer-credits a {
-    color: #6366f1;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* ========================================================\n   🛠️ الإضافات والتنسيقات الجديدة للنطاقات والترتيب الهيكلي\n   ======================================================== */
-.hidden {
-    display: none !important;
-}
-
-/* زر الترس المتواجد في الهيدر */
-.settings-trigger {
+/* ===== التنسيق الخاص بقسم الإعدادات والقائمة المنسدلة ===== */
+.settings-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(30, 41, 59, 0.5);
+    top: 25px;
+    left: 25px;
+    z-index: 50;
+}
+.settings-trigger-btn {
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #94a3b8;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 50%;
+    color: #f1f5f9;
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 8px;
     cursor: pointer;
-    line-height: 1;
-    box-shadow: none;
-    width: auto;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+}
+.settings-trigger-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.settings-trigger:hover {
-    color: #fff;
-    transform: rotate(45deg);
-    background: rgba(30, 41, 59, 0.8);
-    box-shadow: none;
-}
-
-/* القائمة المنسدلة للترس */
 .dropdown-menu {
     position: absolute;
-    top: 50px;
+    top: calc(100% + 8px);
     left: 0;
-    background: #0f172a;
+    width: 180px;
+    background: #1e293b;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    width: 200px;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
-    z-index: 100;
+    border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.2s, transform 0.2s;
 }
-
-/* النافذة المنبثقة للإعدادات */
-.settings-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.8); /* خلفية معتمة لتغطية كامل النافذة */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999; /* جعل النافذة فوق جميع العناصر دائماً */
-    padding: 20px;
+.dropdown-menu.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-5px);
 }
-
-/* الصندوق الداخلي الممركز للإعدادات */
-#settingsPageModal > div {
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    width: 100%;
-    max-width: 500px;
-    padding: 30px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    direction: rtl;
-    text-align: right;
-    position: relative;
-    animation: modalAppear 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modalAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 12px; }
-.settings-header h3 { color: #f8fafc; font-size: 18px; font-weight: 700; }
-.settings-close-btn { background: transparent; border: none; color: #64748b; font-size: 24px; cursor: pointer; box-shadow: none; width: auto; padding: 0; margin: 0; }
-.settings-close-btn:hover { color: #ef4444; transform: none; box-shadow: none; background: transparent; }
-
-/* ===== ستايل قائمة الترس ===== */
 .menu-item {
     display: block;
     width: 100%;
@@ -335,37 +85,247 @@ footer {
     font-size: 13px;
     font-weight: 600;
     border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     cursor: pointer;
-    box-shadow: none;
-    border-radius: 0;
     transition: background 0.2s, color 0.2s;
 }
-
-.menu-item:last-child {
-    border-bottom: none;
-}
-
+.menu-item:last-child { border-bottom: none; }
 .menu-item:hover {
-    background: rgba(255,255,255,0.03);
-    color: #fff;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
 }
 
-/* ========================================================\n   📱 إضافات احترافية مستقلة لدعم التجاوب (Media Queries)\n   ======================================================== */
+/* ===== مستشار الـ ATS الذكي (تنسيقات شريط النسبة) ===== */
+.score-section {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+.score-section h3 { font-size: 16px; font-weight: 700; color: #f1f5f9; margin-bottom: 12px; }
+.score-bar-container {
+    height: 12px;
+    background: #334155;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.score-fill {
+    height: 100%;
+    width: 0%;
+    background: #6366f1;
+    border-radius: 6px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+}
+.score-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.score-label { font-size: 13px; color: #94a3b8; }
+.score-value { font-size: 15px; font-weight: 700; color: #f8fafc; }
+.score-status { font-size: 13px; color: #e2e8f0; line-height: 1.5; }
 
+/* ===== ميزة الاقتراحات التفاعلية ===== */
+.suggestions-box {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px dashed rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 25px;
+    transition: opacity 0.3s;
+}
+.suggestions-box.hidden { display: none; }
+.suggestions-box h4 { font-size: 14px; font-weight: 700; color: #34d399; margin-bottom: 10px; }
+.suggestions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.suggestion-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: right;
+    max-width: 100%;
+}
+.suggestion-item:hover {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: #34d399;
+    color: #ffffff;
+}
+
+/* ===== التخطيط العام والأعمدة الهيكلية ===== */
+.app-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.inputs-section, .result-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+h2 { font-size: 20px; font-weight: 700; color: #f1f5f9; border-bottom: 2px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+
+/* ===== عناصر حقول الإدخال ===== */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+label { font-size: 13px; font-weight: 600; color: #cbd5e1; }
+input, textarea, select {
+    width: 100%;
+    padding: 12px 16px;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #f8fafc;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+input:focus, textarea:focus, select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    background: #1e293b;
+}
+textarea { resize: vertical; min-height: 120px; }
+
+/* ===== بطاقة مطابقة إعلان الوظيفة ===== */
+.job-match-card {
+    background: rgba(245, 158, 11, 0.04);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 5px;
+}
+.job-match-card h3 { font-size: 14px; color: #fbbf24; margin-bottom: 5px; }
+
+/* ===== الأزرار وتفاعلاتها ===== */
+button {
+    font-family: 'Cairo', sans-serif;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+button:active:not(:disabled) { transform: translateY(0); }
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    box-shadow: none;
+    padding: 10px 16px;
+    font-size: 13px;
+}
+.secondary-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+/* ===== النوافذ المنبثقة والـ Modals ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(4px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+.modal-overlay.hidden {
+    display: none !important;
+}
+.modal-content {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    animation: modalAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes modalAppear {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+}
+.settings-header h3 { color: #f8fafc; font-size: 18px; font-weight: 700; }
+.settings-close-btn {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: none;
+    width: auto;
+    padding: 0;
+    margin-0;
+    line-height: 1;
+}
+.settings-close-btn:hover { color: #ef4444; background: transparent; transform: none; box-shadow: none; }
+.settings-body { display: flex; flex-direction: column; gap: 20px; }
+.setting-item { display: flex; flex-direction: column; gap: 8px; }
+
+/* تنسيق خاص بالجولة الترحيبية */
+.text-center { text-align: center; }
+
+/* ===== التجاوب والتوافق الهاتفي (Responsive Design) ===== */
 @media (max-width: 900px) {
-    main {
+    .app-layout {
         grid-template-columns: 1fr;
     }
-    .container {
-        padding: 25px;
-    }
 }
-
 @media (max-width: 600px) {
-    .app-title { font-size: 1.8rem; }
-    .branding-sub { font-size: 0.9rem; }
-    section { padding: 20px 15px; }
+    body { padding: 15px 10px; }
+    .container { padding: 25px 15px; }
+    .form-row { grid-template-columns: 1fr; }
+    .settings-wrapper {
+        position: relative;
+        top: 0; left: 0;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
 }
