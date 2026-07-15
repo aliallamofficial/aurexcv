@@ -48,7 +48,7 @@ function displayRandomLiveTip() {
 }
 
 // ========================================================
-// 🚀 نظام جولة التطبيق (الإصدار البرمجي المطور والمضمون)
+// 🚀 نظام جولة التطبيق والتحكم في ظهور الواجهات
 // ========================================================
 const tourSteps = [
     { icon: "🚀", title: "مرحباً بك في مستقبلك المهني الجديد!", desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.", btnText: "ابدأ الرحلة الآن ←" },
@@ -60,6 +60,8 @@ let isGenerating = false;
 
 function initAppTour() {
     const tourModal = document.getElementById('appTourModal');
+    const mainAppContainer = document.getElementById('mainAppContainer'); // الشاشة الأساسية للتطبيق
+    
     if (!tourModal) return;
 
     const nextBtn = document.getElementById('nextTourBtn');
@@ -79,12 +81,20 @@ function initAppTour() {
         skipBtn.addEventListener('click', closeTour);
     }
 
+    // فحص ما إذا كان المستخدم قد أتم الجولة مسبقاً
     if (localStorage.getItem('cv_tour_completed') === 'true') {
         tourModal.classList.add('hidden');
+        if (mainAppContainer) {
+            mainAppContainer.classList.remove('hidden'); // إظهار الواجهة الأساسية فوراً
+        }
         return;
     }
     
+    // إذا لم يكمل الجولة: نعرض الجولة ونخفي الواجهة الأساسية
     tourModal.classList.remove('hidden');
+    if (mainAppContainer) {
+        mainAppContainer.classList.add('hidden'); 
+    }
 }
 
 function updateTourContent() {
@@ -98,9 +108,24 @@ function updateTourContent() {
 
 function closeTour() {
     const tourModal = document.getElementById('appTourModal');
+    const mainAppContainer = document.getElementById('mainAppContainer');
+    
+    // إخفاء نافذة الجولة
     if (tourModal) {
         tourModal.classList.add('hidden');
     }
+    
+    // إظهار الواجهة الأساسية للتطبيق بسلاسة
+    if (mainAppContainer) {
+        mainAppContainer.classList.remove('hidden');
+        mainAppContainer.style.opacity = 0;
+        setTimeout(() => {
+            mainAppContainer.style.transition = "opacity 0.5s ease-in-out";
+            mainAppContainer.style.opacity = 1;
+        }, 50);
+    }
+    
+    // تخزين اكتمال الجولة محلياً لمنع تكرارها
     localStorage.setItem('cv_tour_completed', 'true');
 }
 
@@ -128,7 +153,6 @@ function calculateCVScore() {
     let score = 0; 
     let feedback = [];
 
-    // تحديث مؤشرات ATS ثنائية الأبعاد بصرياً
     const indBasic = document.getElementById('ind-basic');
     const indSkills = document.getElementById('ind-skills');
     const indNum = document.getElementById('ind-num');
@@ -156,7 +180,6 @@ function calculateCVScore() {
     
     if (experience.length > 40) {
         score += 15;
-        // التحقق من الأرقام والإنجازات
         if (/\d+%|\d+ جنيه|\d+ عميل|\d+ مشروع|\d+ دولار/.test(experience)) {
             score += 20;
             indNum?.classList.add('achieved');
@@ -165,7 +188,6 @@ function calculateCVScore() {
             indNum?.classList.remove('achieved');
         }
         
-        // التحقق من الأفعال القوية
         const strongWords = ['نفذت', 'طورت', 'قاد', 'زودت', 'حققت', 'قللت', 'أدار', 'أنشأ', 'صممت', 'أشرفت'];
         if (strongWords.some(word => experience.includes(word))) {
             score += 15;
@@ -410,14 +432,12 @@ async function askAI(promptMessage, systemMessage) {
         throw new Error('لا يوجد اتصال بالشبكة حالياً. يرجى المزامنة وإعادة المحاولة.'); 
     }
 
-    // الربط الصحيح والمباشر بمسار Serverless Function على Netlify
     const url = `/.netlify/functions/optimize`;
 
     try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 45000); // 45 ثانية لتغطية معالجة الخادم البعيد
+        const timeout = setTimeout(() => controller.abort(), 45000);
 
-        // دمج رسالة النظام وسؤال المستخدم لتغذية النموذج بشكل احترافي
         const fullPrompt = `${systemMessage}\n\nالطلب المباشر:\n${promptMessage}`;
 
         const response = await fetch(url, {
@@ -435,7 +455,6 @@ async function askAI(promptMessage, systemMessage) {
 
         const data = await response.json();
 
-        // فك تشفير البيانات واستخلاص رد الذكاء الاصطناعي
         if (data && data.choices && data.choices[0] && data.choices[0].message) {
             return data.choices[0].message.content.trim();
         } else if (data && data.error) {
@@ -472,7 +491,6 @@ document.addEventListener("DOMContentLoaded", function () {
         skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
     });
 
-    // زر التحسين الذكي الشامل بالذكاء الاصطناعي
     const aiOptimizeBtn = document.getElementById('aiOptimizeBtn');
     if (aiOptimizeBtn) {
         aiOptimizeBtn.addEventListener('click', async (e) => {
@@ -494,7 +512,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // زر تحميل الـ PDF مع ميزة تعديل وتخصيص الخطوط
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -510,7 +527,6 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerText = "⏳ جاري معالجة الهيكل وإصدار الـ PDF..."; 
             this.disabled = true;
             
-            // قراءة نمط الخط المختار من الإعدادات لفرضه في الطباعة
             const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
             
             const printElement = document.createElement('div');
@@ -549,7 +565,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // إدارة السمات والوضع الكوني والرموز
     const themeSelect = document.getElementById('themeSelect');
     if (themeSelect) { 
         themeSelect.addEventListener('change', function() { 
@@ -566,7 +581,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }); 
     }
 
-    // زر التحول الإبداعي الفاخر
     const creativeToggle = document.getElementById('creativeLayoutToggle');
     if (creativeToggle) {
         creativeToggle.addEventListener('change', function() {
@@ -578,7 +592,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // تدويل اللغة في الصفحة للتوافق العالمي
     let currentLang = 'ar';
     const toggleLanguageBtn = document.getElementById('toggleLanguageBtn');
     if (toggleLanguageBtn) { 
@@ -591,7 +604,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }); 
     }
 
-    // مسح الحقول وإعادة تعيين البيانات من الترس السريع
     const clearDataBtn = document.getElementById('clearDataBtn');
     if (clearDataBtn) {
         clearDataBtn.addEventListener('click', (e) => {
@@ -600,7 +612,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // توليد ملخص مهني احترافي مستقل وحقنه بالملف
     const generateSummaryBtn = document.getElementById('generateSummaryBtn');
     if (generateSummaryBtn) { 
         generateSummaryBtn.addEventListener('click', async function(e) { 
@@ -628,7 +639,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }); 
     }
 
-    // تفعيل الترس العائم وقائمتها المنبثقة
     const toggleBtn = document.getElementById("dropdownToggleBtn"); 
     const leftMenu = document.getElementById("topLeftMenu");
     if (toggleBtn && leftMenu) { 
@@ -643,7 +653,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }); 
     }
 
-    // فتح وغلق نافذة إعدادات المظهر المتقدمة
     const openSettingsBtn = document.getElementById("openSettingsBtn"); 
     const closeSettingsBtn = document.getElementById("closeSettingsBtn"); 
     const settingsModal = document.getElementById("settingsPageModal");
@@ -659,7 +668,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }); 
     }
 
-    // زر مشاركة التطبيق الذكي
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async function () {
@@ -682,7 +690,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // زر إشعارات الفرص والخدمات الذكية
     const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) {
         notificationBtn.addEventListener("click", function (e) {
