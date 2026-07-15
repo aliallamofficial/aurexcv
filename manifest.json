@@ -1,12 +1,14 @@
 {
-  "name": "مُنشئ السير الذاتية بالذكاء الاصطناعي",
+  "name": "مُنشئ السير الذاتية بالذكاء الاصطناعي Pro",
   "short_name": "Ali CV Builder",
-  "description": "تطبيق ذكي لإنشاء وتحسين السير الذاتية باستخدام الذكاء الاصطناعي",
-  "start_url": "/",
+  "description": "أسهل تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع أنظمة الـ ATS العالمية.",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#38bdf8",
   "orientation": "portrait",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
       "src": "logo.png",
@@ -19,6 +21,36 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "إنشاء سيرة ذاتية جديدة",
+      "short_name": "سيرة جديدة",
+      "url": "/?action=new",
+      "description": "افتح التطبيق مباشرة للبدء في صياغة سيرة ذاتية جديدة"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "واجهة تطبيق Ali CV Builder على الكمبيوتر"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "واجهة تطبيق Ali CV Builder على الهاتف"
     }
   ]
 }
