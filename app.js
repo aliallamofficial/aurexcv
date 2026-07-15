@@ -5,7 +5,7 @@ const cvTips = [
     "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
     "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك أقل من 5 سنوات.",
     "استخدم أرقاماً ونسباً مئوية حقيقية لإثبات إنجازاتك (مثال: زيادة المبيعات بنسبة 20%).",
-    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء المستعارة.",
+    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء مستعارة.",
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
@@ -29,7 +29,7 @@ function displayRandomLiveTip() {
 const tourSteps = [
     { icon: "🚀", title: "مرحباً بك في مستقبلك المهني الجديد!", desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.", btnText: "ابدأ الرحلة الآن ←" },
     { icon: "📊", title: "مستشار الـ ATS الذكي لحظة بلحظة", desc: "أثناء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.", btnText: "التالي مذهل كالعادة ←" },
-    { icon: "🎯", title: "مطابقة إعلان الوظيفة", desc: "الصق إعلان الوظيفة واعرف نسبة تطابقك والناقص في بياناتك لتضمن القبول.", btnText: "إنهاء الجولة والدخول للتطبيق 🎉" }
+    { icon: "🎯", title: "مطابقة إعلان الوظيفة", desc: "الصق إعلان الوظيفة واعرف نسبة تطابقك والكلمات المفتاحية الناقصة لرفع حظوظ قبولك.", btnText: "إنهاء الجولة والدخول للتطبيق 🎉" }
 ];
 let currentTourStep = 0;
 let isGenerating = false;
@@ -128,7 +128,7 @@ function showJobSuggestions() {
 
     if (matchedJob) {
         suggestionsList.innerHTML = matchedJob.tips.map(tip =>
-            `<button class="suggestion-item" onclick="addTipToExperience('${tip.replace(/'/g, "\\'")}')">${tip}</button>`
+            `<button type="button" class="suggestion-item" style="display:block; width:100%; text-align:right; margin-bottom:8px; padding:8px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#e2e8f0; font-size:12px; cursor:pointer;" onclick="addTipToExperience('${tip.replace(/'/g, "\\'")}')">${tip}</button>`
         ).join('');
         suggestionsBox.classList.remove('hidden');
     } else {
@@ -139,12 +139,11 @@ function showJobSuggestions() {
 function addTipToExperience(tip) {
     const expField = document.getElementById('experience');
     if (expField) {
-        expField.value += (expField.value? '\n• ' : '• ') + tip;
+        expField.value += (expField.value ? '\n• ' : '• ') + tip;
         expField.dispatchEvent(new Event('input'));
     }
 }
-
-// جعل الدالة متاحة للنطاق العالمي لحل مشكلة onclick في الـ HTML المصنع ديناميكياً
+// تصدير الدالة للنطاق العام لتعمل بالـ onclick من أزرار الاقتراحات
 window.addTipToExperience = addTipToExperience;
 
 // ==========================================
@@ -163,9 +162,8 @@ function checkJobMatch() {
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
     if (!skills && !experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
     
-    // تصحيح الخطأ الإملائي البرمجي هنا:
+    // إصلاح القوس والرمز النصي المكسور هنا:
     const cvText = (skills + " " + experience).toLowerCase();
-    
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
     const stopWords = ['في', 'من', 'على', 'إلى', 'مع', 'the', 'and', 'for', 'with'];
@@ -174,15 +172,15 @@ function checkJobMatch() {
     uniqueKeywords.forEach(word => {
         if (cvText.includes(word)) matched++; else missing.push(word);
     });
-    const matchPercent = uniqueKeywords.length > 0? Math.round((matched / uniqueKeywords.length) * 100) : 0;
+    const matchPercent = uniqueKeywords.length > 0 ? Math.round((matched / uniqueKeywords.length) * 100) : 0;
     if (resultDiv) {
         resultDiv.innerHTML = `
             <div style="margin-top:15px; padding:15px; background:#1e293b; border-radius:10px; border:1px solid #334155;">
                 <h4 style="margin:0 0 10px 0;">نسبة التطابق مع الإعلان: ${matchPercent}%</h4>
                 <div style="height:10px; background:#334155; border-radius:5px; margin:10px 0; overflow:hidden;">
-                    <div style="height:100%; width:${matchPercent}%; background:${matchPercent > 70? '#10b981' : matchPercent > 40? '#f59e0b' : '#ef4444'}; border-radius:5px; transition:width 0.5s;"></div>
+                    <div style="height:100%; width:${matchPercent}%; background:${matchPercent > 70 ? '#10b981' : matchPercent > 40 ? '#f59e0b' : '#ef4444'}; border-radius:5px; transition:width 0.5s;"></div>
                 </div>
-                ${missing.slice(0,5).length > 0?
+                ${missing.slice(0,5).length > 0 ?
                 `<p style="color:#fbbf24; font-size:14px;">⚠️ كلمات مفتاحية ناقصة: <b>${missing.slice(0,5).join(', ')}</b><br>ضيفها في المهارات أو الخبرات لرفع النسبة</p>` :
                 `<p style="color:#10b981; font-size:14px;">✅ ممتاز! CV بتاعك مطابق جداً للإعلان</p>`}
             </div>
@@ -214,9 +212,12 @@ function loadSavedData() {
         calculateCVScore();
         showJobSuggestions();
     } else {
-        document.getElementById('scoreFill')?.style.width = '0%';
-        document.getElementById('scoreText')?.innerText = '0%';
-        document.getElementById('scoreStatus')?.innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...';
+        const scoreFill = document.getElementById('scoreFill');
+        if (scoreFill) scoreFill.style.width = '0%';
+        const scoreText = document.getElementById('scoreText');
+        if (scoreText) scoreText.innerText = '0%';
+        const scoreStatus = document.getElementById('scoreStatus');
+        if (scoreStatus) scoreStatus.innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...';
     }
 }
 
@@ -255,7 +256,7 @@ async function askAI(promptMessage, systemMessage) {
 }
 
 // ==========================================
-// 🎉 تهيئة الأحداث
+// 🎉 تهيئة الأحداث عند تحميل المستند
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     displayRandomLiveTip();
@@ -303,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const printElement = document.createElement('div');
             printElement.style.padding = '40px'; printElement.style.color = '#1e293b'; printElement.style.background = '#ffffff'; printElement.style.fontFamily = "'Cairo', sans-serif"; printElement.style.lineHeight = '1.8'; printElement.style.direction = 'rtl'; printElement.style.textAlign = 'right';
             printElement.innerHTML = outputBox.value.replace(/\n/g, '<br>');
-            const data = getInputs(); const pdfFileName = data.name? `${data.name}_Professional_CV.pdf` : 'My_Resume.pdf';
+            const data = getInputs(); const pdfFileName = data.name ? `${data.name}_Professional_CV.pdf` : 'My_Resume.pdf';
             const options = { margin: [15, 15, 15, 15], filename: pdfFileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
             document.fonts.ready.then(() => {
                 setTimeout(() => {
@@ -314,30 +315,73 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const themeSelect = document.getElementById('themeSelect');
-    if (themeSelect) { themeSelect.addEventListener('change', function() { const theme = this.value; if (theme === 'royal-blue') { document.body.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)'; } else if (theme === 'emerald-green') { document.body.style.background = 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)'; } else { document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'; } }); }
+    if (themeSelect) { 
+        themeSelect.addEventListener('change', function() { 
+            const theme = this.value; 
+            if (theme === 'royal-blue') { 
+                document.body.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)'; 
+            } else if (theme === 'emerald-green') { 
+                document.body.style.background = 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)'; 
+            } else { 
+                document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'; 
+            } 
+        }); 
+    }
 
     let currentLang = 'ar';
     const toggleLanguageBtn = document.getElementById('toggleLanguageBtn');
-    if (toggleLanguageBtn) { toggleLanguageBtn.addEventListener('click', function(e) { e.preventDefault(); currentLang = currentLang === 'ar'? 'en' : 'ar'; document.documentElement.dir = currentLang === 'ar'? 'rtl' : 'ltr'; document.documentElement.lang = currentLang; toggleLanguageBtn.innerText = currentLang === 'ar'? '🔄 English' : '🔄 العربية'; }); }
+    if (toggleLanguageBtn) { toggleLanguageBtn.addEventListener('click', function(e) { e.preventDefault(); currentLang = currentLang === 'ar' ? 'en' : 'ar'; document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr'; document.documentElement.lang = currentLang; toggleLanguageBtn.innerText = currentLang === 'ar' ? '🔄 English' : '🔄 العربية'; }); }
 
     const generateSummaryBtn = document.getElementById('generateSummaryBtn');
-    if (generateSummaryBtn) { generateSummaryBtn.addEventListener('click', async function(e) { e.preventDefault(); if (isGenerating) return; const data = getInputs(); if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } isGenerating = true; const originalBtnText = generateSummaryBtn.innerHTML; generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; generateSummaryBtn.disabled = true; try { const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); if (summary && outputBox) { if (outputBox.value.trim() === "") { outputBox.value = `الملخص المهني:\n${summary}\n\n`; } else { outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; } alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); } catch (err) { alert(`لم نتمكن من الاتصال: ${err.message}`); } finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } }); }
+    if (generateSummaryBtn) { 
+        generateSummaryBtn.addEventListener('click', async function(e) { 
+            e.preventDefault(); 
+            if (isGenerating) return; 
+            const data = getInputs(); 
+            if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } 
+            isGenerating = true; 
+            const originalBtnText = generateSummaryBtn.innerHTML; 
+            generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; 
+            generateSummaryBtn.disabled = true; 
+            try { 
+                const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; 
+                const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); 
+                if (summary && outputBox) { 
+                    if (outputBox.value.trim() === "") { 
+                        outputBox.value = `الملخص المهني:\n${summary}\n\n`; 
+                    } else { 
+                        outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; 
+                    } 
+                    alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); 
+                } 
+            } catch (err) { 
+                alert(`لم نتمكن من الاتصال: ${err.message}`); 
+            } finally { 
+                isGenerating = false; 
+                generateSummaryBtn.innerHTML = originalBtnText; 
+                generateSummaryBtn.disabled = false; 
+            } 
+        }); 
+    }
 
     const toggleBtn = document.getElementById("dropdownToggleBtn"); const leftMenu = document.getElementById("topLeftMenu");
-    if (toggleBtn && leftMenu) { toggleBtn.addEventListener("click", function (e) { e.stopPropagation(); leftMenu.classList.toggle("hidden"); }); document.addEventListener("click", function (e) { if (!leftMenu.contains(e.target) && e.target!== toggleBtn) { leftMenu.classList.add("hidden"); } }); }
+    if (toggleBtn && leftMenu) { toggleBtn.addEventListener("click", function (e) { e.stopPropagation(); leftMenu.classList.toggle("hidden"); }); document.addEventListener("click", function (e) { if (!leftMenu.contains(e.target) && e.target !== toggleBtn) { leftMenu.classList.add("hidden"); } }); }
 
     const openSettingsBtn = document.getElementById("openSettingsBtn"); const closeSettingsBtn = document.getElementById("closeSettingsBtn"); const settingsModal = document.getElementById("settingsPageModal");
     if (openSettingsBtn && settingsModal) { openSettingsBtn.addEventListener("click", function () { settingsModal.classList.remove("hidden"); if (leftMenu) leftMenu.classList.add("hidden"); }); }
     if (closeSettingsBtn && settingsModal) { closeSettingsBtn.addEventListener("click", function () { settingsModal.classList.add("hidden"); }); }
 
-    // تفعيل وتطبيق زر وضع التصميم الإبداعي على كامل الصفحة (Body)
+    // التحكم في زر مظهر وضع التصميم الإبداعي من الإعدادات
     const creativeLayoutToggle = document.getElementById("creativeLayoutToggle");
     if (creativeLayoutToggle) {
-        creativeLayoutToggle.addEventListener("change", function () {
+        creativeLayoutToggle.addEventListener("change", function() {
+            const container = document.querySelector(".container");
             if (this.checked) {
                 document.body.classList.add("creative-layout-active");
+                container?.classList.add("creative-layout-active");
             } else {
                 document.body.classList.remove("creative-layout-active");
+                container?.classList.remove("creative-layout-active");
             }
         });
     }
@@ -374,7 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (Notification.permission === "granted") {
                 alert("🔔 الإشعارات مفعلة بالفعل!");
-            } else if (Notification.permission!== "denied") {
+            } else if (Notification.permission !== "denied") {
                 Notification.requestPermission().then(function (permission) {
                     if (permission === "granted") {
                         alert("🎉 تم تفعيل الإشعارات بنجاح!");
