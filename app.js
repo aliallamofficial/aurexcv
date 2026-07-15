@@ -1,5 +1,5 @@
 // ========================================================
-// 💡 مصفوفة النصائح الجاهزة للخبير
+// 💡 مصفوفة النصائح الجاهزة
 // ========================================================
 const cvTips = [
     "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
@@ -9,37 +9,10 @@ const cvTips = [
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
-// ========================================================
-// 🎯 دليل المهن والاقتراحات الجاهزة
-// ========================================================
 const jobGuidelines = {
-    "graphic_designer": { 
-        title: "مصمم جرافيك", 
-        keywords: ["مصمم", "جرافيك", "designer"], 
-        tips: [
-            "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
-            "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
-            "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
-        ] 
-    },
-    "content_creator": { 
-        title: "صانع محتوى / كاتب محتوى", 
-        keywords: ["محتوى", "كاتب", "content", "writer"], 
-        tips: [
-            "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.",
-            "تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.",
-            "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."
-        ] 
-    },
-    "interior_designer": { 
-        title: "مهندس ديكور / مصمم داخلي", 
-        keywords: ["ديكور", "داخلي", "interior"], 
-        tips: [
-            "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
-            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
-            "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."
-        ] 
-    }
+    "graphic_designer": { title: "مصمم جرافيك", keywords: ["مصمم", "جرافيك", "designer"], tips: ["ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.","تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.","إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."] },
+    "content_creator": { title: "صانع محتوى / كاتب محتوى", keywords: ["محتوى", "كاتب", "content", "writer"], tips: ["كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.","تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.","التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."] },
+    "interior_designer": { title: "مهندس ديكور / مصمم داخلي", keywords: ["ديكور", "داخلي", "interior"], tips: ["إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.","اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.","الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."] }
 };
 
 function displayRandomLiveTip() {
@@ -91,7 +64,7 @@ function closeTour() {
 }
 
 // ==========================================
-// 🔥 مستشار الـ ATS الذكي v2.0
+// 🔥 مستشار ATS v2.0
 // ==========================================
 function initCVScoreGauge() {
     const inputs = ['name', 'jobTitle', 'experience', 'skills'];
@@ -130,13 +103,13 @@ function calculateCVScore() {
         scoreFill.style.width = `${score}%`; scoreText.innerText = `${score}%`;
         if (score === 0) { scoreFill.style.background = '#475569'; scoreStatus.innerHTML = '⚠️ الصندوق فارغ، يرجى تعبئة بياناتك للتحليل الفوري...'; }
         else if (score < 40) { scoreFill.style.background = '#ef4444'; scoreStatus.innerHTML = `⚠️ ضعيف: ${feedback.join(' - ')}`; }
-        else if (score < 75) { scoreFill.style.background = '#f59e0b'; scoreStatus.innerHTML = `👍 جيد: ${feedback[0] || 'كمل شوية كمان'}`; }
-        else { scoreFill.style.background = '#10b981'; scoreStatus.innerHTML = '🔥 ممتاز! السيرة الذاتية جاهزة لتخطي فلترة الـ ATS بنجاح.'; }
+        else if (score < 75) { scoreFill.style.background = '#f59e0b'; scoreStatus.innerHTML = `👍 جيد: ${feedback[0] || 'كمل شوية'}`; }
+        else { scoreFill.style.background = '#10b981'; scoreStatus.innerHTML = '🔥 ممتاز! السيرة الذاتية جاهزة لتخطي فلترة الـ ATS'; }
     }
 }
 
 // ==========================================
-// 💡 اقتراحات المهام وإظهار الاقتراحات التفاعلية
+// 💡 اقتراحات المهام من jobGuidelines
 // ==========================================
 function showJobSuggestions() {
     const jobTitle = document.getElementById('jobTitle')?.value.toLowerCase().trim() || "";
@@ -170,11 +143,10 @@ function addTipToExperience(tip) {
         expField.dispatchEvent(new Event('input'));
     }
 }
-// تصدير دالة الإدراج لنطاق الـ Window لضمان استجابة الأحداث الديناميكية
 window.addTipToExperience = addTipToExperience;
 
 // ==========================================
-// 🎯 نظام مطابقة وفحص إعلان الوظيفة
+// 🎯 ميزة مطابقة إعلان الوظيفة
 // ==========================================
 function initJobMatchChecker() {
     const btn = document.getElementById('checkMatchBtn');
@@ -189,7 +161,7 @@ function checkJobMatch() {
     if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً"); return; }
     if (!skills && !experience) { alert("الرجاء ملء المهارات والخبرات أولاً"); return; }
     
-    // إصلاح الخطأ الصياغي السنتاكس القديم ليعمل دمج الكلمات بشكل صحيح
+    // تم تعديل وإصلاح علامات الاقتباس هنا بنجاح
     const cvText = (skills + " " + experience).toLowerCase();
     const jobText = jobDesc.toLowerCase();
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
@@ -209,14 +181,14 @@ function checkJobMatch() {
                 </div>
                 ${missing.slice(0,5).length > 0 ?
                 `<p style="color:#fbbf24; font-size:14px;">⚠️ كلمات مفتاحية ناقصة: <b>${missing.slice(0,5).join(', ')}</b><br>ضيفها في المهارات أو الخبرات لرفع النسبة</p>` :
-                `<p style="color:#10b981; font-size:14px;">✅ ممتاز! الـ CV الخاص بك مطابق لمتطلبات الإعلان تماماً</p>`}
+                `<p style="color:#10b981; font-size:14px;">✅ ممتاز! CV بتاعك مطابق جداً للإعلان</p>`}
             </div>
         `;
     }
 }
 
 // ==========================================
-// 💾 الحفظ والتعبئة التلقائية للبيانات (Local Auto-Save)
+// 💾 الحفظ التلقائي - امان كامل
 // ==========================================
 function autoSave() {
     ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription'].forEach(id => {
@@ -245,17 +217,15 @@ function loadSavedData() {
     }
 }
 
-// Service Worker لتهيئة الـ PWA
+// Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('PWA Service Worker registered!'))
-            .catch(err => console.log('Service Worker failed:', err));
+        navigator.serviceWorker.register('sw.js').then(reg => console.log('PWA Service Worker registered!')).catch(err => console.log('Service Worker failed:', err));
     });
 }
 
 // ==========================================
-// 🤖 دالة معالجة الاتصال بالذكاء الاصطناعي
+// 🤖 دالة الاتصال بالذكاء الاصطناعي
 // ==========================================
 async function askAI(promptMessage, systemMessage) {
     if (!navigator.onLine) { throw new Error('لا يوجد اتصال بالانترنت. يرجى التحقق من الشبكة.'); }
@@ -272,11 +242,7 @@ async function askAI(promptMessage, systemMessage) {
         clearTimeout(timeout);
         if (!response.ok) throw new Error(`خطأ في الخادم: ${response.status}`);
         let rawText = await response.text();
-        let cleanText = rawText.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '')
-                               .replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '')
-                               .replace(/Powered by Pollinations\.AI free text APIs\./gi, '')
-                               .replace(/Support our mission to keep AI accessible for everyone\./gi, '')
-                               .trim();
+        let cleanText = rawText.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '').replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '').replace(/Powered by Pollinations\.AI free text APIs\./gi, '').replace(/Support our mission to keep AI accessible for everyone\./gi, '').trim();
         if (!cleanText) throw new Error('الرد فارغ من الخادم');
         return cleanText;
     } catch (error) {
@@ -286,7 +252,7 @@ async function askAI(promptMessage, systemMessage) {
 }
 
 // ==========================================
-// 🎉 تهيئة كافة الأحداث عند تحميل الـ DOM
+// 🎉 تهيئة الأحداث
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     displayRandomLiveTip();
@@ -304,7 +270,6 @@ document.addEventListener("DOMContentLoaded", function () {
         skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
     });
 
-    // تحسين السيرة الذاتية عبر الذكاء الاصطناعي
     const aiOptimizeBtn = document.getElementById('aiOptimizeBtn');
     if (aiOptimizeBtn) {
         aiOptimizeBtn.addEventListener('click', async (e) => {
@@ -321,194 +286,47 @@ document.addEventListener("DOMContentLoaded", function () {
                 const prompt = `قم بصياغة سيرة ذاتية كاملة، احترافية، ومباشرة ومحسنة كلياً للـ ATS باللغة العربية:\nالاسم الكامل: ${data.name}\nالمسمى الوظيفي المستهدف: ${data.jobTitle}\nالهاتف: ${data.phone}\nالبريد الإلكتروني: ${data.email}\nالمهارات المكتوبة: ${data.skills}\nالخبرات المهنية والمهام العملية: ${data.experience}`;
                 const res = await askAI(prompt, "أنت مستشار توظيف عالمي خبير بنظام الـ ATS. اكتب محتوى السيرة الذاتية السردية والنصية بنقاء وتنسيق كامل مباشر دون أي هوامش، تحيات، أو ملاحظات إضافية جانبية.");
                 if (res && outputBox) { outputBox.value = res; }
-            } catch (err) { 
-                alert(`حدث خطأ: ${err.message}`); 
-                if (outputBox) outputBox.value = 'فشل الاتصال. يرجى المحاولة مرة أخرى.'; 
-            }
+            } catch (err) { alert(`حدث خطأ: ${err.message}`); if (outputBox) outputBox.value = 'فشل الاتصال. يرجى المحاولة مرة أخرى.'; }
             finally { isGenerating = false; aiOptimizeBtn.innerHTML = originalBtnText; aiOptimizeBtn.disabled = false; }
         });
     }
 
-    // ========================================================
-    // 🛡️ الحل النهائي والمضمون لتحميل الـ PDF بدون صفحات بيضاء
-    // ========================================================
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            if (!outputBox || outputBox.value.trim() === "") { 
-                alert('الرجاء إنشاء السيرة الذاتية أولاً!'); 
-                return; 
-            }
-            const originalBtnText = this.innerHTML; 
-            this.innerText = "⏳ جاري إصدار وتجهيز المستند الرقمي..."; 
-            this.disabled = true;
-
-            // 1. إنشاء عنصر الطباعة وتنسيقه مع العرض الثابت لـ A4
+            if (!outputBox || outputBox.value.trim() === "") { alert('الرجاء إنشاء السيرة الذاتية أولاً!'); return; }
+            const originalBtnText = this.innerHTML; this.innerText = "⏳ جاري إصدار وتجهيز المستند الرقمي..."; this.disabled = true;
             const printElement = document.createElement('div');
-            printElement.style.padding = '40px'; 
-            printElement.style.color = '#1e293b'; 
-            printElement.style.background = '#ffffff'; 
-            printElement.style.fontFamily = "'Cairo', sans-serif"; 
-            printElement.style.lineHeight = '1.8'; 
-            printElement.style.direction = 'rtl'; 
-            printElement.style.textAlign = 'right';
-            printElement.style.width = '790px'; // عرض ورقة A4 معياري لثبات الرندر
-            
-            // تحويل السطور لسطور مقروءة بـ HTML
+            printElement.style.padding = '40px'; printElement.style.color = '#1e293b'; printElement.style.background = '#ffffff'; printElement.style.fontFamily = "'Cairo', sans-serif"; printElement.style.lineHeight = '1.8'; printElement.style.direction = 'rtl'; printElement.style.textAlign = 'right';
             printElement.innerHTML = outputBox.value.replace(/\n/g, '<br>');
-
-            // 2. إدخال العنصر مؤقتاً في الـ DOM مخفياً عن عين المستخدم لضمان رصده
-            printElement.style.position = 'absolute';
-            printElement.style.left = '-9999px';
-            printElement.style.top = '0';
-            document.body.appendChild(printElement);
-
-            const data = getInputs(); 
-            const pdfFileName = data.name ? `${data.name}_Professional_CV.pdf` : 'My_Resume.pdf';
-            const options = { 
-                margin: [15, 15, 15, 15], 
-                filename: pdfFileName, 
-                image: { type: 'jpeg', quality: 0.98 }, 
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true, 
-                    logging: false, 
-                    backgroundColor: '#ffffff',
-                    letterRendering: true 
-                }, 
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
-            };
-
-            // 3. التحقق التام من تحميل خطوط المتصفح مع مهلة الأمان
+            const data = getInputs(); const pdfFileName = data.name ? `${data.name}_Professional_CV.pdf` : 'My_Resume.pdf';
+            const options = { margin: [15, 15, 15, 15], filename: pdfFileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
             document.fonts.ready.then(() => {
                 setTimeout(() => {
-                    html2pdf().set(options).from(printElement).save().then(() => {
-                        document.body.removeChild(printElement); // الحذف لتنظيف الذاكرة
-                        this.innerHTML = originalBtnText; 
-                        this.disabled = false; 
-                    }).catch((err) => {
-                        console.error('PDF Build Error:', err);
-                        alert('حدث خطأ أثناء تصدير ملف الـ PDF.'); 
-                        if (document.body.contains(printElement)) {
-                            document.body.removeChild(printElement);
-                        }
-                        this.innerHTML = originalBtnText; 
-                        this.disabled = false; 
-                    });
-                }, 400); // 400 مللي ثانية تمنع بشكل قطعي الصفحات البيضاء
+                    html2pdf().set(options).from(printElement).save().then(() => { this.innerHTML = originalBtnText; this.disabled = false; }).catch((err) => { alert('حدث خطأ أثناء تصدير ملف الـ PDF.'); this.innerHTML = originalBtnText; this.disabled = false; });
+                }, 250);
             });
         });
     }
 
-    // إدارة وتغيير سمات الخلفية والمظهر
     const themeSelect = document.getElementById('themeSelect');
-    if (themeSelect) { 
-        themeSelect.addEventListener('change', function() { 
-            const theme = this.value; 
-            if (theme === 'royal-blue') { 
-                document.body.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)'; 
-            } else if (theme === 'emerald-green') { 
-                document.body.style.background = 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)'; 
-            } else { 
-                document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'; 
-            } 
-        }); 
-    }
+    if (themeSelect) { themeSelect.addEventListener('change', function() { const theme = this.value; if (theme === 'royal-blue') { document.body.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)'; } else if (theme === 'emerald-green') { document.body.style.background = 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)'; } else { document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'; } }); }
 
-    // تفعيل وإلغاء "وضع التصميم الإبداعي" (Creative Layout Style)
-    const creativeLayoutToggle = document.getElementById('creativeLayoutToggle');
-    const mainContainer = document.getElementById('mainContainer');
-    if (creativeLayoutToggle && mainContainer) {
-        creativeLayoutToggle.addEventListener('change', function() {
-            if (this.checked) {
-                document.body.classList.add('creative-layout-active');
-                mainContainer.classList.add('creative-layout-active');
-            } else {
-                document.body.classList.remove('creative-layout-active');
-                mainContainer.classList.remove('creative-layout-active');
-            }
-        });
-    }
-
-    // تبديل لغة الموقع
     let currentLang = 'ar';
     const toggleLanguageBtn = document.getElementById('toggleLanguageBtn');
-    if (toggleLanguageBtn) { 
-        toggleLanguageBtn.addEventListener('click', function(e) { 
-            e.preventDefault(); 
-            currentLang = currentLang === 'ar' ? 'en' : 'ar'; 
-            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr'; 
-            document.documentElement.lang = currentLang; 
-            toggleLanguageBtn.innerText = currentLang === 'ar' ? '🔄 English' : '🔄 العربية'; 
-        }); 
-    }
+    if (toggleLanguageBtn) { toggleLanguageBtn.addEventListener('click', function(e) { e.preventDefault(); currentLang = currentLang === 'ar' ? 'en' : 'ar'; document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr'; document.documentElement.lang = currentLang; toggleLanguageBtn.innerText = currentLang === 'ar' ? '🔄 English' : '🔄 العربية'; }); }
 
-    // توليد ملخص مهني ذكي وحقنه في البداية
     const generateSummaryBtn = document.getElementById('generateSummaryBtn');
-    if (generateSummaryBtn) { 
-        generateSummaryBtn.addEventListener('click', async function(e) { 
-            e.preventDefault(); 
-            if (isGenerating) return; 
-            const data = getInputs(); 
-            if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } 
-            isGenerating = true; 
-            const originalBtnText = generateSummaryBtn.innerHTML; 
-            generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; 
-            generateSummaryBtn.disabled = true; 
-            try { 
-                const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; 
-                const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); 
-                if (summary && outputBox) { 
-                    if (outputBox.value.trim() === "") { 
-                        outputBox.value = `الملخص المهني:\n${summary}\n\n`; 
-                    } else { 
-                        outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; 
-                    } 
-                    alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); 
-                } 
-            } catch (err) { 
-                alert(`لم نتمكن من الاتصال: ${err.message}`); 
-            } finally { 
-                isGenerating = false; 
-                generateSummaryBtn.innerHTML = originalBtnText; 
-                generateSummaryBtn.disabled = false; 
-            } 
-        }); 
-    }
+    if (generateSummaryBtn) { generateSummaryBtn.addEventListener('click', async function(e) { e.preventDefault(); if (isGenerating) return; const data = getInputs(); if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً!'); return; } isGenerating = true; const originalBtnText = generateSummaryBtn.innerHTML; generateSummaryBtn.innerHTML = "⏳ جاري الصياغة..."; generateSummaryBtn.disabled = true; try { const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) قصيراً وموجزاً ومقنعاً جداً متوافق مع خوارزميات ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية المتاحة: ${data.skills}.`; const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي محترف. اكتب نص الملخص المهني فقط في فقرة واحدة متماسكة ومثيرة للإعجاب دون أي مقدمات أو هوامش وبدون ذكر أي ترحيب."); if (summary && outputBox) { if (outputBox.value.trim() === "") { outputBox.value = `الملخص المهني:\n${summary}\n\n`; } else { outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; } alert("🧠 تم توليد وحقن الملخص المهني بنجاح!"); } } catch (err) { alert(`لم نتمكن من الاتصال: ${err.message}`); } finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } }); }
 
-    // التحكم بالقائمة المنسدلة للترس
-    const toggleBtn = document.getElementById("dropdownToggleBtn"); 
-    const leftMenu = document.getElementById("topLeftMenu");
-    if (toggleBtn && leftMenu) { 
-        toggleBtn.addEventListener("click", function (e) { 
-            e.stopPropagation(); 
-            leftMenu.classList.toggle("hidden"); 
-        }); 
-        document.addEventListener("click", function (e) { 
-            if (!leftMenu.contains(e.target) && e.target !== toggleBtn) { 
-                leftMenu.classList.add("hidden"); 
-            } 
-        }); 
-    }
+    const toggleBtn = document.getElementById("dropdownToggleBtn"); const leftMenu = document.getElementById("topLeftMenu");
+    if (toggleBtn && leftMenu) { toggleBtn.addEventListener("click", function (e) { e.stopPropagation(); leftMenu.classList.toggle("hidden"); }); document.addEventListener("click", function (e) { if (!leftMenu.contains(e.target) && e.target !== toggleBtn) { leftMenu.classList.add("hidden"); } }); }
 
-    // نوافذ الإعدادات المنبثقة
-    const openSettingsBtn = document.getElementById("openSettingsBtn"); 
-    const closeSettingsBtn = document.getElementById("closeSettingsBtn"); 
-    const settingsModal = document.getElementById("settingsPageModal");
-    if (openSettingsBtn && settingsModal) { 
-        openSettingsBtn.addEventListener("click", function () { 
-            settingsModal.classList.remove("hidden"); 
-            if (leftMenu) leftMenu.classList.add("hidden"); 
-        }); 
-    }
-    if (closeSettingsBtn && settingsModal) { 
-        closeSettingsBtn.addEventListener("click", function () { 
-            settingsModal.classList.add("hidden"); 
-        }); 
-    }
+    const openSettingsBtn = document.getElementById("openSettingsBtn"); const closeSettingsBtn = document.getElementById("closeSettingsBtn"); const settingsModal = document.getElementById("settingsPageModal");
+    if (openSettingsBtn && settingsModal) { openSettingsBtn.addEventListener("click", function () { settingsModal.classList.remove("hidden"); if (leftMenu) leftMenu.classList.add("hidden"); }); }
+    if (closeSettingsBtn && settingsModal) { closeSettingsBtn.addEventListener("click", function () { settingsModal.classList.add("hidden"); }); }
 
-    // ميزة مشاركة التطبيق الرقمي
     const shareBtn = document.getElementById("shareAppBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", async function () {
@@ -531,13 +349,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // تفعيل نظام الإشعارات
     const notificationBtn = document.getElementById("enableNotificationsBtn");
     if (notificationBtn) {
         notificationBtn.addEventListener("click", function (e) {
             e.preventDefault();
             if (!("Notification" in window)) {
-                alert("عذراً، المتصفح الحالي لا يدعم ميزة الإشعارات.");
+                alert("عذراً، البيئة الحالية لا تدعم ميزة الإشعارات.");
                 return;
             }
             if (Notification.permission === "granted") {
