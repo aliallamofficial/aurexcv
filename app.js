@@ -402,29 +402,52 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// ==========================================
-// 🤖 دالة الاتصال بالذكاء الاصطناعي
-// ==========================================
+// ========================================================
+// 🤖 دالة الاتصال المحدثة والمنظمة بالـ Backend (Llama-3)
+// ========================================================
 async function askAI(promptMessage, systemMessage) {
-    if (!navigator.onLine) { throw new Error('لا يوجد اتصال بالشبكة حالياً. يرجى المزامنة وإعادة المحاولة.'); }
-    const url = `https://text.pollinations.ai/`;
+    if (!navigator.onLine) { 
+        throw new Error('لا يوجد اتصال بالشبكة حالياً. يرجى المزامنة وإعادة المحاولة.'); 
+    }
+
+    // الربط الصحيح والمباشر بمسار Serverless Function على Netlify
+    const url = `/.netlify/functions/optimize`;
+
     try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 30000);
+        const timeout = setTimeout(() => controller.abort(), 45000); // 45 ثانية لتغطية معالجة الخادم البعيد
+
+        // دمج رسالة النظام وسؤال المستخدم لتغذية النموذج بشكل احترافي
+        const fullPrompt = `${systemMessage}\n\nالطلب المباشر:\n${promptMessage}`;
+
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ messages: [{ role: "user", content: promptMessage }], system: systemMessage }),
+            body: JSON.stringify({ promptMessage: fullPrompt }),
             signal: controller.signal
         });
+
         clearTimeout(timeout);
-        if (!response.ok) throw new Error(`فشل الاتصال بخادم المعالجة: ${response.status}`);
-        let rawText = await response.text();
-        let cleanText = rawText.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '').replace(/🌸 Ad 🌸[\s\S]*?\[Support our mission\][\s\S]*?\)/gi, '').replace(/Powered by Pollinations\.AI free text APIs\./gi, '').replace(/Support our mission to keep AI accessible for everyone\./gi, '').trim();
-        if (!cleanText) throw new Error('لم يقم خادم الذكاء الاصطناعي بإعادة أي نصوص.');
-        return cleanText;
+
+        if (!response.ok) {
+            throw new Error(`فشل الاتصال بخادم المعالجة: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // فك تشفير البيانات واستخلاص رد الذكاء الاصطناعي
+        if (data && data.choices && data.choices[0] && data.choices[0].message) {
+            return data.choices[0].message.content.trim();
+        } else if (data && data.error) {
+            throw new Error(data.error);
+        } else {
+            throw new Error('تنسيق رد الخادم غير مدعوم حالياً.');
+        }
+
     } catch (error) {
-        if (error.name === 'AbortError') throw new Error('انتهت المهلة المتاحة للاتصال. يرجى إعادة المحاولة.');
+        if (error.name === 'AbortError') {
+            throw new Error('انتهت المهلة المتاحة للاتصال بخادم الذكاء الاصطناعي. يرجى المحاولة لاحقاً.');
+        }
         throw error;
     }
 }
