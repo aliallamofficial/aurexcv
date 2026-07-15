@@ -420,38 +420,57 @@ function clearAllFields() {
 }
 
 // ========================================================
-// 🤖 دالة الاتصال المباشرة بخادم Hugging Face (Llama-3-8B-Instruct)
+// 🤖 دالة الاتصال الهجين الذكية (سحابي أولاً ⇄ محلي احتياطياً)
 // ========================================================
 async function askAI(promptMessage, systemMessage) {
     if (!navigator.onLine) { 
         throw new Error('لا يوجد اتصال بالشبكة حالياً. يرجى المزامنة وإعادة المحاولة.'); 
     }
 
-    // رابط الـ API المباشر لنموذج Llama-3-8B على Hugging Face
+    // 1️⃣ أولاً: تجربة المحاولة السحابية الفائقة
+    try {
+        console.log("☁️ جاري محاولة الصياغة عبر السحابة...");
+        const responseText = await callCloudAI(promptMessage, systemMessage);
+        return responseText;
+    } catch (cloudError) {
+        console.warn("⚠️ فشل الاتصال بالسحابة بسبب:", cloudError.message);
+        
+        // 2️⃣ ثانياً: التحويل الصامت والسريع للنموذج المحلي المدمج بالمتصفح (بدون Token)
+        console.log("🖥️ جاري التحويل الفوري للتوليد المحلي بالمتصفح...");
+        try {
+            const localResponse = await callLocalAI(promptMessage, systemMessage);
+            return localResponse;
+        } catch (localError) {
+            console.error("❌ فشلت محاولة الصياغة السحابية والمحلية معاً.");
+            throw new Error("فشلت جميع محاولات الاتصال بالذكاء الاصطناعي السحابي والمحلي. يرجى التأكد من اتصالك بالإنترنت وتفعيل ميزة window.ai");
+        }
+    }
+}
+
+// 🌐 أ: دالة الاتصال بالسحابة (Hugging Face)
+async function callCloudAI(promptMessage, systemMessage) {
     const url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct";
-    
-    // ⚠️ استبدل 'YOUR_HF_TOKEN_HERE' بمفتاح الـ Write Token الخاص بك من Hugging Face
     const token = "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"; 
 
+    // تخفيض مدة المهلة الزمنية لـ 18 ثانية لتجنب انتظار السيرفر المعلق والتحويل الفوري للاحتياطي
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 18000); 
+
+    const payload = {
+        inputs: `<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n${systemMessage}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n${promptMessage}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n`,
+        parameters: {
+            max_new_tokens: 1024,
+            temperature: 0.7,
+            return_full_text: false
+        }
+    };
+
     try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 45000);
-
-        // صياغة الـ Payload المتوافقة مع هيكلية النماذج الحديثة لـ Llama-3
-        const payload = {
-            inputs: `<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n${systemMessage}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n${promptMessage}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n`,
-            parameters: {
-                max_new_tokens: 1024,
-                temperature: 0.7,
-                return_full_text: false
-            }
-        };
-
         const response = await fetch(url, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // تمرير الهوية بنجاح وبشكل صحيح لـ POST
+                'Authorization': `Bearer ${token}` 
             },
             body: JSON.stringify(payload),
             signal: controller.signal
@@ -460,12 +479,11 @@ async function askAI(promptMessage, systemMessage) {
         clearTimeout(timeout);
 
         if (!response.ok) {
-            throw new Error(`فشل الاتصال بخادم المعالجة: ${response.status}`);
+            throw new Error(`استجابة غير صالحة من السيرفر السحابي: ${response.status}`);
         }
 
         const data = await response.json();
-
-        // معالجة الرد واستخلاص النص المستهدف من Hugging Face
+        
         if (Array.isArray(data) && data[0] && data[0].generated_text) {
             return data[0].generated_text.trim();
         } else if (data && data.generated_text) {
@@ -473,15 +491,25 @@ async function askAI(promptMessage, systemMessage) {
         } else if (data && data.error) {
             throw new Error(data.error);
         } else {
-            throw new Error('تنسيق رد الخادم غير مدعوم حالياً.');
+            throw new Error('تنسيق رد غير مدعوم.');
         }
-
     } catch (error) {
         if (error.name === 'AbortError') {
-            throw new Error('انتهت المهلة المتاحة للاتصال بخادم الذكاء الاصطناعي. يرجى المحاولة لاحقاً.');
+            throw new Error('انتهت المهلة المتاحة للاتصال بالخادم السحابي.');
         }
         throw error;
     }
+}
+
+// 💻 ب: دالة الاتصال بالذكاء الاصطناعي المحلي بالمتصفح (بدون Token)
+async function callLocalAI(promptMessage, systemMessage) {
+    if (window.ai && (await window.ai.canCreateTextSession()) === "readily") {
+        const session = await window.ai.createTextSession();
+        const formattedPrompt = `${systemMessage}\n\nالطلب الحالي:\n${promptMessage}`;
+        const result = await session.prompt(formattedPrompt);
+        return result.trim();
+    }
+    throw new Error("ميزة window.ai غير متوفرة أو غير نشطة في متصفحك حالياً.");
 }
 
 // ==========================================
