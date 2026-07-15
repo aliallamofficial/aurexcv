@@ -34,6 +34,70 @@ body {
     overflow-x: hidden;
 }
 
+/* ==========================================
+   🌌 تنسيقات شاشة الترحيب والتوسيط الكامل 
+   ========================================== */
+
+/* حاوية الترحيب المغطية للشاشة بالكامل */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(9, 13, 22, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    padding: 20px;
+}
+
+/* بطاقة الترحيب الداخلية */
+.welcome-card {
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 460px;
+    padding: 35px 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 
+                0 0 20px rgba(56, 189, 248, 0.15);
+    text-align: center;
+    direction: rtl;
+    animation: modalAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* الشارات والأيقونات داخل الترحيب */
+.step-badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.08); 
+    border: 1px solid rgba(56, 189, 248, 0.2); 
+    color: var(--accent-blue); 
+    padding: 6px 16px; 
+    border-radius: 50px; 
+    font-size: 11.5px; 
+    font-weight: 700; 
+    margin-bottom: 12px; 
+}
+
+.rocket-icon {
+    font-size: 52px;
+    margin-bottom: 18px;
+    animation: floatIcon 2s ease-in-out infinite alternate;
+}
+
+/* إخفاء الواجهة الخلفية بالكامل */
+.main-content-hidden {
+    display: none !important;
+}
+
+/* ==========================================
+   🧱 حاوية التطبيق الأساسية وعناصر الواجهة
+   ========================================== */
+
 /* حاوية زجاجية ثلاثية الأبعاد */
 .container {
     width: 100%; 
@@ -571,7 +635,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     z-index: 99999;
     padding: 20px;
 }
-.modal-content, .tour-card {
+.modal-content {
     background: #111827;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
@@ -584,50 +648,10 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     animation: modalAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.tour-card {
-    max-width: 460px;
-    text-align: center;
-}
-#tourProgress {
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    margin-bottom: 12px;
-}
-#tourIcon {
-    font-size: 52px;
-    margin-bottom: 18px;
-    animation: floatIcon 2s ease-in-out infinite alternate;
-}
 @keyframes floatIcon {
     from { transform: translateY(0); }
     to { transform: translateY(-8px); }
 }
-#tourTitle {
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 10px;
-}
-#tourDescription {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-.tour-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-}
-.tour-actions button { width: auto; margin: 0; }
-.flat-btn {
-    background: transparent;
-    color: var(--text-muted);
-    box-shadow: none;
-    border: none;
-}
-.flat-btn:hover { background: rgba(255,255,255,0.05); color: white; transform: none; }
 
 .settings-section {
     margin-bottom: 20px;
