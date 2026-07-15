@@ -624,68 +624,90 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const originalBtnText = this.innerHTML; 
-            this.innerText = "⏳ جاري معالجة الهيكل وإصدار الـ PDF..."; 
+            this.innerText = "⏳ جاري تحضير الملف..."; 
             this.disabled = true;
             
             const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
             
-            // 1. إنشاء حاوية الطباعة المؤقتة
+            // 1. إنشاء حاوية الطباعة المؤقتة بخصائص قوية تمنع الاختفاء (Force Visible)
             const printElement = document.createElement('div');
             printElement.id = 'temp-pdf-render';
             
-            // تنسيق فائق الثبات لعملية الريندر (Rendering) في محرك html2pdf
-            printElement.style.position = 'absolute';
-            printElement.style.left = '-9999px'; // نقل العنصر خارج الواجهة المرئية لئلا يشوش التصميم
-            printElement.style.top = '0';
-            printElement.style.width = '790px';  // المقاس النموذجي الآمن لعرض A4
-            printElement.style.padding = '40px'; 
-            printElement.style.color = '#111827'; 
-            printElement.style.backgroundColor = '#ffffff'; // إجبار الخلفية البيضاء
-            printElement.style.fontFamily = selectedFont; 
-            printElement.style.lineHeight = '1.8'; 
-            printElement.style.direction = 'rtl'; 
-            printElement.style.textAlign = 'right';
-            printElement.style.fontSize = '14px';
+            // تنسيق فائق الثبات والمقروئية ومخفي فقط عن عين المستخدم بإحداثيات الشاشة
+            printElement.style.cssText = `
+                position: fixed !important;
+                left: -9999px !important;
+                top: 0px !important;
+                width: 800px !important;
+                padding: 50px !important;
+                color: #000000 !important;
+                background-color: #ffffff !important;
+                font-family: ${selectedFont} !important;
+                line-height: 1.8 !important;
+                direction: rtl !important;
+                text-align: right !important;
+                font-size: 15px !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                display: block !important;
+                box-sizing: border-box !important;
+                height: auto !important;
+            `;
             
-            // تحويل الأسطر الجديدة لمعرفات فنية ومقروءة
-            printElement.innerHTML = outputBox.value.replace(/\n/g, '<br>');
+            // تحويل السطور لفقرات وعناوين حقيقية لضمان رندر نصوص خالي من العيوب
+            const lines = outputBox.value.split('\n');
+            let htmlContent = '';
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (trimmed === "") {
+                    htmlContent += '<br>';
+                } else if (trimmed.startsWith('==') || trimmed.startsWith('__')) {
+                    htmlContent += `<h3 style="border-bottom: 2px solid #1e293b; padding-bottom: 5px; margin-top: 22px; color: #0f172a !important; font-family: ${selectedFont} !important; font-size: 18px;">${trimmed.replace(/^[=_]+/g, '')}</h3>`;
+                } else {
+                    htmlContent += `<p style="margin: 6px 0; color: #1e293b !important; font-family: ${selectedFont} !important; font-size: 14.5px;">${trimmed}</p>`;
+                }
+            });
             
-            // 2. ربط وإدراج العنصر المؤقت في جسم الصفحة ليرسمه المتصفح بشكل كامل
+            printElement.innerHTML = htmlContent;
+            
+            // 2. ربط العنصر بـ body بشكل فوري ليرسمه المتصفح بأبعاد حقيقية
             document.body.appendChild(printElement);
             
             const data = getInputs(); 
-            const pdfFileName = data.name ? `${data.name}_Professional_CV.pdf` : 'My_Professional_CV.pdf';
+            const pdfFileName = data.name ? `${data.name}_CV.pdf` : 'My_CV.pdf';
+            
             const options = { 
-                margin: [10, 10, 10, 10], 
+                margin: [15, 15, 15, 15], // هوامش مريحة للعين من كل الجهات
                 filename: pdfFileName, 
-                image: { type: 'jpeg', quality: 0.99 }, 
+                image: { type: 'jpeg', quality: 0.98 }, 
                 html2canvas: { 
-                    scale: 2.5,           // دقة وضوح ممتازة لخطوط السيرة
-                    useCORS: true,        // لسحب الخطوط الخارجية العربية مثل Cairo بنجاح دون مربعات فارغة
+                    scale: 2,               // دقة واضحة وممتازة تمنع انهيار الذاكرة
+                    useCORS: true,          // سحب خطوط جوجل Fonts الخارجية
                     logging: false, 
-                    backgroundColor: '#ffffff' 
+                    backgroundColor: '#ffffff',
+                    scrollX: 0,
+                    scrollY: 0
                 }, 
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
             
-            // الانتظار حتى تكون الخطوط جاهزة بالمتصفح ثم التصدير والتنظيف فوراً
-            document.fonts.ready.then(() => {
-                setTimeout(() => {
-                    html2pdf().set(options).from(printElement).save().then(() => { 
-                        // حذف عنصر الطباعة فوراً لتجنب تراكم العناصر
+            // 3. التصدير المباشر مع تأخير نصف ثانية لضمان استقرار الرسم
+            setTimeout(() => {
+                html2pdf().set(options).from(printElement).save().then(() => { 
+                    // تنظيف الصفحة فوراً
+                    document.body.removeChild(printElement);
+                    this.innerHTML = originalBtnText; 
+                    this.disabled = false; 
+                }).catch((err) => { 
+                    console.error("PDF Export Error:", err);
+                    if (document.getElementById('temp-pdf-render')) {
                         document.body.removeChild(printElement);
-                        this.innerHTML = originalBtnText; 
-                        this.disabled = false; 
-                    }).catch((err) => { 
-                        if (document.getElementById('temp-pdf-render')) {
-                            document.body.removeChild(printElement);
-                        }
-                        alert('حدث خطأ أثناء تصدير ملف الـ PDF.'); 
-                        this.innerHTML = originalBtnText; 
-                        this.disabled = false; 
-                    });
-                }, 350); // إعطاء المتصفح 350 مللي ثانية إضافية لإنهاء رسم الهيكل والخطوط
-            });
+                    }
+                    alert('حدث خطأ أثناء تصدير ملف الـ PDF. يرجى مراجعة بياناتك.'); 
+                    this.innerHTML = originalBtnText; 
+                    this.disabled = false; 
+                });
+            }, 600); // مهلة كافية ومستقرة للمتصفح لإتمام عملية الرسم
         });
     }
 
