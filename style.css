@@ -694,3 +694,10 @@ input:checked + .slider::before { transform: translateX(24px); }
     .ats-indicators-grid { grid-template-columns: repeat(2, 1fr); }
     section { padding: 20px 14px; }
 }
+
+/* ==========================================
+   🚨 كود إخفاء النوافذ المفقود (حل مشكلة الظهور المفاجئ)
+   ========================================== */
+.hidden {
+    display: none !important;
+}
