@@ -424,7 +424,7 @@ function clearAllFields() {
 // ========================================================
 async function askAI(promptMessage, systemMessage) {
     if (!navigator.onLine) { 
-        throw new Error('لا يوجد اتصال بالشبكة حالياً. يرجى المزامنة وإعادة المحاولة.'); 
+        throw new Error('OFFLINE'); 
     }
 
     // 1️⃣ أولاً: تجربة المحاولة السحابية الفائقة
@@ -442,7 +442,8 @@ async function askAI(promptMessage, systemMessage) {
             return localResponse;
         } catch (localError) {
             console.error("❌ فشلت محاولة الصياغة السحابية والمحلية معاً.");
-            throw new Error("فشلت جميع محاولات الاتصال بالذكاء الاصطناعي السحابي والمحلي. يرجى التأكد من اتصالك بالإنترنت وتفعيل ميزة window.ai");
+            // نرمي خطأ مخصصاً يفهمه الزر ليعرض رسالة الاعتذار الاحترافية للمستخدم
+            throw new Error('BOTH_FAILED');
         }
     }
 }
@@ -548,7 +549,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 const prompt = `أعد صياغة وهيكلة البيانات التالية لتصبح سيرة ذاتية جاهزة عالمياً للـ ATS ومبهرة لمسؤولي التوظيف:\nالاسم الكامل: ${data.name}\nالمسمى الوظيفي المستهدف: ${data.jobTitle}\nالهاتف: ${data.phone}\nالبريد الإلكتروني: ${data.email}\nالمهارات الرئيسية: ${data.skills}\nالخبرات العملية والمهام: ${data.experience}`;
                 const res = await askAI(prompt, "أنت مستشار توظيف خبير وذكي في أنظمة الـ ATS. قم بصياغة سيرة ذاتية متناسقة ونقية باللغة العربية دون مقدمات، أو ترحيبات، أو علامات توضيحية. اكتب البيانات فوراً بهيكلية واضحة ومقروءة.");
                 if (res && outputBox) { outputBox.value = res; }
-            } catch (err) { alert(`حدث خطأ: ${err.message}`); if (outputBox) outputBox.value = 'فشل الاتصال بالذكاء الاصطناعي. يرجى التحقق وإعادة المحاولة.'; }
+            } catch (err) { 
+                if (outputBox) {
+                    if (err.message === 'OFFLINE') {
+                        outputBox.value = "🔌 لا يوجد اتصال بالإنترنت حالياً! يرجى التحقق من اتصال شبكتك ثم المحاولة مجدداً.";
+                    } else {
+                        outputBox.value = `⚠️ نعتذر منك بشدة! 
+خوادم المعالجة السحابية تعاني من ضغط مؤقت حالياً، كما أن ميزة المعالجة المحلية (window.ai) غير نشطة في متصفحك.
+
+💡 للحل السريع ومتابعة إنشاء سيرتك الذاتية:
+1. يرجى الانتظار ثوانٍ ثم إعادة الضغط على زر "تحسين السيرة".
+2. أو نوصي بفتح التطبيق عبر متصفح Google Chrome وتنشيط خيار "Gemini Nano" لتشغيل المعالجة الذكية بشكل محلي مجاني ومستقر بالكامل حتى بدون إنترنت!`;
+                    }
+                }
+            }
             finally { isGenerating = false; aiOptimizeBtn.innerHTML = originalBtnText; aiOptimizeBtn.disabled = false; }
         });
     }
@@ -664,18 +678,25 @@ document.addEventListener("DOMContentLoaded", function () {
             const originalBtnText = generateSummaryBtn.innerHTML; 
             generateSummaryBtn.innerHTML = "⏳ جاري الصياغة الكونية..."; 
             generateSummaryBtn.disabled = true; 
+            if (outputBox) outputBox.value = 'جاري هندسة وصياغة ملخص مهني جذاب ومتناسق مع أنظمة الـ ATS...';
             try { 
                 const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) ذكياً، قصيراً ومؤثراً متوافقاً مع خوارزميات الـ ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية: ${data.skills}.`; 
                 const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي خبير. اكتب نص الملخص المهني فقط في فقرة واحدة جذابة من 3 أسطر على الأكثر دون أي مقدمات أو ترحيب."); 
                 if (summary && outputBox) { 
-                    if (outputBox.value.trim() === "") { 
-                        outputBox.value = `الملخص المهني:\n${summary}\n\n`; 
-                    } else { 
-                        outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n` + outputBox.value; 
-                    } 
+                    outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n`; 
                     alert("🧠 تم توليد وحقن الملخص المهني بنجاح في مقدمة ملفك!"); 
                 } 
-            } catch (err) { alert(`حدث خطأ أثناء الصياغة: ${err.message}`); } 
+            } catch (err) { 
+                if (outputBox) {
+                    if (err.message === 'OFFLINE') {
+                        outputBox.value = "🔌 تعذر صياغة الملخص المهني لعدم وجود اتصال نشط بالإنترنت.";
+                    } else {
+                        outputBox.value = `⚠️ نعتذر، فشل التوليد التلقائي للملخص المهني!
+
+خوادم المعالجة السحابية تحت ضغط مرتفع حالياً، وميزة المعالجة المحلية (window.ai) غير نشطة في متصفحك. يمكنك محاولة الضغط مجدداً بعد لحظات أو تفعيل الإضافات المحلية في متصفح Chrome.`;
+                    }
+                }
+            } 
             finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } 
         }); 
     }
