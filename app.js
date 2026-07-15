@@ -48,7 +48,7 @@ function displayRandomLiveTip() {
 }
 
 // ========================================================
-// 🚀 نظام جولة التطبيق والتحكم في ظهور الواجهات
+// 🚀 نظام جولة التطبيق والتحكم في ظهور الواجهات (مطابق للـ HTML الخاص بك)
 // ========================================================
 const tourSteps = [
     { icon: "🚀", title: "مرحباً بك في مستقبلك المهني الجديد!", desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.", btnText: "ابدأ الرحلة الآن ←" },
@@ -60,7 +60,7 @@ let isGenerating = false;
 
 function initAppTour() {
     const tourModal = document.getElementById('appTourModal');
-    const mainAppContainer = document.getElementById('mainAppContainer'); // الشاشة الأساسية للتطبيق
+    const mainAppContent = document.getElementById('mainAppContent'); // متطابق مع الـ ID في الـ HTML الخاص بك
     
     if (!tourModal) return;
 
@@ -84,16 +84,16 @@ function initAppTour() {
     // فحص ما إذا كان المستخدم قد أتم الجولة مسبقاً
     if (localStorage.getItem('cv_tour_completed') === 'true') {
         tourModal.classList.add('hidden');
-        if (mainAppContainer) {
-            mainAppContainer.classList.remove('hidden'); // إظهار الواجهة الأساسية فوراً
+        if (mainAppContent) {
+            mainAppContent.classList.remove('main-content-hidden'); // إظهار الواجهة الأساسية فوراً
         }
         return;
     }
     
     // إذا لم يكمل الجولة: نعرض الجولة ونخفي الواجهة الأساسية
     tourModal.classList.remove('hidden');
-    if (mainAppContainer) {
-        mainAppContainer.classList.add('hidden'); 
+    if (mainAppContent) {
+        mainAppContent.classList.add('main-content-hidden'); 
     }
 }
 
@@ -108,29 +108,29 @@ function updateTourContent() {
 
 function closeTour() {
     const tourModal = document.getElementById('appTourModal');
-    const mainAppContainer = document.getElementById('mainAppContainer');
+    const mainAppContent = document.getElementById('mainAppContent');
     
     // إخفاء نافذة الجولة
     if (tourModal) {
         tourModal.classList.add('hidden');
     }
     
-    // إظهار الواجهة الأساسية للتطبيق بسلاسة
-    if (mainAppContainer) {
-        mainAppContainer.classList.remove('hidden');
-        mainAppContainer.style.opacity = 0;
+    // إظهار الواجهة الأساسية للتطبيق بسلاسة تامة
+    if (mainAppContent) {
+        mainAppContent.classList.remove('main-content-hidden');
+        mainAppContent.style.opacity = 0;
         setTimeout(() => {
-            mainAppContainer.style.transition = "opacity 0.5s ease-in-out";
-            mainAppContainer.style.opacity = 1;
+            mainAppContent.style.transition = "opacity 0.6s ease-in-out";
+            mainAppContent.style.opacity = 1;
         }, 50);
     }
     
-    // تخزين اكتمال الجولة محلياً لمنع تكرارها
+    // تخزين اكتمال الجولة محلياً لمنع تكرارها عند التحديث
     localStorage.setItem('cv_tour_completed', 'true');
 }
 
 // ==========================================
-// 🔥 مستشار ATS v2.0 (معالجة معرّف الحقل الموحد "name")
+// 🔥 مستشار ATS v2.0
 // ==========================================
 function initCVScoreGauge() {
     const inputs = ['name', 'jobTitle', 'experience', 'skills'];
@@ -413,15 +413,6 @@ function clearAllFields() {
         if (resultDiv) resultDiv.innerHTML = '';
         alert("🗑️ تم تفريغ الحقول وإعادة التعيين بنجاح!");
     }
-}
-
-// تسجيل الـ Service Worker للموقع كـ PWA
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('PWA Service Worker ready!'))
-            .catch(err => console.error('Service Worker registration failed:', err));
-    });
 }
 
 // ========================================================
