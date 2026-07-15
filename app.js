@@ -256,7 +256,6 @@ function showJobSuggestions() {
             btn.type = 'button';
             btn.className = 'suggestion-item';
             btn.innerText = tip;
-            // استخدام المستمع الديناميكي الآمن بدلاً من onclick العشوائي
             btn.addEventListener('click', () => {
                 addTipToExperience(tip);
             });
@@ -421,25 +420,40 @@ function clearAllFields() {
 }
 
 // ========================================================
-// 🤖 دالة الاتصال المحدثة والمنظمة بالـ Backend (Llama-3)
+// 🤖 دالة الاتصال المباشرة بخادم Hugging Face (Llama-3-8B-Instruct)
 // ========================================================
 async function askAI(promptMessage, systemMessage) {
     if (!navigator.onLine) { 
         throw new Error('لا يوجد اتصال بالشبكة حالياً. يرجى المزامنة وإعادة المحاولة.'); 
     }
 
-    const url = `/.netlify/functions/optimize`;
+    // رابط الـ API المباشر لنموذج Llama-3-8B على Hugging Face
+    const url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct";
+    
+    // ⚠️ استبدل 'YOUR_HF_TOKEN_HERE' بمفتاح الـ Write Token الخاص بك من Hugging Face
+    const token = "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"; 
 
     try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 45000);
 
-        const fullPrompt = `${systemMessage}\n\nالطلب المباشر:\n${promptMessage}`;
+        // صياغة الـ Payload المتوافقة مع هيكلية النماذج الحديثة لـ Llama-3
+        const payload = {
+            inputs: `<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n${systemMessage}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n${promptMessage}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n`,
+            parameters: {
+                max_new_tokens: 1024,
+                temperature: 0.7,
+                return_full_text: false
+            }
+        };
 
         const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ promptMessage: fullPrompt }),
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // تمرير الهوية بنجاح وبشكل صحيح لـ POST
+            },
+            body: JSON.stringify(payload),
             signal: controller.signal
         });
 
@@ -451,8 +465,11 @@ async function askAI(promptMessage, systemMessage) {
 
         const data = await response.json();
 
-        if (data && data.choices && data.choices[0] && data.choices[0].message) {
-            return data.choices[0].message.content.trim();
+        // معالجة الرد واستخلاص النص المستهدف من Hugging Face
+        if (Array.isArray(data) && data[0] && data[0].generated_text) {
+            return data[0].generated_text.trim();
+        } else if (data && data.generated_text) {
+            return data.generated_text.trim();
         } else if (data && data.error) {
             throw new Error(data.error);
         } else {
@@ -569,8 +586,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.body.style.background = 'linear-gradient(135deg, #0f1e3d 0%, #080c14 100%)'; 
             } else if (theme === 'emerald-green') { 
                 document.body.style.background = 'linear-gradient(135deg, #092e20 0%, #050f0b 100%)'; 
-            } else if (theme === 'cyber-punk') {
-                document.body.style.background = 'linear-gradient(135deg, #25093a 0%, #0d041c 100%)';
+            } else if (theme === 'cyber-punk') { 
+                document.body.style.background = 'linear-gradient(135deg, #25093a 0%, #0d041c 100%)'; 
             } else { 
                 document.body.style.background = 'linear-gradient(135deg, #090d16 0%, #111827 100%)'; 
             } 
