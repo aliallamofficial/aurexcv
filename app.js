@@ -24,7 +24,7 @@ function displayRandomLiveTip() {
 }
 
 // ========================================================
-// 🚀 نظام جولة التطبيق التعريفية (الإصدار المطور والمضمون)
+// 🚀 نظام جولة التطبيق (الإصدار البرمجي المطور والمضمون 100%)
 // ========================================================
 const tourSteps = [
     { icon: "🚀", title: "مرحباً بك في مستقبلك المهني الجديد!", desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.", btnText: "ابدأ الرحلة الآن ←" },
@@ -38,17 +38,10 @@ function initAppTour() {
     const tourModal = document.getElementById('appTourModal');
     if (!tourModal) return;
 
-    // إذا كانت الجولة مكتملة سابقاً، نخفي النافذة فوراً برمجياً لتجنب تضارب التنسيقات
-    if (localStorage.getItem('cv_tour_completed') === 'true') {
-        tourModal.style.setProperty('display', 'none', 'important');
-        return;
-    }
-    
-    // إظهار النافذة كـ flex بقوة لتخطي أي إعدادات تعارض في CSS أو الـ HTML الداخلي
-    tourModal.style.setProperty('display', 'flex', 'important');
-    
+    // 1. ربط أزرار التحكم بالحدث دائماً دون شروط لتجنب مشكلة الجمود
     const nextBtn = document.getElementById('nextTourBtn');
     const skipBtn = document.getElementById('skipTourBtn');
+    
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             currentTourStep++;
@@ -59,7 +52,18 @@ function initAppTour() {
             }
         });
     }
-    if (skipBtn) skipBtn.addEventListener('click', closeTour);
+    if (skipBtn) {
+        skipBtn.addEventListener('click', closeTour);
+    }
+
+    // 2. التحقق من اكتمال الجولة سابقاً، وإخفاء النافذة بقوة في حال كانت مكتملة
+    if (localStorage.getItem('cv_tour_completed') === 'true') {
+        tourModal.style.setProperty('display', 'none', 'important');
+        return;
+    }
+    
+    // 3. إظهار النافذة قسرياً لمن يفتح التطبيق لأول مرة متغلباً على أي تعارض
+    tourModal.style.setProperty('display', 'flex', 'important');
 }
 
 function updateTourContent() {
@@ -74,7 +78,7 @@ function updateTourContent() {
 function closeTour() {
     const tourModal = document.getElementById('appTourModal');
     if (tourModal) {
-        // إخفاء تام يتغلب على التنسيق الداخلي للمتصفح
+        // إخفاء فوري وتام يتغلب على التنسيق المكتوب في ملف الـ HTML
         tourModal.style.setProperty('display', 'none', 'important');
     }
     localStorage.setItem('cv_tour_completed', 'true');
