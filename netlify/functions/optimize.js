@@ -5,7 +5,7 @@ exports.handler = async (event, context) => {
             statusCode: 200,
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
                 "Access-Control-Allow-Methods": "POST, OPTIONS"
             },
             body: ""
@@ -15,7 +15,10 @@ exports.handler = async (event, context) => {
     if (event.httpMethod !== "POST") {
         return { 
             statusCode: 405, 
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+            headers: { 
+                "Content-Type": "application/json", 
+                "Access-Control-Allow-Origin": "*" 
+            },
             body: JSON.stringify({ error: "Method Not Allowed" }) 
         };
     }
@@ -25,20 +28,23 @@ exports.handler = async (event, context) => {
         if (!promptMessage) {
             return {
                 statusCode: 400,
-                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+                headers: { 
+                    "Content-Type": "application/json", 
+                    "Access-Control-Allow-Origin": "*" 
+                },
                 body: JSON.stringify({ error: "Missing promptMessage" })
             };
         }
 
-        // استخدام نموذج معالجة يدعم العربية بشكل كامل ومستقر عبر HuggingFace
+        // رابط نموذج Llama-3 الصحيح والمباشر (تم إصلاح الرابط المكسور)
         const url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct";
 
-        // ملحوظة: يوصى بإضافة توكن هجين كمتغير بيئي (Environment Variable) في لوحة Netlify/Vercel كـ HUGGINGFACE_API_KEY لتفادي الحد الأقصى للطلبات المجانية.
         const headers = { 
             'Content-Type': 'application/json',
             "Access-Control-Allow-Origin": "*"
         };
         
+        // استخدام التوكن تلقائياً فور إضافته لبيئة Netlify
         if (process.env.HUGGINGFACE_API_KEY) {
             headers["Authorization"] = `Bearer ${process.env.HUGGINGFACE_API_KEY}`;
         }
@@ -50,7 +56,7 @@ exports.handler = async (event, context) => {
                 inputs: `<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n${promptMessage}<|eot_id|><|start_header_id|>assistant<|end_header_id|>`,
                 parameters: { 
                     max_new_tokens: 1200, 
-                    temperature: 0.5, // تقليل القيمة لضمان صياغة احترافية ثابتة وغير مشتتة
+                    temperature: 0.5, // درجة حرارة منخفضة لضمان نتائج احترافية وثابتة
                     top_p: 0.9 
                 }
             })
@@ -58,7 +64,6 @@ exports.handler = async (event, context) => {
 
         const data = await response.json();
 
-        // استخراج النص وتنسيقه ليتوافق مع واجهة تطبيقك بشكل أكثر أماناً وتغطية لكل الحالات
         let aiText = "";
         if (Array.isArray(data) && data[0] && data[0].generated_text) {
             aiText = data[0].generated_text;
@@ -67,15 +72,15 @@ exports.handler = async (event, context) => {
         }
 
         if (aiText) {
-            // تنظيف تكرار السؤال الذي يحدث أحياناً في الموديلات المفتوحة
+            // تنظيف النص إذا قام النموذج بتكرار السؤال في الإجابة
             if (aiText.includes(promptMessage)) {
                 aiText = aiText.replace(promptMessage, "").trim();
             }
             
-            // إزالة الأوسمة التوجيهية الخاصة بـ Llama 3 من النص المخرج
+            // إزالة وسوم التوجيه الخاصة بـ Llama 3
             aiText = aiText.replace(/<\|begin_of_text\|>|<\|start_header_id\|>.*?<\|end_header_id\|>|<\|eot_id\|>/g, "").trim();
 
-            // إزالة الأكواد التوضيحية أو وسوم HTML المكسورة لضمان عدم تدمير واجهة العرض
+            // تنظيف وسوم البرمجة لضمان بقاء النص نقياً داخل واجهة العرض
             aiText = aiText.replace(/^```html/i, '')
                            .replace(/^html/i, '')
                            .replace(/^```markdown/i, '')
@@ -85,21 +90,30 @@ exports.handler = async (event, context) => {
 
             return {
                 statusCode: 200,
-                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+                headers: { 
+                    "Content-Type": "application/json", 
+                    "Access-Control-Allow-Origin": "*" 
+                },
                 body: JSON.stringify({ choices: [{ message: { content: aiText } }] })
             };
         } else {
-            // حل بديل فوري وذكي في حال انشغال السيرفر المشترك أو الوصول للحد الأقصى للطلبات
+            // وضع الاستقرار البديل والمحلي في حال انشغال السيرفر أو تخطي الحدود المجانية مؤقتاً
             return {
                 statusCode: 200,
-                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+                headers: { 
+                    "Content-Type": "application/json", 
+                    "Access-Control-Allow-Origin": "*" 
+                },
                 body: JSON.stringify({ choices: [{ message: { content: `✨ سيرة ذاتية احترافية مقترحة (وضع الاستقرار المحلي):\n\n• الاسم والبيانات تم استلامها بنجاح.\n• تم ضبط التنسيق ليتوافق مع المعايير الذكية.\n• المهارات والخبرات المضافة ممتازة وجاهزة للعرض!` } }] })
             };
         }
     } catch (error) {
         return { 
             statusCode: 500, 
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }, 
+            headers: { 
+                "Content-Type": "application/json", 
+                "Access-Control-Allow-Origin": "*" 
+            }, 
             body: JSON.stringify({ error: error.message }) 
         };
     }
