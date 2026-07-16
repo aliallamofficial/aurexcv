@@ -1,11 +1,12 @@
-/* استيراد خطوط Cairo و Tajawal و Almarai لدعم التخصيص الكامل للخطوط */
-@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Cairo:wght@300;400;600;700&family=Tajawal:wght@400;500;700&display=swap');
-
+/* ========================================================
+   🌌 المتغيرات الأساسية وأنظمة الألوان (Themes)
+   ======================================================== */
 :root {
     --cosmic-bg-gradient: linear-gradient(135deg, #090d16 0%, #111827 100%);
     --card-bg: rgba(17, 24, 39, 0.7);
     --input-bg: #1f2937;
     --accent-blue: #38bdf8;
+    --accent-pink: #ec4899;
     --accent-purple: #8b5cf6;
     --text-main: #f3f4f6;
     --text-muted: #9ca3af;
@@ -15,6 +16,47 @@
     --font-active: 'Cairo', sans-serif;
 }
 
+/* ========================================================
+   🚀 تحسينات المحترفين (Scrollbar & Accessibility)
+   ======================================================== */
+/* 1. تخصيص شريط التمرير (Scrollbar) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-purple);
+}
+
+/* 2. منع تحديد النص في العناصر التفاعلية والبادجات */
+button, 
+.badge-new, 
+.badge-ready,
+.ats-ind,
+.step-badge {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* 3. تأثير التركيز لمستخدمي لوحة المفاتيح والوصول الشامل */
+button:focus-visible, 
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+
+/* ========================================================
+   🏠 التنسيقات العامة للواجهة والصفحة
+   ======================================================== */
 * { 
     box-sizing: border-box; 
     margin: 0; 
@@ -34,11 +76,9 @@ body {
     overflow-x: hidden;
 }
 
-/* ==========================================
-   🌌 تنسيقات شاشة الترحيب والتوسيط الكامل 
-   ========================================== */
-
-/* حاوية الترحيب المغطية للشاشة بالكامل */
+/* ========================================================
+   🌌 شاشة جولة التطبيق والترحيب (Welcome App Tour)
+   ======================================================== */
 .welcome-overlay {
     position: fixed;
     top: 0;
@@ -55,7 +95,6 @@ body {
     padding: 20px;
 }
 
-/* بطاقة الترحيب الداخلية */
 .welcome-card {
     background: #111827;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -70,7 +109,6 @@ body {
     animation: modalAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* الشارات والأيقونات داخل الترحيب */
 .step-badge {
     display: inline-block;
     background: rgba(56, 189, 248, 0.08); 
@@ -86,19 +124,23 @@ body {
 .rocket-icon {
     font-size: 52px;
     margin-bottom: 18px;
+    display: inline-block;
     animation: floatIcon 2s ease-in-out infinite alternate;
 }
 
-/* إخفاء الواجهة الخلفية بالكامل */
+@keyframes floatIcon {
+    from { transform: translateY(0); }
+    to { transform: translateY(-12px); }
+}
+
+/* إخفاء الواجهة الخلفية والتحكم بالظهور */
 .main-content-hidden {
     display: none !important;
 }
 
-/* ==========================================
+/* ========================================================
    🧱 حاوية التطبيق الأساسية وعناصر الواجهة
-   ========================================== */
-
-/* حاوية زجاجية ثلاثية الأبعاد */
+   ======================================================== */
 .container {
     width: 100%; 
     max-width: 1280px; 
@@ -124,7 +166,9 @@ body {
     margin-bottom: 30px;
 }
 
-/* زر الترس المتطور والذكي */
+/* ========================================================
+   ⚙️ زر الترس وقائمة الإعدادات السريعة (Dropdown)
+   ======================================================== */
 #dropdownToggleBtn {
     position: absolute;
     top: 0;
@@ -143,6 +187,7 @@ body {
     z-index: 99;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 #dropdownToggleBtn:hover {
     transform: rotate(45deg) scale(1.1);
     border-color: var(--accent-blue);
@@ -172,7 +217,6 @@ body {
     right: 0;
 }
 
-/* تصميم قائمة الخيارات المنسدلة */
 .menu-item {
     display: block;
     width: 100%;
@@ -187,13 +231,16 @@ body {
     cursor: pointer;
     transition: all 0.2s;
 }
+
 .menu-item:hover {
     background: rgba(56, 189, 248, 0.12);
     color: var(--accent-blue);
     padding-right: 22px;
 }
+
 .menu-item:last-child { border-bottom: none; }
 
+/* الهيدر والعناوين */
 .logo-badge { 
     display: inline-block; 
     background: rgba(56, 189, 248, 0.08); 
@@ -235,7 +282,9 @@ body {
     font-weight: 400; 
 }
 
-/* لوحة مستشار الـ ATS المحدثة */
+/* ========================================================
+   📊 لوحة مستشار الـ ATS الذكي اللحظي
+   ======================================================== */
 .score-section {
     background: rgba(15, 23, 42, 0.8);
     border: 1px solid var(--neon-border);
@@ -330,7 +379,9 @@ body {
     line-height: 1.6;
 }
 
-/* تقسيم شاشات العرض المزدوجة */
+/* ========================================================
+   📝 تخطيط مدخلات وبيانات الـ CV
+   ======================================================== */
 .app-layout { 
     display: flex; 
     gap: 35px; 
@@ -363,6 +414,7 @@ h2 {
     position: relative; 
     padding-right: 14px; 
 }
+
 h2::before { 
     content: ''; 
     position: absolute; 
@@ -398,15 +450,19 @@ label {
     color: #e5e7eb; 
 }
 
+/* حل مشكلة تمدد زر الإملاء الصوتي على الموبايل */
 .textarea-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
+    flex-wrap: wrap; /* حل تداخل العناصر على الشاشات الصغيرة */
+    gap: 8px;       /* تباعد متزن */
 }
+
 .textarea-header label { margin-bottom: 0; }
 
-/* زر الإملاء الصوتي الساحر */
+/* زر الإملاء الصوتي */
 .voice-btn {
     width: auto;
     padding: 5px 12px;
@@ -418,17 +474,21 @@ label {
     margin: 0;
     box-shadow: none;
     transition: all 0.3s;
+    flex-shrink: 0; /* منع انكماش أو اتساع الزر */
 }
+
 .voice-btn:hover {
     background: #8b5cf6;
     color: white;
     transform: scale(1.05);
 }
+
 .voice-btn.recording {
     background: #ef4444;
     color: white;
     animation: pulseRecording 1s infinite alternate;
 }
+
 @keyframes pulseRecording {
     from { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
     to { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
@@ -445,14 +505,16 @@ input[type="text"], textarea, select {
     outline: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
 }
+
 input[type="text"]:focus, textarea:focus, select:focus { 
     border-color: var(--accent-blue); 
     background: #111827; 
     box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15); 
 }
+
 input[type="text"]::placeholder, textarea::placeholder { color: #6b7280; }
 
-/* أزرار مخصصة وعصرية */
+/* الأزرار التفاعلية */
 button { 
     width: 100%; 
     padding: 16px; 
@@ -467,14 +529,18 @@ button {
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15); 
     margin-top: auto; 
 }
+
 button:hover { 
     transform: translateY(-3px); 
     box-shadow: 0 8px 25px rgba(56, 189, 248, 0.35); 
 }
+
 button:active { transform: translateY(-1px); }
 button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; }
 
-/* صندوق الاقتراحات الذكي */
+/* ========================================================
+   💡 معالجة اقتراحات المسميات الوظيفية الجاهزة
+   ======================================================== */
 .suggestions-box {
     background: rgba(30, 41, 59, 0.85);
     border: 1px dashed rgba(56, 189, 248, 0.3);
@@ -483,6 +549,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     margin-bottom: 22px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
 .sug-header {
     display: flex;
     justify-content: space-between;
@@ -492,6 +559,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     color: var(--accent-blue);
     margin-bottom: 12px;
 }
+
 .suggestions-list {
     display: flex;
     flex-direction: column;
@@ -499,6 +567,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     max-height: 180px;
     overflow-y: auto;
 }
+
 .suggestion-item {
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255,255,255,0.04);
@@ -511,6 +580,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     box-shadow: none;
     margin: 0;
 }
+
 .suggestion-item:hover {
     background: var(--accent-blue);
     color: #111827;
@@ -518,19 +588,23 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     transform: translateX(-4px);
 }
 
-/* بطاقة فحص التطابق الفاخرة */
+/* ========================================================
+   🎯 كارت مطابقة الإعلان والـ ATS Match
+   ======================================================== */
 .job-match-card {
     background: rgba(31, 41, 55, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     padding: 18px;
 }
+
 .job-match-card .card-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 14px;
 }
+
 .job-match-card .card-header .icon { font-size: 22px; }
 .job-match-card h4 { font-size: 14px; color: #f3f4f6; margin: 0; }
 .job-match-card p { font-size: 11.5px; color: var(--text-muted); margin: 0; }
@@ -542,19 +616,21 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     margin-top: 20px;
 }
 
-/* تدرجات مذهلة للأزرار */
+/* تدرجات أزرار التحكم بالذكاء الاصطناعي */
 .ai-aux-btn {
     background: rgba(99, 102, 241, 0.12);
     border: 1px solid rgba(99, 102, 241, 0.3);
     color: #a5b4fc;
     box-shadow: none;
 }
+
 .ai-aux-btn:hover { background: #6366f1; color: white; }
 
 .super-gradient-btn {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.25);
 }
+
 .super-gradient-btn:hover {
     background: linear-gradient(135deg, #db2777 0%, #7c3aed 100%);
 }
@@ -563,11 +639,14 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
 }
+
 .green-gradient-btn:hover {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
 }
 
-/* لوحة المعاينة التفاعلية */
+/* ========================================================
+   ✨ قسم ومربع عرض المخرج النهائي (Output)
+   ======================================================== */
 .preview-area-container {
     flex: 1;
     display: flex;
@@ -579,6 +658,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
     margin-bottom: 20px;
 }
+
 #outputBox {
     flex: 1;
     min-height: 520px;
@@ -586,11 +666,14 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     border: none!important;
     box-shadow: none!important;
     resize: none;
+    font-family: 'Almarai', sans-serif; /* المشكلة 4: فرض خط الـ Almarai المقروء للـ ATS */
     font-size: 14.5px;
     line-height: 1.8;
 }
 
-/* بطاقة نصيحة الخبير */
+/* ========================================================
+   💡 نصائح خبير التوظيف الفورية في الفوتر
+   ======================================================== */
 .expert-tip-container {
     background: rgba(31, 41, 55, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -599,6 +682,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     margin-bottom: 25px;
     text-align: center;
 }
+
 .tip-header {
     display: flex;
     align-items: center;
@@ -608,6 +692,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     color: #f59e0b;
     margin-bottom: 6px;
 }
+
 #cvTipText {
     font-size: 13px;
     color: #e5e7eb;
@@ -618,9 +703,12 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     flex-direction: column;
     gap: 6px;
 }
+
 .footer-copyright small { color: #4b5563; }
 
-/* النوافذ العائمة ومودال الإعدادات */
+/* ========================================================
+   ⚙️ نافذة الإعدادات وتخصيص المظهر (Modal Settings)
+   ======================================================== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -635,6 +723,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     z-index: 99999;
     padding: 20px;
 }
+
 .modal-content {
     background: #111827;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -648,14 +737,15 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     animation: modalAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes floatIcon {
-    from { transform: translateY(0); }
-    to { transform: translateY(-8px); }
+@keyframes modalAppear {
+    from { opacity: 0; transform: scale(0.95) translateY(12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .settings-section {
     margin-bottom: 20px;
 }
+
 .settings-section.flex-row {
     display: flex;
     justify-content: space-between;
@@ -665,6 +755,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     border-radius: 12px;
     margin-bottom: 25px;
 }
+
 .settings-section.flex-row h4 { font-size: 14px; color: white; }
 .settings-section.flex-row p { font-size: 11.5px; color: var(--text-muted); }
 
@@ -673,21 +764,67 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     flex-direction: column;
     gap: 10px;
 }
+
 .rainbow-btn {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
 }
 
-/* السلايدر المفتاحي Switch */
-.switch { position: relative; display: inline-block; width: 48px; height: 24px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #374151; transition: .3s; border-radius: 24px; }
-.slider::before { content: ""; position: absolute; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
-input:checked + .slider { background-image: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); }
-input:checked + .slider::before { transform: translateX(24px); }
-[dir="rtl"] input:checked + .slider::before { transform: translateX(-24px); }
+/* زر التبديل والـ Switch والـ RTL */
+.switch { 
+    position: relative; 
+    display: inline-block; 
+    width: 48px; 
+    height: 24px; 
+}
 
-/* تأثيرات المظهر الإبداعي النيوني */
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider { 
+    position: absolute; 
+    cursor: pointer; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background-color: #374151; 
+    transition: .3s; 
+    border-radius: 24px; 
+}
+
+.slider::before { 
+    content: ""; 
+    position: absolute; 
+    height: 16px; 
+    width: 16px; 
+    left: 4px; 
+    bottom: 4px; 
+    background-color: white; 
+    transition: .3s; 
+    border-radius: 50%; 
+}
+
+input:checked + .slider { 
+    background-image: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); 
+}
+
+input:checked + .slider::before { 
+    transform: translateX(24px); 
+}
+
+/* تخصيص اتجاهات الـ RTL للـ Switch (المشكلة 3) */
+[dir="rtl"] .slider::before {
+    left: auto;
+    right: 4px;
+}
+
+[dir="rtl"] input:checked + .slider::before { 
+    transform: translateX(-24px); 
+}
+
+/* ========================================================
+   🎨 الوضع الإبداعي الفاخر وتأثير النيون
+   ======================================================== */
 .creative-layout-active {
     --cosmic-bg-gradient: linear-gradient(135deg, #1a0b2e 0%, #0d041c 100%);
     --card-bg: rgba(26, 12, 47, 0.6);
@@ -696,15 +833,13 @@ input:checked + .slider::before { transform: translateX(24px); }
     --accent-purple: #a855f7;
     --btn-gradient: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
 }
+
 .creative-layout-active h2 { color: #ec4899; }
 .creative-layout-active h2::before { background: #ec4899; }
 
-@keyframes modalAppear {
-    from { opacity: 0; transform: scale(0.95) translateY(12px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-/* تحسينات للشاشات الصغيرة */
+/* ========================================================
+   📱 تجاوب وتوافق الواجهة مع الهواتف المحمولة (Responsive)
+   ======================================================== */
 @media (max-width: 1024px) {
     body { padding: 15px 10px; }
     .container { padding: 25px 15px; }
@@ -719,9 +854,7 @@ input:checked + .slider::before { transform: translateX(24px); }
     section { padding: 20px 14px; }
 }
 
-/* ==========================================
-   🚨 تعريف الكلاس المفقود للإخفاء السليم
-   ========================================== */
+/* تعريف الكلاس المفقود للإخفاء السليم */
 .hidden {
     display: none !important;
 }
