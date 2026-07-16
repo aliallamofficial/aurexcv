@@ -14,6 +14,12 @@
     <meta name="google-site-verification" content="L3tPSb-jmutxwf_FTcPCVK69TdAetKEoSoTS7JME" />
     <meta name="description" content="أسهل صانع سيرة ذاتية بالذكاء الاصطناعي مجاناً وبدون حساب. صمم سي في احترافي جاهز للطباعة وتخطى فحص الـ ATS فوراً مع مستشار التوظيف الذكي.">
     
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#38bdf8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -26,6 +32,11 @@
             referrerpolicy="no-referrer"></script>
 </head>
 <body>
+
+    <div id="sharedViewBanner" class="shared-view-banner hidden">
+        <span>👀 أنت تتصفح الآن سيرة ذاتية مشتركة في وضع العرض فقط.</span>
+        <button id="cloneSharedCVBtn" class="clone-btn">✍️ تعديل هذه السيرة أو إنشاء واحدة جديدة</button>
+    </div>
 
     <div id="appTourModal" class="welcome-overlay">
         <div class="welcome-card">
@@ -129,7 +140,7 @@
 
             <main class="app-layout">
                 
-                <section class="inputs-section">
+                <section class="inputs-section" id="inputsSection">
                     <div class="section-header">
                         <h2>📝 بياناتك المهنية والشخصية</h2>
                         <span class="step-indicator">خطوة 1 من 2</span>
@@ -206,8 +217,10 @@
                         <textarea id="outputBox" placeholder="اكتب بياناتك على اليمين ثم اضغط على 'تحسين بالذكاء الاصطناعي' ليظهر هنا النص الإبداعي فائق الجاذبية والجاهز تماماً للطباعة الورقية والتخطي الفوري للـ ATS..."></textarea>
                     </div>
                     
-                    <div class="result-footer-actions">
+                    <div class="result-footer-actions flex-wrap">
                         <button id="downloadPdfBtn" class="green-gradient-btn">📥 تحميل السيرة الذاتية بصيغة PDF الاحترافية</button>
+                        <button id="downloadWordBtn" class="blue-gradient-btn">📝 تصدير بصيغة Word (.doc)</button>
+                        <button id="shareCVLinkBtn" class="orange-gradient-btn">🔗 مشاركة السيرة الذاتية برابط مباشر</button>
                     </div>
                 </section>
                 
@@ -238,4 +251,4 @@
     
     <script src="app.js" defer></script>
 </body>
-</html>
+    </html>
