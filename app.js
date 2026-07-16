@@ -5,7 +5,7 @@ const cvTips = [
     "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
     "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك أقل من 5 سنوات.",
     "استخدم أرقاماً ونسباً مئوية حقيقية لإثبات إنجازاتك (مثال: زيادة المبيعات بنسبة 20%).",
-    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء المستعارة.",
+    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء مستعارة.",
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
@@ -81,7 +81,6 @@ function initAppTour() {
         skipBtn.addEventListener('click', closeTour);
     }
 
-    // فحص ما إذا كان المستخدم قد أتم الجولة مسبقاً
     if (localStorage.getItem('cv_tour_completed') === 'true') {
         tourModal.classList.add('hidden');
         if (mainAppContent) {
@@ -91,7 +90,6 @@ function initAppTour() {
         return;
     }
     
-    // إذا لم يكمل الجولة: نعرض الجولة ونخفي الواجهة الأساسية
     tourModal.classList.remove('hidden');
     if (mainAppContent) {
         mainAppContent.classList.add('main-content-hidden'); 
@@ -128,7 +126,7 @@ function closeTour() {
 }
 
 // ==========================================
-// 🔥 مستشار ATS v2.0
+// 🔥 مستشار ATS v2.1 (محدث بالكلمات القوية)
 // ==========================================
 function initCVScoreGauge() {
     const inputs = ['name', 'jobTitle', 'experience', 'skills'];
@@ -141,6 +139,7 @@ function initCVScoreGauge() {
         }
     });
     loadSavedData();
+    checkBackupAvailability(); 
 }
 
 function calculateCVScore() {
@@ -186,12 +185,15 @@ function calculateCVScore() {
             indNum?.classList.remove('achieved');
         }
         
-        const strongWords = ['نفذت', 'طورت', 'قاد', 'زودت', 'حققت', 'قللت', 'أدار', 'أنشأ', 'صممت', 'أشرفت'];
+        const strongWords = [
+            'نفذت', 'طورت', 'قاد', 'زودت', 'حققت', 'قللت', 'أدار', 'أنشأ', 'صممت', 'أشرفت',
+            'قمت بـ', 'ساهمت في', 'طورت نظام', 'أطلقت', 'حسّنت', 'وجهت', 'نسقت'
+        ];
         if (strongWords.some(word => experience.includes(word))) {
             score += 15;
             indWords?.classList.add('achieved');
         } else {
-            feedback.push("ابدأ مسؤولياتك بفعل قوي: (حققت، صممت، أدار)");
+            feedback.push("ابدأ مسؤولياتك بكلمات قوية: (حققت، ساهمت في، طورت نظام)");
             indWords?.classList.remove('achieved');
         }
     } else if (experience.length > 10) { 
@@ -250,7 +252,7 @@ function showJobSuggestions() {
     }
 
     if (matchedJob) {
-        suggestionsList.innerHTML = ''; // تفريغ القائمة أولاً
+        suggestionsList.innerHTML = ''; 
         matchedJob.tips.forEach(tip => {
             const btn = document.createElement('button');
             btn.type = 'button';
@@ -376,7 +378,7 @@ function initVoiceDictation() {
 }
 
 // ==========================================
-// 💾 إدارة الحفظ والاسترجاع التلقائي والمسح
+// 💾 إدارة الحفظ والاسترجاع التلقائي والنسخ الاحتياطي
 // ==========================================
 function autoSave() {
     ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription'].forEach(id => {
@@ -403,7 +405,19 @@ function loadSavedData() {
 }
 
 function clearAllFields() {
-    if (confirm("هل أنت متأكد من رغبتك في مسح كافة الحقول الحالية للبدء من جديد؟")) {
+    if (confirm("⚠️ هل أنت متأكد من رغبتك في مسح كافة الحقول للبدء من جديد؟")) {
+        const backupData = {
+            name: document.getElementById('name')?.value || '',
+            jobTitle: document.getElementById('jobTitle')?.value || '',
+            phone: document.getElementById('phone')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            experience: document.getElementById('experience')?.value || '',
+            skills: document.getElementById('skills')?.value || '',
+            jobDescription: document.getElementById('jobDescription')?.value || ''
+        };
+        
+        localStorage.setItem('cv_backup', JSON.stringify(backupData));
+
         ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription', 'outputBox'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = '';
@@ -411,110 +425,85 @@ function clearAllFields() {
         ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription'].forEach(id => {
             localStorage.removeItem(`cv_${id}`);
         });
+
         calculateCVScore();
         showJobSuggestions();
         const resultDiv = document.getElementById('matchResult');
         if (resultDiv) resultDiv.innerHTML = '';
-        alert("🗑️ تم تفريغ الحقول وإعادة التعيين بنجاح!");
+        
+        checkBackupAvailability();
+        alert("🗑️ تم مسح البيانات. (يمكنك التراجع بالزر الذي ظهر الآن إذا مسحت بالخطأ!)");
     }
 }
 
-// ========================================================
-// 🤖 نظام الاتصال السحابي الهجين والمولد المحلي الاحتياطي (100% استمرارية)
-// ========================================================
+function restoreBackup() {
+    const backupStr = localStorage.getItem('cv_backup');
+    if (!backupStr) return;
+    try {
+        const data = JSON.parse(backupStr);
+        Object.keys(data).forEach(key => {
+            const el = document.getElementById(key);
+            if (el) {
+                el.value = data[key];
+                localStorage.setItem(`cv_${key}`, data[key]);
+            }
+        });
+        calculateCVScore();
+        showJobSuggestions();
+        localStorage.removeItem('cv_backup'); 
+        checkBackupAvailability();
+        alert("✅ تم التراجع عن المسح واسترجاع بياناتك بنجاح!");
+    } catch(e) {
+        console.error("Backup restoration failed", e);
+    }
+}
 
-const cloudTokens = [
-    "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", // التوكن الأول (الأساسي)
-    "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"  // التوكن الثاني الجديد (الاحتياطي السحابي)
-];
-
-async function askAI(promptMessage, systemMessage, userInputs = null) {
-    // خط الدفاع الأول: تجربة السحابة عبر الرموز الدوارة المتعددة (في حال توفر الإنترنت)
-    if (navigator.onLine) {
-        for (let i = 0; i < cloudTokens.length; i++) {
-            const currentToken = cloudTokens[i];
-            try {
-                console.log(`☁️ محاولة الصياغة عبر السحابة باستخدام التوكن الرقم [${i + 1}]...`);
-                const responseText = await callCloudAI(promptMessage, systemMessage, currentToken);
-                return responseText; // نجحت المحاولة السحابية!
-            } catch (cloudError) {
-                console.warn(`⚠️ فشل التوكن [${i + 1}] بسبب:`, cloudError.message);
+function checkBackupAvailability() {
+    let undoBtn = document.getElementById('undoClearBtn');
+    const hasBackup = localStorage.getItem('cv_backup') !== null;
+    
+    if (hasBackup) {
+        if (!undoBtn) {
+            undoBtn = document.createElement('button');
+            undoBtn.id = 'undoClearBtn';
+            undoBtn.type = 'button';
+            undoBtn.className = 'btn-action btn-undo'; 
+            undoBtn.innerHTML = '↩️ تراجع عن مسح الحقول';
+            undoBtn.style.cssText = 'background: #4f46e5; color: white; padding: 8px 16px; border-radius: 8px; margin-top: 10px; cursor: pointer; transition: 0.3s;';
+            undoBtn.addEventListener('click', restoreBackup);
+            
+            const btnGroup = document.getElementById('clearDataBtn')?.parentNode;
+            if (btnGroup) {
+                btnGroup.appendChild(undoBtn);
             }
         }
     } else {
-        console.warn("🔌 وضع غير متصل بالشبكة (Offline). يتم تخطي المحاولات السحابية...");
+        if (undoBtn) undoBtn.remove();
     }
+}
 
-    // خط الدفاع الثاني: المحاولة بالذكاء الاصطناعي المحلي بالمتصفح (window.ai)
-    console.log("🖥️ جاري تجربة المحاولة المحلية عبر المتصفح (window.ai)...");
+// ========================================================
+// 🤖 نظام الذكاء الاصطناعي الآمن والخفيف (100% متوافق ومحمي)
+// ========================================================
+async function askAI(promptMessage, systemMessage, userInputs = null) {
+    // 1. فحص وجود ميزة الذكاء الاصطناعي المحلية أولاً للسرعة والأمان المطلق
     try {
+        console.log("🖥️ جاري تجربة المحاولة المحلية عبر المتصفح (window.ai)...");
         const localResponse = await callLocalAI(promptMessage, systemMessage);
         return localResponse;
     } catch (localError) {
-        console.warn("⚠️ ميزة window.ai غير متوفرة أو غير نشطة في هذا المتصفح.");
+        console.warn("⚠️ ميزة window.ai غير نشطة في متصفحك الحالي.");
     }
 
-    // خط الدفاع الثالث (المؤمن 100%): المولد المدمج الخارق لضمان الصياغة الفورية دون أي خطأ
-    console.log("🛠️ تشغيل خط الدفاع الأخير: المولد الهيكلي المدمج فائق الأمان...");
+    // 2. خط الدفاع المدمج الفوري الفولاذي (دون نقل أي بيانات سحابياً لحفظ الأمان التام وتجاوز التحذيرات)
     if (userInputs) {
+        console.log("🛠️ تشغيل المحرك المدمج المحلي الفوري لتخطي مخاطر التوكنات...");
         return generateBackupStaticCV(userInputs);
     }
     
-    throw new Error('BOTH_FAILED');
+    throw new Error('GENERATION_FAILED');
 }
 
-// 🌐 أ: دالة الاتصال بالسحابة (Hugging Face)
-async function callCloudAI(promptMessage, systemMessage, token) {
-    const url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct";
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000); // 12 ثانية كحد أقصى للمهلة
-
-    const payload = {
-        inputs: `<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n${systemMessage}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n${promptMessage}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n`,
-        parameters: {
-            max_new_tokens: 1024,
-            temperature: 0.7,
-            return_full_text: false
-        }
-    };
-
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` 
-            },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-        });
-
-        clearTimeout(timeout);
-
-        if (!response.ok) {
-            throw new Error(`كود الاستجابة: ${response.status}`);
-        }
-
-        const data = await response.json();
-        
-        if (Array.isArray(data) && data[0] && data[0].generated_text) {
-            return data[0].generated_text.trim();
-        } else if (data && data.generated_text) {
-            return data.generated_text.trim();
-        } else if (data && data.error) {
-            throw new Error(data.error);
-        } else {
-            throw new Error('تنسيق رد غير معروف.');
-        }
-    } catch (error) {
-        if (error.name === 'AbortError') {
-            throw new Error('انتهت مهلة الاتصال بالتوكن الحالي.');
-        }
-        throw error;
-    }
-}
-
-// 💻 ب: دالة الاتصال بالذكاء الاصطناعي المحلي بالمتصفح
 async function callLocalAI(promptMessage, systemMessage) {
     if (window.ai && (await window.ai.canCreateTextSession()) === "readily") {
         const session = await window.ai.createTextSession();
@@ -525,7 +514,6 @@ async function callLocalAI(promptMessage, systemMessage) {
     throw new Error("window.ai غير متوفر.");
 }
 
-// 🛡️ ج: المولد المدمج الخارق لضمان الصياغة الفورية دون أي اتصال أو تفاعل خارجي
 function generateBackupStaticCV(data) {
     const skillsList = data.skills.split(',').map(s => s.trim()).filter(s => s.length > 0);
     const skillsBullets = skillsList.map(s => `  • ${s}`).join('\n');
@@ -592,17 +580,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const originalBtnText = aiOptimizeBtn.innerHTML;
             aiOptimizeBtn.innerHTML = "⏳ جاري الهندسة الذكية للمستند بالـ ATS...";
             aiOptimizeBtn.disabled = true;
-            if (outputBox) outputBox.value = 'جاري الاتصال بالعقل الاصطناعي وصياغة سيرتك الذاتية بتوزيع الكلمات المفتاحية الذكية...';
+            if (outputBox) outputBox.value = 'جاري هندسة وصياغة سيرتك الذاتية بأمان وبتوزيع الكلمات المفتاحية الذكية...';
             try {
                 const prompt = `أعد صياغة وهيكلة البيانات التالية لتصبح سيرة ذاتية جاهزة عالمياً للـ ATS ومبهرة لمسؤولي التوظيف:\nالاسم الكامل: ${data.name}\nالمسمى الوظيفي المستهدف: ${data.jobTitle}\nالهاتف: ${data.phone}\nالبريد الإلكتروني: ${data.email}\nالمهارات الرئيسية: ${data.skills}\nالخبرات العملية والمهام: ${data.experience}`;
                 const res = await askAI(prompt, "أنت مستشار توظيف خبير وذكي في أنظمة الـ ATS. قم بصياغة سيرة ذاتية متناسقة ونقية باللغة العربية دون مقدمات، أو ترحيبات، أو علامات توضيحية. اكتب البيانات فوراً بهيكلية واضحة ومقروءة.", data);
                 if (res && outputBox) { outputBox.value = res; }
             } catch (err) { 
                 if (outputBox) {
-                    outputBox.value = `⚠️ نعتذر منك بشدة! 
-تعذر الاتصال بخوادم المعالجة السحابية أو تشغيل الذكاء الاصطناعي المحلي بالمتصفح.
-
-💡 تم تطبيق خط الدفاع الفولاذي وتوليد قالب سيرة ذاتية ATS فوري ومتناسق ببياناتك بالكامل بأمان وبدون أي انقطاع!`;
+                    outputBox.value = `⚠️ حدث خطأ أو تعذر الاتصال السحابي الآمن.`;
                 }
             }
             finally { isGenerating = false; aiOptimizeBtn.innerHTML = originalBtnText; aiOptimizeBtn.disabled = false; }
@@ -618,6 +603,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 return; 
             }
             
+            const data = getInputs();
+            
+            if (data.email && data.email !== 'info@example.com' && !data.email.includes('@')) {
+                alert("⚠️ البريد الإلكتروني الذي قمت بإدخاله غير صحيح (يجب أن يحتوي على علامة @). يرجى مراجعته!");
+                return;
+            }
+            
             if (typeof html2pdf === 'undefined') {
                 alert('⚠️ نعتذر، تعذر العثور على مكتبة التصدير الرقمي. يرجى التأكد من اتصالك بالإنترنت.');
                 return;
@@ -629,15 +621,15 @@ document.addEventListener("DOMContentLoaded", function () {
             
             const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
             
-            // 1. إنشاء حاوية الطباعة المؤقتة بخصائص قوية تمنع الاختفاء (Force Visible)
             const printElement = document.createElement('div');
             printElement.id = 'temp-pdf-render';
             
-            // تنسيق فائق الثبات والمقروئية ومخفي فقط عن عين المستخدم بإحداثيات الشاشة
             printElement.style.cssText = `
-                position: fixed !important;
-                left: -9999px !important;
-                top: 0px !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                z-index: -1 !important;
+                opacity: 0.01 !important;
                 width: 800px !important;
                 padding: 50px !important;
                 color: #000000 !important;
@@ -647,14 +639,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 direction: rtl !important;
                 text-align: right !important;
                 font-size: 15px !important;
-                opacity: 1 !important;
-                visibility: visible !important;
                 display: block !important;
                 box-sizing: border-box !important;
                 height: auto !important;
             `;
             
-            // تحويل السطور لفقرات وعناوين حقيقية لضمان رندر نصوص خالي من العيوب
             const lines = outputBox.value.split('\n');
             let htmlContent = '';
             lines.forEach(line => {
@@ -670,31 +659,28 @@ document.addEventListener("DOMContentLoaded", function () {
             
             printElement.innerHTML = htmlContent;
             
-            // 2. ربط العنصر بـ body بشكل فوري ليرسمه المتصفح بأبعاد حقيقية
             document.body.appendChild(printElement);
             
-            const data = getInputs(); 
             const pdfFileName = data.name ? `${data.name}_CV.pdf` : 'My_CV.pdf';
             
             const options = { 
-                margin: [15, 15, 15, 15], // هوامش مريحة للعين من كل الجهات
+                margin: [15, 15, 15, 15], 
                 filename: pdfFileName, 
                 image: { type: 'jpeg', quality: 0.98 }, 
                 html2canvas: { 
-                    scale: 2,               // دقة واضحة وممتازة تمنع انهيار الذاكرة
-                    useCORS: true,          // سحب خطوط جوجل Fonts الخارجية
+                    scale: 2.2,             
+                    useCORS: true,          
                     logging: false, 
                     backgroundColor: '#ffffff',
                     scrollX: 0,
-                    scrollY: 0
+                    scrollY: 0,
+                    windowWidth: 800        
                 }, 
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
             
-            // 3. التصدير المباشر مع تأخير نصف ثانية لضمان استقرار الرسم
             setTimeout(() => {
                 html2pdf().set(options).from(printElement).save().then(() => { 
-                    // تنظيف الصفحة فوراً
                     document.body.removeChild(printElement);
                     this.innerHTML = originalBtnText; 
                     this.disabled = false; 
@@ -707,7 +693,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     this.innerHTML = originalBtnText; 
                     this.disabled = false; 
                 });
-            }, 600); // مهلة كافية ومستقرة للمتصفح لإتمام عملية الرسم
+            }, 600); 
         });
     }
 
