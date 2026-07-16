@@ -456,8 +456,8 @@ label {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
-    flex-wrap: wrap; /* حل تداخل العناصر على الشاشات الصغيرة */
-    gap: 8px;       /* تباعد متزن */
+    flex-wrap: wrap; 
+    gap: 8px;       
 }
 
 .textarea-header label { margin-bottom: 0; }
@@ -474,7 +474,7 @@ label {
     margin: 0;
     box-shadow: none;
     transition: all 0.3s;
-    flex-shrink: 0; /* منع انكماش أو اتساع الزر */
+    flex-shrink: 0; 
 }
 
 .voice-btn:hover {
@@ -666,9 +666,83 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     border: none!important;
     box-shadow: none!important;
     resize: none;
-    font-family: 'Almarai', sans-serif; /* المشكلة 4: فرض خط الـ Almarai المقروء للـ ATS */
+    font-family: 'Almarai', sans-serif; 
     font-size: 14.5px;
     line-height: 1.8;
+}
+
+/* ========================================================
+   🔗 الإضافات الجديدة: شريط المشاركة والأزرار المطورة
+   ======================================================== */
+.shared-view-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-bottom: 2px solid #e11d48;
+    color: #f8fafc;
+    padding: 14px 20px;
+    text-align: center;
+    font-family: var(--font-active);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+.shared-view-banner .clone-btn {
+    background: #e11d48;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+    transition: all 0.3s ease;
+}
+
+.shared-view-banner .clone-btn:hover {
+    background: #be123c;
+    transform: translateY(-1px);
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+}
+
+.flex-wrap button {
+    flex: 1;
+    min-width: 200px; /* تضمن توزيع الأزرار بشكل متجاوب */
+}
+
+.blue-gradient-btn {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
+}
+
+.blue-gradient-btn:hover {
+    background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+}
+
+.orange-gradient-btn {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.2);
+}
+
+.orange-gradient-btn:hover {
+    background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
 }
 
 /* ========================================================
@@ -857,4 +931,4 @@ input:checked + .slider::before {
 /* تعريف الكلاس المفقود للإخفاء السليم */
 .hidden {
     display: none !important;
-}
+   }
