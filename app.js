@@ -486,7 +486,6 @@ function checkBackupAvailability() {
 // 🤖 نظام الذكاء الاصطناعي الآمن والخفيف (100% متوافق ومحمي)
 // ========================================================
 async function askAI(promptMessage, systemMessage, userInputs = null) {
-    // 1. فحص وجود ميزة الذكاء الاصطناعي المحلية أولاً للسرعة والأمان المطلق
     try {
         console.log("🖥️ جاري تجربة المحاولة المحلية عبر المتصفح (window.ai)...");
         const localResponse = await callLocalAI(promptMessage, systemMessage);
@@ -495,7 +494,6 @@ async function askAI(promptMessage, systemMessage, userInputs = null) {
         console.warn("⚠️ ميزة window.ai غير نشطة في متصفحك الحالي.");
     }
 
-    // 2. خط الدفاع المدمج الفوري الفولاذي (دون نقل أي بيانات سحابياً لحفظ الأمان التام وتجاوز التحذيرات)
     if (userInputs) {
         console.log("🛠️ تشغيل المحرك المدمج المحلي الفوري لتخطي مخاطر التوكنات...");
         return generateBackupStaticCV(userInputs);
@@ -549,6 +547,149 @@ ${skillsBullets}
 ⚡ تم تهيئة وتنسيق هذا المستند محلياً للتوافق التام مع فحص الـ ATS.`;
 }
 
+
+// ==========================================
+// 🔗 ميزة الروابط الذكية (Shareable URL) والمشاركة بدون خادم
+// ==========================================
+function generateShareableLink() {
+    const inputs = {
+        name: document.getElementById('name')?.value.trim() || '',
+        jobTitle: document.getElementById('jobTitle')?.value.trim() || '',
+        phone: document.getElementById('phone')?.value.trim() || '',
+        email: document.getElementById('email')?.value.trim() || '',
+        experience: document.getElementById('experience')?.value.trim() || '',
+        skills: document.getElementById('skills')?.value.trim() || ''
+    };
+
+    if (!inputs.name || !inputs.jobTitle) {
+        alert("⚠️ يرجى ملء حقل الاسم والمسمى الوظيفي على الأقل لتوليد رابط مشاركة صالح!");
+        return;
+    }
+
+    try {
+        const jsonString = JSON.stringify(inputs);
+        // تشفير الكائن النصي بصيغة Base64 آمنة للمتصفحات والرابط
+        const encodedData = btoa(unescape(encodeURIComponent(jsonString)))
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=+$/, '');
+
+        const shareUrl = `${window.location.origin}${window.location.pathname}?view=${encodedData}`;
+
+        // نسخ الرابط تلقائياً إلى حافظة المستخدم
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            alert("🔥 تم توليد رابط سيرة ذاتية ذكي ونسخه إلى الحافظة بنجاح! شاركه الآن.");
+        }).catch(err => {
+            console.error("خطأ أثناء النسخ التلقائي:", err);
+            prompt("📋 انسخ رابط المشاركة الذكي الخاص بك من هنا:", shareUrl);
+        });
+    } catch (e) {
+        console.error("فشل في ترميز البيانات:", e);
+        alert("⚠️ عذراً، حدث خطأ أثناء تشفير بيانات الرابط.");
+    }
+}
+
+function checkAndLoadSharedLink() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const viewData = urlParams.get('view');
+
+    if (viewData) {
+        try {
+            // فك التشفير واسترجاع البيانات الأصلية
+            const base64 = viewData.replace(/-/g, '+').replace(/_/g, '/');
+            const decodedJson = decodeURIComponent(escape(atob(base64)));
+            const cvData = JSON.parse(decodedJson);
+
+            // ملء حقول الإدخال تلقائياً بالبيانات المسترجعة
+            if (document.getElementById('name')) document.getElementById('name').value = cvData.name || '';
+            if (document.getElementById('jobTitle')) document.getElementById('jobTitle').value = cvData.jobTitle || '';
+            if (document.getElementById('phone')) document.getElementById('phone').value = cvData.phone || '';
+            if (document.getElementById('email')) document.getElementById('email').value = cvData.email || '';
+            if (document.getElementById('experience')) document.getElementById('experience').value = cvData.experience || '';
+            if (document.getElementById('skills')) document.getElementById('skills').value = cvData.skills || '';
+
+            // تفعيل التحليلات لتحديث النتيجة فوراً
+            calculateCVScore();
+            showJobSuggestions();
+
+            // تنبيه المستخدم بنجاح العرض المستورد
+            setTimeout(() => {
+                alert("📥 تم تحميل بيانات السيرة الذاتية المستوردة عبر الرابط المشترك بنجاح!");
+            }, 500);
+
+        } catch (e) {
+            console.error('فشل في قراءة بيانات الرابط المشفر:', e);
+        }
+    }
+}
+
+
+// ==========================================
+// 📝 ميزة التصدير المباشر بصيغة Word (.doc / .docx)
+// ==========================================
+function exportToWord() {
+    const outputBox = document.getElementById('outputBox');
+    if (!outputBox || outputBox.value.trim() === "") {
+        alert("⚠️ الرجاء كتابة السيرة الذاتية أو توليدها بالذكاء الاصطناعي أولاً لتصديرها كملف Word!");
+        return;
+    }
+
+    const name = document.getElementById('name')?.value.trim() || 'My_CV';
+    const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
+    const rawContent = outputBox.value;
+
+    // بناء الهيكل المتوافق بالكامل مع مايكروسوفت وورد
+    let formattedHtml = '';
+    const lines = rawContent.split('\n');
+    lines.forEach(line => {
+        const trimmed = line.trim();
+        if (trimmed === "") {
+            formattedHtml += '<br>';
+        } else if (trimmed.startsWith('==') || trimmed.startsWith('__')) {
+            formattedHtml += `<h2 style="color:#0f172a; font-family:${selectedFont}; border-bottom:1px solid #cbd5e1; padding-bottom:5px; margin-top:20px;">${trimmed.replace(/^[=_]+/g, '')}</h2>`;
+        } else {
+            formattedHtml += `<p style="color:#334155; font-family:${selectedFont}; margin: 5px 0;">${trimmed}</p>`;
+        }
+    });
+
+    const wordTemplate = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta charset="utf-8">
+        <title>CV Export</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            unicode-bidi: embed;
+            padding: 20px;
+          }
+          h2 { font-size: 16pt; color: #0f172a; margin-top: 15pt; }
+          p { font-size: 11pt; color: #334155; line-height: 1.5; }
+        </style>
+      </head>
+      <body>
+        ${formattedHtml}
+      </body>
+      </html>
+    `;
+
+    // استخدام الـ Blob وتحديد المخرجات كـ ملف Word ثنائي للتنزيل الفوري
+    const blob = new Blob(['\ufeff' + wordTemplate], {
+        type: 'application/msword;charset=utf-8'
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${name}_CV.doc`; // امتداد .doc متوافق كلياً مع جميع إصدارات Word وأنظمة الـ ATS
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+
 // ==========================================
 // 🎉 تهيئة الأحداث والـ DOM والمزايا الجديدة
 // ==========================================
@@ -559,15 +700,35 @@ document.addEventListener("DOMContentLoaded", function () {
     initJobMatchChecker();
     initVoiceDictation();
 
+    // فحص الرابط مباشرة عند فتح الصفحة لاستيراد البيانات المترابطة إن وجدت
+    checkAndLoadSharedLink();
+
     const outputBox = document.getElementById('outputBox');
     const getInputs = () => ({
-        name: document.getElementById('name')?.value.trim(),
-        jobTitle: document.getElementById('jobTitle')?.value.trim(),
+        name: document.getElementById('name')?.value.trim() || '',
+        jobTitle: document.getElementById('jobTitle')?.value.trim() || '',
         phone: document.getElementById('phone')?.value.trim() || 'غير مدرج للخصوصية',
         email: document.getElementById('email')?.value.trim() || 'info@example.com',
         experience: document.getElementById('experience')?.value.trim() || 'لا توجد خبرات عملية مضافة',
         skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
     });
+
+    // 💥 ربط الأزرار الجديدة (Word والمشاركة الذكية) المتاحة في ملف index.html الخاص بك:
+    const downloadWordBtn = document.getElementById('downloadWordBtn');
+    if (downloadWordBtn) {
+        downloadWordBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            exportToWord();
+        });
+    }
+
+    const shareCvBtn = document.getElementById('shareCvBtn') || document.getElementById('shareCvLinkBtn');
+    if (shareCvBtn) {
+        shareCvBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            generateShareableLink();
+        });
+    }
 
     const aiOptimizeBtn = document.getElementById('aiOptimizeBtn');
     if (aiOptimizeBtn) {
@@ -681,17 +842,19 @@ document.addEventListener("DOMContentLoaded", function () {
             
             setTimeout(() => {
                 html2pdf().set(options).from(printElement).save().then(() => { 
-                    document.body.removeChild(printElement);
-                    this.innerHTML = originalBtnText; 
-                    this.disabled = false; 
+                    if (document.getElementById('temp-pdf-render')) {
+                        document.body.removeChild(printElement);
+                    }
+                    downloadPdfBtn.innerHTML = originalBtnText; 
+                    downloadPdfBtn.disabled = false; 
                 }).catch((err) => { 
                     console.error("PDF Export Error:", err);
                     if (document.getElementById('temp-pdf-render')) {
                         document.body.removeChild(printElement);
                     }
-                    alert('حدث خطأ أثناء تصدير ملف الـ PDF. يرجى مراجعة بياناتك.'); 
-                    this.innerHTML = originalBtnText; 
-                    this.disabled = false; 
+                    alert('حدث خطأ أثناء تصدير ملف الـ PDF. يرجى مراجعته.'); 
+                    downloadPdfBtn.innerHTML = originalBtnText; 
+                    downloadPdfBtn.disabled = false; 
                 });
             }, 600); 
         });
