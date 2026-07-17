@@ -2,8 +2,8 @@
   "name": "مُنشئ السير الذاتية بالذكاء الاصطناعي Pro",
   "short_name": "Ali CV Builder",
   "description": "أسهل تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع أنظمة الـ ATS العالمية.",
-  "id": "/?source=pwa",
-  "start_url": "/?source=pwa",
+  "id": "/ali-cv-builder/?source=pwa",
+  "start_url": "/ali-cv-builder/?source=pwa",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#38bdf8",
@@ -33,7 +33,7 @@
     {
       "name": "إنشاء سيرة ذاتية جديدة",
       "short_name": "سيرة جديدة",
-      "url": "/?source=shortcut",
+      "url": "/ali-cv-builder/?source=shortcut",
       "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
