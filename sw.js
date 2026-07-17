@@ -1,13 +1,14 @@
-const CACHE_NAME = 'ali-cv-builder-v5';
+const CACHE_NAME = 'ali-cv-builder-v6'; // تم ترقية الإصدار لتحديث الهاتف فوراً
 const STATIC_ASSETS = [
   '/ali-cv-builder/',
   '/ali-cv-builder/index.html',
   '/ali-cv-builder/style.css',
   '/ali-cv-builder/app.js',
   '/ali-cv-builder/manifest.json',
-  '/ali-cv-builder/icons/icon-192x192.png',
-  '/ali-cv-builder/icons/icon-512x512.png',
-  '/ali-cv-builder/icons/icon-maskable-192x192.png'
+  '/ali-cv-builder/icons/apple-touch-icon-76x76.png',
+  '/ali-cv-builder/icons/apple-touch-icon-120x120.png',
+  '/ali-cv-builder/icons/apple-touch-icon-152x152.png',
+  '/ali-cv-builder/icons/apple-touch-icon-180x180.png'
 ];
 
 // 1. مرحلة التثبيت: تخزين الملفات الأساسية بطريقة مرنة
@@ -40,13 +41,13 @@ self.addEventListener('activate', event => {
   );
 });
 
-// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs
+// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs ودعم الـ PWA
 self.addEventListener('fetch', event => {
   if (!event.request.url.startsWith('http')) return;
 
   const requestUrl = event.request.url;
 
-  // استثناء طلبات HuggingFace والدوال الخلفية من الكاش نهائياً
+  // استثناء طلبات الـ AI والدوال الخلفية من الكاش نهائياً
   if (requestUrl.includes('huggingface.co') || requestUrl.includes('optimize') || event.request.method !== 'GET') {
     return; 
   }
@@ -63,7 +64,8 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        return caches.match(event.request);
+        // ✅ الإصلاح السحري: ignoreSearch يضمن فتح التطبيق حتى مع وجود ?source=pwa
+        return caches.match(event.request, { ignoreSearch: true });
       })
   );
 });
