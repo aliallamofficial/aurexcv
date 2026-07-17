@@ -381,6 +381,10 @@ function initVoiceDictation() {
 // 💾 إدارة الحفظ والاسترجاع التلقائي والنسخ الاحتياطي
 // ==========================================
 function autoSave() {
+    // تخطي الحفظ التلقائي في حال كان المستخدم يتصفح رابط مشاركة (وضع العرض)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('view')) return;
+
     ['name', 'jobTitle', 'phone', 'email', 'experience', 'skills', 'jobDescription'].forEach(id => {
         const el = document.getElementById(id);
         if (el) localStorage.setItem(`cv_${id}`, el.value);
@@ -547,28 +551,29 @@ ${skillsBullets}
 ⚡ تم تهيئة وتنسيق هذا المستند محلياً للتوافق التام مع فحص الـ ATS.`;
 }
 
-
-// ==========================================
+// ========================================================
 // 🔗 ميزة الروابط الذكية (Shareable URL) والمشاركة بدون خادم
-// ==========================================
+// ========================================================
 function generateShareableLink() {
-    const inputs = {
+    const getInputs = () => ({
         name: document.getElementById('name')?.value.trim() || '',
         jobTitle: document.getElementById('jobTitle')?.value.trim() || '',
         phone: document.getElementById('phone')?.value.trim() || '',
         email: document.getElementById('email')?.value.trim() || '',
         experience: document.getElementById('experience')?.value.trim() || '',
-        skills: document.getElementById('skills')?.value.trim() || ''
-    };
+        skills: document.getElementById('skills')?.value.trim() || '',
+        outputBox: document.getElementById('outputBox')?.value.trim() || ''
+    });
 
-    if (!inputs.name || !inputs.jobTitle) {
+    const data = getInputs();
+
+    if (!data.name || !data.jobTitle) {
         alert("⚠️ يرجى ملء حقل الاسم والمسمى الوظيفي على الأقل لتوليد رابط مشاركة صالح!");
         return;
     }
 
     try {
-        const jsonString = JSON.stringify(inputs);
-        // تشفير الكائن النصي بصيغة Base64 آمنة للمتصفحات والرابط
+        const jsonString = JSON.stringify(data);
         const encodedData = btoa(unescape(encodeURIComponent(jsonString)))
             .replace(/\+/g, '-')
             .replace(/\//g, '_')
@@ -576,11 +581,9 @@ function generateShareableLink() {
 
         const shareUrl = `${window.location.origin}${window.location.pathname}?view=${encodedData}`;
 
-        // نسخ الرابط تلقائياً إلى حافظة المستخدم
         navigator.clipboard.writeText(shareUrl).then(() => {
             alert("🔥 تم توليد رابط سيرة ذاتية ذكي ونسخه إلى الحافظة بنجاح! شاركه الآن.");
         }).catch(err => {
-            console.error("خطأ أثناء النسخ التلقائي:", err);
             prompt("📋 انسخ رابط المشاركة الذكي الخاص بك من هنا:", shareUrl);
         });
     } catch (e) {
@@ -595,27 +598,30 @@ function checkAndLoadSharedLink() {
 
     if (viewData) {
         try {
-            // فك التشفير واسترجاع البيانات الأصلية
-            const base64 = viewData.replace(/-/g, '+').replace(/_/g, '/');
+            let base64 = viewData.replace(/-/g, '+').replace(/_/g, '/');
+            while (base64.length % 4) { base64 += '='; }
+
             const decodedJson = decodeURIComponent(escape(atob(base64)));
             const cvData = JSON.parse(decodedJson);
 
-            // ملء حقول الإدخال تلقائياً بالبيانات المسترجعة
+            // ملء الحقول بالبيانات المسترجعة
             if (document.getElementById('name')) document.getElementById('name').value = cvData.name || '';
             if (document.getElementById('jobTitle')) document.getElementById('jobTitle').value = cvData.jobTitle || '';
             if (document.getElementById('phone')) document.getElementById('phone').value = cvData.phone || '';
             if (document.getElementById('email')) document.getElementById('email').value = cvData.email || '';
             if (document.getElementById('experience')) document.getElementById('experience').value = cvData.experience || '';
             if (document.getElementById('skills')) document.getElementById('skills').value = cvData.skills || '';
+            if (document.getElementById('outputBox') && cvData.outputBox) document.getElementById('outputBox').value = cvData.outputBox;
 
-            // تفعيل التحليلات لتحديث النتيجة فوراً
+            // إظهار بار التنبيه العلوي (وضع العرض فقط) وإخفاء شاشة المدخلات
+            const banner = document.getElementById('sharedViewBanner');
+            if (banner) banner.classList.remove('hidden');
+
+            const inputsSection = document.getElementById('inputsSection');
+            if (inputsSection) inputsSection.style.display = 'none';
+
             calculateCVScore();
             showJobSuggestions();
-
-            // تنبيه المستخدم بنجاح العرض المستورد
-            setTimeout(() => {
-                alert("📥 تم تحميل بيانات السيرة الذاتية المستوردة عبر الرابط المشترك بنجاح!");
-            }, 500);
 
         } catch (e) {
             console.error('فشل في قراءة بيانات الرابط المشفر:', e);
@@ -623,9 +629,8 @@ function checkAndLoadSharedLink() {
     }
 }
 
-
 // ==========================================
-// 📝 ميزة التصدير المباشر بصيغة Word (.doc / .docx)
+// 📝 ميزة التصدير المباشر بصيغة Word (.doc)
 // ==========================================
 function exportToWord() {
     const outputBox = document.getElementById('outputBox');
@@ -638,7 +643,6 @@ function exportToWord() {
     const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
     const rawContent = outputBox.value;
 
-    // بناء الهيكل المتوافق بالكامل مع مايكروسوفت وورد
     let formattedHtml = '';
     const lines = rawContent.split('\n');
     lines.forEach(line => {
@@ -674,7 +678,6 @@ function exportToWord() {
       </html>
     `;
 
-    // استخدام الـ Blob وتحديد المخرجات كـ ملف Word ثنائي للتنزيل الفوري
     const blob = new Blob(['\ufeff' + wordTemplate], {
         type: 'application/msword;charset=utf-8'
     });
@@ -682,13 +685,12 @@ function exportToWord() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${name}_CV.doc`; // امتداد .doc متوافق كلياً مع جميع إصدارات Word وأنظمة الـ ATS
+    a.download = `${name}_CV.doc`; 
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
-
 
 // ==========================================
 // 🎉 تهيئة الأحداث والـ DOM والمزايا الجديدة
@@ -713,7 +715,7 @@ document.addEventListener("DOMContentLoaded", function () {
         skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
     });
 
-    // 💥 ربط الأزرار الجديدة (Word والمشاركة الذكية) المتاحة في ملف index.html الخاص بك:
+    // 💥 ربط ميزة تنزيل Word (.doc)
     const downloadWordBtn = document.getElementById('downloadWordBtn');
     if (downloadWordBtn) {
         downloadWordBtn.addEventListener('click', function(e) {
@@ -722,11 +724,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const shareCvBtn = document.getElementById('shareCvBtn') || document.getElementById('shareCvLinkBtn');
-    if (shareCvBtn) {
-        shareCvBtn.addEventListener('click', function(e) {
+    // 💥 ربط ميزة رابط المشاركة المباشر
+    const shareCVLinkBtn = document.getElementById('shareCVLinkBtn');
+    if (shareCVLinkBtn) {
+        shareCVLinkBtn.addEventListener('click', function(e) {
             e.preventDefault();
             generateShareableLink();
+        });
+    }
+
+    // 💥 ربط زر التعديل الإلغائي داخل البانر العلوي لوضع العرض
+    const cloneSharedCVBtn = document.getElementById('cloneSharedCVBtn');
+    if (cloneSharedCVBtn) {
+        cloneSharedCVBtn.addEventListener('click', function() {
+            // إخفاء البانر وإعادة إظهار قسم المدخلات للتعديل
+            document.getElementById('sharedViewBanner')?.classList.add('hidden');
+            const inputsSection = document.getElementById('inputsSection');
+            if (inputsSection) inputsSection.style.display = 'flex';
+            
+            // تنظيف المعاملات من الرابط (المظهر الجمالي والنظيف للـ URL)
+            window.history.pushState({}, document.title, window.location.pathname);
+            alert("✍️ تم الانتقال لوضع التعديل! يمكنك الآن تخصيص البيانات وحفظها محلياً.");
         });
     }
 
