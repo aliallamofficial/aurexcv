@@ -33,7 +33,7 @@ const jobGuidelines = {
         keywords: ["ديكور", "داخلي", "interior"], 
         tips: [
             "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
-            "اختيار الخامات، الأثاث، وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
+            "اختيار الخامات, الأثاث, وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
             "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."
         ] 
     }
@@ -489,7 +489,6 @@ function checkBackupAvailability() {
 // 🤖 نظام الذكاء الاصطناعي الهجين (المتصفح -> السيرفر الخلفي -> البديل المحلي)
 // ========================================================
 async function askAI(promptMessage, systemMessage, userInputs = null) {
-    // 1. تجربة المحرك المدمج بالمتصفح إذا كان متاحاً ونشطاً
     try {
         if (window.ai && (await window.ai.canCreateTextSession()) === "readily") {
             console.log("🖥️ جاري استخدام محرك المتصفح المحلي (window.ai)...");
@@ -502,7 +501,6 @@ async function askAI(promptMessage, systemMessage, userInputs = null) {
         console.warn("⚠️ ميزة window.ai غير مدعومة أو غير نشطة في متصفحك الحالي.");
     }
 
-    // 2. المحاولة السحابية من خلال استدعاء السيرفر (optimize.js المتصل بـ HuggingFace)
     try {
         console.log("🌐 جاري إرسال الطلب إلى السيرفر الخلفي الذكي...");
         const response = await fetch('/.netlify/functions/optimize', {
@@ -523,7 +521,6 @@ async function askAI(promptMessage, systemMessage, userInputs = null) {
         console.error("❌ فشل الاتصال بالسيرفر السحابي أو انقطع الإنترنت:", serverError);
     }
 
-    // 3. المحرك المدمج المحلي الفوري لتخطي مخاطر التوكنات أو الشبكة بدون إحباط العميل
     if (userInputs) {
         console.log("🛠️ تشغيل المحرك المدمج المحلي الفوري (وضع الاستقرار)...");
         return generateBackupStaticCV(userInputs);
@@ -781,6 +778,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // ==========================================
+    // 🛡️ تعديل دالة الـ PDF للتحميل المباشر الآمن والمنع التام للحظر
+    // ==========================================
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
@@ -865,6 +865,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
             
+            // ✅ تم الانتقال للأمر المستقر .save() مباشرة لمنع معالجة التنزيل كـ Pop-up مجهول
             setTimeout(() => {
                 html2pdf().set(options).from(printElement).save().then(() => { 
                     if (document.getElementById('temp-pdf-render')) {
@@ -881,7 +882,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     downloadPdfBtn.innerHTML = originalBtnText; 
                     downloadPdfBtn.disabled = false; 
                 });
-            }, 600); 
+            }, 400); 
         });
     }
 
