@@ -4,7 +4,10 @@ const STATIC_ASSETS = [
   '/index.html',
   '/style.css',
   '/app.js',
-  '/manifest.json'
+  '/manifest.json',
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png',
+  '/icons/icon-maskable-192x192.png'
 ];
 
 // 1. مرحلة التثبيت: تخزين الملفات الأساسية بطريقة مرنة تمنع انهيار الـ Service Worker
@@ -18,8 +21,7 @@ self.addEventListener('install', event => {
           });
         })
       );
-    }).then(() => self.skipWaiting())
-  );
+    }).then(() => self.skipWaiting())\n  );
 });
 
 // 2. مرحلة التفعيل: مسح الملفات وإصدارات الكاش القديمة فوراً لتحديث التطبيق
@@ -33,8 +35,7 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    }).then(() => self.clients.claim())
-  );
+    }).then(() => self.clients.claim())\n  );
 });
 
 // 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs والرجوع الذكي للكاش عند انقطاع الإنترنت
@@ -52,9 +53,9 @@ self.addEventListener('fetch', event => {
     fetch(event.request)
       .then(response => {
         if (response && response.status === 200) {
-          const responseClone = response.clone();
+          const responseToCache = response.clone();
           caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseClone);
+            cache.put(event.request, responseToCache);
           });
         }
         return response;
