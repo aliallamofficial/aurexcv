@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ali-cv-builder-v8'; // تم ترقية الإصدار لتحديث كاش هواتف المستخدمين وفيس بوك فوراً
+const CACHE_NAME = 'ali-cv-builder-v9'; // تم الترقية لإجبار المتصفحات وفيسبوك على التحديث فوراً
 const STATIC_ASSETS = [
   '/ali-cv-builder/',
   '/ali-cv-builder/index.html',
@@ -42,18 +42,18 @@ self.addEventListener('activate', event => {
   );
 });
 
-// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs وتخطي الروبوتات
+// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" وتخطي الروبوتات تماماً لمنع الأخطاء
 self.addEventListener('fetch', event => {
   if (!event.request.url.startsWith('http')) return;
 
   const requestUrl = event.request.url;
 
-  // 1. استثناء طلبات الـ AI والدوال الخلفية من الكاش نهائياً
+  // استثناء طلبات الـ AI والدوال الخلفية من الكاش نهائياً
   if (requestUrl.includes('huggingface.co') || requestUrl.includes('optimize') || event.request.method !== 'GET') {
     return; 
   }
 
-  // 2. الإصلاح السحري لفيسبوك: تحويل الحروف لصغيرة وتخطي الكاش تماماً لجميع روبوتات الفحص والمشاركة
+  // الإصلاح السحري: تحويل بيانات الزائر لحروف صغيرة واكتشاف روبوتات وسائل التواصل لتخطي الكاش تماماً
   const ua = (navigator.userAgent || '').toLowerCase();
   if (
     ua.includes('facebookexternalhit') || 
@@ -61,7 +61,7 @@ self.addEventListener('fetch', event => {
     ua.includes('twitterbot') || 
     ua.includes('whatsapp')
   ) {
-    return; // اترك الطلب يمر مباشرة للشبكة دون تدخل الكاش ليعود برمز الاستجابة الطبيعي 200 ونوع محتوى سليم
+    return; // اترك الروبوت يمر مباشرة للسيرفر الأصلي ليعود برمز 200 وصورة سليمة
   }
 
   event.respondWith(
@@ -76,7 +76,6 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // يضمن فتح التطبيق حتى مع وجود ?source=pwa في غياب الإنترنت
         return caches.match(event.request, { ignoreSearch: true });
       })
   );
