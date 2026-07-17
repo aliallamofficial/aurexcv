@@ -46,7 +46,7 @@
       "name": "إنشاء سيرة ذاتية جديدة",
       "short_name": "سيرة جديدة",
       "url": "/ali-cv-builder/?source=pwa",
-      "icons": [{ "src": "icons/apple-touch-icon.png", "sizes": "180x180" }]
+      "icons": [{ "src": "icons/apple-touch-icon-180x180.png", "sizes": "180x180" }]
     }
   ]
 }
