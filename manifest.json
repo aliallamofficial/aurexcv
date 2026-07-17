@@ -33,8 +33,8 @@
     {
       "name": "إنشاء سيرة ذاتية جديدة",
       "short_name": "سيرة جديدة",
-      "url": "/?action=new",
-      "description": "افتح التطبيق مباشرة للبدء في صياغة سيرة ذاتية جديدة"
+      "url": "/?source=shortcut",
+      "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
 }
