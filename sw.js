@@ -1,16 +1,16 @@
-const CACHE_NAME = 'ali-cv-builder-v4';
+const CACHE_NAME = 'ali-cv-builder-v5';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
-  '/icons/icon-maskable-192x192.png'
+  '/ali-cv-builder/',
+  '/ali-cv-builder/index.html',
+  '/ali-cv-builder/style.css',
+  '/ali-cv-builder/app.js',
+  '/ali-cv-builder/manifest.json',
+  '/ali-cv-builder/icons/icon-192x192.png',
+  '/ali-cv-builder/icons/icon-512x512.png',
+  '/ali-cv-builder/icons/icon-maskable-192x192.png'
 ];
 
-// 1. مرحلة التثبيت: تخزين الملفات الأساسية بطريقة مرنة تمنع انهيار الـ Service Worker
+// 1. مرحلة التثبيت: تخزين الملفات الأساسية بطريقة مرنة
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -21,7 +21,8 @@ self.addEventListener('install', event => {
           });
         })
       );
-    }).then(() => self.skipWaiting())\n  );
+    }).then(() => self.skipWaiting())
+  );
 });
 
 // 2. مرحلة التفعيل: مسح الملفات وإصدارات الكاش القديمة فوراً لتحديث التطبيق
@@ -35,16 +36,17 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    }).then(() => self.clients.claim())\n  );
+    }).then(() => self.clients.claim())
+  );
 });
 
-// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs والرجوع الذكي للكاش عند انقطاع الإنترنت
+// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs
 self.addEventListener('fetch', event => {
   if (!event.request.url.startsWith('http')) return;
 
   const requestUrl = event.request.url;
 
-  // ⚠️ أمن وحماية: استثناء طلبات HuggingFace والدوال الخلفية التابعة لـ Netlify من الكاش نهائياً
+  // استثناء طلبات HuggingFace والدوال الخلفية من الكاش نهائياً
   if (requestUrl.includes('huggingface.co') || requestUrl.includes('optimize') || event.request.method !== 'GET') {
     return; 
   }
