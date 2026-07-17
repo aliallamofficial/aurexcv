@@ -381,7 +381,6 @@ function initVoiceDictation() {
 // 💾 إدارة الحفظ والاسترجاع التلقائي والنسخ الاحتياطي
 // ==========================================
 function autoSave() {
-    // تخطي الحفظ التلقائي في حال كان المستخدم يتصفح رابط مشاركة (وضع العرض)
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('view')) return;
 
@@ -487,33 +486,50 @@ function checkBackupAvailability() {
 }
 
 // ========================================================
-// 🤖 نظام الذكاء الاصطناعي الآمن والخفيف (100% متوافق ومحمي)
+// 🤖 نظام الذكاء الاصطناعي الهجين (المتصفح -> السيرفر الخلفي -> البديل المحلي)
 // ========================================================
 async function askAI(promptMessage, systemMessage, userInputs = null) {
+    // 1. تجربة المحرك المدمج بالمتصفح إذا كان متاحاً ونشطاً
     try {
-        console.log("🖥️ جاري تجربة المحاولة المحلية عبر المتصفح (window.ai)...");
-        const localResponse = await callLocalAI(promptMessage, systemMessage);
-        return localResponse;
+        if (window.ai && (await window.ai.canCreateTextSession()) === "readily") {
+            console.log("🖥️ جاري استخدام محرك المتصفح المحلي (window.ai)...");
+            const session = await window.ai.createTextSession();
+            const formattedPrompt = `${systemMessage}\n\nالطلب الحالي:\n${promptMessage}`;
+            const result = await session.prompt(formattedPrompt);
+            return result.trim();
+        }
     } catch (localError) {
-        console.warn("⚠️ ميزة window.ai غير نشطة في متصفحك الحالي.");
+        console.warn("⚠️ ميزة window.ai غير مدعومة أو غير نشطة في متصفحك الحالي.");
     }
 
+    // 2. المحاولة السحابية من خلال استدعاء السيرفر (optimize.js المتصل بـ HuggingFace)
+    try {
+        console.log("🌐 جاري إرسال الطلب إلى السيرفر الخلفي الذكي...");
+        const response = await fetch('/.netlify/functions/optimize', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ promptMessage: `${systemMessage}\n\n${promptMessage}` })
+        });
+
+        if (response.ok) {
+            const resultData = await response.json();
+            if (resultData.choices && resultData.choices[0] && resultData.choices[0].message) {
+                return resultData.choices[0].message.content;
+            }
+        }
+    } catch (serverError) {
+        console.error("❌ فشل الاتصال بالسيرفر السحابي أو انقطع الإنترنت:", serverError);
+    }
+
+    // 3. المحرك المدمج المحلي الفوري لتخطي مخاطر التوكنات أو الشبكة بدون إحباط العميل
     if (userInputs) {
-        console.log("🛠️ تشغيل المحرك المدمج المحلي الفوري لتخطي مخاطر التوكنات...");
+        console.log("🛠️ تشغيل المحرك المدمج المحلي الفوري (وضع الاستقرار)...");
         return generateBackupStaticCV(userInputs);
     }
     
     throw new Error('GENERATION_FAILED');
-}
-
-async function callLocalAI(promptMessage, systemMessage) {
-    if (window.ai && (await window.ai.canCreateTextSession()) === "readily") {
-        const session = await window.ai.createTextSession();
-        const formattedPrompt = `${systemMessage}\n\nالطلب الحالي:\n${promptMessage}`;
-        const result = await session.prompt(formattedPrompt);
-        return result.trim();
-    }
-    throw new Error("window.ai غير متوفر.");
 }
 
 function generateBackupStaticCV(data) {
@@ -604,7 +620,6 @@ function checkAndLoadSharedLink() {
             const decodedJson = decodeURIComponent(escape(atob(base64)));
             const cvData = JSON.parse(decodedJson);
 
-            // ملء الحقول بالبيانات المسترجعة
             if (document.getElementById('name')) document.getElementById('name').value = cvData.name || '';
             if (document.getElementById('jobTitle')) document.getElementById('jobTitle').value = cvData.jobTitle || '';
             if (document.getElementById('phone')) document.getElementById('phone').value = cvData.phone || '';
@@ -613,7 +628,6 @@ function checkAndLoadSharedLink() {
             if (document.getElementById('skills')) document.getElementById('skills').value = cvData.skills || '';
             if (document.getElementById('outputBox') && cvData.outputBox) document.getElementById('outputBox').value = cvData.outputBox;
 
-            // إظهار بار التنبيه العلوي (وضع العرض فقط) وإخفاء شاشة المدخلات
             const banner = document.getElementById('sharedViewBanner');
             if (banner) banner.classList.remove('hidden');
 
@@ -702,7 +716,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initJobMatchChecker();
     initVoiceDictation();
 
-    // فحص الرابط مباشرة عند فتح الصفحة لاستيراد البيانات المترابطة إن وجدت
     checkAndLoadSharedLink();
 
     const outputBox = document.getElementById('outputBox');
@@ -715,7 +728,6 @@ document.addEventListener("DOMContentLoaded", function () {
         skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
     });
 
-    // 💥 ربط ميزة تنزيل Word (.doc)
     const downloadWordBtn = document.getElementById('downloadWordBtn');
     if (downloadWordBtn) {
         downloadWordBtn.addEventListener('click', function(e) {
@@ -724,7 +736,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 💥 ربط ميزة رابط المشاركة المباشر
     const shareCVLinkBtn = document.getElementById('shareCVLinkBtn');
     if (shareCVLinkBtn) {
         shareCVLinkBtn.addEventListener('click', function(e) {
@@ -733,16 +744,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 💥 ربط زر التعديل الإلغائي داخل البانر العلوي لوضع العرض
     const cloneSharedCVBtn = document.getElementById('cloneSharedCVBtn');
     if (cloneSharedCVBtn) {
         cloneSharedCVBtn.addEventListener('click', function() {
-            // إخفاء البانر وإعادة إظهار قسم المدخلات للتعديل
             document.getElementById('sharedViewBanner')?.classList.add('hidden');
             const inputsSection = document.getElementById('inputsSection');
             if (inputsSection) inputsSection.style.display = 'flex';
             
-            // تنظيف المعاملات من الرابط (المظهر الجمالي والنظيف للـ URL)
             window.history.pushState({}, document.title, window.location.pathname);
             alert("✍️ تم الانتقال لوضع التعديل! يمكنك الآن تخصيص البيانات وحفظها محلياً.");
         });
@@ -837,7 +845,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             
             printElement.innerHTML = htmlContent;
-            
             document.body.appendChild(printElement);
             
             const pdfFileName = data.name ? `${data.name}_CV.pdf` : 'My_CV.pdf';
@@ -870,7 +877,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (document.getElementById('temp-pdf-render')) {
                         document.body.removeChild(printElement);
                     }
-                    alert('حدث خطأ أثناء تصدير ملف الـ PDF. يرجى مراجعته.'); 
+                    alert('حدث خطأ أثناء تصدير ملف الـ PDF.'); 
                     downloadPdfBtn.innerHTML = originalBtnText; 
                     downloadPdfBtn.disabled = false; 
                 });
@@ -946,8 +953,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 } 
             } catch (err) { 
                 if (outputBox) {
-                     outputBox.value = `الملخص المهني المقترح لـ ${data.jobTitle}:
-"مهني طموح ومبادر في مجال ${data.jobTitle}، أمتلك مهارات استثنائية في العمل الجماعي وحل المشكلات مع التركيز على الكفاءة والإنتاجية العالية لمطابقة متطلبات سوق العمل ونظام الـ ATS."`;
+                     outputBox.value = `الملخص المهني المقترح لـ ${data.jobTitle}:\n"مهني طموح ومبادر في مجال ${data.jobTitle}، أمتلك مهارات استثنائية في العمل الجماعي وحل المشكلات مع التركيز على الكفاءة والإنتاجية العالية لمطابقة متطلبات سوق العمل ونظام الـ ATS."`;
                 }
             } 
             finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } 
