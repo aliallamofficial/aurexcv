@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ali-cv-builder-v7'; // ترقية الإصدار لتحديث الكاش على الهواتف فوراً
+const CACHE_NAME = 'ali-cv-builder-v8'; // تم ترقية الإصدار لتحديث كاش هواتف المستخدمين وفيس بوك فوراً
 const STATIC_ASSETS = [
   '/ali-cv-builder/',
   '/ali-cv-builder/index.html',
@@ -9,7 +9,7 @@ const STATIC_ASSETS = [
   '/ali-cv-builder/icons/apple-touch-icon-120x120.png',
   '/ali-cv-builder/icons/apple-touch-icon-152x152.png',
   '/ali-cv-builder/icons/apple-touch-icon-180x180.png',
-  '/ali-cv-builder/icons/icon-512x512.png' // إعادة إضافتها لضمان كاش سليم
+  '/ali-cv-builder/icons/icon-512x512.png'
 ];
 
 // 1. مرحلة التثبيت: تخزين الملفات الأساسية بطريقة مرنة
@@ -42,7 +42,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs ودعم الـ PWA وتخطي الروبوتات
+// 3. مرحلة الجلب: استراتيجية "الشبكة أولاً" مع حماية الـ APIs وتخطي الروبوتات
 self.addEventListener('fetch', event => {
   if (!event.request.url.startsWith('http')) return;
 
@@ -53,15 +53,15 @@ self.addEventListener('fetch', event => {
     return; 
   }
 
-  // 2. الإصلاح السحري لفيسبوك: منع الـ Service Worker من اعتراض روبوتات فحص وسائل التواصل
-  const userAgent = navigator.userAgent || '';
+  // 2. الإصلاح السحري لفيسبوك: تحويل الحروف لصغيرة وتخطي الكاش تماماً لجميع روبوتات الفحص والمشاركة
+  const ua = (navigator.userAgent || '').toLowerCase();
   if (
-    userAgent.includes('facebookexternalhit') || 
-    userAgent.includes('Facebot') || 
-    userAgent.includes('Twitterbot') || 
-    userAgent.includes('WhatsApp')
+    ua.includes('facebookexternalhit') || 
+    ua.includes('facebot') || 
+    ua.includes('twitterbot') || 
+    ua.includes('whatsapp')
   ) {
-    return; // اترك الطلب يمر مباشرة للشبكة دون تدخل الكاش ليعود برمز الاستجابة الطبيعي 200
+    return; // اترك الطلب يمر مباشرة للشبكة دون تدخل الكاش ليعود برمز الاستجابة الطبيعي 200 ونوع محتوى سليم
   }
 
   event.respondWith(
@@ -76,7 +76,7 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // ✅ يضمن فتح التطبيق حتى مع وجود ?source=pwa في غياب الإنترنت
+        // يضمن فتح التطبيق حتى مع وجود ?source=pwa في غياب الإنترنت
         return caches.match(event.request, { ignoreSearch: true });
       })
   );
