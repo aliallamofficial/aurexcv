@@ -872,21 +872,66 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // ========================================================
+    // ✉️ نظام المزامنة الفورية للتعليقات عبر تليجرام (محدث ومدمج)
+    // ========================================================
+    const TELEGRAM_TOKEN = "8840422551:AAFsoY7tQypbDZSywgqCWgKE8_YMrt5JBuo";
+    const TELEGRAM_CHAT_ID = "6876904568";
+
     const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
     if(submitFeedbackBtn) {
         submitFeedbackBtn.addEventListener("click", () => {
             const textFeedback = document.getElementById("userFeedbackTextarea").value.trim();
             if(!textFeedback) {
-                let emptyFeed = currentLang === 'ar' ? "يرجى كتابة تعليقك أو مشكلتك أولاً قبل الإرسال!" : "Please write your comment or problem before submitting!";
+                let emptyFeed = currentLang === 'ar' ? "يرجى كتابة تعليقك أو مشكلتك أولاً قبل الإرسال!" : 
+                               (currentLang === 'en' ? "Please write your comment or problem before submitting!" : 
+                               "Veuillez écrire votre commentaire ou problème avant de soumettre !");
                 alert(emptyFeed);
                 return;
             }
+
+            // 1. حفظ التعليق محلياً في المتصفح كنسخة احتياطية آمنة
             let localStoreFeedbacks = JSON.parse(localStorage.getItem("ali_cv_feedbacks") || "[]");
             localStoreFeedbacks.push({ rating: selectedRating, message: textFeedback, timestamp: Date.now() });
             localStorage.setItem("ali_cv_feedbacks", JSON.stringify(localStoreFeedbacks));
             
-            let successFeed = currentLang === 'ar' ? "🎉 تم حفظ تقييمك وملاحظاتك بأمان محلياً وسيرسل فوراً للمطور عند الاتصال بالخادم!" : "🎉 Your review and feedback have been securely saved locally!";
-            alert(successFeed);
+            // 2. صياغة نص الرسالة الاحترافية لتصلك على تليجرام
+            const starsText = "⭐".repeat(selectedRating);
+            const messageText = `🚀 *تقييم جديد للمنصة* 🚀\n\n` +
+                                `🔹 *التقييم:* ${starsText} (${selectedRating}/5)\n` +
+                                `🔹 *التعليق:* ${textFeedback}\n` +
+                                `🔹 *اللغة المستخدمة:* ${currentLang.toUpperCase()}\n` +
+                                `📅 *التوقيت:* ${new Date().toLocaleString()}`;
+
+            // 3. إرسال البيانات فوراً إلى تليجرام بشكل خلفي (Async)
+            fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: messageText,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => {
+                if(response.ok) {
+                    let successFeed = currentLang === 'ar' ? "🎉 شكراً لك! تم إرسال تقييمك وملاحظاتك مباشرة للمطور بنجاح." : 
+                                     (currentLang === 'en' ? "🎉 Thank you! Your review has been sent directly to the developer." : 
+                                     "🎉 Merci ! Votre avis a été envoyé directement au développeur.");
+                    alert(successFeed);
+                } else {
+                    let localSuccess = currentLang === 'ar' ? "🎉 تم حفظ تقييمك بأمان محلياً وسيتزامن فوراً عند استقرار الشبكة!" : 
+                                       (currentLang === 'en' ? "🎉 Feedback saved safely in your local session!" : 
+                                       "🎉 Commentaire enregistré localement avec succès !");
+                    alert(localSuccess);
+                }
+            })
+            .catch(err => {
+                let localSuccess = currentLang === 'ar' ? "🎉 تم حفظ تقييمك بأمان محلياً!" : "🎉 Saved locally!";
+                alert(localSuccess);
+            });
+
+            // تصفير صندوق النصوص بعد الإرسال
             document.getElementById("userFeedbackTextarea").value = "";
         });
     }
