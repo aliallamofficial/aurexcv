@@ -4,8 +4,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5WP8H9FKZS"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+        function gtag(){dataLayer.push(arguments);}\n        gtag('js', new Date());
         gtag('config', 'G-5WP8H9FKZS');
     </script>
     <meta charset="UTF-8">
@@ -16,256 +15,244 @@
     <meta name="google-site-verification" content="L3tPSb-jmutxwf_FTcPCVK69TdAetKEoSoTS7JME" />
     
     <meta name="description" content="أفضل موقع عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً وبدون حساب. Free AI Resume Builder and ATS checker. Optimize your CV to bypass recruitment systems instantly.">
-    <meta name="keywords" content="عمل سيرة ذاتية, انشاء سي في, ذكاء اصطناعي سير ذاتية, نموذج سيرة ذاتية جاهز, تعديل سي في, سيرة ذاتية ATS, cv builder ai, free cv maker, طريقة عمل cv, AI Resume Builder, ATS Resume Checker, Professional Resume Maker">
-
-    <meta property="og:title" content="Ali CV Builder | AI Resume & CV Builder">
-    <meta property="og:description" content="أنشئ سيرة ذاتية احترافية مجاناً متوافقة مع أنظمة الـ ATS العالمية وبدون تسجيل. Free AI Resume Builder.">
-    <meta property="og:image" content="icons/icon-512x512.png">
-    <meta property="og:url" content="https://aliallamofficial.github.io/ali-cv-builder/">
-    <meta property="og:type" content="website">
-    <meta property="fb:app_id" content="966242223397117" />
+    <meta name=\"keywords\" content=\"عمل سيرة ذاتية, انشاء سي في, ذكاء اصطناعي سير ذاتية, نموذج سيرة ذاتية جاهز, تعديل سي في, سيرة ذاتية ATS, cv builder ai, free cv maker, طريقة عمل cv, AI Resume Builder, ATS Resume Checker\">
     
-    <link rel="manifest" href="/ali-cv-builder/manifest.json">
-    <meta name="theme-color" content="#38bdf8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#0f172a">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-app-theme="cosmic">
 
-    <div id="sharedViewBanner" class="shared-view-banner hidden">
-        <span data-i18n="sharedViewText">👀 أنت تتصفح الآن سيرة ذاتية مشتركة في وضع العرض فقط.</span>
-        <button id="cloneSharedCVBtn" class="clone-btn" data-i18n="cloneSharedCVBtn">✍️ تعديل هذه السيرة أو إنشاء واحدة جديدة</button>
+    <div id="sharedViewOverlay" class="shared-view-overlay hidden">
+        <div class="shared-overlay-content">
+            <span id="sharedViewText" data-i18n="sharedViewText">👀 أنت تتصفح الآن سيرة ذاتية مشتركة في وضع العرض فقط.</span>
+            <button id="cloneSharedCVBtn" class="clone-cv-btn" data-i18n="cloneSharedCVBtn">✍️ تعديل هذه السيرة أو إنشاء واحدة جديدة</button>
+        </div>
     </div>
 
-    <div id="appTourModal" class="welcome-overlay">
-        <div class="welcome-card">
-            <div id="tourProgress" class="step-badge" data-i18n="tourStep1">خطوة 1 من 3</div>
-            <div id="tourIcon" class="rocket-icon">🚀</div>
-            <h3 id="tourTitle" data-i18n="tourTitleText">مرحباً بك في مستقبلك المهني الجديد!</h3>
-            <p id="tourDescription" data-i18n="tourDescText">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة لتعلم كيفية عمل سي في احترافي.</p>
-            <div class="tour-actions">
-                <button id="nextTourBtn" class="primary-btn" data-i18n="tourStartBtn">ابدأ الرحلة الآن ←</button>
-                <button id="skipTourBtn" class="flat-btn" data-i18n="tourSkipBtn">تخطي</button>
+    <div id="appTourModal" class="app-tour-modal-backdrop">
+        <div class="tour-card-wrapper animate-popup">
+            <div class="tour-header-badge" id="tourProgress" data-i18n="tourStep1">خطوة 1 من 3</div>
+            <div class="tour-body-icon" id="tourIcon">🚀</div>
+            <h2 class="tour-card-title" id="tourTitle" data-i18n="tourTitleText">مرحباً بك في مستقبلك المهني الجديد!</h2>
+            <p class="tour-card-desc" id="tourDescription" data-i18n="tourDescText">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.</p>
+            <div class="tour-actions-row">
+                <button id="skipTourBtn" class="btn-tour-secondary" data-i18n="tourSkipBtn">تخطي</button>
+                <button id="nextTourBtn" class="btn-tour-primary" data-i18n="tourStartBtn">ابدأ الرحلة الآن ←</button>
             </div>
         </div>
     </div>
 
-    <div id="mainAppContent" class="main-content-hidden">
-        
-        <div id="settingsPageModal" class="modal-overlay hidden">
-            <div class="modal-content">
-                <div class="settings-header">
-                    <h3 data-i18n="settingsHeaderTitle">⚙️ تخصيص المنصة والمظهر الفاخر</h3>
-                    <button id="closeSettingsBtn" class="settings-close-btn">&times;</button>
+    <div id="settingsPageModal" class="settings-modal-backdrop hidden">
+        <div class="settings-card animate-slide-up">
+            <div class="settings-modal-header">
+                <h3 data-i18n="settingsHeaderTitle">⚙️ تخصيص المنصة والمظهر الفاخر</h3>
+                <button id="closeSettingsBtn" class="close-modal-x">&times;</button>
+            </div>
+            <div class="settings-modal-body">
+                <div class="setting-item-block">
+                    <label data-i18n="themeLabel">🎨 مظهر التطبيق الكوني (Themes):</label>
+                    <select id="themeSelect" class="premium-select-input">
+                        <option value="cosmic" data-i18n="themeDefault">🌌 الوضع الكوني العميق (افتراضي)</option>
+                        <option value="royal" data-i18n="themeRoyal">👑 الأزرق الملكي الفاخر</option>
+                        <option value="emerald" data-i18n="themeEmerald">💚 الأخضر الزمردي الخلاب</option>
+                        <option value="cyber" data-i18n="themeCyber">🔮 الأرجواني السايبربانك</option>
+                    </select>
                 </div>
                 
-                <div class="settings-section">
-                    <label data-i18n="themeLabel">🎨 مظهر التطبيق الكوني (Themes):</label>
-                    <select id="themeSelect">
-                        <option value="default" data-i18n="themeDefault">🌌 الوضع الكوني العميق (افتراضي)</option>
-                        <option value="royal-blue" data-i18n="themeRoyal">👑 الأزرق الملكي الفاخر</option>
-                        <option value="emerald-green" data-i18n="themeEmerald">💚 الأخضر الزمردي الخلاب</option>
-                        <option value="cyber-punk" data-i18n="themeCyber">🔮 الأرجواني السايبربانك</option>
-                    </select>
-                </div>
-
-                <div class="settings-section">
+                <div class="setting-item-block">
                     <label data-i18n="fontLabel">✍️ نمط خط السيرة الذاتية (CV Fonts):</label>
-                    <select id="cvFontSelect">
-                        <option value="'Cairo', sans-serif">Cairo (عصري ومقروء)</option>
-                        <option value="'Tajawal', sans-serif">Tajawal (أنيق ورسمي)</option>
-                        <option value="'Almarai', sans-serif">Almarai (واضح وممتاز للـ ATS)</option>
-                        <option value="'Inter', sans-serif">Inter (Global Latin Standard)</option>
+                    <select id="cvFontSelect" class="premium-select-input">
+                        <option value="'Cairo', sans-serif">Cairo (رسمي حاد)</option>
+                        <option value="'Plus Jakarta Sans', sans-serif">Jakarta (عصري غربي)</option>
+                        <option value="monospace">Monospace (تقني هندسي)</option>
+                        <option value="serif">Classic Serif (أكاديمي كلاسيكي)</option>
                     </select>
                 </div>
 
-                <div class="settings-section flex-row">
-                    <div>
+                <div class="setting-item-block toggle-row">
+                    <div class="toggle-text-meta">
                         <h4 data-i18n="creativeTitle">✨ مظهر التصميم الإبداعي الفاخر</h4>
                         <p data-i18n="creativeDesc">ألوان مشعة وتأثير نيون فريد للواجهة</p>
                     </div>
-                    <label class="switch">
+                    <label class="premium-switch">
                         <input type="checkbox" id="creativeLayoutToggle">
-                        <span class="slider"></span>
+                        <span class="slider-round-thumb"></span>
                     </label>
                 </div>
-
-                <div class="settings-buttons">
-                    <button id="enableNotificationsBtn" class="secondary-btn" data-i18n="notifBtn">🔔 تفعيل إشعارات الفرص الحرة</button>
-                    <button id="shareAppBtn" class="rainbow-btn" data-i18n="shareBtn">🔗 مشاركة المنصة السحرية</button>
+                
+                <div class="settings-action-buttons">
+                    <button id="enableNotificationsBtn" class="action-trigger-btn btn-notif" data-i18n="notifBtn">🔔 تفعيل إشعارات الفرص الحرة</button>
+                    <button id="sharePlatformAppBtn" class="action-trigger-btn btn-share" data-i18n="shareBtn">🔗 مشاركة المنصة السحرية</button>
                 </div>
             </div>
-        </div>
-
-        <div class="container" id="mainContainer">
-            
-            <header class="main-app-header">
-                <div class="settings-wrapper">
-                    <button id="dropdownToggleBtn" class="settings-trigger-btn" title="Options">⚙️</button>
-                    <div id="topLeftMenu" class="dropdown-menu hidden">
-                        <button class="menu-item" id="openSettingsBtn" data-i18n="menuCustomize">🎨 تخصيص المظهر والخطوط</button>
-                        <button class="menu-item" id="toggleLanguageBtn" data-i18n="menuLang">🔄 English (الانتقال للإنجليزية)</button>
-                        <button class="menu-item" id="clearDataBtn" data-i18n="menuClear">🗑️ مسح وإعادة تعيين الحقول</button>
-                    </div>
-                </div>
-
-                <span class="logo-badge" style="background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%); color: #ffffff; font-weight: bold; padding: 6px 16px; border-radius: 50px; box-shadow: 0 0 15px rgba(56,189,248,0.3); display: inline-block;">Ali AI Engine • Premium Edition</span>
-                
-                <h1 class="app-title" id="mainTitleText" style="font-size: 2.5rem; font-weight: 700; background: linear-gradient(to left, #ffffff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 1.5rem;" data-i18n="mainTitle">إنشاء سيرة ذاتية احترافية بالذكاء الاصطناعي</h1>
-                
-                <div class="branding-sub" style="color: #94a3b8; font-weight: 600; font-size: 1.1rem; letter-spacing: 0.5px; margin-bottom: 1rem;" data-i18n="brandSub">Ali CV Builder Pro • المنصة الذكية المتكاملة</div>
-                
-                <p class="app-subtitle" style="max-width: 750px; margin: 0 auto; color: #cbd5e1; line-height: 1.8; font-size: 1.05rem;" data-i18n="appSubtitle">
-                    صمّم مستندك المهني القادم بأحدث تقنيات الذكاء الاصطناعي التوليدي. قوالب ذكية مجهزة لـ عمل سي في احترافي جاهز للتعديل والطباعة فوراً، مخصصة بالكامل لتخطي خوارزميات فحص الـ ATS العالمية بنسبة 100% وبدون الحاجة لإنشاء حساب أو تسجيل بياناتك.
-                </p>
-            </header>
-
-            <div id="scoreGaugeContainer" class="score-section">
-                <div class="score-top-info">
-                    <div class="score-title">
-                        <span class="pulse-dot"></span>
-                        <strong data-i18n="atsAdvisorTitle">مستشار الـ ATS الذكي اللحظي:</strong>
-                    </div>
-                    <span id="scoreText" class="score-value">0%</span>
-                </div>
-                
-                <div class="score-bar-container">
-                    <div id="scoreFill" class="score-fill"></div>
-                </div>
-                
-                <div class="ats-indicators-grid">
-                    <div class="ats-ind" id="ind-basic" data-i18n="indBasic">👤 البيانات الأساسية</div>
-                    <div class="ats-ind" id="ind-skills" data-i18n="indSkills">🛠️ مهارات كافية</div>
-                    <div class="ats-ind" id="ind-num" data-i18n="indNum">📊 أرقام وإنجازات</div>
-                    <div class="ats-ind" id="ind-words" data-i18n="indWords">⚡ أفعال حركية</div>
-                </div>
-                
-                <p id="scoreStatus" class="score-status" data-i18n="scoreStatusEmpty">⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي...</p>
-            </div>
-
-            <main class="app-layout">
-                
-                <section class="inputs-section" id="inputsSection">
-                    <div class="section-header">
-                        <h2 data-i18n="inputSectionTitle">📝 بياناتك المهنية والشخصية لإعداد السي في</h2>
-                        <span class="step-indicator" data-i18n="stepIndicator1">خطوة 1 من 2</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="name" data-i18n="labelName">👤 الاسم الكامل</label>
-                        <input type="text" id="name" placeholder="Ali Allam" data-i18n-placeholder="holderName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="jobTitle" data-i18n="labelJobTitle">🎯 المسمى الوظيفي المستهدف</label>
-                        <input type="text" id="jobTitle" placeholder="Software Engineer" data-i18n-placeholder="holderJobTitle" required>
-                    </div>
-                    
-                    <div id="jobSuggestionsBox" class="suggestions-box hidden">
-                        <div class="sug-header">
-                            <span data-i18n="sugHeader">💡 اقتراحات مهام مجهزة للـ ATS لمجالك:</span>
-                            <span class="badge-new" data-i18n="badgeNew">جديد</span>
-                        </div>
-                        <div id="suggestionsList" class="suggestions-list"></div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone" data-i18n="labelPhone">📞 رقم الهاتف</label>
-                            <input type="text" id="phone" placeholder="+201149117724" data-i18n-placeholder="holderPhone">
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-i18n="labelEmail">📧 البريد الإلكتروني</label>
-                            <input type="email" id="email" placeholder="info@example.com" data-i18n-placeholder="holderEmail">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="skills" data-i18n="labelSkills">🛠️ المهارات التقنية والشخصية (افصل بينها بفاصلة ,)</label>
-                        <input type="text" id="skills" placeholder="Problem Solving, JavaScript, Excel..." data-i18n-placeholder="holderSkills">
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="textarea-header">
-                            <label for="experience" data-i18n="labelExperience">💼 الخبرات المهنية والمشاريع السابقة</label>
-                            <button id="voiceDictationBtn" class="voice-btn" type="button" title="Smart Voice Dictation"><span data-i18n="voiceBtnText">🎤 إملاء ذكي</span></button>
-                        </div>
-                        <textarea id="experience" rows="6" placeholder="..." data-i18n-placeholder="holderExperience"></textarea>
-                    </div>
-                    
-                    <div class="form-group job-match-card">
-                        <div class="card-header">
-                            <span class="icon">🎯</span>
-                            <div class="card-titles">
-                                <h4 data-i18n="matchTitle">مطابقة إعلان الوظيفة الذاتي (ATS Match)</h4>
-                                <p data-i18n="matchDesc">حلل الكلمات الدلالية الناقصة فوراً</p>
-                            </div>
-                        </div>
-                        <textarea id="jobDescription" rows="3" placeholder="..." data-i18n-placeholder="holderJobDesc"></textarea>
-                        <button id="checkMatchBtn" type="button" class="secondary-btn" data-i18n="matchBtn">📊 احسب نسبة التطابق ونقاط الضعف</button>
-                        <div id="matchResult"></div>
-                    </div>
-                    
-                    <div class="actions-group">
-                        <button id="generateSummaryBtn" class="ai-aux-btn" data-i18n="btnGenSummary">🧠 توليد ملخص مهني احترافي فوراً</button>
-                        <button id="aiOptimizeBtn" class="super-gradient-btn" data-i18n="btnOptimize">🚀 تحسين وإعادة الصياغة بالذكاء الاصطناعي</button>
-                    </div>
-                </section>
-                
-                <section class="result-section">
-                    <div class="section-header">
-                        <h2 data-i18n="resultSectionTitle">✨ مستندك المهني الجاهز</h2>
-                        <span class="badge-ready" data-i18n="badgeReady">A4 جاهز للطباعة</span>
-                    </div>
-                    
-                    <div class="preview-area-container">
-                        <textarea id="outputBox" placeholder="..." data-i18n-placeholder="holderOutput"></textarea>
-                    </div>
-                    
-                    <div class="result-footer-actions flex-wrap">
-                        <button id="downloadPdfBtn" class="green-gradient-btn" data-i18n="btnPdf">📥 تحميل بصيغة PDF الاحترافية</button>
-                        <button id="downloadWordBtn" class="blue-gradient-btn" data-i18n="btnWord">📝 تصدير بصيغة Word (.doc)</button>
-                        <button id="shareCVLinkBtn" class="orange-gradient-btn" data-i18n="btnShareLink">🔗 مشاركة برابط مباشر</button>
-                    </div>
-                </section>
-                
-            </main>
-            
-            <footer style="text-align: center; width: 100%; margin-top: 3rem; padding: 2rem 1rem 1rem 1rem;">
-                <div id="cvLiveTipBox" class="expert-tip-container" style="max-width: 600px; margin: 0 auto 2rem auto; text-align: right;">
-                    <div class="tip-header">
-                        <span class="sparkle">💡</span>
-                        <strong data-i18n="tipHeaderTitle">نصائح إضافية لكيفية عمل نموذج سيرة ذاتية ممتاز:</strong>
-                    </div>
-                    <p id="cvTipText" data-i18n="tipTextContent">تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد الـ ATS وضمن أهم الكلمات الدلالية للوظيفة.</p>
-                </div>
-                
-                <div style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.15); padding: 6px 14px; border-radius: 20px; margin-bottom: 1.5rem; backdrop-filter: blur(5px);">
-                    <span style="font-size: 14px;">🔒</span>
-                    <span style="font-size: 12px; color: #94a3b8; font-weight: bold; letter-spacing: 0.5px;">GPG KEY:</span>
-                    <code style="font-family: monospace; font-size: 13px; color: #38bdf8; letter-spacing: 1px; font-weight: bold;">55392380FBF1C8F1</code>
-                </div>
-                
-                <div class="footer-copyright" style="text-align: center; margin: 0 auto;">
-                    <p style="font-size: 15px; color: #e2e8f0; margin-bottom: 4px;"><span data-i18n=\"footerRights\">جميع الحقوق محفوظة © 2026</span> <strong style="color: #38bdf8;">Ali CV Builder Pro</strong></p>
-                    <small style="font-size: 12px; color: #94a3b8; display: block;" data-i18n="footerDesc">تم تطويره وتحديثه بكفاءة فائقة وميزات ذكاء اصطناعي ثورية لتحسين السير الذاتية وتصدر محركات البحث.</small>
-                </div>
-            </footer>
         </div>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <script src="app.js?v=2.0"></script>
+    <div class="app-glass-container" id="mainAppContent">
+        
+        <div class="top-navigation-bar">
+            <div class="logo-area-brand">
+                <span class="animated-sparkle-icon">✨</span>
+                <span class="brand-text-logo">Ali CV Builder <span class="badge-pro-gradient">PRO</span></span>
+            </div>
+            
+            <div class="menu-actions-relative">
+                <button id="dropdownToggleBtn" class="circle-icon-menu-btn" aria-label="Open Menu">⚙️</button>
+                <div id="topLeftMenu" class="dropdown-context-menu hidden">
+                    <button id="openSettingsBtn" class="menu-item-link"><span class="menu-icon">🎨</span> <span data-i18n="menuCustomize">تخصيص المظهر والخطوط</span></button>
+                    <button id="toggleLanguageBtn" class="menu-item-link"><span class="menu-icon">🔄</span> <span data-i18n="menuLang">English (الانتقال للإنجليزية)</span></button>
+                    <div class="menu-divider-line"></div>
+                    <button id="clearDataBtn" class="menu-item-link text-danger-clear"><span class="menu-icon">🗑️</span> <span data-i18n="menuClear">مسح وإعادة تعيين الحقول</span></button>
+                </div>
+            </div>
+        </div>
+
+        <section class="hero-branding-section">
+            <h2 class="hero-main-title" data-i18n="mainTitle">إنشاء سيرة ذاتية احترافية بالذكاء الاصطناعي</h2>
+            <span class="hero-sub-brand" data-i18n="brandSub">Ali CV Builder Pro • المنصة الذكية المتكاملة</span>
+            <p class="hero-paragraph-description" data-i18n="appSubtitle">
+                صمّم مستندك المهني القادم بأحدث تقنيات الذكاء الاصطناعي التوليدي. قوالب ذكية مجهزة لـ عمل سي في احترافي جاهز للتعديل والطباعة فوراً، مخصصة بالكامل لتخطي خوارزميات فحص الـ ATS العالمية بنسبة 100% وبدون الحاجة لإنشاء حساب أو تسجيل بياناتك.
+            </p>
+        </section>
+
+        <section class="ats-analytics-advisor-panel">
+            <div class="ats-panel-header-row">
+                <h3 class="ats-panel-title"><span class="pulse-indicator-dot"></span> <span data-i18n="atsAdvisorTitle">مستشار الـ ATS الذكي اللحظي:</span></h3>
+                <div class="ats-score-badge-circle" id="scoreText">0%</div>
+            </div>
+            <div class="ats-progress-track-bar">
+                <div id="scoreFill" class="ats-progress-fill-gradient" style="width: 0%;"></div>
+            </div>
+            <div class="ats-realtime-indicators-grid">
+                <div class="indicator-pill-badge" id="ind-basic"><span class="status-chk">✓</span> <span data-i18n="indBasic">👤 البيانات الأساسية</span></div>
+                <div class="indicator-pill-badge" id="ind-skills"><span class="status-chk">✓</span> <span data-i18n="indSkills">🛠️ مهارات كافية</span></div>
+                <div class="indicator-pill-badge" id="ind-num"><span class="status-chk">✓</span> <span data-i18n="indNum">📊 أرقام وإنجازات</span></div>
+                <div class="indicator-pill-badge" id="ind-words"><span class="status-chk">✓</span> <span data-i18n="indWords">⚡ أفعال حركية</span></div>
+            </div>
+            <p id="scoreStatus" class="ats-feedback-status-text" data-i18n="scoreStatusEmpty">⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي...</p>
+        </section>
+
+        <div class="main-workspace-grid">
+            
+            <section class="workspace-inputs-card">
+                <div class="card-section-header">
+                    <h3 data-i18n="inputSectionTitle">📝 بياناتك المهنية والشخصية لإعداد السي في</h3>
+                    <span class="step-meta-badge" data-i18n="stepIndicator1">خطوة 1 من 2</span>
+                </div>
+                
+                <div class="premium-input-wrapper-group">
+                    <label for="name" data-i18n="labelName">👤 الاسم الكامل</label>
+                    <input type="text" id="name" data-i18n-placeholder="holderName" placeholder="مثال: علي علام" autocomplete="name">
+                </div>
+
+                <div class="premium-input-wrapper-group">
+                    <label for="jobTitle" data-i18n="labelJobTitle">🎯 المسمى الوظيفي المستهدف</label>
+                    <input type="text" id="jobTitle" data-i18n-placeholder="holderJobTitle" placeholder="مثال: مصمم واجهات مستخدم، مهندس برمجيات...">
+                </div>
+
+                <div id="jobSuggestionsBox" class="dynamic-suggestions-box hidden">
+                    <div class="sug-box-header"><span class="spark-sug">💡</span> <span data-i18n="sugHeader">اقتراحات مهام مجهزة للـ ATS لمجالك:</span> <span class="badge-new-sug" data-i18n="badgeNew">جديد</span></div>
+                    <div id="suggestionsList" class="sug-items-flex-row"></div>
+                </div>
+
+                <div class="premium-input-grid-2-col">
+                    <div class="premium-input-wrapper-group">
+                        <label for="phone" data-i18n="labelPhone">📞 رقم الهاتف</label>
+                        <input type="tel" id="phone" data-i18n-placeholder="holderPhone" placeholder="مثال: 01149117724">
+                    </div>
+                    <div class="premium-input-wrapper-group">
+                        <label for="email" data-i18n="labelEmail">📧 البريد الإلكتروني</label>
+                        <input type="email" id="email" data-i18n-placeholder="holderEmail" placeholder="info@example.com">
+                    </div>
+                </div>
+
+                <div class="premium-input-wrapper-group">
+                    <label for="skills" data-i18n="labelSkills">🛠️ المهارات التقنية والشخصية (افصل بينها بفاصلة ,)</label>
+                    <input type="text" id="skills" data-i18n-placeholder="holderSkills" placeholder="مثال: حل المشكلات, Photoshop, Excel, إدارة الوقت...">
+                </div>
+
+                <div class="premium-input-wrapper-group relative-block">
+                    <label for="experience" data-i18n="labelExperience">💼 الخبرات المهنية والمشاريع السابقة</label>
+                    <textarea id="experience" rows="6" data-i18n-placeholder="holderExperience" placeholder="اكتب مسؤولياتك وإنجازاتك السابقة أو انقر على الاقتراحات الجاهزة التي ستظهر بالأعلى تلقائياً عند كتابة مسماك الوظيفي..."></textarea>
+                    <button id="voiceDictationBtn" type="button" class="voice-dictation-badge-btn"><span class="mic-icon">🎤</span> <span data-i18n="voiceBtnText">إملاء ذكي</span></button>
+                </div>
+
+                <div class="job-description-matcher-card">
+                    <h4 class="matcher-card-title" data-i18n="matchTitle">مطابقة إعلان الوظيفة الذاتي (ATS Match)</h4>
+                    <p class="matcher-card-sub" data-i18n="matchDesc">حلل الكلمات الدلالية الناقصة فوراً</p>
+                    <textarea id="jobDescription" rows="3" data-i18n-placeholder="holderJobDesc" placeholder="الصق نص إعلان الوظيفة التي ترغب في التقدم إليها هنا بالكامل..."></textarea>
+                    <button id="checkMatchBtn" class="btn-calculate-match-trigger" data-i18n="matchBtn">📊 احسب نسبة التطابق ونقاط الضعف</button>
+                    <div id="matchResult" class="match-result-output-area"></div>
+                </div>
+
+                <div class="action-ai-triggers-row">
+                    <button id="generateSummaryBtn" class="ai-btn-secondary"><span class="brain-spark">🧠</span> <span data-i18n="btnGenSummary">توليد ملخص مهني احترافي فوراً</span></button>
+                    <button id="aiOptimizeBtn" class="ai-btn-primary-gradient"><span class="rocket-blast">🚀</span> <span data-i18n="btnOptimize">تحسين وإعادة الصياغة بالذكاء الاصطناعي</span></button>
+                </div>
+            </section>
+
+            <section class="workspace-result-preview-card">
+                <div class="card-section-header">
+                    <h3 data-i18n="resultSectionTitle">✨ مستندك المهني الجاهز</h3>
+                    <span class="step-meta-badge badge-ready-print" data-i18n="badgeReady">A4 جاهز للطباعة</span>
+                </div>
+                
+                <div id="cvPrintTemplateWrapper" class="cv-render-paper-container">
+                    <textarea id="outputBox" readonly data-i18n-placeholder="holderOutput" placeholder="اكتب بياناتك على اليمين ثم اضغط على 'تحسين بالذكاء الاصطناعي' ليظهر هنا النص الإبداعي فائق الجاذبية والجاهز تماماً للطباعة الورقية والتخطي الفوري للـ ATS..."></textarea>
+                </div>
+
+                <div class="export-actions-button-grid">
+                    <button id="downloadPdfBtn" class="export-btn pdf-gradient"><span class="btn-icon-svg">📥</span> <span data-i18n="btnPdf">تحميل بصيغة PDF الاحترافية</span></button>
+                    <button id="downloadWordBtn" class="export-btn word-gradient"><span class="btn-icon-svg">📝</span> <span data-i18n="btnWord">تصدير بصيغة Word (.doc)</span></button>
+                </div>
+                <button id="shareCVLinkBtn" class="share-cv-link-btn-block" data-i18n="btnShareLink">🔗 مشاركة برابط مباشر</button>
+            </section>
+        </div>
+
+        <section class="global-feedback-privacy-card">
+            <div class="feedback-inner-wrapper">
+                <h4 data-i18n="feedbackTitle">📣 اترك بصمتك واقتراحاتك (أو الإبلاغ عن مشكلة تواجهك)</h4>
+                <div class="stars-rating-row" id="starRatingSystem">
+                    <span data-value="1">★</span><span data-value="2">★</span><span data-value="3">★</span><span data-value="4">★</span><span data-value="5" class="selected">★</span>
+                </div>
+                <textarea id="userFeedbackTextarea" rows="2" data-i18n-placeholder="holderFeedback" placeholder="اكتب اقتراحك، تقييمك، أو أي مشكلة واجهتك في التطبيق هنا..."></textarea>
+                <button id="submitFeedbackBtn" class="btn-submit-feedback">إرسال التقييم والملاحظات</button>
+            </div>
+            <div class="privacy-link-centered-row">
+                <a href="#" id="viewPrivacyPolicyBtn" class="privacy-anchor-link" data-i18n="privacyLink">🔒 سياسة خصوصية ثورية لم يسبق لها مثيل (تشفير محلي 100%)</a>
+            </div>
+        </section>
+
+        <div class="live-expert-tips-banner">
+            <span class="bulb-flash-icon">💡</span>
+            <div class="tip-content-meta">
+                <strong data-i18n="tipHeaderTitle">نصائح إضافية لكيفية عمل نموذج سيرة ذاتية ممتاز:</strong>
+                <p id="cvTipText" data-i18n="tipTextContent">تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد الـ ATS وضمن أهم الكلمات الدلالية للوظيفة.</p>
+            </div>
+        </div>
+
+        <footer class="app-luxury-footer">
+            <div class="crypto-key-signature-badge">
+                <span class="lock-shield-svg">🔒</span>
+                <span class="key-label">GPG KEY:</span>
+                <code class="raw-hex-key">55392380FBF1C8F1</code>
+            </div>
+            
+            <div class="footer-copyright-meta">
+                <p><span data-i18n="footerRights">جميع الحقوق محفوظة © 2026</span> <strong class="brand-highlight">Ali CV Builder Pro</strong></p>
+                <small data-i18n="footerDesc">تم تطويره وتحديثه بكفاءة فائقة وميزات ذكاء اصطناعي ثورية لتحسين السير الذاتية وتصدر محركات البحث.</small>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
