@@ -74,6 +74,8 @@ body {
     justify-content: center; 
     align-items: center;
     overflow-x: hidden;
+    /* إضافة مساحة مرنة باليد لعدم تداخل محتويات الهيدر مع الشريط العلوي */
+    padding-top: 80px !important; 
 }
 
 /* ========================================================
@@ -672,9 +674,13 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
 }
 
 /* ========================================================
-   🔗 الإضافات الجديدة: شريط المشاركة والأزرار المطورة
+   🔗 شريط المشاركة المطور (تم حل مشكلة التموضع المطلق وتخريب الشاشة)
    ======================================================== */
 .shared-view-banner {
+    position: fixed; /* التغيير الجوهري: يجعله يطفو حراً فوق كل محتويات التطبيق والشبكات */
+    top: 0;
+    left: 0;
+    width: 100vw; /* يأخذ كامل عرض الشاشة الفيزيائي */
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     border-bottom: 2px solid #e11d48;
     color: #f8fafc;
@@ -685,10 +691,8 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     justify-content: center;
     align-items: center;
     gap: 15px;
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 999999; /* رقم فلكي لضمان ظهوره فوق المودال والنوافذ المنبثقة وجولة التطبيق */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -708,6 +712,8 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none!important; 
     font-size: 13px;
     box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
     transition: all 0.3s ease;
+    width: auto; /* منع الزر من التمدد لعرض كامل */
+    margin: 0; /* تصفير المسافات الإجبارية */
 }
 
 .shared-view-banner .clone-btn:hover {
@@ -915,7 +921,7 @@ input:checked + .slider::before {
    📱 تجاوب وتوافق الواجهة مع الهواتف المحمولة (Responsive)
    ======================================================== */
 @media (max-width: 1024px) {
-    body { padding: 15px 10px; }
+    body { padding: 15px 10px; padding-top: 85px !important; }
     .container { padding: 25px 15px; }
     .app-layout { flex-direction: column; gap: 25px; }
     #outputBox { min-height: 440px; }
@@ -926,9 +932,16 @@ input:checked + .slider::before {
     .branding-sub { font-size: 0.95rem; }
     .ats-indicators-grid { grid-template-columns: repeat(2, 1fr); }
     section { padding: 20px 14px; }
+    /* شريط المشاركة في الموبايل لجعله متجاوب ومرن */
+    .shared-view-banner {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+    }
+    body { padding-top: 110px !important; }
 }
 
 /* تعريف الكلاس المفقود للإخفاء السليم */
 .hidden {
     display: none !important;
-   }
+}
