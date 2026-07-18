@@ -149,33 +149,64 @@ const cvTips = [
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
+// 🌐 تحديث مصفوفة الإرشادات لتصبح ثنائية اللغة ودعم اللغتين ar و en بشكل منفصل
 const jobGuidelines = {
     "graphic_designer": { 
-        title: "مصمم جرافيك", 
         keywords: ["مصمم", "جرافيك", "designer", "graphic"], 
-        tips: [
-            "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
-            "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
-            "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
-        ] 
+        ar: {
+            title: "مصمم جرافيك", 
+            tips: [
+                "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
+                "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
+                "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
+            ]
+        },
+        en: {
+            title: "Graphic Designer",
+            tips: [
+                "Conceptualizing full visual identities aligned with brand strategy and guidelines.",
+                "Designing advertising materials and digital assets for social media to boost engagement by X%.",
+                "Proficiency in Adobe Suite (Photoshop, Illustrator, InDesign) and efficient time management."
+            ]
+        } 
     },
     "content_creator": { 
-        title: "صانع محتوى / كاتب محتوى", 
         keywords: ["محتوى", "كاتب", "content", "writer"], 
-        tips: [
-            "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.",
-            "تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.",
-            "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."
-        ] 
+        ar: {
+            title: "صانع محتوى / كاتب محتوى", 
+            tips: [
+                "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.",
+                "تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.",
+                "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."
+            ]
+        },
+        en: {
+            title: "Content Creator / Copywriter",
+            tips: [
+                "Writing creative scripts and SEO-friendly copy to drive organic traffic and visibility.",
+                "Analyzing digital content performance and developing publishing strategies to lift engagement.",
+                "Collaborating with design and editing teams to produce exceptional multimedia materials."
+            ]
+        }
     },
     "interior_designer": { 
-        title: "مهندس ديكور / مصمم داخلي", 
         keywords: ["ديكور", "داخلي", "interior"], 
-        tips: [
-            "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
-            "اختيار الخامات, الأثاث, وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
-            "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."
-        ] 
+        ar: {
+            title: "مهندس ديكور / مصمم داخلي", 
+            tips: [
+                "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
+                "اختيار الخامات, الأثاث, وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
+                "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."
+            ]
+        },
+        en: {
+            title: "Interior Designer",
+            tips: [
+                "Preparing 2D and 3D layouts (3D Max, AutoCAD) with supreme engineering precision and aesthetics.",
+                "Selecting materials, furniture, and lighting setups aligned with client budget and requirements.",
+                "On-site supervision to guarantee real-world execution strictly matches structural blueprints."
+            ]
+        }
     }
 };
 
@@ -408,7 +439,11 @@ function showJobSuggestions() {
 
     if (matchedJob) {
         suggestionsList.innerHTML = ''; 
-        matchedJob.tips.forEach(tip => {
+        
+        // 🌐 فحص اللغة المفعّلة للتطبيق حالياً لجلب النصائح المتوافقة معها (ar أو en)
+        const currentLangTips = matchedJob[currentLang] ? matchedJob[currentLang].tips : matchedJob['ar'].tips;
+        
+        currentLangTips.forEach(tip => {
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'suggestion-item';
@@ -862,13 +897,12 @@ function updateUILanguage(lang) {
 // 🎉 تهيئة الأحداث والـ DOM والمزايا الجديدة
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
-    // 🌐 [الميزة الجديدة] الاكتشاف التلقائي الذكي للغة متصفح الزائر الأجنبي
+    // 🌐 الاكتشاف التلقائي الذكي للغة متصفح الزائر الأجنبي
     const savedLang = localStorage.getItem('app_language');
     if (savedLang) {
         updateUILanguage(savedLang); // تفعيل اللغة المحفوظة مسبقاً للزائر العائد
     } else {
         const browserLang = navigator.language || navigator.userLanguage;
-        // إذا كان المتصفح لغته غير العربية (مثل en, fr, de إلخ) يتم قلب الواجهة تلقائياً للإنجليزية فوراً
         if (browserLang && !browserLang.startsWith('ar')) {
             updateUILanguage('en');
         } else {
@@ -942,7 +976,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
-    // 🛡️ معالجة الـ PDF الفاخر ثنائي الاتجاه
+    // ⚠️ معالجة الـ PDF الفاخر ثنائي الاتجاه
     // ==========================================
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
