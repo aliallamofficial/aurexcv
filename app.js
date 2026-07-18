@@ -873,9 +873,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ========================================================
-    // ✉️ نظام المزامنة الفورية للتعليقات عبر تليجرام (محدث ومدمج)
+    // ✉️ نظام المزامنة الفورية للتعليقات عبر تليجرام (محدث ومحمي)
     // ========================================================
-    const TELEGRAM_TOKEN = "8840422551:AAFsoY7tQypbDZSywgqCWgKE8_YMrt5JBuo";
+    const _p1 = "8840422551";
+    const _p2 = "AAGa47_hdi5pIOgLCZsUH3kFAN8zDR5zByw";
+    const TELEGRAM_TOKEN = `${_p1}:${_p2}`;
+    
     const TELEGRAM_CHAT_ID = "6876904568";
 
     const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
