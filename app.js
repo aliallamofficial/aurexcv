@@ -74,7 +74,7 @@ const translations = {
         cloneSharedCVBtn: "✍️ Edit this resume or create a new one",
         tourStep1: "Step 1 of 3",
         tourTitleText: "Welcome to your new career future!",
-        tourDescText: "Let's take you on a quick 1-minute tour to learn how to craft an unbeatable resume using AI.",
+        tourDescText: "Let's take you on a quick 1-minute tour to learn how to build an invincible resume using AI.",
         tourStartBtn: "Start Journey Now ←",
         tourSkipBtn: "Skip",
         settingsHeaderTitle: "⚙️ Platform Customization & Premium Layout",
@@ -130,7 +130,7 @@ const translations = {
         holderPhone: "e.g., +201149117724",
         holderEmail: "info@example.com",
         holderSkills: "e.g., Problem Solving, Photoshop, Excel, Time Management...",
-        holderExperience: "Write your previous duties and achievements or click on the ready-made suggestions that will appear above automatically...",
+        holderExperience: "Write your previous duties and achievements or click on the ready-made suggestions that will appear automatically...",
         holderJobDesc: "Paste the full text of the job advertisement you want to apply for here...",
         holderOutput: "Fill in your details on the left/right and click 'Optimize with AI' to render the highly attractive professional text ready for ATS bypass..."
     }
@@ -528,7 +528,7 @@ function checkJobMatch() {
 }
 
 // ==========================================
-// 🎙️ ميزة الإملاء الصوتي الذكي (Speech Recognition)
+// 27 ميزة الإملاء الصوتي الذكي (Speech Recognition)
 // ==========================================
 function initVoiceDictation() {
     const voiceBtn = document.getElementById('voiceDictationBtn');
@@ -746,7 +746,7 @@ function generateBackupStaticCV(data) {
         return `========================================\nFULL NAME: ${data.name}\nJOB TITLE: ${data.jobTitle}\n========================================\n\n📍 CONTACT INFO:\n--------------------\n📱 Phone: ${data.phone}\n📧 Email: ${data.email}\n\n🎯 PROFESSIONAL SUMMARY:\n--------------------\nAmbitious professional looking to utilize my comprehensive skills as a ${data.jobTitle} in an outstanding workspace. Focused on workflows optimization.\n\n💼 WORK CHRONOLOGY & EXPERIENCES:\n--------------------\n${formattedExp}\n\n🛠️ SKILLS & CORE COMPETENCIES:\n--------------------\n${skillsBullets}\n\n========================================\n⚡ Formatted for 100% global ATS compatibility.`;
     }
 
-    return `========================================\nالاسم الكامل: ${data.name}\nالمسمى الوظيفي: ${data.jobTitle}\n========================================\n\n📍 معلومات الاتصال:\n--------------------\n📱 الهاتف: ${data.phone}\n📧 البريد الإلكتروني: ${data.email}\n\n🎯 الهدف المهني:\n--------------------\nساعٍ لتوظيف مهاراتي وخبراتي كـ ${data.jobTitle} في بيئة عمل متميزة تدعم الابتكار والاحترافية، مع تحقيق أعلى مستويات الإنتاجية العالية لمطابقة نظام الـ ATS.\n\n💼 الخبرات المهنية والعملية:\n--------------------\n${formattedExp}\n\n🛠️ المهارات الأساسية والتقنية:\n--------------------\n${skillsBullets}\n\n========================================\n⚡ تم تهيئة وتنسيق هذا المستند محلياً للتوافق التام مع فحص الـ ATS.`;
+    return `========================================\nالاسم الكامل: ${data.name}\nالمسمى الوظيفي: ${data.jobTitle}\n========================================\n\n📍 معلومات الاتصال:\n--------------------\n📱 الهاتف: ${data.phone}\n📧 البريد الإلكتروني: ${data.email}\n\n🎯 الهدف المهني:\n--------------------\nساعٍ لتوظيف مهاراتي وخبراتي كـ ${data.jobTitle} في بيئة عمل متميزة تدعم الابتكار والاحترافية، مع تحقيق أعلى مستويات الإنتاجية العالية لمطابقة متمتطلبات سوق العمل ونظام الـ ATS.\n\n💼 الخبرات المهنية والعملية:\n--------------------\n${formattedExp}\n\n🛠️ المهارات الأساسية والتقنية:\n--------------------\n${skillsBullets}\n\n========================================\n⚡ تم تهيئة وتنسيق هذا المستند محلياً للتوافق التام مع فحص الـ ATS.`;
 }
 
 // ========================================================
@@ -976,7 +976,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
-    // ⚠️ معالجة الـ PDF الفاخر ثنائي الاتجاه
+    // ⚠️ معالجة الـ PDF الفاخر ثنائي الاتجاه - (تم الإصلاح والتطوير)
     // ==========================================
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
@@ -1001,17 +1001,34 @@ document.addEventListener("DOMContentLoaded", function () {
             this.disabled = true;
             
             const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
+            
+            // إنشاء حاوية مرئية للمكتبة ولكن خارج نطاق رؤية المستخدم البدنية (بدون إخفاء الشفافية)
             const printElement = document.createElement('div');
-            printElement.style.cssText = `position: absolute !important; top: 0 !important; left: 0 !important; z-index: -1 !important; opacity: 0.01 !important; width: 800px !important; padding: 50px !important; color: #000000 !important; background-color: #ffffff !important; font-family: ${selectedFont} !important; line-height: 1.8 !important; direction: ${currentLang === 'ar' ? 'rtl' : 'ltr'} !important; text-align: ${currentLang === 'ar' ? 'right' : 'left'} !important; font-size: 15px !important; display: block !important; box-sizing: border-box !important; height: auto !important;`;
+            printElement.style.cssText = `
+                position: fixed !important;
+                top: 0 !important;
+                left: -9999px !important;
+                width: 700px !important;
+                padding: 40px !important;
+                color: #000000 !important;
+                background-color: #ffffff !important;
+                font-family: ${selectedFont} !important;
+                line-height: 1.6 !important;
+                direction: ${currentLang === 'ar' ? 'rtl' : 'ltr'} !important;
+                text-align: ${currentLang === 'ar' ? 'right' : 'left'} !important;
+                font-size: 14px !important;
+                box-sizing: border-box !important;
+            `;
             
             let htmlContent = '';
             outputBox.value.split('\n').forEach(line => {
                 const trimmed = line.trim();
-                if (trimmed === "") htmlContent += '<br>';
-                else if (trimmed.startsWith('==') || trimmed.startsWith('__')) {
-                    htmlContent += `<h3 style="border-bottom: 2px solid #1e293b; padding-bottom: 5px; margin-top: 22px; color: #0f172a !important; font-family: ${selectedFont} !important; font-size: 18px;">${trimmed.replace(/^[=_]+/g, '')}</h3>`;
+                if (trimmed === "") {
+                    htmlContent += '<br>';
+                } else if (trimmed.startsWith('==') || trimmed.startsWith('__')) {
+                    htmlContent += `<h3 style="border-bottom: 2px solid #1e293b; padding-bottom: 5px; margin-top: 20px; margin-bottom: 10px; color: #0f172a !important; font-family: ${selectedFont} !important; font-size: 18px; font-weight: bold;">${trimmed.replace(/^[=_]+/g, '')}</h3>`;
                 } else {
-                    htmlContent += `<p style="margin: 6px 0; color: #1e293b !important; font-family: ${selectedFont} !important; font-size: 14.5px;">${trimmed}</p>`;
+                    htmlContent += `<p style="margin: 4px 0; color: #1e293b !important; font-family: ${selectedFont} !important; font-size: 14px; white-space: pre-wrap;">${trimmed}</p>`;
                 }
             });
             
@@ -1019,8 +1036,10 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.appendChild(printElement);
             
             const options = { 
-                margin: [15, 15, 15, 15], filename: data.name ? `${data.name}_CV.pdf` : 'My_CV.pdf', image: { type: 'jpeg', quality: 0.98 }, 
-                html2canvas: { scale: 2.2, useCORS: true, logging: false, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0, windowWidth: 800 }, 
+                margin: [10, 15, 10, 15], 
+                filename: data.name ? `${data.name}_CV.pdf` : 'My_CV.pdf', 
+                image: { type: 'jpeg', quality: 0.98 }, 
+                html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' }, 
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
             
@@ -1028,11 +1047,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 html2pdf().set(options).from(printElement).save().then(() => { 
                     if (printElement.parentNode) printElement.parentNode.removeChild(printElement);
                     downloadPdfBtn.innerHTML = originalBtnText; downloadPdfBtn.disabled = false; 
-                }).catch(() => { 
+                }).catch((err) => { 
+                    console.error("PDF generation error:", err);
                     if (printElement.parentNode) printElement.parentNode.removeChild(printElement);
                     downloadPdfBtn.innerHTML = originalBtnText; downloadPdfBtn.disabled = false; 
                 });
-            }, 400); 
+            }, 300); 
         });
     }
 
