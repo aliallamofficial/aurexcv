@@ -976,7 +976,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
-    // ⚠️ معالجة الـ PDF الفاخر ثنائي الاتجاه - (تم الإصلاح والتطوير)
+    // ⚠️ معالجة الـ PDF الفاخر ثنائي الاتجاه - (تحديث الأمان والاستقرار النهائي)
     // ==========================================
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
@@ -1002,13 +1002,14 @@ document.addEventListener("DOMContentLoaded", function () {
             
             const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
             
-            // إنشاء حاوية مرئية للمكتبة ولكن خارج نطاق رؤية المستخدم البدنية (بدون إخفاء الشفافية)
+            // إنشاء حاوية مرئية للمتصفح 100% ولكن مخفية خلف الطبقات الأخرى تماماً لضمان عدم ظهور صفحة بيضاء
             const printElement = document.createElement('div');
             printElement.style.cssText = `
-                position: fixed !important;
+                position: absolute !important;
                 top: 0 !important;
-                left: -9999px !important;
-                width: 700px !important;
+                left: 0 !important;
+                z-index: -9999 !important;
+                width: 790px !important;
                 padding: 40px !important;
                 color: #000000 !important;
                 background-color: #ffffff !important;
@@ -1028,7 +1029,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else if (trimmed.startsWith('==') || trimmed.startsWith('__')) {
                     htmlContent += `<h3 style="border-bottom: 2px solid #1e293b; padding-bottom: 5px; margin-top: 20px; margin-bottom: 10px; color: #0f172a !important; font-family: ${selectedFont} !important; font-size: 18px; font-weight: bold;">${trimmed.replace(/^[=_]+/g, '')}</h3>`;
                 } else {
-                    htmlContent += `<p style="margin: 4px 0; color: #1e293b !important; font-family: ${selectedFont} !important; font-size: 14px; white-space: pre-wrap;">${trimmed}</p>`;
+                    htmlContent += `<p style="margin: 6px 0; color: #1e293b !important; font-family: ${selectedFont} !important; font-size: 14px; white-space: pre-wrap; word-break: break-word;">${trimmed}</p>`;
                 }
             });
             
@@ -1036,13 +1037,19 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.appendChild(printElement);
             
             const options = { 
-                margin: [10, 15, 10, 15], 
+                margin: [15, 15, 15, 15], 
                 filename: data.name ? `${data.name}_CV.pdf` : 'My_CV.pdf', 
                 image: { type: 'jpeg', quality: 0.98 }, 
-                html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' }, 
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true, 
+                    logging: false, 
+                    backgroundColor: '#ffffff'
+                }, 
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
             
+            // زيادة المهلة إلى 500 مللي ثانية لضمان أن المتصفح انتهى تماماً من رسم العنصر
             setTimeout(() => {
                 html2pdf().set(options).from(printElement).save().then(() => { 
                     if (printElement.parentNode) printElement.parentNode.removeChild(printElement);
@@ -1052,7 +1059,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (printElement.parentNode) printElement.parentNode.removeChild(printElement);
                     downloadPdfBtn.innerHTML = originalBtnText; downloadPdfBtn.disabled = false; 
                 });
-            }, 300); 
+            }, 500); 
         });
     }
 
