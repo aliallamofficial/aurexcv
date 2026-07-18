@@ -814,7 +814,7 @@ function checkAndLoadSharedLink() {
 }
 
 // ==========================================
-// 📝 ميزة التصدير المباشر بصيغة Word (.doc)
+// 📝 ميزة التدوين المباشر بصيغة Word (.doc)
 // ==========================================
 function exportToWord() {
     const outputBox = document.getElementById('outputBox');
