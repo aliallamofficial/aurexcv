@@ -1,4 +1,144 @@
 // ========================================================
+// 🌐 قاموس الترجمة العالمي والديناميكي (Internationalization)
+// ========================================================
+const translations = {
+    ar: {
+        appTitleSEO: "عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً | انشاء سي في ATS احترافي جاهز - Ali CV Builder",
+        sharedViewText: "👀 أنت تتصفح الآن سيرة ذاتية مشتركة في وضع العرض فقط.",
+        cloneSharedCVBtn: "✍️ تعديل هذه السيرة أو إنشاء واحدة جديدة",
+        tourStep1: "خطوة 1 من 3",
+        tourTitleText: "مرحباً بك في مستقبلك المهني الجديد!",
+        tourDescText: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.",
+        tourStartBtn: "ابدأ الرحلة الآن ←",
+        tourSkipBtn: "تخطي",
+        settingsHeaderTitle: "⚙️ تخصيص المنصة والمظهر الفاخر",
+        themeLabel: "🎨 مظهر التطبيق الكوني (Themes):",
+        themeDefault: "🌌 الوضع الكوني العميق (افتراضي)",
+        themeRoyal: "👑 الأزرق الملكي الفاخر",
+        themeEmerald: "💚 الأخضر الزمردي الخلاب",
+        themeCyber: "🔮 الأرجواني السايبربانك",
+        fontLabel: "✍️ نمط خط السيرة الذاتية (CV Fonts):",
+        creativeTitle: "✨ مظهر التصميم الإبداعي الفاخر",
+        creativeDesc: "ألوان مشعة وتأثير نيون فريد للواجهة",
+        notifBtn: "🔔 تفعيل إشعارات الفرص الحرة",
+        shareBtn: "🔗 مشاركة المنصة السحرية",
+        menuCustomize: "🎨 تخصيص المظهر والخطوط",
+        menuLang: "🔄 English (الانتقال للإنجليزية)",
+        menuClear: "🗑️ مسح وإعادة تعيين الحقول",
+        mainTitle: "إنشاء سيرة ذاتية احترافية بالذكاء الاصطناعي",
+        brandSub: "Ali CV Builder Pro • المنصة الذكية المتكاملة",
+        appSubtitle: "صمّم مستندك المهني القادم بأحدث تقنيات الذكاء الاصطناعي التوليدي. قوالب ذكية مجهزة لـ عمل سي في احترافي جاهز للتعديل والطباعة فوراً، مخصصة بالكامل لتخطي خوارزميات فحص الـ ATS العالمية بنسبة 100% وبدون الحاجة لإنشاء حساب أو تسجيل بياناتك.",
+        atsAdvisorTitle: "مستشار الـ ATS الذكي اللحظي:",
+        indBasic: "👤 البيانات الأساسية",
+        indSkills: "🛠️ مهارات كافية",
+        indNum: "📊 أرقام وإنجازات",
+        indWords: "⚡ أفعال حركية",
+        scoreStatusEmpty: "⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي...",
+        inputSectionTitle: "📝 بياناتك المهنية والشخصية لإعداد السي في",
+        stepIndicator1: "خطوة 1 من 2",
+        labelName: "👤 الاسم الكامل",
+        labelJobTitle: "🎯 المسمى الوظيفي المستهدف",
+        sugHeader: "💡 اقتراحات مهام مجهزة للـ ATS لمجالك:",
+        badgeNew: "جديد",
+        labelPhone: "📞 رقم الهاتف",
+        labelEmail: "📧 البريد الإلكتروني",
+        labelSkills: "🛠️ المهارات التقنية والشخصية (افصل بينها بفاصلة ,)",
+        labelExperience: "💼 الخبرات المهنية والمشاريع السابقة",
+        voiceBtnText: "🎤 إملاء ذكي",
+        matchTitle: "مطابقة إعلان الوظيفة الذاتي (ATS Match)",
+        matchDesc: "حلل الكلمات الدلالية الناقصة فوراً",
+        matchBtn: "📊 احسب نسبة التطابق ونقاط الضعف",
+        btnGenSummary: "🧠 توليد ملخص مهني احترافي فوراً",
+        btnOptimize: "🚀 تحسين وإعادة الصياغة بالذكاء الاصطناعي",
+        resultSectionTitle: "✨ مستندك المهني الجاهز",
+        badgeReady: "A4 جاهز للطباعة",
+        btnPdf: "📥 تحميل بصيغة PDF الاحترافية",
+        btnWord: "📝 تصدير بصيغة Word (.doc)",
+        btnShareLink: "🔗 مشاركة برابط مباشر",
+        tipHeaderTitle: "نصائح إضافية لكيفية عمل نموذج سيرة ذاتية ممتاز:",
+        tipTextContent: "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد الـ ATS وضمن أهم الكلمات الدلالية للوظيفة.",
+        footerRights: "جميع الحقوق محفوظة © 2026",
+        footerDesc: "تم تطويره وتحديثه بكفاءة فائقة وميزات ذكاء اصطناعي ثورية لتحسين السير الذاتية وتصدر محركات البحث.",
+        holderName: "مثال: علي علام",
+        holderJobTitle: "مثال: مصمم واجهات مستخدم، مهندس برمجيات...",
+        holderPhone: "مثال: 01149117724",
+        holderEmail: "info@example.com",
+        holderSkills: "مثال: حل المشكلات, Photoshop, Excel, إدارة الوقت...",
+        holderExperience: "اكتب مسؤولياتك وإنجازاتك السابقة أو انقر على الاقتراحات الجاهزة التي ستظهر بالأعلى تلقائياً عند كتابة مسماك الوظيفي...",
+        holderJobDesc: "الصق نص إعلان الوظيفة التي ترغب في التقدم إليها هنا بالكامل...",
+        holderOutput: "اكتب بياناتك على اليمين ثم اضغط على 'تحسين بالذكاء الاصطناعي' ليظهر هنا النص الإبداعي فائق الجاذبية والجاهز تماماً للطباعة الورقية والتخطي الفوري للـ ATS..."
+    },
+    en: {
+        appTitleSEO: "Free AI Resume Builder & ATS Checker | Create Professional CV - Ali CV Builder",
+        sharedViewText: "👀 You are viewing a shared resume in read-only mode.",
+        cloneSharedCVBtn: "✍️ Edit this resume or create a new one",
+        tourStep1: "Step 1 of 3",
+        tourTitleText: "Welcome to your new career future!",
+        tourDescText: "Let's take you on a quick 1-minute tour to learn how to craft an unbeatable resume using AI.",
+        tourStartBtn: "Start Journey Now ←",
+        tourSkipBtn: "Skip",
+        settingsHeaderTitle: "⚙️ Platform Customization & Premium Layout",
+        themeLabel: "🎨 App Cosmic Themes:",
+        themeDefault: "🌌 Deep Space Cosmic (Default)",
+        themeRoyal: "👑 Luxury Royal Blue",
+        themeEmerald: "💚 Stunning Emerald Green",
+        themeCyber: "🔮 Cyberpunk Purple",
+        fontLabel: "✍️ Resume Fonts (CV Fonts):",
+        creativeTitle: "✨ Luxury Creative Design",
+        creativeDesc: "Radiant colors and unique neon effects for the interface",
+        notifBtn: "🔔 Enable Freelance Opportunities Notifications",
+        shareBtn: "🔗 Share the Magical Platform",
+        menuCustomize: "🎨 Customize Look & Fonts",
+        menuLang: "🔄 العربية (Switch to Arabic)",
+        menuClear: "🗑️ Reset & Clear All Fields",
+        mainTitle: "Create a Professional Resume with AI",
+        brandSub: "Ali CV Builder Pro • Integrated Smart Platform",
+        appSubtitle: "Design your next professional document with the latest generative AI technologies. Smart templates prepared to create a professional resume ready for immediate editing and printing, completely optimized to bypass global ATS algorithms by 100% without registration.",
+        atsAdvisorTitle: "Real-time Smart ATS Advisor:",
+        indBasic: "👤 Basic Information",
+        indSkills: "🛠️ Sufficient Skills",
+        indNum: "📊 Numbers & Achievements",
+        indWords: "⚡ Action Verbs",
+        scoreStatusEmpty: "⚠️ Fill in your name and target job title to start the smart analytical tracking...",
+        inputSectionTitle: "📝 Your Professional & Personal Data for CV Creation",
+        stepIndicator1: "Step 1 of 2",
+        labelName: "👤 Full Name",
+        labelJobTitle: "🎯 Target Job Title",
+        sugHeader: "💡 Ready-made ATS duty suggestions for your field:",
+        badgeNew: "New",
+        labelPhone: "📞 Phone Number",
+        labelEmail: "📧 Email Address",
+        labelSkills: "🛠️ Technical & Soft Skills (Separate with a comma ,)",
+        labelExperience: "💼 Professional Experience & Past Projects",
+        voiceBtnText: "🎤 Smart Dictation",
+        matchTitle: "Automated Job Description Matching (ATS Match)",
+        matchDesc: "Analyze missing keywords immediately",
+        matchBtn: "📊 Calculate Match Percentage & Weaknesses",
+        btnGenSummary: "🧠 Generate Professional Summary Instantly",
+        btnOptimize: "🚀 Optimize & Rewrite with AI",
+        resultSectionTitle: "✨ Your Ready Professional Document",
+        badgeReady: "A4 Ready to Print",
+        btnPdf: "📥 Download Professional PDF",
+        btnWord: "📝 Export to Word (.doc)",
+        btnShareLink: "🔗 Share Directly via Link",
+        tipHeaderTitle: "Extra Tips on How to Create an Excellent Resume:",
+        tipTextContent: "Avoid putting your profile picture if you are applying to international corporations that completely rely on ATS.",
+        footerRights: "All Rights Reserved © 2026",
+        footerDesc: "Developed and updated with ultra-efficiency and revolutionary AI features for resume enhancement and SEO dominance.",
+        holderName: "e.g., Ali Allam",
+        holderJobTitle: "e.g., UI/UX Designer, Software Engineer...",
+        holderPhone: "e.g., +201149117724",
+        holderEmail: "info@example.com",
+        holderSkills: "e.g., Problem Solving, Photoshop, Excel, Time Management...",
+        holderExperience: "Write your previous duties and achievements or click on the ready-made suggestions that will appear above automatically...",
+        holderJobDesc: "Paste the full text of the job advertisement you want to apply for here...",
+        holderOutput: "Fill in your details on the left/right and click 'Optimize with AI' to render the highly attractive professional text ready for ATS bypass..."
+    }
+};
+
+let currentLang = 'ar';
+
+// ========================================================
 // 💡 مصفوفة النصائح الجاهزة للخبير
 // ========================================================
 const cvTips = [
@@ -12,7 +152,7 @@ const cvTips = [
 const jobGuidelines = {
     "graphic_designer": { 
         title: "مصمم جرافيك", 
-        keywords: ["مصمم", "جرافيك", "designer"], 
+        keywords: ["مصمم", "جرافيك", "designer", "graphic"], 
         tips: [
             "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
             "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
@@ -33,7 +173,7 @@ const jobGuidelines = {
         keywords: ["ديكور", "داخلي", "interior"], 
         tips: [
             "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
-            "اختيار الخامات, الأثاث, وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
+            "اختيار الخامات, الأثاث, وتنسيق الإضاءة بما يتوافق مع ميزانية العميل وااحتياجاته.",
             "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."
         ] 
     }
@@ -50,11 +190,18 @@ function displayRandomLiveTip() {
 // ========================================================
 // 🚀 نظام جولة التطبيق والتحكم في ظهور الواجهات
 // ========================================================
-const tourSteps = [
+const tourStepsAr = [
     { icon: "🚀", title: "مرحباً بك في مستقبلك المهني الجديد!", desc: "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.", btnText: "ابدأ الرحلة الآن ←" },
     { icon: "📊", title: "مستشار الـ ATS الذكي لحظة بلحظة", desc: "أثناء كتابة بياناتك، سيقوم العداد الذكي بتقييم قوة مستندك وإعطائك نصائح حية لتخطي أنظمة الفلترة العالمية بنجاح.", btnText: "التالي مذهل كالعادة ←" },
     { icon: "🎯", title: "مطابقة إعلان الوظيفة", desc: "الصق إعلان الوظيفة واعرف نسبة تطابقك والكلمات الدلالية الناقصة فوراً لتتجاوز الفحص بكفاءة.", btnText: "إنهاء الجولة والدخول للتطبيق 🎉" }
 ];
+
+const tourStepsEn = [
+    { icon: "🚀", title: "Welcome to your new career future!", desc: "Let's take you on a quick 1-minute tour to learn how to build an invincible resume using AI.", btnText: "Start Journey Now ←" },
+    { icon: "📊", title: "Real-time Smart ATS Advisor", desc: "While writing your details, the smart counter evaluates your document's power and drops live tips to pass filtering systems successfully.", btnText: "Next is Awesome ←" },
+    { icon: "🎯", title: "Job Description Matching", desc: "Paste the job post description and instantly see your match score along with missing keywords.", btnText: "Finish Tour & Enter App 🎉" }
+];
+
 let currentTourStep = 0;
 let isGenerating = false;
 
@@ -70,7 +217,8 @@ function initAppTour() {
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             currentTourStep++;
-            if (currentTourStep < tourSteps.length) { 
+            const activeTourSteps = currentLang === 'ar' ? tourStepsAr : tourStepsEn;
+            if (currentTourStep < activeTourSteps.length) { 
                 updateTourContent(); 
             } else { 
                 closeTour(); 
@@ -97,8 +245,13 @@ function initAppTour() {
 }
 
 function updateTourContent() {
-    const stepData = tourSteps[currentTourStep];
-    document.getElementById('tourProgress') && (document.getElementById('tourProgress').innerText = `خطوة ${currentTourStep + 1} من ${tourSteps.length}`);
+    const activeTourSteps = currentLang === 'ar' ? tourStepsAr : tourStepsEn;
+    const stepData = activeTourSteps[currentTourStep];
+    const totalSteps = activeTourSteps.length;
+    
+    const stepProgressText = currentLang === 'ar' ? `خطوة ${currentTourStep + 1} من ${totalSteps}` : `Step ${currentTourStep + 1} of ${totalSteps}`;
+
+    document.getElementById('tourProgress') && (document.getElementById('tourProgress').innerText = stepProgressText);
     document.getElementById('tourIcon') && (document.getElementById('tourIcon').innerText = stepData.icon);
     document.getElementById('tourTitle') && (document.getElementById('tourTitle').innerText = stepData.title);
     document.getElementById('tourDescription') && (document.getElementById('tourDescription').innerText = stepData.desc);
@@ -126,7 +279,7 @@ function closeTour() {
 }
 
 // ==========================================
-// 🔥 مستشار ATS v2.1 (محدث بالكلمات القوية)
+// 🔥 مستشار ATS v2.5 العالمي ثنائي اللغة
 // ==========================================
 function initCVScoreGauge() {
     const inputs = ['name', 'jobTitle', 'experience', 'skills'];
@@ -159,7 +312,7 @@ function calculateCVScore() {
         score += 25;
         indBasic?.classList.add('achieved');
     } else {
-        feedback.push("اكتب الاسم الكامل والمسمى الوظيفي المستهدف");
+        feedback.push(currentLang === 'ar' ? "اكتب الاسم الكامل والمسمى الوظيفي المستهدف" : "Fill in your full name and target job title");
         indBasic?.classList.remove('achieved');
     }
     
@@ -171,34 +324,38 @@ function calculateCVScore() {
         score += 12;
         indSkills?.classList.remove('achieved');
     } else {
-        feedback.push("أضف 5 مهارات على الأقل مفصولة بفاصلة");
+        feedback.push(currentLang === 'ar' ? "أضف 5 مهارات على الأقل مفصولة بفاصلة" : "Add at least 5 skills separated by commas");
         indSkills?.classList.remove('achieved');
     }
     
     if (experience.length > 40) {
         score += 15;
-        if (/\d+%|\d+ جنيه|\d+ عميل|\d+ مشروع|\d+ دولار/.test(experience)) {
+        // دعم فحص الأرقام محلياً وعالمياً
+        if (/\d+%|\d+ جنيه|\d+ عميل|\d+ مشروع|\d+ دولار|\d+%\s*|\d+\s*projects|\d+\s*clients|\d+\s*\$/.test(experience)) {
             score += 20;
             indNum?.classList.add('achieved');
         } else {
-            feedback.push("أضف أرقاماً تدعم إنجازاتك السابقة (مثال: %30، 5 مشاريع)");
+            feedback.push(currentLang === 'ar' ? "أضف أرقاماً تدعم إنجازاتك السابقة (مثال: %30، 5 مشاريع)" : "Add metrics/numbers supporting achievements (e.g., 30%, 5 projects)");
             indNum?.classList.remove('achieved');
         }
         
+        // كلمات دلالية وأفعال حركة مدمجة للغتين العربية والإنجليزية
         const strongWords = [
             'نفذت', 'طورت', 'قاد', 'زودت', 'حققت', 'قللت', 'أدار', 'أنشأ', 'صممت', 'أشرفت',
-            'قمت بـ', 'ساهمت في', 'طورت نظام', 'أطلقت', 'حسّنت', 'وجهت', 'نسقت'
+            'قمت بـ', 'ساهمت في', 'طورت نظام', 'أطلقت', 'حسّنت', 'وجهت', 'نسقت',
+            'developed', 'achieved', 'managed', 'led', 'created', 'designed', 'improved',
+            'optimized', 'launched', 'directed', 'implemented', 'increased', 'reduced'
         ];
-        if (strongWords.some(word => experience.includes(word))) {
+        if (strongWords.some(word => experience.toLowerCase().includes(word))) {
             score += 15;
             indWords?.classList.add('achieved');
         } else {
-            feedback.push("ابدأ مسؤولياتك بكلمات قوية: (حققت، ساهمت في، طورت نظام)");
+            feedback.push(currentLang === 'ar' ? "ابدأ مسؤولياتك بكلمات قوية: (حققت، ساهمت في، طورت نظام)" : "Start duties with powerful action verbs (e.g., Achieved, Developed, Managed)");
             indWords?.classList.remove('achieved');
         }
     } else if (experience.length > 10) { 
         score += 10; 
-        feedback.push("فصّل مسؤولياتك الوظيفية للحصول على تقييم أعلى"); 
+        feedback.push(currentLang === 'ar' ? "فصّل مسؤولياتك الوظيفية للحصول على تقييم أعلى" : "Detail your job responsibilities for a higher score"); 
         indNum?.classList.remove('achieved');
         indWords?.classList.remove('achieved');
     } else {
@@ -219,16 +376,16 @@ function calculateCVScore() {
         
         if (score === 0) { 
             scoreFill.style.background = '#475569'; 
-            scoreStatus.innerHTML = '⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي...'; 
+            scoreStatus.innerHTML = currentLang === 'ar' ? '⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي...' : '⚠️ Fill in your name and target job title to start smart analytical tracking...'; 
         } else if (score < 40) { 
             scoreFill.style.background = 'linear-gradient(90deg, #ef4444, #f87171)'; 
-            scoreStatus.innerHTML = `⚠️ <strong>ضعيف:</strong> ${feedback[0] || 'أكمل البيانات الأساسية'}`; 
+            scoreStatus.innerHTML = currentLang === 'ar' ? `⚠️ <strong>ضعيف:</strong> ${feedback[0] || 'أكمل البيانات الأساسية'}` : `⚠️ <strong>Weak:</strong> ${feedback[0] || 'Complete basic data'}`; 
         } else if (score < 75) { 
             scoreFill.style.background = 'linear-gradient(90deg, #f59e0b, #fbbf24)'; 
-            scoreStatus.innerHTML = `👍 <strong>جيد:</strong> ${feedback[0] || 'حسّن التفاصيل للحصول على النتيجة الكاملة'}`; 
+            scoreStatus.innerHTML = currentLang === 'ar' ? `👍 <strong>جيد:</strong> ${feedback[0] || 'حسّن التفاصيل للحصول على النتيجة الكاملة'}` : `👍 <strong>Good:</strong> ${feedback[0] || 'Improve details for a full score'}`; 
         } else { 
             scoreFill.style.background = 'linear-gradient(90deg, #10b981, #34d399)'; 
-            scoreStatus.innerHTML = '🔥 <strong>ممتاز!</strong> سيرتك الذاتية متطابقة ومهيأة لتجاوز أقوى أنظمة الـ ATS بنجاح.'; 
+            scoreStatus.innerHTML = currentLang === 'ar' ? '🔥 <strong>ممتاز!</strong> سيرتك الذاتية متطابقة ومهيأة لتجاوز أقوى أنظمة الـ ATS بنجاح.' : '🔥 <strong>Excellent!</strong> Your resume is optimized to successfully bypass toughest ATS networks.'; 
         }
     }
 }
@@ -291,14 +448,20 @@ function checkJobMatch() {
     const experience = document.getElementById('experience')?.value.trim() || "";
     const resultDiv = document.getElementById('matchResult');
     
-    if (!jobDesc) { alert("الرجاء لصق نص إعلان الوظيفة أولاً للتحليل!"); return; }
-    if (!skills && !experience) { alert("الرجاء تعبئة المهارات أو الخبرات للتحقق من التطابق!"); return; }
+    if (!jobDesc) { 
+        alert(currentLang === 'ar' ? "الرجاء لصق نص إعلان الوظيفة أولاً للتحليل!" : "Please paste the job description text first for analysis!"); 
+        return; 
+    }
+    if (!skills && !experience) { 
+        alert(currentLang === 'ar' ? "الرجاء تعبئة المهارات أو الخبرات للتحقق من التطابق!" : "Please fill out skills or experience to check matching!"); 
+        return; 
+    }
     
     const cvText = (skills + " " + experience).toLowerCase();
     const jobText = jobDesc.toLowerCase();
     
     const keywords = jobText.match(/[a-zA-Z0-9\u0600-\u06FF]{3,}/g) || [];
-    const stopWords = ['في', 'من', 'على', 'إلى', 'مع', 'the', 'and', 'for', 'with', 'هذا', 'هذه', 'بين'];
+    const stopWords = ['في', 'من', 'على', 'إلى', 'مع', 'the', 'and', 'for', 'with', 'هذا', 'هذه', 'بين', 'this', 'that', 'from'];
     const uniqueKeywords = [...new Set(keywords)].filter(w => w.length > 3 && !stopWords.includes(w));
     
     let matched = 0; 
@@ -310,18 +473,22 @@ function checkJobMatch() {
     const matchPercent = uniqueKeywords.length > 0 ? Math.round((matched / uniqueKeywords.length) * 100) : 0;
     
     if (resultDiv) {
+        const titleLabel = currentLang === 'ar' ? 'نسبة ملاءمة الكلمات المفتاحية:' : 'Keyword Matching Rate:';
+        const missingText = currentLang === 'ar' ? '⚠️ الكلمات الموصى بإضافتها لرفع النسبة:' : '⚠️ Recommended keywords to add to increase score:';
+        const clearText = currentLang === 'ar' ? '✅ مذهل! السيرة الذاتية متوافقة بشكل كامل وخارقة للمعايير.' : '✅ Incredible! The resume is fully compatible and outperforms global standards.';
+
         resultDiv.innerHTML = `
             <div style="margin-top:16px; padding:16px; background: rgba(31, 41, 55, 0.7); border-radius:12px; border:1px solid rgba(255,255,255,0.05);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="font-size:13.5px; font-weight:700;">نسبة ملاءمة الكلمات المفتاحية:</span>
+                    <span style="font-size:13.5px; font-weight:700;">${titleLabel}</span>
                     <span style="font-size:16px; font-weight:700; color:${matchPercent > 70 ? '#10b981' : matchPercent > 40 ? '#f59e0b' : '#ef4444'};">${matchPercent}%</span>
                 </div>
                 <div style="height:8px; background:#1f2937; border-radius:10px; overflow:hidden; margin-bottom:12px;">
                     <div style="height:100%; width:${matchPercent}%; background:linear-gradient(90deg, #ec4899, #8b5cf6); border-radius:10px; transition:width 0.6s;"></div>
                 </div>
                 ${missing.length > 0 ?
-                `<p style="color:#fbbf24; font-size:12.5px; line-height:1.6;">⚠️ الكلمات الموصى بإضافتها لرفع النسبة: <strong style="color:white;">${missing.slice(0, 5).join(', ')}</strong></p>` :
-                `<p style="color:#10b981; font-size:12.5px; line-height:1.6;">✅ مذهل! السيرة الذاتية متوافقة بشكل كامل وخارقة للمعايير.</p>`}
+                `<p style="color:#fbbf24; font-size:12.5px; line-height:1.6;">${missingText} <strong style="color:white;">${missing.slice(0, 5).join(', ')}</strong></p>` :
+                `<p style="color:#10b981; font-size:12.5px; line-height:1.6;">${clearText}</p>`}
             </div>
         `;
     }
@@ -343,21 +510,20 @@ function initVoiceDictation() {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = 'ar-EG';
-    recognition.continuous = false;
-    recognition.interimResults = false;
-
+    
     voiceBtn.addEventListener('click', () => {
         if (voiceBtn.classList.contains('recording')) {
             recognition.stop();
         } else {
+            // تكييف لغة الاستماع الصوتي مع الواجهة الحالية
+            recognition.lang = currentLang === 'ar' ? 'ar-EG' : 'en-US';
             recognition.start();
         }
     });
 
     recognition.onstart = () => {
         voiceBtn.classList.add('recording');
-        voiceBtn.innerText = '🔴 جاري الاستماع...';
+        voiceBtn.innerText = currentLang === 'ar' ? '🔴 جاري الاستماع...' : '🔴 Listening...';
     };
 
     recognition.onresult = (event) => {
@@ -368,12 +534,20 @@ function initVoiceDictation() {
 
     recognition.onend = () => {
         voiceBtn.classList.remove('recording');
-        voiceBtn.innerText = '🎤 إملاء ذكي';
+        const spanText = document.createElement('span');
+        spanText.setAttribute('data-i18n', 'voiceBtnText');
+        spanText.innerText = currentLang === 'ar' ? '🎤 إملاء ذكي' : '🎤 Smart Dictation';
+        voiceBtn.innerHTML = '';
+        voiceBtn.appendChild(spanText);
     };
 
     recognition.onerror = () => {
         voiceBtn.classList.remove('recording');
-        voiceBtn.innerText = '🎤 إملاء ذكي';
+        const spanText = document.createElement('span');
+        spanText.setAttribute('data-i18n', 'voiceBtnText');
+        spanText.innerText = currentLang === 'ar' ? '🎤 إملاء ذكي' : '🎤 Smart Dictation';
+        voiceBtn.innerHTML = '';
+        voiceBtn.appendChild(spanText);
     };
 }
 
@@ -408,7 +582,10 @@ function loadSavedData() {
 }
 
 function clearAllFields() {
-    if (confirm("⚠️ هل أنت متأكد من رغبتك في مسح كافة الحقول للبدء من جديد؟")) {
+    const msgConfirm = currentLang === 'ar' ? "⚠️ هل أنت متأكد من رغبتك في مسح كافة الحقول للبدء من جديد؟" : "⚠️ Are you sure you want to clear all fields to start over?";
+    const msgAlert = currentLang === 'ar' ? "🗑️ تم مسح البيانات. (يمكنك التراجع بالزر الذي ظهر الآن إذا مسحت بالخطأ!)" : "🗑️ Data cleared. (You can undo using the button that appeared if deleted by mistake!)";
+
+    if (confirm(msgConfirm)) {
         const backupData = {
             name: document.getElementById('name')?.value || '',
             jobTitle: document.getElementById('jobTitle')?.value || '',
@@ -435,7 +612,7 @@ function clearAllFields() {
         if (resultDiv) resultDiv.innerHTML = '';
         
         checkBackupAvailability();
-        alert("🗑️ تم مسح البيانات. (يمكنك التراجع بالزر الذي ظهر الآن إذا مسحت بالخطأ!)");
+        alert(msgAlert);
     }
 }
 
@@ -455,7 +632,9 @@ function restoreBackup() {
         showJobSuggestions();
         localStorage.removeItem('cv_backup'); 
         checkBackupAvailability();
-        alert("✅ تم التراجع عن المسح واسترجاع بياناتك بنجاح!");
+        
+        const successMsg = currentLang === 'ar' ? "✅ تم التراجع عن المسح واسترجاع بياناتك بنجاح!" : "✅ Clear operation undone and data restored successfully!";
+        alert(successMsg);
     } catch(e) {
         console.error("Backup restoration failed", e);
     }
@@ -471,7 +650,7 @@ function checkBackupAvailability() {
             undoBtn.id = 'undoClearBtn';
             undoBtn.type = 'button';
             undoBtn.className = 'btn-action btn-undo'; 
-            undoBtn.innerHTML = '↩️ تراجع عن مسح الحقول';
+            undoBtn.innerHTML = currentLang === 'ar' ? '↩️ تراجع عن مسح الحقول' : '↩️ Undo Clear Fields';
             undoBtn.style.cssText = 'background: #4f46e5; color: white; padding: 8px 16px; border-radius: 8px; margin-top: 10px; cursor: pointer; transition: 0.3s;';
             undoBtn.addEventListener('click', restoreBackup);
             
@@ -491,18 +670,18 @@ function checkBackupAvailability() {
 async function askAI(promptMessage, systemMessage, userInputs = null) {
     try {
         if (window.ai && (await window.ai.canCreateTextSession()) === "readily") {
-            console.log("🖥️ جاري استخدام محرك المتصفح المحلي (window.ai)...");
+            console.log("🖥️ Using local browser engine (window.ai)...");
             const session = await window.ai.createTextSession();
-            const formattedPrompt = `${systemMessage}\n\nالطلب الحالي:\n${promptMessage}`;
+            const formattedPrompt = `${systemMessage}\n\nRequest:\n${promptMessage}`;
             const result = await session.prompt(formattedPrompt);
             return result.trim();
         }
     } catch (localError) {
-        console.warn("⚠️ ميزة window.ai غير مدعومة أو غير نشطة في متصفحك الحالي.");
+        console.warn("⚠️ window.ai feature not supported or active in current browser environment.");
     }
 
     try {
-        console.log("🌐 جاري إرسال الطلب إلى السيرفر الخلفي الذكي...");
+        console.log("🌐 Sending request to intelligent cloud backend...");
         const response = await fetch('/.netlify/functions/optimize', {
             method: 'POST',
             headers: {
@@ -518,11 +697,11 @@ async function askAI(promptMessage, systemMessage, userInputs = null) {
             }
         }
     } catch (serverError) {
-        console.error("❌ فشل الاتصال بالسيرفر السحابي أو انقطع الإنترنت:", serverError);
+        console.error("❌ Cloud communication failed or internet disconnected:", serverError);
     }
 
     if (userInputs) {
-        console.log("🛠️ تشغيل المحرك المدمج المحلي الفوري (وضع الاستقرار)...");
+        console.log("🛠️ Activating static built-in fall-back engine...");
         return generateBackupStaticCV(userInputs);
     }
     
@@ -536,6 +715,33 @@ function generateBackupStaticCV(data) {
     let formattedExp = data.experience;
     if (!formattedExp.includes('•') && !formattedExp.includes('-')) {
         formattedExp = data.experience.split('\n').map(line => line.trim().length > 0 ? `• ${line}` : '').join('\n');
+    }
+
+    if (currentLang === 'en') {
+        return `========================================
+FULL NAME: ${data.name}
+JOB TITLE: ${data.jobTitle}
+========================================
+
+📍 CONTACT INFO:
+--------------------
+📱 Phone: ${data.phone}
+📧 Email: ${data.email}
+
+🎯 PROFESSIONAL SUMMARY:
+--------------------
+Ambitious professional looking to utilize my comprehensive skills as a ${data.jobTitle} in an outstanding workspace that fosters productivity. Highly focused on optimizing workflows and contributing seamlessly to high-tier target metrics.
+
+💼 WORK CHRONOLOGY & EXPERIENCES:
+--------------------
+${formattedExp}
+
+🛠️ SKILLS & CORE COMPETENCIES (ATS Optimized):
+--------------------
+${skillsBullets}
+
+========================================
+⚡ This document has been locally formatted for 100% global ATS compatibility.`;
     }
 
     return `========================================
@@ -581,7 +787,8 @@ function generateShareableLink() {
     const data = getInputs();
 
     if (!data.name || !data.jobTitle) {
-        alert("⚠️ يرجى ملء حقل الاسم والمسمى الوظيفي على الأقل لتوليد رابط مشاركة صالح!");
+        const errorAlert = currentLang === 'ar' ? "⚠️ يرجى ملء حقل الاسم والمسمى الوظيفي على الأقل لتوليد رابط مشاركة صالح!" : "⚠️ Please fill in at least the name and job title to generate a valid share link!";
+        alert(errorAlert);
         return;
     }
 
@@ -595,13 +802,16 @@ function generateShareableLink() {
         const shareUrl = `${window.location.origin}${window.location.pathname}?view=${encodedData}`;
 
         navigator.clipboard.writeText(shareUrl).then(() => {
-            alert("🔥 تم توليد رابط سيرة ذاتية ذكي ونسخه إلى الحافظة بنجاح! شاركه الآن.");
+            const copySuccess = currentLang === 'ar' ? "🔥 تم توليد رابط سيرة ذاتية ذكي ونسخه إلى الحافظة بنجاح! شاركه الآن." : "🔥 Smart resume link successfully generated and copied to clipboard! Share it now.";
+            alert(copySuccess);
         }).catch(err => {
-            prompt("📋 انسخ رابط المشاركة الذكي الخاص بك من هنا:", shareUrl);
+            const promptTitle = currentLang === 'ar' ? "📋 انسخ رابط المشاركة الذكي الخاص بك من هنا:" : "📋 Copy your smart sharing link from here:";
+            prompt(promptTitle, shareUrl);
         });
     } catch (e) {
         console.error("فشل في ترميز البيانات:", e);
-        alert("⚠️ عذراً، حدث خطأ أثناء تشفير بيانات الرابط.");
+        const failMsg = currentLang === 'ar' ? "⚠️ عذراً، حدث خطأ أثناء تشفير بيانات الرابط." : "⚠️ Sorry, an error occurred while encoding link data.";
+        alert(failMsg);
     }
 }
 
@@ -646,7 +856,8 @@ function checkAndLoadSharedLink() {
 function exportToWord() {
     const outputBox = document.getElementById('outputBox');
     if (!outputBox || outputBox.value.trim() === "") {
-        alert("⚠️ الرجاء كتابة السيرة الذاتية أو توليدها بالذكاء الاصطناعي أولاً لتصديرها كملف Word!");
+        const errorAlert = currentLang === 'ar' ? "⚠️ الرجاء كتابة السيرة الذاتية أو توليدها بالذكاء الاصطناعي أولاً لتصديرها كملف Word!" : "⚠️ Please type or generate a resume via AI first to export as Word!";
+        alert(errorAlert);
         return;
     }
 
@@ -667,6 +878,7 @@ function exportToWord() {
         }
     });
 
+    const isRtl = currentLang === 'ar' ? 'rtl' : 'ltr';
     const wordTemplate = `
       <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
       <head>
@@ -675,7 +887,7 @@ function exportToWord() {
         <style>
           body {
             font-family: Arial, sans-serif;
-            direction: rtl;
+            direction: ${isRtl};
             unicode-bidi: embed;
             padding: 20px;
           }
@@ -704,6 +916,55 @@ function exportToWord() {
 }
 
 // ==========================================
+// 🌐 محرك التدويل وتحديث نصوص واجهة المستخدم تلقائياً
+// ==========================================
+function updateUILanguage(lang) {
+    currentLang = lang;
+    const htmlEl = document.getElementById('appHtml') || document.documentElement;
+    
+    // قلب الاتجاه وتعيين اللغة للـ HTML
+    if (lang === 'en') {
+        htmlEl.setAttribute('dir', 'ltr');
+        htmlEl.setAttribute('lang', 'en');
+        // تعديل افتراضي للخطوط الغربية
+        const fontSelect = document.getElementById('cvFontSelect');
+        if (fontSelect && fontSelect.value.includes('Cairo')) {
+            fontSelect.value = "'Inter', sans-serif";
+        }
+    } else {
+        htmlEl.setAttribute('dir', 'rtl');
+        htmlEl.setAttribute('lang', 'ar');
+        const fontSelect = document.getElementById('cvFontSelect');
+        if (fontSelect && fontSelect.value.includes('Inter')) {
+            fontSelect.value = "'Cairo', sans-serif";
+        }
+    }
+
+    // تحديث كافة عناصر الواجهة الحاملة لسمة data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+            el.innerText = translations[lang][key];
+        }
+    });
+
+    // تحديث نصوص التلميحات الجاهزة (Placeholders)
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+            el.setAttribute('placeholder', translations[lang][key]);
+        }
+    });
+
+    // إعادة الحساب المباشر للعداد والنصائح المترجمة
+    calculateCVScore();
+    if (currentTourStep < 3) {
+        updateTourContent();
+    }
+    checkBackupAvailability();
+}
+
+// ==========================================
 // 🎉 تهيئة الأحداث والـ DOM والمزايا الجديدة
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
@@ -719,10 +980,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const getInputs = () => ({
         name: document.getElementById('name')?.value.trim() || '',
         jobTitle: document.getElementById('jobTitle')?.value.trim() || '',
-        phone: document.getElementById('phone')?.value.trim() || 'غير مدرج للخصوصية',
+        phone: document.getElementById('phone')?.value.trim() || (currentLang === 'ar' ? 'غير مدرج للخصوصية' : 'Not listed for privacy'),
         email: document.getElementById('email')?.value.trim() || 'info@example.com',
-        experience: document.getElementById('experience')?.value.trim() || 'لا توجد خبرات عملية مضافة',
-        skills: document.getElementById('skills')?.value.trim() || 'لا توجد مهارات مضافة',
+        experience: document.getElementById('experience')?.value.trim() || (currentLang === 'ar' ? 'لا توجد خبرات عملية مضافة' : 'No clinical experiences added'),
+        skills: document.getElementById('skills')?.value.trim() || (currentLang === 'ar' ? 'لا توجد مهارات مضافة' : 'No added skills'),
     });
 
     const downloadWordBtn = document.getElementById('downloadWordBtn');
@@ -749,7 +1010,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (inputsSection) inputsSection.style.display = 'flex';
             
             window.history.pushState({}, document.title, window.location.pathname);
-            alert("✍️ تم الانتقال لوضع التعديل! يمكنك الآن تخصيص البيانات وحفظها محلياً.");
+            const editModeMsg = currentLang === 'ar' ? "✍️ تم الانتقال لوضع التعديل! يمكنك الآن تخصيص البيانات وحفظها محلياً." : "✍️ Switched to edit mode! You can now customize your data locally.";
+            alert(editModeMsg);
         });
     }
 
@@ -759,19 +1021,31 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             if (isGenerating) return;
             const data = getInputs();
-            if (!data.name || !data.jobTitle) { alert('يرجى كتابة اسمك الكامل والمسمى الوظيفي المستهدف أولاً!'); return; }
+            if (!data.name || !data.jobTitle) { 
+                const validationMsg = currentLang === 'ar' ? 'يرجى كتابة اسمك الكامل والمسمى الوظيفي المستهدف أولاً!' : 'Please type your full name and target job title first!';
+                alert(validationMsg); 
+                return; 
+            }
             isGenerating = true;
             const originalBtnText = aiOptimizeBtn.innerHTML;
-            aiOptimizeBtn.innerHTML = "⏳ جاري الهندسة الذكية للمستند بالـ ATS...";
+            
+            aiOptimizeBtn.innerHTML = currentLang === 'ar' ? "⏳ جاري الهندسة الذكية للمستند بالـ ATS..." : "⏳ Intelligently engineering document with ATS...";
             aiOptimizeBtn.disabled = true;
-            if (outputBox) outputBox.value = 'جاري هندسة وصياغة سيرتك الذاتية بأمان وبتوزيع الكلمات المفتاحية الذكية...';
+            
+            if (outputBox) outputBox.value = currentLang === 'ar' ? 'جاري هندسة وصياغة سيرتك الذاتية بأمان وبتوزيع الكلمات المفتاحية الذكية...' : 'Safely engineering and rewriting your resume with smart keywords distribution...';
+            
             try {
-                const prompt = `أعد صياغة وهيكلة البيانات التالية لتصبح سيرة ذاتية جاهزة عالمياً للـ ATS ومبهرة لمسؤولي التوظيف:\nالاسم الكامل: ${data.name}\nالمسمى الوظيفي المستهدف: ${data.jobTitle}\nالهاتف: ${data.phone}\nالبريد الإلكتروني: ${data.email}\nالمهارات الرئيسية: ${data.skills}\nالخبرات العملية والمهام: ${data.experience}`;
-                const res = await askAI(prompt, "أنت مستشار توظيف خبير وذكي في أنظمة الـ ATS. قم بصياغة سيرة ذاتية متناسقة ونقية باللغة العربية دون مقدمات، أو ترحيبات، أو علامات توضيحية. اكتب البيانات فوراً بهيكلية واضحة ومقروءة.", data);
+                const prompt = `Rewrite and structure the following data to be a stellar global resume optimized for ATS and recruitment managers:\nName: ${data.name}\nTarget Job: ${data.jobTitle}\nPhone: ${data.phone}\nEmail: ${data.email}\nSkills: ${data.skills}\nExperiences: ${data.experience}`;
+                
+                const sysInstruction = currentLang === 'ar' 
+                    ? "أنت مستشار توظيف خبير وذكي في أنظمة الـ ATS. قم بصياغة سيرة ذاتية متناسقة ونقية باللغة العربية دون مقدمات، أو ترحيبات، أو علامات توضيحية. اكتب البيانات فوراً بهيكلية واضحة ومقروءة."
+                    : "You are a professional recruitment advisor expert in ATS systems. Build a consistent and clean resume in English immediately without introductory greetings or meta-explanations. Output the data immediately in clear, highly-readable structures.";
+
+                const res = await askAI(prompt, sysInstruction, data);
                 if (res && outputBox) { outputBox.value = res; }
             } catch (err) { 
                 if (outputBox) {
-                    outputBox.value = `⚠️ حدث خطأ أو تعذر الاتصال السحابي الآمن.`;
+                    outputBox.value = currentLang === 'ar' ? `⚠️ حدث خطأ أو تعذر الاتصال السحابي الآمن.` : `⚠️ Error occurred or cloud secure connection failed.`;
                 }
             }
             finally { isGenerating = false; aiOptimizeBtn.innerHTML = originalBtnText; aiOptimizeBtn.disabled = false; }
@@ -779,34 +1053,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
-    // 🛡️ تعديل دالة الـ PDF للتحميل المباشر الآمن والمنع التام للحظر
+    // 🛡️ معالجة الـ PDF الفاخر ثنائي الاتجاه والتنزيل
     // ==========================================
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
     if (downloadPdfBtn) {
         downloadPdfBtn.addEventListener('click', function (e) {
             e.preventDefault();
             if (!outputBox || outputBox.value.trim() === "") { 
-                alert('الرجاء صياغة السيرة الذاتية أو توليدها بالذكاء الاصطناعي أولاً!'); 
+                const alertText = currentLang === 'ar' ? 'الرجاء صياغة السيرة الذاتية أو توليدها بالذكاء الاصطناعي أولاً!' : 'Please write or generate the resume via AI first!';
+                alert(alertText); 
                 return; 
             }
             
             const data = getInputs();
             
             if (data.email && data.email !== 'info@example.com' && !data.email.includes('@')) {
-                alert("⚠️ البريد الإلكتروني الذي قمت بإدخاله غير صحيح (يجب أن يحتوي على علامة @). يرجى مراجعته!");
+                const mailAlert = currentLang === 'ar' ? "⚠️ البريد الإلكتروني الذي قمت بإدخاله غير صحيح (يجب أن يحتوي على علامة @). يرجى مراجعته!" : "⚠️ Invalid email address (must include @). Please check it!";
+                alert(mailAlert);
                 return;
             }
             
             if (typeof html2pdf === 'undefined') {
-                alert('⚠️ نعتذر، تعذر العثور على مكتبة التصدير الرقمي. يرجى التأكد من اتصالك بالإنترنت.');
+                const libAlert = currentLang === 'ar' ? '⚠️ نعتذر، تعذر العثور على مكتبة التصدير الرقمي. يرجى التأكد من اتصالك بالإنترنت.' : '⚠️ Apologies, the digital export library could not be found. Please check internet connection.';
+                alert(libAlert);
                 return;
             }
 
             const originalBtnText = this.innerHTML; 
-            this.innerText = "⏳ جاري تحضير الملف..."; 
+            this.innerText = currentLang === 'ar' ? "⏳ جاري تحضير الملف..." : "⏳ Preparing file..."; 
             this.disabled = true;
             
             const selectedFont = document.getElementById('cvFontSelect')?.value || "'Cairo', sans-serif";
+            const pdfDirection = currentLang === 'ar' ? 'rtl' : 'ltr';
+            const pdfTextAlign = currentLang === 'ar' ? 'right' : 'left';
             
             const printElement = document.createElement('div');
             printElement.id = 'temp-pdf-render';
@@ -823,8 +1102,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 background-color: #ffffff !important;
                 font-family: ${selectedFont} !important;
                 line-height: 1.8 !important;
-                direction: rtl !important;
-                text-align: right !important;
+                direction: ${pdfDirection} !important;
+                text-align: ${pdfTextAlign} !important;
                 font-size: 15px !important;
                 display: block !important;
                 box-sizing: border-box !important;
@@ -865,7 +1144,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
             
-            // ✅ تم الانتقال للأمر المستقر .save() مباشرة لمنع معالجة التنزيل كـ Pop-up مجهول
             setTimeout(() => {
                 html2pdf().set(options).from(printElement).save().then(() => { 
                     if (document.getElementById('temp-pdf-render')) {
@@ -878,7 +1156,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (document.getElementById('temp-pdf-render')) {
                         document.body.removeChild(printElement);
                     }
-                    alert('حدث خطأ أثناء تصدير ملف الـ PDF.'); 
+                    alert('Error exporting PDF.'); 
                     downloadPdfBtn.innerHTML = originalBtnText; 
                     downloadPdfBtn.disabled = false; 
                 });
@@ -913,15 +1191,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    let currentLang = 'ar';
+    // زر تبديل اللغة المطور ليعمل كـ Toggle عالمي منظم
     const toggleLanguageBtn = document.getElementById('toggleLanguageBtn');
     if (toggleLanguageBtn) { 
         toggleLanguageBtn.addEventListener('click', function(e) { 
             e.preventDefault(); 
-            currentLang = currentLang === 'ar' ? 'en' : 'ar'; 
-            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr'; 
-            document.documentElement.lang = currentLang; 
-            toggleLanguageBtn.innerText = currentLang === 'ar' ? '🔄 English (الانتقال للإنجليزية)' : '🔄 العربية (Arabic)'; 
+            const nextLang = currentLang === 'ar' ? 'en' : 'ar'; 
+            updateUILanguage(nextLang);
         }); 
     }
 
@@ -939,22 +1215,36 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault(); 
             if (isGenerating) return; 
             const data = getInputs(); 
-            if (!data.jobTitle) { alert('الرجاء إدخال المسمى الوظيفي المستهدف أولاً لتتم الصياغة بموجبه!'); return; } 
+            if (!data.jobTitle) { 
+                const alertJob = currentLang === 'ar' ? 'الرجاء إدخال المسمى الوظيفي المستهدف أولاً لتتم الصياغة بموجبه!' : 'Please enter target job title first to formulate according to it!';
+                alert(alertJob); 
+                return; 
+            } 
             isGenerating = true; 
             const originalBtnText = generateSummaryBtn.innerHTML; 
-            generateSummaryBtn.innerHTML = "⏳ جاري الصياغة الكونية..."; 
+            generateSummaryBtn.innerHTML = currentLang === 'ar' ? "⏳ جاري الصياغة الكونية..." : "⏳ Cosmic writing..."; 
             generateSummaryBtn.disabled = true; 
-            if (outputBox) outputBox.value = 'جاري هندسة وصياغة ملخص مهني جذاب ومتناسق مع أنظمة الـ ATS...';
+            if (outputBox) outputBox.value = currentLang === 'ar' ? 'جاري هندسة وصياغة ملخص مهني جذاب ومتناسق مع أنظمة الـ ATS...' : 'Engineering and crafting an appealing, ATS-aligned professional summary...';
             try { 
-                const summaryPrompt = `اكتب ملخصاً مهنياً (Professional Summary) ذكياً، قصيراً ومؤثراً متوافقاً مع خوارزميات الـ ATS لوظيفة: "${data.jobTitle}". المهارات المفتاحية: ${data.skills}.`; 
-                const summary = await askAI(summaryPrompt, "أنت مستشار توظيف عالمي خبير. اكتب نص الملخص المهني فقط في فقرة واحدة جذابة من 3 أسطر على الأكثر دون أي مقدمات أو ترحيب.", data); 
+                const summaryPrompt = `Write a short, powerful and smart professional summary optimized for ATS algorithms for the job title: "${data.jobTitle}". Core keywords: ${data.skills}.`; 
+                const systemSum = currentLang === 'ar' 
+                    ? "أنت مستشار توظيف عالمي خبير. اكتب نص الملخص المهني فقط في فقرة واحدة جذابة من 3 أسطر على الأكثر دون أي مقدمات أو ترحيب."
+                    : "You are an expert global recruitment advisor. Write only the professional summary text inside a single attractive paragraph maximum 3 lines long without any intros or pleasantries.";
+
+                const summary = await askAI(summaryPrompt, systemSum, data); 
                 if (summary && outputBox) { 
-                    outputBox.value = `الملخص المهني:\n${summary}\n\n====================\n\n`; 
-                    alert("🧠 تم توليد وحقن الملخص المهني بنجاح في مقدمة ملفك!"); 
+                    const headline = currentLang === 'ar' ? 'الملخص المهني:' : 'Professional Summary:';
+                    outputBox.value = `${headline}\n${summary}\n\n====================\n\n`; 
+                    const successAlert = currentLang === 'ar' ? "🧠 تم توليد وحقن الملخص المهني بنجاح في مقدمة ملفك!" : "🧠 Professional summary generated and injected into document top successfully!";
+                    alert(successAlert); 
                 } 
             } catch (err) { 
                 if (outputBox) {
-                     outputBox.value = `الملخص المهني المقترح لـ ${data.jobTitle}:\n"مهني طموح ومبادر في مجال ${data.jobTitle}، أمتلك مهارات استثنائية في العمل الجماعي وحل المشكلات مع التركيز على الكفاءة والإنتاجية العالية لمطابقة متطلبات سوق العمل ونظام الـ ATS."`;
+                    if (currentLang === 'ar') {
+                        outputBox.value = `الملخص المهني المقترح لـ ${data.jobTitle}:\n"مهني طموح ومبادر في مجال ${data.jobTitle}، أمتلك مهارات استثنائية في العمل الجماعي وحل المشكلات مع التركيز على الكفاءة والإنتاجية العالية لمطابقة متمتطلبات سوق العمل ونظام الـ ATS."`;
+                    } else {
+                        outputBox.value = `Suggested Professional Summary for ${data.jobTitle}:\n"Highly driven and proactive professional skilled in ${data.jobTitle} operations. Strong capability in handling heavy workflows and cross-functional tasking optimized entirely for recruitment tracking systems."`;
+                    }
                 }
             } 
             finally { isGenerating = false; generateSummaryBtn.innerHTML = originalBtnText; generateSummaryBtn.disabled = false; } 
@@ -996,17 +1286,18 @@ document.addEventListener("DOMContentLoaded", function () {
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: 'صانع السير الذاتية بالذكاء الاصطناعي',
-                        text: 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.',
+                        title: currentLang === 'ar' ? 'صانع السير الذاتية بالذكاء الاصطناعي' : 'AI Resume Builder Pro',
+                        text: currentLang === 'ar' ? 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.' : 'Smart application to create and optimize resumes for free without account, ATS friendly.',
                         url: window.location.href
                     });
                 } catch (err) {}
             } else {
                 try {
                     await navigator.clipboard.writeText(window.location.href);
-                    alert("📋 تم نسخ رابط التطبيق بنجاح لمشاركته مع زملائك!");
+                    const linkCopied = currentLang === 'ar' ? "📋 تم نسخ رابط التطبيق بنجاح لمشاركته مع زملائك!" : "📋 Platform link copied successfully to share with colleagues!";
+                    alert(linkCopied);
                 } catch (err) {
-                    alert("عذراً، لم نتمكن من نسخ الرابط تلقائياً.");
+                    alert("Error copying link.");
                 }
             }
         });
@@ -1017,17 +1308,17 @@ document.addEventListener("DOMContentLoaded", function () {
         notificationBtn.addEventListener("click", function (e) {
             e.preventDefault();
             if (!("Notification" in window)) {
-                alert("عذراً، المتصفح الحالي لا يدعم نظام الإشعارات.");
+                alert(currentLang === 'ar' ? "عذراً، المتصفح الحالي لا يدعم نظام الإشعارات." : "Sorry, the current browser does not support notifications.");
                 return;
             }
             if (Notification.permission === "granted") {
-                alert("🔔 الإشعارات والفرص مفعلة مسبقاً لديك!");
+                alert(currentLang === 'ar' ? "🔔 الإشعارات والفرص مفعلة مسبقاً لديك!" : "🔔 Notifications and openings are already active!");
             } else if (Notification.permission !== "denied") {
                 Notification.requestPermission().then(function (permission) {
                     if (permission === "granted") {
-                        alert("🎉 تم تفعيل إشعارات الفرص المحدثة بنجاح!");
+                        alert(currentLang === 'ar' ? "🎉 تم تفعيل إشعارات الفرص المحدثة بنجاح!" : "🎉 Updated opportunity notifications enabled successfully!");
                     } else {
-                        alert("⚠️ تم رفض إذن تفعيل الإشعارات.");
+                        alert(currentLang === 'ar' ? "⚠️ تم رفض إذن تفعيل الإشعارات." : "⚠️ Notifications permission denied.");
                     }
                 });
             }
