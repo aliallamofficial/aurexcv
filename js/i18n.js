@@ -1,5 +1,5 @@
 // ==========================================================================
-// 🌐 AUREX CV QUANTUM MULTI-LANGUAGE DICTIONARY (20 LANGUAGES MATRIX)
+// 🌐 AUREX CV QUANTUM MULTI-LANGUAGE DICTIONARY (GLOBAL 10-LANGUAGE MATRIX)
 // ==========================================================================
 
 const aurexTranslations = {
@@ -28,6 +28,110 @@ const aurexTranslations = {
         sectionEdu: "المؤهلات الأكاديمية والشهادات",
         metaTitle: "AurexCV | أول منصة سيرة ذاتية وفحص ATS بالذكاء الاصطناعي لا تقهر عالمياً",
         metaDesc: "أنشئ سيرة ذاتية لا تقهر ومتوافقة تماماً مع أنظمة الـ ATS مجاناً عبر منصة AurexCV v5.0 وبدعم من ذكاء Qwen2.5-72B."
+    },
+    fr: {
+        globalTagline: "La première plateforme de carrière IA imbattable au monde",
+        unlimitedFree: "100% Gratuit Pro Max",
+        heroTitle: "Réussissez chaque entretien avec",
+        heroSubtitle: "Conçu pour la perfection. Audité par Google AI. Zéro restriction, chiffrement local total.",
+        dockTitle: "🛡️ Les 14 Suites Quantum Souveraines d'Aurex",
+        atsEmptyState: "ℹ️ Remplissez vos informations ou exécutez 'Aurex Job Match' pour lancer le scan.",
+        sectionSkills: "Compétences Techniques Clés",
+        sectionExp: "Expérience Professionnelle",
+        sectionEdu: "Éducation & Diplômes",
+        metaTitle: "AurexCV | La première plateforme de carrière IA imbattable au monde",
+        metaDesc: "Créez un CV optimisé pour les ATS gratuitement avec AurexCV v5.0."
+    },
+    de: {
+        globalTagline: "Die weltweit erste unschlagbare KI-Karriereplattform",
+        unlimitedFree: "100% Kostenlos Pro Max",
+        heroTitle: "Meistern Sie jedes Interview mit",
+        heroSubtitle: "Auf Perfektion ausgelegt. Von Google AI geprüft. Keine Einschränkungen, lokale Verschlüsselung.",
+        dockTitle: "🛡️ Aurex 14 Souveräne Quantum-Suites",
+        atsEmptyState: "ℹ️ Füllen Sie Ihr Profil aus oder starten Sie 'Aurex Job Match' für den Tiefenscan.",
+        sectionSkills: "Technische Kernkompetenzen",
+        sectionExp: "Berufserfahrung",
+        sectionEdu: "Ausbildung & Zeugnisse",
+        metaTitle: "AurexCV | Die weltweit erste unschlagbare KI-Karriereplattform",
+        metaDesc: "Erstellen Sie kostenlos einen ATS-optimierten Lebenslauf mit AurexCV v5.0."
+    },
+    es: {
+        globalTagline: "La primera plataforma de carrera de IA imbatible del mundo",
+        unlimitedFree: "100% Gratis Pro Max",
+        heroTitle: "Arrase en cada entrevista con",
+        heroSubtitle: "Diseñado para la perfección. Auditado por Google AI. Sin restricciones, cifrado local total.",
+        dockTitle: "🛡️ Suites Cuánticas Soberanas Aurex 14",
+        atsEmptyState: "ℹ️ Complete los detalles de su perfil o ejecute 'Aurex Job Match' para iniciar el escaneo.",
+        sectionSkills: "Competencias Técnicas Centrales",
+        sectionExp: "Experiencia Profesional",
+        sectionEdu: "Educación & Credenciales",
+        metaTitle: "AurexCV | La primera plataforma de carrera de IA imbatible del mundo",
+        metaDesc: "Cree un currículum optimizado para ATS de forma gratuita con AurexCV v5.0."
+    },
+    tr: {
+        globalTagline: "Dünyanın İlk Yenilmez Yapay Zeka Kariyer Platformu",
+        unlimitedFree: "100% Ücretsiz Pro Max",
+        heroTitle: "Her Mülakatı Şununla Kazanın:",
+        heroSubtitle: "Kusursuzluk için tasarlandı. Google AI tarafından denetlendi. Sıfır kısıtlama, yerel şifreleme.",
+        dockTitle: "🛡️ Aurex 14 Egemen Kuantum Süiti",
+        atsEmptyState: "ℹ️ Profil detaylarınızı doldurun veya derin taramayı başlatmak için 'Aurex Job Match'i çalıştırın.",
+        sectionSkills: "Temel Teknik Yetkinlikler",
+        sectionExp: "Profesyonel Deneyim",
+        sectionEdu: "Eğitim & Sertifikalar",
+        metaTitle: "AurexCV | Dünyanın İlk Yenilmez Yapay Zeka Kariyer Platformu",
+        metaDesc: "AurexCV v5.0 ile ücretsiz, ATS uyumlu bir özgeçmiş oluşturun."
+    },
+    hi: {
+        globalTagline: "दुनिया का पहला अजेय एआई करियर प्लेटफॉर्म",
+        unlimitedFree: "100% फ्री प्रो मैक्स",
+        heroTitle: "हर इंटरव्यू को क्रश करें",
+        heroSubtitle: "परफेक्ट डिज़ाइन। गूगल एआई द्वारा ऑडिटेड। शून्य प्रतिबंध, पूर्ण स्थानीय एन्क्रिप्शन।",
+        dockTitle: "🛡️ ऑरेक्स 14 सॉवरेन क्वांटम सुइट्स",
+        atsEmptyState: "ℹ️ अपनी प्रोफ़ाइल विवरण भरें या स्कैन शुरू करने के लिए 'Aurex Job Match' चलाएं।",
+        sectionSkills: "मुख्य तकनीकी क्षमताएं",
+        sectionExp: "पेशेवर अनुभव",
+        sectionEdu: "शिक्षा और प्रमाण पत्र",
+        metaTitle: "AurexCV | दुनिया का पहला अजेय एआई करियर प्लेटफॉर्म",
+        metaDesc: "AurexCV v5.0 के साथ मुफ्त में ATS-अनुकूलित रेज्यूमे बनाएं।"
+    },
+    zh: {
+        globalTagline: "全球首个无敌AI职业平台",
+        unlimitedFree: "100% 免费 Pro Max",
+        heroTitle: "横扫每一次面试",
+        heroSubtitle: "追求完美设计。通过 Google AI 审核。零限制，全本地加密。",
+        dockTitle: "🛡️ Aurex 14 主权量子套件",
+        atsEmptyState: "ℹ️ 填写您的个人资料或执行“Aurex Job Match”以触发深度扫描。",
+        sectionSkills: "核心技术能力",
+        sectionExp: "工作经历",
+        sectionEdu: "教育背景与证书",
+        metaTitle: "AurexCV | 全球首个无敌AI职业平台",
+        metaDesc: "使用 AurexCV v5.0 免费创建针对 ATS 优化的简历。"
+    },
+    ru: {
+        globalTagline: "Первая в мире непобедимая карьерная платформа с ИИ",
+        unlimitedFree: "100% Бесплатно Pro Max",
+        heroTitle: "Сокрушите каждое собеседование с",
+        heroSubtitle: "Создано для совершенства. Проверено Google AI. Без ограничений, локальное шифрование.",
+        dockTitle: "🛡️ Суверенные квантовые пакеты Aurex 14",
+        atsEmptyState: "ℹ️ Заполните данные профиля или запустите 'Aurex Job Match' для глубокого сканирования.",
+        sectionSkills: "Ключевые технические компетенции",
+        sectionExp: "Профессиональный опыт",
+        sectionEdu: "Образование и сертификаты",
+        metaTitle: "AurexCV | Первая в мире непобедимая карьерная платформа с ИИ",
+        metaDesc: "Создайте резюме, оптимизированное для ATS, бесплатно с помощью AurexCV v5.0."
+    },
+    it: {
+        globalTagline: "La prima piattaforma di carriera AI imbattibile al mondo",
+        unlimitedFree: "100% Gratuito Pro Max",
+        heroTitle: "Supera ogni colloquio con",
+        heroSubtitle: "Progettato per la perfezione. Auditato da Google AI. Zero restrizioni, crittografia locale.",
+        dockTitle: "🛡️ Suite Quantistiche Sovrane Aurex 14",
+        atsEmptyState: "ℹ️ Compila i dettagli del profilo o esegui 'Aurex Job Match' per avviare la scansione.",
+        sectionSkills: "Competenze Tecniche Core",
+        sectionExp: "Esperienza Professionale",
+        sectionEdu: "Formazione e Titoli",
+        metaTitle: "AurexCV | La prima piattaforma di carriera AI imbattibile al mondo",
+        metaDesc: "Crea un curriculum ottimizzato per ATS gratuitamente con AurexCV v5.0."
     }
 };
 
@@ -35,7 +139,7 @@ function applyQuantumI18n(lang) {
     const htmlTag = document.getElementById("aurexHtml");
     if (!htmlTag) return;
 
-    // ضبط اتجاه الصفحة ديناميكياً لتوفير تجربة مستخدم كاملة السلاسة
+    // ضبط اتجاه الصفحة ديناميكياً لتوفير تجربة مستخدم كاملة السلاسة (يدعم العربية حالياً)
     if (lang === 'ar') {
         htmlTag.setAttribute("dir", "rtl");
         htmlTag.setAttribute("lang", "ar");
