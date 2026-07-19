@@ -472,6 +472,18 @@ function applyLanguage() {
     handleJobTitleSuggestions();
     calculateATSScore();
     displayRandomLiveTip();
+    
+    // تحديث لغة الترحيب داخل الشات عند تغيير اللغة
+    const chatBody = document.getElementById("aiChatBody");
+    if(chatBody && chatBody.children.length === 1) {
+        if(currentLang === 'en') {
+            chatBody.children[0].innerHTML = "Welcome! I am **Ali AI**, your integrated smart assistant. 🤖✨<br>I can guide you through features, explain how to build/export an ATS-friendly resume, or receive your feedback. What would you like to ask today?";
+        } else if(currentLang === 'fr') {
+            chatBody.children[0].innerHTML = "Bienvenue ! Je suis **Ali AI**, votre assistant intelligent intégré. 🤖✨<br>Je peux vous guider, vous expliquer comment créer un CV compatible ATS, ou recevoir vos commentaires. Que voulez-vous demander aujourd'hui ?";
+        } else {
+            chatBody.children[0].innerHTML = "مرحباً بك! أنا **Ali AI** مساعدك الذكي المتكامل. 🤖✨<br>يمكنني إرشادك لأماكن الميزات، وشرح كيفية بناء وتصدير سيرة ذاتية متوافقة مع الـ ATS، أو استقبال شكواك ومقترحاتك فوراً. بأي لغة تفضل التحدث اليوم؟";
+        }
+    }
 }
 
 // 🧠 استدعاء خادم الـ Cloudflare Worker لإجراء معالجة وتحسين الـ CV بالذكاء الاصطناعي
@@ -513,6 +525,118 @@ function processAIOptimization(mode) {
 }
 
 // ========================================================
+// 💬 محرك تشغيل المساعد الذكي التفاعلي (Ali AI Chat Engine)
+// ========================================================
+function initAiSupportChat() {
+    const floatBtn = document.getElementById("aiSupportFloatBtn");
+    const supportPage = document.getElementById("aiSupportPage");
+    const closeBtn = document.getElementById("closeAiSupportBtn");
+    const sendBtn = document.getElementById("sendAiChatBtn");
+    const chatInput = document.getElementById("aiChatInput");
+    const chatBody = document.getElementById("aiChatBody");
+
+    if (!floatBtn || !supportPage || !closeBtn || !sendBtn || !chatInput || !chatBody) return;
+
+    // فتح صفحة الدعم والمساعد الذكي
+    floatBtn.addEventListener("click", () => {
+        supportPage.style.display = "flex";
+        supportPage.classList.remove("hidden");
+    });
+
+    // إغلاق صفحة الدعم والعودة للتطبيق
+    closeBtn.addEventListener("click", () => {
+        supportPage.style.display = "none";
+        supportPage.classList.add("hidden");
+    });
+
+    // دالة إرسال واستقبال الرسائل من الـ Worker
+    async function handleSendMessage() {
+        const query = chatInput.value.trim();
+        if (!query) return;
+
+        // 1. إضافة رسالة المستخدم في الواجهة
+        appendChatMessage(query, "user");
+        chatInput.value = "";
+
+        // 2. إضافة رسالة الانتظار (تأثير جاري التحميل)
+        const loadingId = "loading_" + Date.now();
+        const loadingText = currentLang === 'ar' ? "⏳ جاري التفكير..." : (currentLang === 'en' ? "⏳ Thinking..." : "⏳ Réflexion...");
+        appendChatMessage(loadingText, "ai", loadingId);
+
+        try {
+            // 3. إرسال السؤال إلى الـ Cloudflare Worker باستغلال وضع الـ "chat"
+            const response = await fetch(SECURE_BACKEND_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    mode: "chat",
+                    query: query,
+                    lang: currentLang
+                })
+            });
+
+            const data = await response.json();
+            
+            // إزالة رسالة الانتظار
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) loadingEl.remove();
+
+            if (data.success && data.result) {
+                appendChatMessage(data.result, "ai");
+            } else {
+                throw new Error("Invalid response");
+            }
+        } catch (error) {
+            console.error(error);
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) loadingEl.remove();
+            
+            const errorText = currentLang === 'ar' ? "❌ عذراً، لم أستطع الاتصال بالخادم الآن. يرجى المحاولة لاحقاً." : "❌ Sorry, I couldn't connect to the server right now.";
+            appendChatMessage(errorText, "ai");
+        }
+    }
+
+    // دالة بناء وحقن فقاعات المحادثة بشكل منسق واحترافي
+    function appendChatMessage(text, sender, id = null) {
+        const msgDiv = document.createElement("div");
+        if (id) msgDiv.id = id;
+
+        // تطبيق الاستايلات البرمجية مباشرة لتتوافق مع تصميمك الأنيق
+        msgDiv.style.padding = "14px 18px";
+        msgDiv.style.borderRadius = sender === "user" ? "16px 0px 16px 16px" : "0px 16px 16px 16px";
+        msgDiv.style.maxWidth = "80%";
+        msgDiv.style.lineHeight = "1.6";
+        msgDiv.style.fontSize = "14px";
+        msgDiv.style.whiteSpace = "pre-wrap";
+        msgDiv.style.boxShadow = "0 4px 10px rgba(0,0,0,0.1)";
+
+        if (sender === "user") {
+            msgDiv.style.alignSelf = "flex-end";
+            msgDiv.style.background = "linear-gradient(135deg, #38bdf8, #0284c7)";
+            msgDiv.style.color = "#0f172a";
+            msgDiv.style.fontWeight = "600";
+        } else {
+            msgDiv.style.alignSelf = "flex-start";
+            msgDiv.style.background = "#1e293b";
+            msgDiv.style.color = "#e2e8f0";
+            msgDiv.style.border = "1px solid rgba(255,255,255,0.03)";
+        }
+
+        msgDiv.innerText = text;
+        chatBody.appendChild(msgDiv);
+        
+        // التمرير التلقائي لأسفل الشات دائماً مع كل رسالة جديدة
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // تفعيل الإرسال عند الضغط على الزر أو زر Enter بكيبورد المستخدم
+    sendBtn.addEventListener("click", handleSendMessage);
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSendMessage();
+    });
+}
+
+// ========================================================
 // 🎬 بدء تشغيل الـ DOM والـ Event Listeners عند التحميل
 // ========================================================
 document.addEventListener("DOMContentLoaded", () => {
@@ -525,6 +649,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     applyLanguage();
+    initAiSupportChat(); // تشغيل محرك الشات الذكي الفوري
 
     const inputFields = ["name", "jobTitle", "skills", "experience"];
     inputFields.forEach(id => {
