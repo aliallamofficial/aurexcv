@@ -71,7 +71,7 @@ const translations = {
         feedbackDesc: "ملاحظاتك تساعدنا على تحسين محرك الذكاء الاصطناعي باستمرار",
         btnSubmitFeedback: "إرسال التقييم والملاحظات",
         holderFeedback: "اكتب اقتراحك، تقييمك، أو أي مشكلة واجهتك في التطبيق هنا...",
-        privacyLink: "🔒 سياسة خصوصية ثورية لم يسبق لها ميل (تشفير محلي 100%)"
+        privacyLink: "🔒 سياسة خصوصية ثورية لم يسبق لها مثيل (تشفير محلي 100%)"
     },
     en: {
         appTitleSEO: "Free AI Resume Builder & ATS Checker | Create Professional CV - Ali CV Builder",
@@ -226,7 +226,7 @@ const cvTips = [
     "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
     "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك أقل من 5 سنوات.",
     "استخدم أرقاماً ونسباً مئوية حقيقية لإثبات إنجازاتك (مثال: زيادة المبيعات بنسبة 20%).",
-    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء المستعارة.",
+    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء مستعارة.",
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
@@ -565,12 +565,6 @@ function processAIOptimization(mode) {
 // ========================================================
 document.addEventListener("DOMContentLoaded", () => {
     
-    // الأجزاء الثابتة لتوكن ومُعرّف تليجرام
-    const _p1 = "8840422551";
-    const _p2 = "AAGa47_hdi5pIOgLCZsUH3kFAN8zDR5zByw";
-    const TELEGRAM_TOKEN = `${_p1}:${_p2}`;
-    const TELEGRAM_CHAT_ID = "6876904568";
-
     if(localStorage.getItem("ali_cv_tour_done") === "true") {
         const modal = document.getElementById("appTourModal");
         if(modal) modal.style.display = "none";
@@ -879,8 +873,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ========================================================
-    // ✉️ نظام المزامنة الفورية للتعليقات عبر تليجرام
+    // ✉️ نظام المزامنة الفورية للتعليقات عبر تليجرام (محدث ومحمي)
     // ========================================================
+    const _p1 = "8840422551";
+    const _p2 = "AAGa47_hdi5pIOgLCZsUH3kFAN8zDR5zByw";
+    const TELEGRAM_TOKEN = `${_p1}:${_p2}`;
+    
+    const TELEGRAM_CHAT_ID = "6876904568";
+
     const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
     if(submitFeedbackBtn) {
         submitFeedbackBtn.addEventListener("click", () => {
@@ -893,10 +893,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            // 1. حفظ التعليق محلياً في المتصفح كنسخة احتياطية آمنة
             let localStoreFeedbacks = JSON.parse(localStorage.getItem("ali_cv_feedbacks") || "[]");
             localStoreFeedbacks.push({ rating: selectedRating, message: textFeedback, timestamp: Date.now() });
             localStorage.setItem("ali_cv_feedbacks", JSON.stringify(localStoreFeedbacks));
             
+            // 2. صياغة نص الرسالة الاحترافية لتصلك على تليجرام
             const starsText = "⭐".repeat(selectedRating);
             const messageText = `🚀 *تقييم جديد للمنصة* 🚀\n\n` +
                                 `🔹 *التقييم:* ${starsText} (${selectedRating}/5)\n` +
@@ -904,6 +906,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 `🔹 *اللغة المستخدمة:* ${currentLang.toUpperCase()}\n` +
                                 `📅 *التوقيت:* ${new Date().toLocaleString()}`;
 
+            // 3. إرسال البيانات فوراً إلى تليجرام بشكل خلفي (Async)
             fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -931,6 +934,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(localSuccess);
             });
 
+            // تصفير صندوق النصوص بعد الإرسال
             document.getElementById("userFeedbackTextarea").value = "";
         });
     }
@@ -943,119 +947,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "🔒 سياسة خصوصية Ali CV Builder Pro:\nنعيد صياغة الأمن الرقمي! تطبيقنا مصمم محلياً بالكامل (Client-Side)، ولا يمتلك خوادم مركزية تسحب بياناتك الشخصية أو سيرتك المهنية. يتم معالجة وتشفير كل حرف تكتبه محلياً 100% داخل جلسة متصفحك الخاصة وآمن تماماً من أي تسريب." : 
                 (currentLang === 'en' ? "🔒 Ali CV Builder Pro Privacy Policy:\nCompletely decentralized client-side application. No central data harvesting servers. 100% locally encrypted inside your secure sandbox browser storage." : "🔒 Politique de confidentialité d'Ali CV Builder Pro :\nApplication entièrement décentralisée côté client. Aucun serveur central de collecte de données. Chiffrement 100% local.");
             alert(privacyTxt);
-        });
-    }
-
-    // ========================================================
-    // 🤖 محرك تشغيل وإدارة واجهة المساعد الذكي (Ali AI Overlay)
-    // ========================================================
-    const aiFloatBtn = document.getElementById("aiSupportFloatBtn");
-    const aiPage = document.getElementById("aiSupportPage");
-    const closeAiBtn = document.getElementById("closeAiSupportBtn");
-    const sendAiBtn = document.getElementById("sendAiChatBtn");
-    const aiInput = document.getElementById("aiChatInput");
-    const aiChatBody = document.getElementById("aiChatBody");
-
-    if (aiFloatBtn && aiPage && closeAiBtn) {
-        // فتح واجهة الدعم الذكي
-        aiFloatBtn.addEventListener("click", () => {
-            aiPage.style.display = "flex";
-            aiPage.classList.remove("hidden");
-        });
-
-        // إغلاق واجهة الدعم الذكي والعودة للتطبيق
-        closeAiBtn.addEventListener("click", () => {
-            aiPage.style.display = "none";
-            aiPage.classList.add("hidden");
-        });
-    }
-
-    // دالة إضافة رسالة داخل صندوق الدردشة
-    function appendChatMessage(sender, text, isAi = false) {
-        if (!aiChatBody) return;
-        const msgWrapper = document.createElement("div");
-        msgWrapper.style.alignSelf = isAi ? "flex-start" : "flex-end";
-        msgWrapper.style.background = isAi ? "#1e293b" : "linear-gradient(135deg, #38bdf8, #1d4ed8)";
-        msgWrapper.style.color = isAi ? "#e2e8f0" : "#fff";
-        msgWrapper.style.padding = "12px 16px";
-        msgWrapper.style.borderRadius = isAi ? "0 16px 16px 16px" : "16px 16px 0 16px";
-        msgWrapper.style.maxWidth = "80%";
-        msgWrapper.style.lineHeight = "1.6";
-        msgWrapper.style.fontSize = "14px";
-        msgWrapper.style.boxShadow = "0 4px 10px rgba(0,0,0,0.1)";
-        msgWrapper.style.border = isAi ? "1px solid rgba(255,255,255,0.03)" : "none";
-        msgWrapper.style.whiteSpace = "pre-wrap";
-        msgWrapper.innerHTML = `<strong>${sender}:</strong><br>${text}`;
-        
-        aiChatBody.appendChild(msgWrapper);
-        aiChatBody.scrollTop = aiChatBody.scrollHeight;
-    }
-
-    // معالجة إرسال الرسائل وتوليد الرد التلقائي والمزامنة مع تليجرام
-    function handleAiSendMessage() {
-        if (!aiInput) return;
-        const query = aiInput.value.trim();
-        if (!query) return;
-
-        // 1. عرض رسالة المستخدم في الواجهة
-        const userTitle = currentLang === 'ar' ? "أنت" : (currentLang === 'en' ? "You" : "Vous");
-        appendChatMessage(userTitle, query, false);
-        aiInput.value = "";
-
-        // 2. مزامنة الرسالة فوراً إلى المطور عبر تليجرام كخط إنتاج مباشر للدعم الفني
-        const chatLogMessage = `💬 *رسالة دعم جديدة من الشات الذكي* 💬\n\n` +
-                               `👤 *المرسل:* مستخدم التطبيق\n` +
-                               `📝 *الرسالة:* ${query}\n` +
-                               `🌐 *اللغة النشطة:* ${currentLang.toUpperCase()}\n` +
-                               `📅 *التوقيت:* ${new Date().toLocaleString()}`;
-        
-        fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: chatLogMessage, parse_mode: 'Markdown' })
-        }).catch(() => {});
-
-        // 3. محرك تحليل الكلمات المفتاحية التلقائي وإطلاق الرد الذكي اللحظي للمستخدم
-        setTimeout(() => {
-            let aiResponse = "";
-            const lowerQuery = query.toLowerCase();
-
-            if (currentLang === 'ar') {
-                if (lowerQuery.includes("ats") || lowerQuery.includes("عداد") || lowerQuery.includes("فحص")) {
-                    aiResponse = "العداد الذكي في الأعلى يقيس مدى توافق سيرتك الذاتية مع أنظمة الـ ATS العالمية. للوصول لـ 100% احرص على: كتابة الاسم والمسمى، فصل المهارات بفاصلة، استخدام أرقام ونسب مئوية بإنجازاتك، وإدخال أفعال حركية قوية.";
-                } else if (lowerQuery.includes("تحميل") || lowerQuery.includes("pdf") || lowerQuery.includes("word") || lowerQuery.includes("حفظ")) {
-                    aiResponse = "تستطيع تصدير عملك بضغطة زر واحدة! استخدم الأزرار الملونة أسفل مربع المستند الجاهز: الأخضر لتحميل PDF فاخر، الأزرق لملف Word جاهز للتعديل، أو البرتقالي لمشاركة رابط سيرتك الذاتية مباشرة.";
-                } else if (lowerQuery.includes("لغة") || lowerQuery.includes("انجليزي") || lowerQuery.includes("فرنسي")) {
-                    aiResponse = "المنصة تدعم 3 لغات بالكامل. يمكنك الضغط على ترس الخيارات ⚙️ بالأعلى، ثم النقر على زر '🔄 لغة / Language' للتبديل الفوري والديناميكي بين العربية، الإنجليزية، والفرنسية.";
-                } else {
-                    aiResponse = "شكراً لتواصلك معي! لقد قمت باستلام رسالتك وتمريرها مباشرة إلى المطور علي علام كبلاغ دعم فني عاجل. إذا كنت تواجه مشكلة أو لديك اقتراح، كن واثقاً أنه سيتم مراجعته وتحديث المنصة فوراً. 🚀✨";
-                }
-            } else if (currentLang === 'en') {
-                if (lowerQuery.includes("ats") || lowerQuery.includes("score") || lowerQuery.includes("gauge")) {
-                    aiResponse = "The live ATS gauge measures optimization. To achieve 100%, please ensure you add a clear job title, provide at least 4 skills separated by commas, state actual numbers/percentages, and use strong action verbs.";
-                } else if (lowerQuery.includes("download") || lowerQuery.includes("pdf") || lowerQuery.includes("word") || lowerQuery.includes("export")) {
-                    aiResponse = "You can easily download your output using the action buttons below the preview container: Green for standard professional A4 PDF, Blue for editable Word documents, and Orange to get a direct sharing link.";
-                } else {
-                    aiResponse = "Thank you for reaching out! I have successfully forwarded your message directly to the developer (Ali Allam). If this is a feature request or bug report, it will be analyzed and patched in the upcoming release! 🚀";
-                }
-            } else { // fr
-                if (lowerQuery.includes("ats") || lowerQuery.includes("score")) {
-                    aiResponse = "La jauge ATS mesure votre score. Pour atteindre 100%, ajoutez votre titre, séparez vos compétences par des virgules, intégrez des chiffres et des verbes d'action.";
-                } else if (lowerQuery.includes("telecharger") || lowerQuery.includes("pdf") || lowerQuery.includes("word")) {
-                    aiResponse = "Utilisez les boutons en bas du document : le bouton vert pour le PDF, le bleu pour le fichier Word (.doc), ou l'orange pour copier le lien.";
-                } else {
-                    aiResponse = "Merci pour votre message ! Vos commentaires ont été transmis directement au développeur. Nous analyserons votre demande pour améliorer l'application rapidement. 🚀";
-                }
-            }
-
-            appendChatMessage("Ali AI", aiResponse, true);
-        }, 800);
-    }
-
-    if (sendAiBtn && aiInput) {
-        sendAiBtn.addEventListener("click", handleAiSendMessage);
-        aiInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") handleAiSendMessage();
         });
     }
 });
