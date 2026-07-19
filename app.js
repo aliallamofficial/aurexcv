@@ -209,7 +209,7 @@ const translations = {
         holderExperience: "Rédigez vos tâches et réalisations précédentes ou cliquez sur les suggestions prêtes à l'emploi qui apparaîtront automatiquement...",
         holderJobDesc: "Collez ici le texte intégral de l'annonce d'emploi pour laquelle vous souhaitez postuler...",
         holderOutput: "Remplissez vos données à droite/gauche et cliquez sur 'Optimiser avec l'IA' pour afficher le texte professionnel hautement attractif prêt pour le contournement de l'ATS...",
-        feedbackTitle: "📣 Laissez votre empreinte & suggestions (ou signalez un problème)",
+        feedbackTitle: "📣 Laissez votre empreinte & suggestions (or signalez un problème)",
         feedbackDesc: "Vos commentaires nous aident à améliorer constamment le moteur d'IA",
         btnSubmitFeedback: "Envoyer l'évaluation et les commentaires",
         holderFeedback: "Tapez votre suggestion, avis ou tout problème rencontré dans l'application ici...",
@@ -218,6 +218,9 @@ const translations = {
 };
 
 let currentLang = 'ar';
+
+// 🌐 ربط الـ Backend السحابي المشفر والآمن الخاص بك على Cloudflare
+const SECURE_BACKEND_URL = "https://ali-cv-backend.prof-ali-hatem-cairo.workers.dev";
 
 // ========================================================
 // 💡 مصفوفة النصائح الجاهزة للخبير
@@ -471,11 +474,14 @@ function applyLanguage() {
     displayRandomLiveTip();
 }
 
+// 🧠 استدعاء خادم الـ Cloudflare Worker لإجراء معالجة وتحسين الـ CV بالذكاء الاصطناعي
 function processAIOptimization(mode) {
     const name = document.getElementById("name").value.trim();
     const title = document.getElementById("jobTitle").value.trim();
     const skills = document.getElementById("skills").value.trim();
     const exp = document.getElementById("experience").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
     const out = document.getElementById("outputBox");
 
     if(!name || !title) {
@@ -486,78 +492,24 @@ function processAIOptimization(mode) {
 
     out.value = currentLang === 'ar' ? "⏳ جاري تشغيل خوارزميات الذكاء الاصطناعي السحابية وتحسين الكلمات الدلالية للـ ATS... يرجى الانتظار ثوانٍ..." : (currentLang === 'en' ? "⏳ Running cloud AI algorithms and optimizing ATS keywords... Please wait seconds..." : "⏳ Exécution des algorithmes d'IA et optimisation des mots-clés ATS...");
     
-    setTimeout(() => {
-        let aiResult = "";
-        if(currentLang === 'ar') {
-            aiResult = `==================================================\n`;
-            aiResult += `👤 ${name.toUpperCase()} | 🎯 ${title.toUpperCase()}\n`;
-            aiResult += `📱 الهاتف: ${document.getElementById("phone").value || 'غير مدرج'} | 📧 البريد: ${document.getElementById("email").value || 'غير مدرج'}\n`;
-            aiResult += `==================================================\n\n`;
-            aiResult += `🧠 الخلاصة المهنية والملخص التنفيذي (AI Generated Summary):\n`;
-            aiResult += `--------------------------------------------------\n`;
-            aiResult += `${title} شغوف ومتميز يتمتع بخبرة عملية في القيادة والتطوير والتحليل. يمتلك سجلاً حافلاً في حل المشكلات المعقدة وتطبيق أفضل الممارسات العالمية، مما يسهم في رفع الكفاءة التشغيلية وتحقيق الأهداف الاستراتيجية للمؤسسة.\n\n`;
-            
-            if(skills) {
-                aiResult += `🛠️ المهارات والقدرات الجوهرية (Core Competencies & ATS Keywords):\n`;
-                aiResult += `--------------------------------------------------\n`;
-                aiResult += `• ` + skills.split(",").map(s => s.trim()).join("  |  • ") + `\n\n`;
-            }
-
-            aiResult += `💼 الخبرات المهنية والمشاريع الاستراتيجية (Professional Experience):\n`;
-            aiResult += `--------------------------------------------------\n`;
-            if(exp && exp !== "...") {
-                aiResult += exp.split("\n").map(line => line.trim().startsWith("•") || line.trim().startsWith("-") ? line : `• ${line}`).join("\n") + "\n";
-            } else {
-                aiResult += `• إنجاز المهام الموكلة بكفاءة تامة وتطوير آليات العمل لرفع الإنتاجية بنسبة 25%.\n• التعاون مع فرق العمل المتعددة لضمان جودة المخرجات وتخطي توقعات العملاء.\n`;
-            }
-        } else if(currentLang === 'en') {
-            aiResult = `==================================================\n`;
-            aiResult += `👤 ${name.toUpperCase()} | 🎯 ${title.toUpperCase()}\n`;
-            aiResult += `📱 Phone: ${document.getElementById("phone").value || 'N/A'} | 📧 Email: ${document.getElementById("email").value || 'N/A'}\n`;
-            aiResult += `==================================================\n\n`;
-            aiResult += `🧠 PROFESSIONAL SUMMARY (AI Generated Summary):\n`;
-            aiResult += `--------------------------------------------------\n`;
-            aiResult += `Results-driven and highly analytical ${title} with proven expertise in project execution and strategic development. Adept at leveraging advanced technical workflows and engineering best practices to streamline operations, enhance productivity, and achieve corporate benchmarks.\n\n`;
-            
-            if(skills) {
-                aiResult += `🛠️ KEY COMPETENCIES & ATS KEYWORDS:\n`;
-                aiResult += `--------------------------------------------------\n`;
-                aiResult += `• ` + skills.split(",").map(s => s.trim()).join("  |  • ") + `\n\n`;
-            }
-
-            aiResult += `💼 PROFESSIONAL EXPERIENCE:\n`;
-            aiResult += `--------------------------------------------------\n`;
-            if(exp && exp !== "...") {
-                aiResult += exp.split("\n").map(line => line.trim().startsWith("•") || line.trim().startsWith("-") ? line : `• ${line}`).join("\n") + "\n";
-            } else {
-                aiResult += `• Executed core operational responsibilities with high accuracy, lifting performance by 25%.\n• Partnered with cross-functional teams to secure seamless workflows and boost customer satisfaction.\n`;
-            }
-        } else { // fr
-            aiResult = `==================================================\n`;
-            aiResult += `👤 ${name.toUpperCase()} | 🎯 ${title.toUpperCase()}\n`;
-            aiResult += `📱 Tél: ${document.getElementById("phone").value || 'N/A'} | 📧 E-mail: ${document.getElementById("email").value || 'N/A'}\n`;
-            aiResult += `==================================================\n\n`;
-            aiResult += `🧠 RÉSUMÉ PROFESSIONNEL (Généré par l'IA) :\n`;
-            aiResult += `--------------------------------------------------\n`;
-            aiResult += `Professionnel axé sur les résultats et hautement analytique en tant que ${title} avec une expertise prouvée dans l'exécution de projets et le développement stratégique. Capable d'optimiser les opérations et d'améliorer la productivité globale.\n\n`;
-            
-            if(skills) {
-                aiResult += `🛠️ COMPÉTENCES CLÉS & MOTS-CLÉS ATS :\n`;
-                aiResult += `--------------------------------------------------\n`;
-                aiResult += `• ` + skills.split(",").map(s => s.trim()).join("  |  • ") + `\n\n`;
-            }
-
-            aiResult += `💼 EXPÉRIENCE PROFESSIONNELLE :\n`;
-            aiResult += `--------------------------------------------------\n`;
-            if(exp && exp !== "...") {
-                aiResult += exp.split("\n").map(line => line.trim().startsWith("•") || line.trim().startsWith("-") ? line : `• ${line}`).join("\n") + "\n";
-            } else {
-                aiResult += `• Exécution des responsabilités opérationnelles de base avec une grande précision, augmentant les performances de 25%.\n• Collaboration avec des équipes interfonctionnelles pour assurer des flux de travail transparents.\n`;
-            }
+    // إرسال البيانات إلى السيرفر بدلاً من التوليد المحلي البدائي
+    fetch(SECURE_BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, title, skills, exp, phone, email, lang: currentLang, mode })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success && data.result) {
+            out.value = data.result;
+        } else {
+            throw new Error(data.error || "Unknown Error");
         }
-        
-        out.value = aiResult;
-    }, 1200);
+    })
+    .catch(err => {
+        console.error(err);
+        out.value = currentLang === 'ar' ? "❌ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي. يرجى التحقق من مفتاح الـ API والـ Worker." : "❌ Error connecting to AI. Please verify the API key and Worker setup.";
+    });
 }
 
 // ========================================================
