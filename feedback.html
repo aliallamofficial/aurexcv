@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Feedback Wire | AurexCV</title>
+    <link rel="stylesheet" href="/aurexcv/assets/style.css">
+    <style>
+        body { background: #0A0A0C; color: #fff; font-family: 'Inter', sans-serif; padding: 40px 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        h1 { color: #D4AF37; }
+        .feed-input { width: 100%; padding: 12px; background: #141416; border: 1px solid #222; border-radius: 6px; color: #fff; margin-top: 10px; margin-bottom: 15px; }
+        .btn-send { background: #D4AF37; color: #000; padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Feedback Wire</h1>
+        <p style="color: #a0a0a5; margin-bottom: 20px;">Help us tune the quantum engine. Send your technical logs or user experience updates directly to our development core.</p>
+        <form onsubmit="alert('Feedback sent securely via client wire!'); window.location.href='/aurexcv/'; return false;">
+            <label>Your Signal (Email)</label>
+            <input type="email" required class="feed-input" placeholder="node@network.com">
+            <label>Transmission Payload (Message)</label>
+            <textarea required class="feed-input" style="height: 120px;" placeholder="Describe layout anomalies, engine suggestions or feature requests..."></textarea>
+            <button class="btn-send" type="submit">Transmit Message Payload</button>
+        </form>
+    </div>
+</body>
+</html>
