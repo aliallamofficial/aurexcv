@@ -8,19 +8,19 @@
         gtag('js', new Date());
         gtag('config', 'G-5WP8H9FKZS');
     </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title data-i18n="appTitleSEO">عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً | Free AI Resume Builder & ATS Checker - Ali CV Builder</title>
-    
     <meta name="google-site-verification" content="L3tPSb-jmutxwf_FTcPCVK69TdAetKEoSoTS7JME" />
-    
     <meta name="description" content="أفضل موقع عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً وبدون حساب. Free AI Resume Builder and ATS checker. Optimize your CV to bypass recruitment systems instantly.">
     <meta name="keywords" content="عمل سيرة ذاتية, انشاء سي في, ذكاء اصطناعي سير ذاتية, نموذج سيرة ذاتية جاهز, تعديل سي في, سيرة ذاتية ATS, cv builder ai, free cv maker, طريقة عمل cv, AI Resume Builder, ATS Resume Checker">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body data-app-theme="cosmic">
@@ -33,12 +33,12 @@
     <div id="welcomeTourOverlay" class="welcome-overlay">
         <div class="welcome-card">
             <span id="tourStepBadge" class="step-badge" data-i18n="tourStep1">خطوة 1 من 3</span>
-            <div id="tourIcon animate" class="rocket-icon">🚀</div>
-            <h3 id="tourTitle" class="form-group" style="font-size: 20px; color: white; font-weight: 700;" data-i18n="tourTitleText">مرحباً بك في مستقبلك المهني الجديد!</h3>
-            <p id="tourDescription" class="form-group" style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6;" data-i18n="tourDescText">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.</p>
+            <div id="tourIcon" class="rocket-icon">🚀</div>
+            <h3 id="tourTitle" style="font-size: 20px; color: white; font-weight: 700; margin-bottom:15px;" data-i18n="tourTitleText">مرحباً بك في مستقبلك المهني الجديد!</h3>
+            <p id="tourDescription" style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom:20px;" data-i18n="tourDescText">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.</p>
             
             <div style="display: flex; gap: 10px; margin-top: 25px;">
-                <button id="tourNextBtn" style="flex: 2; margin: 0;" data-i18n="tourStartBtn">ابدأ الرحلة الآن ←</button>
+                <button id="tourNextBtn" class="super-gradient-btn" style="flex: 2; margin: 0;" data-i18n="tourStartBtn">ابدأ الرحلة الآن ←</button>
                 <button id="tourSkipBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="tourSkipBtn">تخطي</button>
             </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="modal-content">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
                 <h3 style="color: white; font-size: 17px; margin: 0;" data-i18n="settingsHeaderTitle">⚙️ تخصيص المنصة والمظهر الفاخر</h3>
-                <span id="closeSettingsModalBtn" style="cursor: pointer; font-size: 20px; color: var(--text-muted);">&times;</span>
+                <span id="closeSettingsModalBtn" style="cursor: pointer; font-size: 24px; color: var(--text-muted);">&times;</span>
             </div>
 
             <div class="settings-section">
@@ -71,10 +71,10 @@
                 </select>
             </div>
 
-            <div class="settings-section flex-row">
+            <div class="settings-section flex-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <div>
-                    <h4 data-i18n="creativeTitle">✨ مظهر التصميم الإبداعي الفاخر</h4>
-                    <p data-i18n="creativeDesc">ألوان مشعة وتأثير نيون متوهج لكامل المنصة</p>
+                    <h4 data-i18n="creativeTitle" style="color: white; font-size: 14px;">✨ مظهر التصميم الإبداعي الفاخر</h4>
+                    <p data-i18n="creativeDesc" style="color: var(--text-muted); font-size: 12px;">ألوان مشعة وتأثير نيون متوهج لكامل المنصة</p>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="creativeNeonToggleSwitch">
@@ -82,10 +82,10 @@
                 </label>
             </div>
 
-            <div class="settings-section flex-row">
+            <div class="settings-section flex-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <div>
-                    <h4 data-i18n="lockTitle">🔒 التشفير وقفل الحماية التلقائي</h4>
-                    <p data-i18n="lockDesc">قفل وتأمين مدخلاتك المهنية عند الخمول</p>
+                    <h4 data-i18n="lockTitle" style="color: white; font-size: 14px;">🔒 التشفير وقفل الحماية التلقائي</h4>
+                    <p data-i18n="lockDesc" style="color: var(--text-muted); font-size: 12px;">قفل وتأمين مدخلاتك المهنية عند الخمول</p>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="securityLockToggleSwitch" checked>
@@ -93,171 +93,172 @@
                 </label>
             </div>
 
-            <div class="settings-buttons">
-                <button id="saveSettingsBtn" class="rainbow-btn" style="margin: 0;" data-i18n="saveSettingsBtnClose">حفظ الإعدادات وتطبيق السمة ✨</button>
+            <div class="settings-buttons" style="margin-top: 25px;">
+                <button id="saveSettingsBtn" class="super-gradient-btn" style="margin: 0;" data-i18n="saveSettingsBtnClose">حفظ الإعدادات وتطبيق السمة ✨</button>
             </div>
         </div>
     </div>
 
     <div class="container main-content-hidden" id="mainAppContainer">
         
-        <header class="main-app-header">
-            <div id="dropdownToggleBtn">⚙️</div>
+        <header class="main-app-header" style="position: relative; text-align: center; margin-bottom: 40px;">
+            <div id="dropdownToggleBtn" style="position: absolute; right: 0; top: 0; cursor: pointer; font-size: 24px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); user-select: none;">⚙️</div>
             
-            <div id="topLeftMenu" class="hidden">
-                <button class="menu-item" id="openSettingsMenuBtn" data-i18n="menuSettings">⚙️ إعدادات المظهر والسمات</button>
-                <button class="menu-item" id="langSwitchBtnAr">🇸🇦 العربية (Arabic)</button>
-                <button class="menu-item" id="langSwitchBtnEn">🇺🇸 English (الإنجليزية)</button>
-                <button class="menu-item" id="langSwitchBtnFr">🇫🇷 Français (الفرنسية)</button>
+            <div id="topLeftMenu" class="dropdown-menu hidden" style="position: absolute; right: 0; top: 55px; background: #1f2937; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 10px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-main);">
+                <button class="menu-item ai-aux-btn" id="openSettingsMenuBtn" style="font-size: 13px; padding: 8px 12px;" data-i18n="menuSettings">⚙️ إعدادات المظهر والسمات</button>
+                <div style="display: flex; gap: 4px;">
+                    <button class="menu-item ai-aux-btn" id="langSwitchBtnAr" style="font-size: 12px; padding: 6px;">🇸🇦 AR</button>
+                    <button class="menu-item ai-aux-btn" id="langSwitchBtnEn" style="font-size: 12px; padding: 6px;">🇺🇸 EN</button>
+                    <button class="menu-item ai-aux-btn" id="langSwitchBtnFr" style="font-size: 12px; padding: 6px;">🇫🇷 FR</button>
+                </div>
             </div>
 
-            <div class="logo-badge">Ali CV Builder Pro v4.0 AI</div>
-            <div class="branding-sub">Next-Gen Personal Branding</div>
-            <h1 class="app-title" id="appTitleTextMain">مُهندس السير الذاتية الذكي</h1>
-            <p class="app-subtitle" id="appSubtitleTextMain" data-i18n="appSubtitle">اصنع سيرة ذاتية إستراتيجية لا تقهر، متوافقة 100% مع خوارزميات وأنظمة فحص المتقدمين الذكية (ATS) بدعم كامل للذكاء الاصطناعي اللحظي.</p>
+            <div class="logo-badge" style="display: inline-block; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--accent-blue); margin-bottom: 15px;">Ali CV Builder Pro v4.0 AI</div>
+            <h1 class="app-title" id="appTitleTextMain" style="font-size: 32px; font-weight: 800; color: white; margin-bottom: 10px;" data-i18n="appTitleMain">مُهندس السير الذاتية الذكي</h1>
+            <p class="app-subtitle" id="appSubtitleTextMain" style="font-size: 15px; color: var(--text-muted); max-width: 800px; margin: 0 auto; line-height: 1.6;" data-i18n="appSubtitle">اصنع سيرة ذاتية إستراتيجية لا تقهر، متوافقة 100% مع خوارزميات وأنظمة فحص المتقدمين الذكية (ATS) بدعم كامل للذكاء الاصطناعي اللحظي.</p>
         </header>
 
-        <div class="score-section">
-            <div class="score-top-info">
-                <span class="score-title">
-                    <span class="pulse-dot"></span>
+        <div class="score-section" style="background: rgba(255,255,255,0.02); border: 1px solid var(--neon-border); border-radius: var(--radius-lg); padding: 25px; margin-bottom: 35px;">
+            <div class="score-top-info" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <span class="score-title" style="font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                    <span class="pulse-dot" style="width: 8px; height: 8px; background: #38bdf8; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #38bdf8;"></span>
                     <span id="atsAdvisorTitleLabel" data-i18n="atsLiveAdvisor">مستشار الـ ATS الذكي واللحظي</span>
                 </span>
-                <span id="atsScoreValueDisplay" class="score-value">0%</span>
+                <span id="atsScoreValueDisplay" class="score-value" style="font-size: 24px; font-weight: 800; color: var(--accent-blue);">0%</span>
             </div>
             
-            <div class="score-bar-container">
-                <div id="atsScoreProgressBarFill" class="score-fill"></div>
+            <div class="score-bar-container" style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
+                <div id="atsScoreProgressBarFill" class="score-fill" style="width: 0%; height: 100%; background: var(--btn-gradient); transition: width 0.4s ease;"></div>
             </div>
 
-            <div class="ats-indicators-grid">
-                <div id="indLength" class="ats-ind" data-i18n="indLen text">حجم النص</div>
-                <div id="indKeywords" class="ats-ind" data-i18n="indKey text">الكلمات المفتاحية</div>
-                <div id="indStructure" class="ats-ind" data-i18n="indStructureText">هيكلة القسم</div>
-                <div id="indContact" class="ats-ind" data-i18n="indContactText">بيانات الاتصال</div>
+            <div class="ats-indicators-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 15px;">
+                <div id="indLength" class="ats-ind" style="text-align: center; background: rgba(255,255,255,0.01); padding: 10px; border-radius: 10px; font-size: 13px; color: var(--text-muted);" data-i18n="indLen">حجم النص</div>
+                <div id="indKeywords" class="ats-ind" style="text-align: center; background: rgba(255,255,255,0.01); padding: 10px; border-radius: 10px; font-size: 13px; color: var(--text-muted);" data-i18n="indKey">الكلمات المفتاحية</div>
+                <div id="indStructure" class="ats-ind" style="text-align: center; background: rgba(255,255,255,0.01); padding: 10px; border-radius: 10px; font-size: 13px; color: var(--text-muted);" data-i18n="indStructureText">هيكلة القسم</div>
+                <div id="indContact" class="ats-ind" style="text-align: center; background: rgba(255,255,255,0.01); padding: 10px; border-radius: 10px; font-size: 13px; color: var(--text-muted);" data-i18n="indContactText">بيانات الاتصال</div>
             </div>
 
-            <div id="atsScoreStatusText" class="score-status" data-i18n="atsInitialStatusText">🤔 ابدأ بكتابة أو لصق سيرتك الحالية لكي يقوم محرك الذكاء الاصطناعي بفحصها وتحليلها فوراً.</div>
+            <div id="atsScoreStatusText" class="score-status" style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5;" data-i18n="atsInitialStatusText">🤔 ابدأ بكتابة أو لصق سيرتك الحالية لكي يقوم محرك الذكاء الاصطناعي بفحصها وتحليلها فوراً.</div>
         </div>
 
         <div class="app-layout">
             
             <section>
-                <div class="section-header">
-                    <h2 id="secInputTitle" data-i18n="inputSectionTitle">1. مدخلات السيرة والوظيفة المستهدفة</h2>
-                    <span class="step-indicator" data-i18n="step1Indicator">خطوة 1</span>
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                    <h2 id="secInputTitle" style="font-size: 18px; font-weight: 700; color: white;" data-i18n="inputSectionTitle">1. مدخلات السيرة والوظيفة المستهدفة</h2>
+                    <span class="step-indicator" style="background: rgba(255,255,255,0.04); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: var(--text-muted);" data-i18n="step1Indicator">خطوة 1</span>
                 </div>
 
-                <div class="form-group">
-                    <div class="textarea-header">
-                        <label id="lblJobTitle" data-i18n="jobTitleLabelField">المسمى الوظيفي المستهدف:</label>
-                        <button type="button" class="voice-btn" id="voiceBtnJobTitle" data-i18n="voiceBtnText">🎙️ إملاء صوتي</button>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <div class="textarea-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <label id="lblJobTitle" style="font-size: 14px; color: white;" data-i18n="jobTitleLabelField">المسمى الوظيفي المستهدف:</label>
+                        <button type="button" class="voice-btn ai-aux-btn" id="voiceBtnJobTitle" style="width: auto; padding: 4px 12px; font-size: 12px;" data-i18n="voiceBtnText">🎙️ إملاء صوتي</button>
                     </div>
                     <input type="text" id="targetJobTitleInput" placeholder="مثال: مدير مشاريع، مهندس برمجيات، محاسب قانوني...">
                 </div>
 
-                <div class="suggestions-box">
-                    <div class="sug-header">
+                <div class="suggestions-box" style="margin-bottom: 25px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; padding: 15px;">
+                    <div class="sug-header" style="margin-bottom: 10px; font-size: 13px; color: var(--text-muted);">
                         <span data-i18n="sugBoxTitle">💡 مسميات وظيفية شائعة للبدء الفوري:</span>
                     </div>
-                    <div class="suggestions-list" id="jobSuggestionsListContainer">
-                        </div>
+                    <div class="suggestions-list" id="jobSuggestionsListContainer" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
                 </div>
 
-                <div class="form-group">
-                    <div class="textarea-header">
-                        <label id="lblCurrentCv" data-i18n="currentCvLabelField">سيرتك الذاتية الحالية (أو خبراتك بالتفصيل):</label>
-                        <button type="button" class="voice-btn" id="voiceBtnCurrentCv" data-i18n="voiceBtnText">🎙️ إملاء صوتي</button>
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <div class="textarea-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <label id="lblCurrentCv" style="font-size: 14px; color: white;" data-i18n="currentCvLabelField">سيرتك الذاتية الحالية (أو خبراتك بالتفصيل):</label>
+                        <button type="button" class="voice-btn ai-aux-btn" id="voiceBtnCurrentCv" style="width: auto; padding: 4px 12px; font-size: 12px;" data-i18n="voiceBtnText">🎙️ إملاء صوتي</button>
                     </div>
                     <textarea id="currentCvTextInput" rows="7" placeholder="اكتب أو الصق سيرتك الذاتية الحالية، أو اكتب مسودتك المهنية، وتاريخك الوظيفي، والمهارات التي تمتلكها بالتفصيل..."></textarea>
                 </div>
 
-                <div class="job-match-card">
-                    <div class="card-header">
-                        <span style="font-size: 20px;">🎯</span>
+                <div class="job-match-card" style="background: rgba(56, 189, 248, 0.02); border: 1px solid rgba(56, 189, 248, 0.1); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px;">
+                    <div class="card-header" style="display: flex; gap: 15px; margin-bottom: 15px;">
+                        <span style="font-size: 24px;">🎯</span>
                         <div>
-                            <h4 id="lblMatchCardTitle" data-i18n="matchCardTitleText">مُطابقة وصف الإعلان الوظيفي (اختياري)</h4>
-                            <p id="lblMatchCardDesc" data-i18n="matchCardDescText">الصق وصف الوظيفة المعلن عنها لرفع دقة الكلمات المفتاحية ومطابقة خوارزميات التوظيف بدقة 100%.</p>
+                            <h4 id="lblMatchCardTitle" style="color: white; font-size: 14px;" data-i18n="matchCardTitleText">مُطابقة وصف الإعلان الوظيفي (اختياري)</h4>
+                            <p id="lblMatchCardDesc" style="color: var(--text-muted); font-size: 12px; line-height: 1.5; margin-top: 4px;" data-i18n="matchCardDescText">الصق وصف الوظيفة المعلن عنها لرفع دقة الكلمات المفتاحية ومطابقة خوارزميات التوظيف بدقة 100%.</p>
                         </div>
                     </div>
-                    <textarea id="jobDescriptionTextInput" rows="4" placeholder="الصق متطلبات ومسؤوليات الإعلان الوظيفي هنا لدمج الكلمات المفتاحية الاستراتيجية..."></textarea>
+                    <textarea id="jobDescriptionTextInput" rows="4" placeholder="الصق متمتطلبات ومسؤوليات الإعلان الوظيفي هنا لدمج الكلمات المفتاحية الاستراتيجية..."></textarea>
                 </div>
 
-                <div class="actions-group">
+                <div class="actions-group" style="display: flex; flex-direction: column; gap: 12px;">
                     <button id="generateAiCvBtn" class="super-gradient-btn" data-i18n="btnGenerateStrategic">🚀 صياغة السيرة الذاتية الاستراتيجية بالذكاء الاصطناعي</button>
-                    
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 12px;">
                         <button id="optimizeKeywordsBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="btnOptimizeKeywords">🎯 تحسين الكلمات المفتاحية لـ ATS</button>
                         <button id="fixGrammarBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="btnFixGrammar">✍️ تدقيق لغوي واحترافي</button>
                     </div>
                 </div>
             </section>
 
-            <section>
-                <div class="section-header">
-                    <h2 id="secPreviewTitle" data-i18n="previewSectionTitle">2. السيرة الذاتية المهنية الناتجة</h2>
-                    <span class="badge-ready" id="badgeReadyStatus" data-i18n="badgeReadyText">جاهز للتصدير</span>
+            <section style="display: flex; flex-direction: column;">
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                    <h2 id="secPreviewTitle" style="font-size: 18px; font-weight: 700; color: white;" data-i18n="previewSectionTitle">2. السيرة الذاتية المهنية الناتجة</h2>
+                    <span class="badge-ready" id="badgeReadyStatus" style="background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2); padding: 4px 12px; border-radius: 8px; font-size: 12px; color: var(--accent-blue);" data-i18n="badgeReadyText">جاهز للتصدير</span>
                 </div>
 
-                <div class="preview-area-container">
-                    <textarea id="outputBox" placeholder="سوف تظهر سيرتك الذاتية الاحترافية والمصاغة بأسلوب استراتيجي عالمي هنا... يمكنك التعديل عليها مباشرة بكل حرية في أي وقت!"></textarea>
+                <div class="preview-area-container" style="flex: 1; display: flex; margin-bottom: 25px;">
+                    <textarea id="outputBox" style="flex: 1; min-height: 450px; line-height: 1.7; white-space: pre-wrap;" placeholder="سوف تظهر سيرتك الذاتية الاحترافية والمصاغة بأسلوب استراتيجي عالمي هنا... يمكنك التعديل عليها مباشرة بكل حرية في أي وقت!"></textarea>
                 </div>
 
-                <div class="flex-wrap">
-                    <button id="copyToClipboardBtn" class="blue-gradient-btn" data-i18n="btnCopyToClipboard">📋 نسخ النص بالكامل</button>
-                    <button id="downloadAsTxtBtn" class="orange-gradient-btn" data-i18n="btnDownloadTxt">📥 تحميل كملف TXT مهني</button>
-                    <button id="shareCvLinkBtn" class="green-gradient-btn" data-i18n="btnShareCloud">🌐 إنشاء رابط مشاركة سحابي</button>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button id="copyToClipboardBtn" class="super-gradient-btn" style="background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);" data-i18n="btnCopyToClipboard">📋 نسخ النص بالكامل</button>
+                    <div style="display: flex; gap: 12px;">
+                        <button id="downloadAsTxtBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="btnDownloadTxt">📥 تحميل كملف TXT مهني</button>
+                        <button id="shareCvLinkBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="btnShareCloud">🌐 إنشاء رابط مشاركة سحابي</button>
+                    </div>
                 </div>
             </section>
 
         </div>
 
-        <footer style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 30px; text-align: center;">
-            <div class="expert-tip-container">
-                <div class="tip-header">
+        <footer style="margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 35px; text-align: center;">
+            <div class="expert-tip-container" style="background: rgba(255,255,255,0.01); border-radius: 12px; padding: 20px; max-width: 800px; margin: 0 auto 35px auto; text-align: right;">
+                <div class="tip-header" style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px; font-weight: 700; color: #38bdf8;">
                     <span>💡</span>
                     <span id="lblExpertTipTitle" data-i18n="expertTipTitleText">نصيحة خبير التوظيف الفورية:</span>
                 </div>
-                <p id="cvTipText">احرص دائماً على تضمين أرقام وإنجازات قابلة للقياس (مثال: زيادة المبيعات بنسبة 25%) لرفع جاذبية سيرتك الذاتية أمام مدراء التوظيف.</p>
+                <p id="cvTipText" style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6;">احرص دائماً على تضمين أرقام وإنجازات قابلة للقياس (مثال: زيادة المبيعات بنسبة 25%) لرفع جاذبية سيرتك الذاتية أمام مدراء التوظيف.</p>
             </div>
 
-            <div style="margin-bottom: 25px;">
-                <p style="font-size: 13.5px; font-weight: 700; color: #e5e7eb;" data-i18n="ratingBoxTitle">⭐ ما هو تقييمك لتجربتك اليوم؟ ساعدنا في التطوير المتواصل للمنصة:</p>
-                <div id="starRatingSystem">
-                    <span data-rating="1">★</span>
-                    <span data-rating="2">★</span>
-                    <span data-rating="3">★</span>
-                    <span data-rating="4">★</span>
-                    <span data-rating="5">★</span>
+            <div style="margin-bottom: 35px;">
+                <p style="font-size: 14px; font-weight: 700; color: #e5e7eb; margin-bottom: 12px;" data-i18n="ratingBoxTitle">⭐ ما هو تقييمك لتجربتك اليوم؟ ساعدنا في التطوير المتواصل للمنصة:</p>
+                <div id="starRatingSystem" style="display: flex; justify-content: center; gap: 8px; font-size: 28px; cursor: pointer; margin-bottom: 15px; user-select: none;">
+                    <span data-rating="1" style="color: #38bdf8;">★</span>
+                    <span data-rating="2" style="color: #38bdf8;">★</span>
+                    <span data-rating="3" style="color: #38bdf8;">★</span>
+                    <span data-rating="4" style="color: #38bdf8;">★</span>
+                    <span data-rating="5" style="color: #38bdf8;">★</span>
                 </div>
                 
-                <div style="max-width: 500px; margin: 10px auto; display: flex; gap: 8px;">
-                    <input type="text" id="userFeedbackTextarea" placeholder="اكتب تعليقك أو مقترحك هنا بكل حرية..." style="padding: 10px 14px; font-size: 12.5px; border-radius: 10px;">
-                    <button id="submitFeedbackBtn" style="width: auto; padding: 0 20px; font-size: 12.5px; border-radius: 10px; margin: 0;" data-i18n="btnSubmitRating">إرسال التقييم</button>
+                <div style="max-width: 550px; margin: 0 auto; display: flex; gap: 10px;">
+                    <input type="text" id="userFeedbackTextarea" placeholder="اكتب تعليقك أو مقترحك هنا بكل حرية..." style="flex: 1; padding: 12px 16px; font-size: 13px;">
+                    <button id="submitFeedbackBtn" class="super-gradient-btn" style="width: auto; padding: 0 24px; font-size: 13px; margin: 0;" data-i18n="btnSubmitRating">إرسال التقييم</button>
                 </div>
             </div>
 
-            <div class="footer-copyright">
-                <small>&copy; 2026 Ali CV Builder Pro. All Rights Reserved.</small>
-                <small><a href="#" id="viewPrivacyPolicyBtn" style="color: var(--accent-blue); text-decoration: none;" data-i18n="privacyPolicyLink">🔒 سياسة الخصوصية والأمان الفائق للبيانات المهنية</a></small>
+            <div class="footer-copyright" style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: var(--text-muted);">
+                <span>&copy; 2026 Ali CV Builder Pro. All Rights Reserved.</span>
+                <span><a href="#" id="viewPrivacyPolicyBtn" style="color: var(--accent-blue); text-decoration: none;" data-i18n="privacyPolicyLink">🔒 سياسة الخصوصية والأمان الفائق للبيانات المهنية</a></span>
             </div>
         </footer>
 
     </div>
 
     <div id="aiChatWidgetContainer" style="position: fixed; bottom: 25px; right: 25px; width: 360px; background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden; z-index: 9999; transition: all 0.3s ease;">
-        <div id="aiChatWidgetHeader" style="background: var(--btn-gradient); padding: 16px 20px; color: white; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+        <div id="aiChatWidgetHeader" style="background: var(--btn-gradient); padding: 16px 20px; color: white; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 18px;">🤖</span>
+                <span>🤖</span>
                 <strong id="aiWidgetTitleLabel" style="font-size: 14px; font-weight: 700;" data-i18n="aiAssistantTitle">مساعد الدعم والذكاء الاصطناعي</strong>
             </div>
             <span id="aiChatToggleMinimizeBtn" style="font-size: 16px; font-weight: bold;">−</span>
         </div>
 
-        <div id="aiChatWidgetBodyArea" style="display: flex; flex-direction: column; height: 320px;">
+        <div id="aiChatWidgetBodyArea" style="display: flex; flex-direction: column; height: 320px; transition: height 0.3s ease;">
             <div id="aiChatMessagesHistoryContainer" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; font-size: 13px; color: #e5e7eb; background: #0b0f19; line-height: 1.5;">
                 <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.15); padding: 12px; border-radius: 12px;" id="aiWidgetWelcomeMessage" data-i18n="aiWelcomeMsg">
-                    مرحباً بك! أنا مستشارك المهني الذكي. يمكنني مساعدتك في صياغة جمل احترافية، مراجعة متطلبات الـ ATS، أو استقبال استفساراتك ومقترحاتك فوراً لتطوير واجهتك. بأي لغة تفضل التحدث اليوم؟
+                    مرحباً بك! أنا مستشارك المهني الذكي ومساعد الدعم الفني. يمكنني صياغة فقرات احترافية لك، مراجعة معايير الـ ATS، أو استقبال مقترحاتك لتطوير المنصة فوراً. كيف يمكنني مساعدتك؟
                 </div>
             </div>
 
