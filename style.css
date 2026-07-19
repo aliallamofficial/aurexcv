@@ -1,318 +1,655 @@
-/* ========================================================
-   🌌 المتغيرات الأساسية وأنظمة الألوان الفاخرة (Themes Matrix)
-   ======================================================== */
+/* ==========================================================================
+   🌌 AUREX CV QUANTUM DESIGN SYSTEM - PRIMARY CSS SHEET
+   ========================================================================== */
+
+/* 🎨 GLOBAL MATRIX SYSTEM VARIABLES */
 :root {
-    --cosmic-bg-gradient: linear-gradient(135deg, #070b12 0%, #10141e 100%);
-    --card-bg: rgba(17, 24, 39, 0.75);
-    --input-bg: #1f2937;
-    --accent-blue: #38bdf8;
-    --accent-pink: #ec4899;
-    --accent-purple: #8b5cf6;
-    --text-main: #f3f4f6;
-    --text-muted: #9ca3af;
-    --neon-border: rgba(56, 189, 248, 0.15);
-    --btn-gradient: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
-    --shadow-main: 0 20px 40px rgba(0, 0, 0, 0.5);
-    --font-active: 'Cairo', sans-serif;
-    --radius-lg: 20px;
-    --radius-xl: 28px;
+    --bg-dark-master: #0A0A0C;
+    --card-surface: #121216;
+    --card-border: rgba(212, 175, 55, 0.12);
+    --gold-primary: #D4AF37;
+    --gold-glow: rgba(212, 175, 55, 0.35);
+    --gold-gradient: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
+    --text-pure: #F5F5F7;
+    --text-secondary: #9A9A1A;
+    --text-muted: #8E8E93;
+    --radius-premium: 14px;
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --font-global: 'Inter', 'Cairo', sans-serif;
 }
 
-/* التبديل الديناميكي للسمات الكونية */
-body[data-app-theme="royal"] {
-    --cosmic-bg-gradient: linear-gradient(135deg, #0b1528 0%, #020617 100%);
-    --btn-gradient: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
-    --accent-blue: #60a5fa;
-    --neon-border: rgba(96, 165, 250, 0.15);
-}
-
-body[data-app-theme="emerald"] {
-    --cosmic-bg-gradient: linear-gradient(135deg, #062f22 0%, #022c22 100%);
-    --btn-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
-    --accent-blue: #34d399;
-    --neon-border: rgba(52, 211, 153, 0.15);
-}
-
-body[data-app-theme="cyber"] {
-    --cosmic-bg-gradient: linear-gradient(135deg, #1e1b4b 0%, #030712 100%);
-    --btn-gradient: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
-    --accent-blue: #f472b6;
-    --neon-border: rgba(244, 114, 182, 0.15);
-}
-
-/* ========================================================
-   🎨 التنسيقات الهيكلية والتأثيرات العامة للمنصة
-   ======================================================== */
-* {
+/* 🧱 ARCHITECTURAL RESET */
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 body {
-    font-family: var(--font-active);
-    background: var(--cosmic-bg-gradient);
-    color: var(--text-main);
-    min-height: 100vh;
-    padding: 40px 20px;
-    line-height: 1.5;
-    transition: background 0.3s ease;
+    background-color: var(--bg-dark-master);
+    color: var(--text-pure);
+    font-family: var(--font-global);
     overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* مظهر النيون المتوهج النشط اختياريًا */
-body.neon-glow-active {
-    --neon-border: rgba(56, 189, 248, 0.45);
-    text-shadow: 0 0 1px rgba(255,255,255,0.1);
+/* 👑 SUPREME LUXURY NAVIGATION BANNER */
+.aurex-header {
+    background: rgba(18, 18, 22, 0.85);
+    border-bottom: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
 }
 
-body.neon-glow-active .score-section,
-body.neon-glow-active .modal-content,
-body.neon-glow-active #aiChatWidgetContainer {
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
-}
-
-/* حاوية التطبيق المركزية الفاخرة */
-.container {
-    max-width: 1200px;
+.header-container {
+    max-width: 1440px;
     margin: 0 auto;
-    background: var(--card-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--neon-border);
-    border-radius: var(--radius-xl);
-    padding: 50px 40px;
-    box-shadow: var(--shadow-main);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* قناع الحماية لإخفاء المحتوى السري محلياً عند الخمول */
-.main-content-hidden {
-    opacity: 0;
-    transform: scale(0.98);
-    pointer-events: none;
-    user-select: none;
-}
-
-/* شريط تصفح الرابط المشترك السحابي العالي الجاذبية */
-.shared-view-banner {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: linear-gradient(90deg, #b91c1c 0%, #dc2626 100%);
-    color: white;
-    padding: 12px 20px;
-    text-align: center;
-    font-size: 13.5px;
-    font-weight: 700;
-    z-index: 99999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.shared-view-banner .clone-btn {
-    background: white;
-    color: #b91c1c;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 12.5px;
-    transition: transform 0.2s;
-}
-
-.shared-view-banner .clone-btn:hover {
-    transform: scale(1.03);
-}
-
-/* ========================================================
-   🧩 تصميم شبكة لوحة التحكم والتنقل الثنائي (Layout Columns)
-   ======================================================== */
-.app-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
-    margin-top: 30px;
-}
-
-@media (max-width: 850px) {
-    .app-layout {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-}
-
-/* حقول الإدخال والتعامل الفاخر مع النصوص */
-input[type="text"], select, textarea {
+    padding: 0 30px;
+    display: table;
     width: 100%;
-    background: var(--input-bg);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 14px 16px;
-    color: white;
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-input[type="text"]:focus, select:focus, textarea:focus {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+.brand-identity {
+    display: table-cell;
+    vertical-align: middle;
 }
 
-/* ========================================================
-   🔘 أزرار العمليات الكونية والتأثيرات الضوئية (Button Components)
-   ======================================================== */
-button {
-    font-family: inherit;
+.aurex-logo-svg {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 12px;
 }
 
-.super-gradient-btn {
-    width: 100%;
-    background: var(--btn-gradient);
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 12px;
-    font-size: 14.5px;
+[dir="rtl"] .aurex-logo-svg {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+.brand-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.brand-name {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
     font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, filter 0.2s ease;
-    margin-bottom: 5px;
+    letter-spacing: 1px;
+    color: var(--text-pure);
 }
 
-.super-gradient-btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
+.gold-text {
+    color: var(--gold-primary);
 }
 
-.super-gradient-btn:active {
-    transform: translateY(0);
-}
-
-.ai-aux-btn {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    color: #e5e7eb;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 13.5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.ai-aux-btn:hover {
-    border-color: var(--accent-blue);
-    background: rgba(56, 189, 248, 0.04);
-    color: white;
-}
-
-/* ========================================================
-   🗔 النوافذ العائمة المنبثقة والجولات التوجيهية (Modals & Overlays)
-   ======================================================== */
-.modal-overlay, .welcome-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(4, 7, 13, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 99999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    transition: opacity 0.3s ease;
-}
-
-.modal-content, .welcome-card {
-    background: #111827;
-    border: 1px solid var(--neon-border);
-    border-radius: var(--radius-xl);
-    max-width: 520px;
-    width: 100%;
-    padding: 35px;
-    position: relative;
-    box-shadow: var(--shadow-main);
-}
-
-.settings-section {
-    margin-bottom: 20px;
-}
-
-.settings-section label {
+.brand-tagline {
     display: block;
-    font-size: 13.5px;
+    font-size: 11px;
     color: var(--text-muted);
-    margin-bottom: 8px;
+    font-weight: 300;
+    margin-top: 2px;
+}
+
+.header-controls {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+
+[dir="rtl"] .header-controls {
+    text-align: left;
+}
+
+.lang-selector-wrapper {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+[dir="rtl"] .lang-selector-wrapper {
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+.aurex-select-minimal {
+    background: #1A1A22;
+    border: 1px solid var(--card-border);
+    color: var(--text-pure);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.aurex-select-minimal:focus {
+    border-color: var(--gold-primary);
+}
+
+.status-badge {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
     font-weight: 600;
 }
 
-.hidden {
-    display: none !important;
+/* 🌌 MAIN WORKSPACE CONTAINER */
+.aurex-app-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
-/* أزرار وجزيئات الجولة التعليمية التفاعلية */
-.step-badge {
-    position: absolute;
-    top: -15px; left: 35px;
-    background: var(--btn-gradient);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-[dir="rtl"] .step-badge {
-    left: auto; right: 35px;
-}
-
-.rocket-icon {
-    font-size: 44px;
+/* 🎯 HERO MISSION CONTROL SECTION */
+.hero-intro-section {
+    margin-bottom: 50px;
     text-align: center;
+}
+
+.hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-pure);
     margin-bottom: 15px;
 }
 
-/* مفتاح التبديل الذكي (Toggle Switch CSS) */
-.switch {
-    position: relative; 
-    display: inline-block; 
-    width: 48px; 
-    height: 24px; 
-    flex-shrink: 0;
-}
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { 
-    position: absolute; 
-    cursor: pointer; 
-    top: 0; left: 0; right: 0; bottom: 0; 
-    background-color: #374151; 
-    border-radius: 24px; 
-}
-.slider::before { \n    content: ""; \n    position: absolute; \n    height: 16px; width: 16px; \n    left: 4px; bottom: 4px; \n    background-color: white; \n    border-radius: 50%; \n}
-input:checked + .slider { background-image: var(--btn-gradient); }
-input:checked + .slider::before { transform: translateX(24px); }
-
-[dir="rtl"] .slider::before { left: auto; right: 4px; }
-[dir="rtl"] input:checked + .slider::before { transform: translateX(-24px); }
-
-/* ========================================================
-   📱 متجاوب بالكامل وتوافقي فائق (Responsive Design)
-   ======================================================== */
-@media (max-width: 1024px) {
-    body { padding: 40px 15px; }
-    .container { padding: 30px 20px; }
+.gold-gradient-text {
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-@media (max-width: 640px) {
-    .app-title { font-size: 24px !important; }
-    .app-subtitle { font-size: 13.5px !important; }
-    .container { padding: 25px 15px; border-radius: 16px; }
-   }
+.hero-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 🚀 SOVEREIGN FEATURES DOCK OVERVIEW */
+.unbeatable-features-dock {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-premium);
+    padding: 25px;
+    margin-bottom: 40px;
+}
+
+.dock-title {
+    font-size: 18px;
+    color: var(--gold-primary);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.dock-grid {
+    display: block;
+    width: 100%;
+}
+
+.dock-btn {
+    background: #181822;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    margin: 4px;
+    display: inline-block;
+    transition: var(--transition-smooth);
+}
+
+.dock-btn:hover, .dock-btn.active {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: var(--gold-primary);
+    color: var(--gold-primary);
+}
+
+.suite-workspace-card {
+    background: #16161E;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.workspace-panel-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-pure);
+    margin-bottom: 5px;
+}
+
+.workspace-panel-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+/* 🛠️ CONTROL GRID LAYOUT SPLIT */
+.workspace-layout-grid {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 25px 0;
+}
+
+.control-panel-column, .preview-panel-column {
+    display: table-cell;
+    vertical-align: top;
+    width: 50%;
+}
+
+@media (max-width: 992px) {
+    .workspace-layout-grid, .control-panel-column, .preview-panel-column {
+        display: block;
+        width: 100%;
+    }
+    .control-panel-column {
+        margin-bottom: 30px;
+    }
+}
+
+/* 💎 AUREX CARDS AND ENGINES INTERFACES */
+.aurex-card {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-premium);
+    padding: 25px;
+}
+
+.mt-10 { margin-top: 10px; }
+.mt-15 { margin-top: 15px; }
+.mt-25 { margin-top: 25px; }
+.mt-50 { margin-top: 50px; }
+
+.card-header-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-pure);
+    margin-bottom: 20px;
+}
+
+.card-header-flex {
+    display: table;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.card-header-flex .card-header-title {
+    display: table-cell;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.card-header-flex .aurex-btn-secondary {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+}
+
+/* 🛡️ DYNAMIC FORM ELEMENT SYSTEMS */
+.input-group-row {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 15px 0;
+}
+
+.input-wrapper {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.aurex-label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.aurex-input, .aurex-textarea {
+    width: 100%;
+    background: #16161E;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-pure);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.aurex-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.aurex-input:focus, .aurex-textarea:focus {
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* ⚡ BUTTON CONSTRUCTIONS */
+.aurex-btn-gold {
+    background: var(--gold-gradient);
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.aurex-btn-gold:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 15px var(--gold-glow);
+}
+
+.aurex-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--gold-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.aurex-btn-gold-trigger {
+    width: 100%;
+    background: var(--gold-gradient);
+    border: none;
+    padding: 18px;
+    border-radius: var(--radius-premium);
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+}
+
+/* 🧠 ATS ALGORITHMIC COGNITIVE RADAR DISPLAY */
+.ats-radar-card {
+    border-left: 4px solid var(--gold-primary);
+}
+
+.ats-radar-header {
+    display: table;
+    width: 100%;
+}
+
+.ats-radar-header > div:first-child {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ats-radial-score-container {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    width: 90px;
+    position: relative;
+}
+
+.radial-progress-svg {
+    transform: rotate(-90deg);
+}
+
+.radial-progress-svg .bg-circle {
+    fill: none;
+    stroke: #22222A;
+    stroke-width: 6;
+}
+
+.radial-progress-svg .progress-circle {
+    fill: none;
+    stroke: var(--gold-primary);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.score-digits-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-pure);
+}
+
+.ats-feedback-list-box {
+    margin-top: 20px;
+    background: #16161E;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.suggestion-item {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.suggestion-item.info-state {
+    color: var(--text-muted);
+}
+
+/* 🎨 TEMPLATE EXECUTIVE CONTROLLERS */
+.template-selector-grid {
+    display: block;
+    width: 100%;
+}
+
+.tmpl-card {
+    background: #181822;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 4px;
+    font-size: 13px;
+    transition: var(--transition-smooth);
+}
+
+.tmpl-card.active, .tmpl-card:hover {
+    border-color: var(--gold-primary);
+    background: rgba(212, 175, 55, 0.05);
+    color: var(--gold-primary);
+}
+
+/* 🖥️ REAL-TIME CANVAS PRINT WALL */
+.cv-preview-outer-frame {
+    background: #181822;
+    border-radius: var(--radius-premium);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+}
+
+.canvas-action-bar {
+    background: #121216;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: table;
+    width: 100%;
+}
+
+.canvas-badge {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.canvas-actions {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.canvas-action-btn {
+    background: #1E1E28;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-pure);
+    padding: 8px 16px;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.canvas-action-btn:hover {
+    border-color: var(--gold-primary);
+    color: var(--gold-primary);
+}
+
+/* 📃 LIVE RENDER RESUME PAPER (PURE WHITE ENVIRONMENT FOR PRINTERS) */
+.cv-render-paper {
+    background: #FFFFFF;
+    color: #111111;
+    padding: 40px;
+    min-height: 800px;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+}
+
+.render-field-name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.render-field-title {
+    font-size: 15px;
+    color: #555;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.render-field-contact {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.canvas-divider {
+    border: 0;
+    border-top: 1px solid #DDD;
+    margin: 20px 0;
+}
+
+.canvas-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #111;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #111;
+    padding-bottom: 3px;
+    margin-bottom: 10px;
+}
+
+.render-field-text {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ✍️ SEO ACCUMULATION CONTENT MATRIX */
+.aurex-seo-blog-matrix {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 40px;
+}
+
+.blog-matrix-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.blog-matrix-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.blog-posts-grid {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 20px 0;
+}
+
+.blog-article-card {
+    display: table-cell;
+    background: var(--card-surface);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 20px;
+    vertical-align: top;
+}
+
+.blog-article-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-pure);
+}
+
+.blog-article-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.blog-read-link {
+    font-size: 12px;
+    color: var(--gold-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* 👑 FOOTER SOVEREIGN INFORMATION WALL */
+.aurex-footer {
+    border-top: 1px solid var(--card-border);
+    padding: 30px 0;
+    margin-top: 80px;
+    text-align: center;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    margin: 0 15px;
+}
+
+.footer-links a:hover {
+    color: var(--gold-primary);
+}
+
+.footer-copyright {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 15px;
+}
