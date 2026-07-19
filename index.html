@@ -8,316 +8,266 @@
         gtag('js', new Date());
         gtag('config', 'G-5WP8H9FKZS');
     </script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title data-i18n="appTitleSEO">عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً | Free AI Resume Builder & ATS Checker - Ali CV Builder</title>
     
     <meta name="google-site-verification" content="L3tPSb-jmutxwf_FTcPCVK69TdAetKEoSoTS7JME" />
-    <meta name="description" content="أفضل موقع عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً وبدون حساب. Free AI Resume Builder and ATS checker. Optimize your CV to bypass recruitment systems instantly.">
-    <meta name="keywords" content="عمل سيرة ذاتية, انشاء سي في, ذكاء اصطناعي سير ذاتية, نموذج سيرة ذاتية جاهز, تعديل سي في, سيرة ذاتية ATS, cv builder ai, free cv maker, طريقة عمل cv, AI Resume Builder, ATS Resume Checker, Professional Resume Maker">
-
-    <meta property="og:title" content="Ali CV Builder | AI Resume & CV Builder">
-    <meta property="og:description" content="أنشئ سيرة ذاتية احترافية مجاناً متوافقة مع أنظمة الـ ATS العالمية وبدون تسجيل. Free AI Resume Builder.">
-    <meta property="og:image" content="icons/icon-512x512.png">
-    <meta property="og:url" content="https://aliallamofficial.github.io/ali-cv-builder/">
-    <meta property="og:type" content="website">
-    <meta property="fb:app_id" content="966242223397117" />
     
-    <link rel="manifest" href="/ali-cv-builder/manifest.json">
-    <meta name="theme-color" content="#38bdf8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-
+    <meta name="description" content="أفضل موقع عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً وبدون حساب. Free AI Resume Builder and ATS checker. Optimize your CV to bypass recruitment systems instantly.">
+    <meta name="keywords" content="عمل سيرة ذاتية, انشاء سي في, ذكاء اصطناعي سير ذاتية, نموذج سيرة ذاتية جاهز, تعديل سي في, سيرة ذاتية ATS, cv builder ai, free cv maker, طريقة عمل cv, AI Resume Builder, ATS Resume Checker">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-app-theme="cosmic">
 
     <div id="sharedViewBanner" class="shared-view-banner hidden">
-        <span data-i18n="sharedViewText"><i class="fa-solid fa-eye gap-icon"></i> أنت تتصفح الآن سيرة ذاتية مشتركة في وضع العرض فقط.</span>
+        <span id="sharedBannerText" data-i18n="sharedViewText">👀 أنت تتصفح الآن سيرة ذاتية مشتركة في وضع العرض فقط.</span>
         <button id="cloneSharedCVBtn" class="clone-btn" data-i18n="cloneSharedCVBtn">✍️ تعديل هذه السيرة أو إنشاء واحدة جديدة</button>
     </div>
 
-    <div id="appTourModal" class="welcome-overlay">
+    <div id="welcomeTourOverlay" class="welcome-overlay">
         <div class="welcome-card">
-            <div id="tourProgress" class="step-badge" data-i18n="tourStep1">خطوة 1 من 3</div>
-            <div id="tourIcon" class="rocket-icon">🚀</div>
-            <h3 id="tourTitle" data-i18n="tourTitleText">مرحباً بك في مستقبلك المهني الجديد!</h3>
-            <p id="tourDescription" data-i18n="tourDescText">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة لتعلم كيفية عمل سي في احترافي.</p>
-            <div class="tour-actions">
-                <button id="nextTourBtn" class="primary-btn" data-i18n="tourStartBtn">ابدأ الرحلة الآن ←</button>
-                <button id="skipTourBtn" class="flat-btn" data-i18n="tourSkipBtn">تخطي</button>
+            <span id="tourStepBadge" class="step-badge" data-i18n="tourStep1">خطوة 1 من 3</span>
+            <div id="tourIcon animate" class="rocket-icon">🚀</div>
+            <h3 id="tourTitle" class="form-group" style="font-size: 20px; color: white; font-weight: 700;" data-i18n="tourTitleText">مرحباً بك في مستقبلك المهني الجديد!</h3>
+            <p id="tourDescription" class="form-group" style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6;" data-i18n="tourDescText">دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي.</p>
+            
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button id="tourNextBtn" style="flex: 2; margin: 0;" data-i18n="tourStartBtn">ابدأ الرحلة الآن ←</button>
+                <button id="tourSkipBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="tourSkipBtn">تخطي</button>
             </div>
         </div>
     </div>
 
-    <div id="mainAppContent" class="main-content-hidden">
-        
-        <div id="settingsPageModal" class="modal-overlay hidden">
-            <div class="modal-content">
-                <div class="settings-header">
-                    <h3 data-i18n="settingsHeaderTitle"><i class="fa-solid fa-sliders gap-icon"></i> تخصيص المنصة والمظهر الفاخر</h3>
-                    <button id="closeSettingsBtn" class="settings-close-btn">&times;</button>
-                </div>
-                
-                <div class="settings-section">
-                    <label data-i18n="themeLabel">🎨 مظهر التطبيق الكوني (Themes):</label>
-                    <select id="themeSelect">
-                        <option value="default" data-i18n="themeDefault">🌌 الوضع الكوني العميق (افتراضي)</option>
-                        <option value="royal-blue" data-i18n="themeRoyal">👑 الأزرق الملكي الفاخر</option>
-                        <option value="emerald-green" data-i18n="themeEmerald">💚 الأخضر الزمردي الخلاب</option>
-                        <option value="cyber-punk" data-i18n="themeCyber">🔮 الأرجواني السايبربانك</option>
-                    </select>
-                </div>
+    <div id="settingsModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+                <h3 style="color: white; font-size: 17px; margin: 0;" data-i18n="settingsHeaderTitle">⚙️ تخصيص المنصة والمظهر الفاخر</h3>
+                <span id="closeSettingsModalBtn" style="cursor: pointer; font-size: 20px; color: var(--text-muted);">&times;</span>
+            </div>
 
-                <div class="settings-section">
-                    <label data-i18n="fontLabel">✍️ نمط خط السيرة الذاتية (CV Fonts):</label>
-                    <select id="cvFontSelect">
-                        <option value="'Cairo', sans-serif">Cairo (عصري ومقروء)</option>
-                        <option value="'Tajawal', sans-serif">Tajawal (أنيق ورسمي)</option>
-                        <option value="'Almarai', sans-serif">Almarai (واضح وممتاز للـ ATS)</option>
-                        <option value="'Inter', sans-serif">Inter (Global Latin Standard)</option>
-                    </select>
-                </div>
+            <div class="settings-section">
+                <label data-i18n="themeLabel">🎨 مظهر التطبيق الكوني (Themes):</label>
+                <select id="themeSelectorField">
+                    <option value="cosmic" data-i18n="themeDefault">🌌 الوضع الكوني العميق (افتراضي)</option>
+                    <option value="royal" data-i18n="themeRoyal">👑 الأزرق الملكي الفاخر</option>
+                    <option value="emerald" data-i18n="themeEmerald">💚 الأخضر الزمردي الخلاب</option>
+                    <option value="cyber" data-i18n="themeCyber">🔮 الأرجواني السايبربانك</option>
+                </select>
+            </div>
 
-                <div class="settings-section flex-row">
-                    <div>
-                        <h4 data-i18n="creativeTitle">✨ مظهر التصميم الإبداعي الفاخر</h4>
-                        <p data-i18n="creativeDesc">ألوان مشعة وتأثير نيون فريد للواجهة</p>
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" id="creativeLayoutToggle">
-                        <span class="slider"></span>
-                    </label>
-                </div>
+            <div class="settings-section">
+                <label data-i18n="fontLabel">✍️ نمط خط السيرة الذاتية (CV Fonts):</label>
+                <select id="fontSelectorField">
+                    <option value="Cairo">Cairo (خط عربي احترافي حديث)</option>
+                    <option value="Almarai">Almarai (خفيف وممتاز للقراءة)</option>
+                    <option value="Tajawal">Tajawal (أنيق وتقليدي متناسق)</option>
+                    <option value="Inter">Inter (مثالي للنصوص الإنجليزية)</option>
+                </select>
+            </div>
 
-                <div class="settings-buttons">
-                    <button id="enableNotificationsBtn" class="secondary-btn" data-i18n="notifBtn"><i class="fa-solid fa-bell gap-icon"></i> تفعيل إشعارات الفرص الحرة</button>
-                    <button id="shareAppBtn" class="rainbow-btn" data-i18n="shareBtn"><i class="fa-solid fa-share-nodes gap-icon"></i> مشاركة المنصة السحرية</button>
+            <div class="settings-section flex-row">
+                <div>
+                    <h4 data-i18n="creativeTitle">✨ مظهر التصميم الإبداعي الفاخر</h4>
+                    <p data-i18n="creativeDesc">ألوان مشعة وتأثير نيون متوهج لكامل المنصة</p>
                 </div>
+                <label class="switch">
+                    <input type="checkbox" id="creativeNeonToggleSwitch">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="settings-section flex-row">
+                <div>
+                    <h4 data-i18n="lockTitle">🔒 التشفير وقفل الحماية التلقائي</h4>
+                    <p data-i18n="lockDesc">قفل وتأمين مدخلاتك المهنية عند الخمول</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="securityLockToggleSwitch" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="settings-buttons">
+                <button id="saveSettingsBtn" class="rainbow-btn" style="margin: 0;" data-i18n="saveSettingsBtnClose">حفظ الإعدادات وتطبيق السمة ✨</button>
             </div>
         </div>
+    </div>
 
-        <div class="container" id="mainContainer">
+    <div class="container main-content-hidden" id="mainAppContainer">
+        
+        <header class="main-app-header">
+            <div id="dropdownToggleBtn">⚙️</div>
             
-            <header class="main-app-header">
-                <div class="settings-wrapper">
-                    <button id="dropdownToggleBtn" class="settings-trigger-btn" title="Options"><i class="fa-solid fa-gear"></i></button>
-                    <div id="topLeftMenu" class="dropdown-menu hidden">
-                        <button class="menu-item" id="openSettingsBtn" data-i18n="menuCustomize"><i class="fa-solid fa-palette gap-icon"></i> تخصيص المظهر والخطوط</button>
-                        <button class="menu-item" id="toggleLanguageBtn" data-i18n="menuLang"><i class="fa-solid fa-language gap-icon"></i> لغة / Language / Langue</button>
-                        <button class="menu-item" id="clearDataBtn" data-i18n="menuClear"><i class="fa-solid fa-trash-can gap-icon"></i> مسح وإعادة تعيين الحقول</button>
-                    </div>
-                </div>
-
-                <span class="logo-badge">Ali AI Engine • Premium Edition</span>
-                
-                <h1 class="app-title" id="mainTitleText" data-i18n="mainTitle">إنشاء سيرة ذاتية احترافية بالذكاء الاصطناعي</h1>
-                <div class="branding-sub" data-i18n="brandSub">Ali CV Builder Pro • المنصة الذكية المتكاملة</div>
-                
-                <p class="app-subtitle" data-i18n="appSubtitle">
-                    صمّم مستندك المهني القادم بأحدث تقنيات الذكاء الاصطناعي التوليدي. قوالب ذكية مجهزة لـ عمل سي في احترافي جاهز للتعديل والطباعة فوراً، مخصصة بالكامل لتخطي خوارزميات فحص الـ ATS العالمية بنسبة 100% وبدون الحاجة لإنشاء حساب أو تسجيل بياناتك.
-                </p>
-            </header>
-
-            <div id="scoreGaugeContainer" class="score-section">
-                <div class="score-top-info">
-                    <div class="score-title">
-                        <span class="pulse-dot"></span>
-                        <strong data-i18n="atsAdvisorTitle">مستشار الـ ATS الذكي اللحظي:</strong>
-                    </div>
-                    <span id="scoreText" class="score-value">0%</span>
-                </div>
-                
-                <div class="score-bar-container">
-                    <div id="scoreFill" class="score-fill"></div>
-                </div>
-                
-                <div class="ats-indicators-grid">
-                    <div class="ats-ind" id="ind-basic" data-i18n="indBasic"><i class="fa-regular fa-user gap-icon"></i> البيانات الأساسية</div>
-                    <div class="ats-ind" id="ind-skills" data-i18n="indSkills"><i class="fa-solid fa-screwdriver-wrench gap-icon"></i> مهارات كافية</div>
-                    <div class="ats-ind" id="ind-num" data-i18n="indNum"><i class="fa-solid fa-chart-line gap-icon"></i> أرقام وإنجازات</div>
-                    <div class="ats-ind" id="ind-words" data-i18n="indWords"><i class="fa-solid fa-bolt gap-icon"></i> أفعال حركية</div>
-                </div>
-                
-                <p id="scoreStatus" class="score-status" data-i18n="scoreStatusEmpty">⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي...</p>
+            <div id="topLeftMenu" class="hidden">
+                <button class="menu-item" id="openSettingsMenuBtn" data-i18n="menuSettings">⚙️ إعدادات المظهر والسمات</button>
+                <button class="menu-item" id="langSwitchBtnAr">🇸🇦 العربية (Arabic)</button>
+                <button class="menu-item" id="langSwitchBtnEn">🇺🇸 English (الإنجليزية)</button>
+                <button class="menu-item" id="langSwitchBtnFr">🇫🇷 Français (الفرنسية)</button>
             </div>
 
-            <main class="app-layout">
-                
-                <section class="inputs-section" id="inputsSection">
-                    <div class="section-header">
-                        <h2 data-i18n="inputSectionTitle"><i class="fa-regular fa-pen-to-square gap-icon"></i> بياناتك المهنية والشخصية لإعداد السي في</h2>
-                        <span class="step-indicator" data-i18n="stepIndicator1">خطوة 1 من 2</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="name" data-i18n="labelName">👤 الاسم الكامل</label>
-                        <input type="text" id="name" placeholder="Ali Allam" data-i18n-placeholder="holderName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="jobTitle" data-i18n="labelJobTitle">🎯 المسمى الوظيفي المستهدف</label>
-                        <input type="text" id="jobTitle" placeholder="Software Engineer" data-i18n-placeholder="holderJobTitle" required>
-                    </div>
-                    
-                    <div id="jobSuggestionsBox" class="suggestions-box hidden">
-                        <div class="sug-header">
-                            <span data-i18n="sugHeader"><i class="fa-regular fa-lightbulb gap-icon"></i> اقتراحات مهام مجهزة للـ ATS لمجالك:</span>
-                            <span class="badge-new" data-i18n="badgeNew">جديد</span>
-                        </div>
-                        <div id="suggestionsList" class="suggestions-list"></div>
-                    </div>
+            <div class="logo-badge">Ali CV Builder Pro v4.0 AI</div>
+            <div class="branding-sub">Next-Gen Personal Branding</div>
+            <h1 class="app-title" id="appTitleTextMain">مُهندس السير الذاتية الذكي</h1>
+            <p class="app-subtitle" id="appSubtitleTextMain" data-i18n="appSubtitle">اصنع سيرة ذاتية إستراتيجية لا تقهر، متوافقة 100% مع خوارزميات وأنظمة فحص المتقدمين الذكية (ATS) بدعم كامل للذكاء الاصطناعي اللحظي.</p>
+        </header>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone" data-i18n="labelPhone">📞 رقم الهاتف</label>
-                            <input type="text" id="phone" placeholder="+201149117724" data-i18n-placeholder="holderPhone">
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-i18n="labelEmail">📧 البريد الإلكتروني</label>
-                            <input type="email" id="email" placeholder="info@example.com" data-i18n-placeholder="holderEmail">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="skills" data-i18n="labelSkills">🛠️ المهارات التقنية والشخصية (افصل بينها بفاصلة ,)</label>
-                        <input type="text" id="skills" placeholder="Problem Solving, JavaScript, Excel..." data-i18n-placeholder="holderSkills">
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="textarea-header">
-                            <label for="experience" data-i18n="labelExperience">💼 الخبرات المهنية والمشاريع السابقة</label>
-                            <button id="voiceDictationBtn" class="voice-btn" type="button" title="Smart Voice Dictation"><span data-i18n="voiceBtnText"><i class="fa-solid fa-microphone gap-icon"></i> إملاء ذكي</span></button>
-                        </div>
-                        <textarea id="experience" rows="6" placeholder="..." data-i18n-placeholder="holderExperience"></textarea>
-                    </div>
-                    
-                    <div class="form-group job-match-card">
-                        <div class="card-header">
-                            <span class="icon"><i class="fa-solid fa-bullseye" style="color: #38bdf8;"></i></span>
-                            <div class="card-titles">
-                                <h4 data-i18n="matchTitle">مطابقة إعلان الوظيفة الذاتي (ATS Match)</h4>
-                                <p data-i18n="matchDesc">حلل الكلمات الدلالية الناقصة فوراً</p>
-                            </div>
-                        </div>
-                        <textarea id="jobDescription" rows="3" placeholder="..." data-i18n-placeholder="holderJobDesc"></textarea>
-                        <button id="checkMatchBtn" type="button" class="secondary-btn" data-i18n="matchBtn"><i class="fa-solid fa-chart-pie gap-icon"></i> احسب نسبة التطابق ونقاط الضعف</button>
-                        <div id="matchResult"></div>
-                    </div>
-                    
-                    <div class="actions-group">
-                        <button id="generateSummaryBtn" class="ai-aux-btn" data-i18n="btnGenSummary"><i class="fa-solid fa-brain gap-icon"></i> توليد ملخص مهني احترافي فوراً</button>
-                        <button id="aiOptimizeBtn" class="super-gradient-btn" data-i18n="btnOptimize"><i class="fa-solid fa-wand-magic-sparkles gap-icon"></i> تحسين وإعادة الصياغة بالذكاء الاصطناعي</button>
-                    </div>
-                </section>
-                
-                <section class="result-section">
-                    <div class="section-header">
-                        <h2 data-i18n="resultSectionTitle"><i class="fa-regular fa-file-pdf gap-icon"></i> مستندك المهني الجاهز</h2>
-                        <span class="badge-ready" data-i18n="badgeReady">A4 جاهز للطباعة</span>
-                    </div>
-                    
-                    <div class="preview-area-container">
-                        <textarea id="outputBox" placeholder="..." data-i18n-placeholder="holderOutput"></textarea>
-                    </div>
-                    
-                    <div class="result-footer-actions flex-wrap">
-                        <button id="downloadPdfBtn" class="green-gradient-btn" data-i18n="btnPdf"><i class="fa-solid fa-file-arrow-down gap-icon"></i> تحميل بصيغة PDF الاحترافية</button>
-                        <button id="downloadWordBtn" class="blue-gradient-btn" data-i18n="btnWord"><i class="fa-solid fa-file-word gap-icon"></i> تصدير بصيغة Word (.doc)</button>
-                        <button id="shareCVLinkBtn" class="orange-gradient-btn" data-i18n="btnShareLink"><i class="fa-solid fa-link gap-icon"></i> مشاركة برابط مباشر</button>
-                    </div>
-                </section>
-                
-            </main>
+        <div class="score-section">
+            <div class="score-top-info">
+                <span class="score-title">
+                    <span class="pulse-dot"></span>
+                    <span id="atsAdvisorTitleLabel" data-i18n="atsLiveAdvisor">مستشار الـ ATS الذكي واللحظي</span>
+                </span>
+                <span id="atsScoreValueDisplay" class="score-value">0%</span>
+            </div>
+            
+            <div class="score-bar-container">
+                <div id="atsScoreProgressBarFill" class="score-fill"></div>
+            </div>
 
-            <section class="form-group job-match-card" style="margin-top: 2rem; padding: 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px;">
-                <div class="card-header" style="margin-bottom: 15px;">
-                    <span class="icon"><i class="fa-regular fa-comment-dots" style="color: #a855f7;"></i></span>
-                    <div class="card-titles">
-                        <h4 data-i18n="feedbackTitle">اترك بصمتك واقتراحاتك (أو الإبلاغ عن مشكلة تواجهك)</h4>
-                        <p data-i18n="feedbackDesc">ملاحظاتك تساعدنا على تحسين محرك الذكاء الاصطناعي باستمرار</p>
+            <div class="ats-indicators-grid">
+                <div id="indLength" class="ats-ind" data-i18n="indLen text">حجم النص</div>
+                <div id="indKeywords" class="ats-ind" data-i18n="indKey text">الكلمات المفتاحية</div>
+                <div id="indStructure" class="ats-ind" data-i18n="indStructureText">هيكلة القسم</div>
+                <div id="indContact" class="ats-ind" data-i18n="indContactText">بيانات الاتصال</div>
+            </div>
+
+            <div id="atsScoreStatusText" class="score-status" data-i18n="atsInitialStatusText">🤔 ابدأ بكتابة أو لصق سيرتك الحالية لكي يقوم محرك الذكاء الاصطناعي بفحصها وتحليلها فوراً.</div>
+        </div>
+
+        <div class="app-layout">
+            
+            <section>
+                <div class="section-header">
+                    <h2 id="secInputTitle" data-i18n="inputSectionTitle">1. مدخلات السيرة والوظيفة المستهدفة</h2>
+                    <span class="step-indicator" data-i18n="step1Indicator">خطوة 1</span>
+                </div>
+
+                <div class="form-group">
+                    <div class="textarea-header">
+                        <label id="lblJobTitle" data-i18n="jobTitleLabelField">المسمى الوظيفي المستهدف:</label>
+                        <button type="button" class="voice-btn" id="voiceBtnJobTitle" data-i18n="voiceBtnText">🎙️ إملاء صوتي</button>
                     </div>
+                    <input type="text" id="targetJobTitleInput" placeholder="مثال: مدير مشاريع، مهندس برمجيات، محاسب قانوني...">
                 </div>
-                <div class="stars-row" id="starRatingSystem" style="display: flex; gap: 8px; font-size: 26px; cursor: pointer; color: rgba(255,255,255,0.2); margin-bottom: 15px;">
-                    <span data-value="1">★</span><span data-value="2">★</span><span data-value="3">★</span><span data-value="4">★</span><span data-value="5" class="selected" style="color: #38bdf8;">★</span>
+
+                <div class="suggestions-box">
+                    <div class="sug-header">
+                        <span data-i18n="sugBoxTitle">💡 مسميات وظيفية شائعة للبدء الفوري:</span>
+                    </div>
+                    <div class="suggestions-list" id="jobSuggestionsListContainer">
+                        </div>
                 </div>
-                <textarea id="userFeedbackTextarea" rows="2" style="width: 100%; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px; color: #fff; font-family: inherit; resize: none; margin-bottom: 12px;" data-i18n-placeholder="holderFeedback" placeholder="اكتب اقتراحك، تقييمك، أو أي مشكلة واجهتك في التطبيق هنا..."></textarea>
-                <button id="submitFeedbackBtn" type="button" class="secondary-btn" style="padding: 8px 16px; font-size: 13px;" data-i18n="btnSubmitFeedback">إرسال التقييم والملاحظات</button>
-                
-                <div style="text-align: center; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
-                    <a href="#" id="viewPrivacyPolicyBtn" style="color: #38bdf8; font-size: 13px; text-decoration: none; font-weight: 600;" data-i18n="privacyLink"><i class="fa-solid fa-shield-halved gap-icon"></i> سياسة خصوصية ثورية لم يسبق لها مثيل (تشفير محلي 100%)</a>
+
+                <div class="form-group">
+                    <div class="textarea-header">
+                        <label id="lblCurrentCv" data-i18n="currentCvLabelField">سيرتك الذاتية الحالية (أو خبراتك بالتفصيل):</label>
+                        <button type="button" class="voice-btn" id="voiceBtnCurrentCv" data-i18n="voiceBtnText">🎙️ إملاء صوتي</button>
+                    </div>
+                    <textarea id="currentCvTextInput" rows="7" placeholder="اكتب أو الصق سيرتك الذاتية الحالية، أو اكتب مسودتك المهنية، وتاريخك الوظيفي، والمهارات التي تمتلكها بالتفصيل..."></textarea>
+                </div>
+
+                <div class="job-match-card">
+                    <div class="card-header">
+                        <span style="font-size: 20px;">🎯</span>
+                        <div>
+                            <h4 id="lblMatchCardTitle" data-i18n="matchCardTitleText">مُطابقة وصف الإعلان الوظيفي (اختياري)</h4>
+                            <p id="lblMatchCardDesc" data-i18n="matchCardDescText">الصق وصف الوظيفة المعلن عنها لرفع دقة الكلمات المفتاحية ومطابقة خوارزميات التوظيف بدقة 100%.</p>
+                        </div>
+                    </div>
+                    <textarea id="jobDescriptionTextInput" rows="4" placeholder="الصق متطلبات ومسؤوليات الإعلان الوظيفي هنا لدمج الكلمات المفتاحية الاستراتيجية..."></textarea>
+                </div>
+
+                <div class="actions-group">
+                    <button id="generateAiCvBtn" class="super-gradient-btn" data-i18n="btnGenerateStrategic">🚀 صياغة السيرة الذاتية الاستراتيجية بالذكاء الاصطناعي</button>
+                    
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button id="optimizeKeywordsBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="btnOptimizeKeywords">🎯 تحسين الكلمات المفتاحية لـ ATS</button>
+                        <button id="fixGrammarBtn" class="ai-aux-btn" style="flex: 1; margin: 0;" data-i18n="btnFixGrammar">✍️ تدقيق لغوي واحترافي</button>
+                    </div>
                 </div>
             </section>
-            
-            <footer style="text-align: center; width: 100%; margin-top: 3rem; padding: 2rem 1rem 1rem 1rem;">
-                <div id="cvLiveTipBox" class="expert-tip-container" style="max-width: 600px; margin: 0 auto 2rem auto; text-align: right;">
-                    <div class="tip-header">
-                        <span class="sparkle">💡</span>
-                        <strong data-i18n="tipHeaderTitle">نصائح إضافية لكيفية عمل نموذج سيرة ذاتية ممتاز:</strong>
-                    </div>
-                    <p id="cvTipText" data-i18n="tipTextContent">تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد الـ ATS وضمن أهم الكلمات الدلالية للوظيفة.</p>
+
+            <section>
+                <div class="section-header">
+                    <h2 id="secPreviewTitle" data-i18n="previewSectionTitle">2. السيرة الذاتية المهنية الناتجة</h2>
+                    <span class="badge-ready" id="badgeReadyStatus" data-i18n="badgeReadyText">جاهز للتصدير</span>
                 </div>
-                
-                <div style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.15); padding: 6px 14px; border-radius: 20px; margin-bottom: 1.5rem; backdrop-filter: blur(5px);">
-                    <span style="font-size: 14px;">🔒</span>
-                    <span style="font-size: 12px; color: #94a3b8; font-weight: bold; letter-spacing: 0.5px;">GPG KEY:</span>
-                    <code style="font-family: monospace; font-size: 13px; color: #38bdf8; letter-spacing: 1px; font-weight: bold;">55392380FBF1C8F1</code>
+
+                <div class="preview-area-container">
+                    <textarea id="outputBox" placeholder="سوف تظهر سيرتك الذاتية الاحترافية والمصاغة بأسلوب استراتيجي عالمي هنا... يمكنك التعديل عليها مباشرة بكل حرية في أي وقت!"></textarea>
                 </div>
-                
-                <div class="footer-copyright" style="text-align: center; margin: 0 auto;">
-                    <p style="font-size: 15px; color: #e2e8f0; margin-bottom: 4px;"><span data-i18n="footerRights">جميع الحقوق محفوظة © 2026</span> <strong style="color: #38bdf8;">Ali CV Builder Pro</strong></p>
-                    <small style="font-size: 12px; color: #94a3b8; display: block;" data-i18n="footerDesc">تم تطويره وتحديثه بكفاءة فائقة وميزات ذكاء اصطناعي ثورية لتحسين السير الذاتية وتصدر محركات البحث.</small>
+
+                <div class="flex-wrap">
+                    <button id="copyToClipboardBtn" class="blue-gradient-btn" data-i18n="btnCopyToClipboard">📋 نسخ النص بالكامل</button>
+                    <button id="downloadAsTxtBtn" class="orange-gradient-btn" data-i18n="btnDownloadTxt">📥 تحميل كملف TXT مهني</button>
+                    <button id="shareCvLinkBtn" class="green-gradient-btn" data-i18n="btnShareCloud">🌐 إنشاء رابط مشاركة سحابي</button>
                 </div>
-            </footer>
+            </section>
+
         </div>
+
+        <footer style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 30px; text-align: center;">
+            <div class="expert-tip-container">
+                <div class="tip-header">
+                    <span>💡</span>
+                    <span id="lblExpertTipTitle" data-i18n="expertTipTitleText">نصيحة خبير التوظيف الفورية:</span>
+                </div>
+                <p id="cvTipText">احرص دائماً على تضمين أرقام وإنجازات قابلة للقياس (مثال: زيادة المبيعات بنسبة 25%) لرفع جاذبية سيرتك الذاتية أمام مدراء التوظيف.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <p style="font-size: 13.5px; font-weight: 700; color: #e5e7eb;" data-i18n="ratingBoxTitle">⭐ ما هو تقييمك لتجربتك اليوم؟ ساعدنا في التطوير المتواصل للمنصة:</p>
+                <div id="starRatingSystem">
+                    <span data-rating="1">★</span>
+                    <span data-rating="2">★</span>
+                    <span data-rating="3">★</span>
+                    <span data-rating="4">★</span>
+                    <span data-rating="5">★</span>
+                </div>
+                
+                <div style="max-width: 500px; margin: 10px auto; display: flex; gap: 8px;">
+                    <input type="text" id="userFeedbackTextarea" placeholder="اكتب تعليقك أو مقترحك هنا بكل حرية..." style="padding: 10px 14px; font-size: 12.5px; border-radius: 10px;">
+                    <button id="submitFeedbackBtn" style="width: auto; padding: 0 20px; font-size: 12.5px; border-radius: 10px; margin: 0;" data-i18n="btnSubmitRating">إرسال التقييم</button>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                <small>&copy; 2026 Ali CV Builder Pro. All Rights Reserved.</small>
+                <small><a href="#" id="viewPrivacyPolicyBtn" style="color: var(--accent-blue); text-decoration: none;" data-i18n="privacyPolicyLink">🔒 سياسة الخصوصية والأمان الفائق للبيانات المهنية</a></small>
+            </div>
+        </footer>
+
     </div>
 
-    <div id="aiSupportFloatBtn" style="position: fixed; bottom: 25px; left: 25px; z-index: 9999; background: linear-gradient(135deg, #38bdf8, #1d4ed8); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; cursor: pointer; box-shadow: 0 6px 30px rgba(56, 189, 248, 0.4); transition: transform 0.3s, cubic-bezier(0.175, 0.885, 0.32, 1.275); user-select: none;" onmouseover="this.style.transform='scale(1.1) rotate(10deg)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'">
-        <i class="fa-regular fa-comments" style="color: #ffffff;"></i>
-    </div>
-
-    <div id="aiSupportPage" class="hidden" style="position: fixed; bottom: 95px; left: 25px; width: 380px; height: 500px; background: #0f172a; z-index: 10000; border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); display: none; flex-direction: column; overflow: hidden; font-family: inherit; transition: all 0.3s ease;">
-        
-        <div style="background: #1e293b; padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <div id="aiChatWidgetContainer" style="position: fixed; bottom: 25px; right: 25px; width: 360px; background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden; z-index: 9999; transition: all 0.3s ease;">
+        <div id="aiChatWidgetHeader" style="background: var(--btn-gradient); padding: 16px 20px; color: white; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="background: linear-gradient(135deg, #38bdf8, #a855f7); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #fff; box-shadow: 0 0 10px rgba(56,189,248,0.3);">A</div>
-                <div>
-                    <h3 style="margin: 0; font-size: 15px; font-weight: 700; color: #fff;">Ali AI</h3>
-                    <span style="font-size: 11px; color: #38bdf8; display: block; margin-top: 1px;">● خبير السير الذاتية الذكي متاح</span>
+                <span style="font-size: 18px;">🤖</span>
+                <strong id="aiWidgetTitleLabel" style="font-size: 14px; font-weight: 700;" data-i18n="aiAssistantTitle">مساعد الدعم والذكاء الاصطناعي</strong>
+            </div>
+            <span id="aiChatToggleMinimizeBtn" style="font-size: 16px; font-weight: bold;">−</span>
+        </div>
+
+        <div id="aiChatWidgetBodyArea" style="display: flex; flex-direction: column; height: 320px;">
+            <div id="aiChatMessagesHistoryContainer" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; font-size: 13px; color: #e5e7eb; background: #0b0f19; line-height: 1.5;">
+                <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.15); padding: 12px; border-radius: 12px;" id="aiWidgetWelcomeMessage" data-i18n="aiWelcomeMsg">
+                    مرحباً بك! أنا مستشارك المهني الذكي. يمكنني مساعدتك في صياغة جمل احترافية، مراجعة متطلبات الـ ATS، أو استقبال استفساراتك ومقترحاتك فوراً لتطوير واجهتك. بأي لغة تفضل التحدث اليوم؟
                 </div>
             </div>
-            <button id="closeAiSupportBtn" style="background: transparent; border: none; color: #94a3b8; cursor: pointer; font-size: 20px; line-height: 1; padding: 5px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
 
-        <div id="aiChatBody" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);">
-            <div style="align-self: flex-start; background: #1e293b; padding: 12px 16px; border-radius: 0 14px 14px 14px; max-width: 85%; line-height: 1.5; font-size: 13.5px; color: #e2e8f0; border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                مرحباً بك! أنا **Ali AI** مساعدك الذكي المتكامل. 🤖✨<br>
-                يمكنني مساعدتك في صياغة الأقسام، وشرح معايير الـ ATS العالمية، أو تلقي المقترحات والمشكلات لحلها فوراً. بأي لغة تفضل التحدث اليوم؟
+            <div style="padding: 12px; background: #1f2937; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="aiChatInput" placeholder="اكتب سؤالك هنا..." style="flex: 1; background: #0b0f19; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 14px; color: #f8fafc; font-size: 13px; outline: none;">
+                <button id="sendAiChatBtn" style="width: auto; background: var(--btn-gradient); color: white; border: none; padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; margin: 0;" data-i18n="btnSendChat">إرسال</button>
             </div>
         </div>
-
-        <div style="padding: 12px; background: #1e293b; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px; align-items: center;">
-            <input type="text" id="aiChatInput" placeholder="اكتب سؤالك هنا أو اذكر المشكلة..." style="flex: 1; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 10px 12px; color: #f8fafc; font-size: 13px; outline: none; transition: border 0.2s; font-family: inherit;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-            <button id="sendAiChatBtn" style="background: linear-gradient(135deg, #38bdf8, #0284c7); color: #0f172a; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-                <i class="fa-regular fa-paper-plane"></i>
-            </button>
-        </div>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <script src="app.js?v=2.0"></script>
+    <script src="app.js"></script>
 </body>
 </html>
