@@ -3,7 +3,7 @@
 // ========================================================
 const translations = {
     ar: {
-        appTitleSEO: "عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً | انشاء سي في ATS احترافي جاهز - Ali CV Builder",
+        appTitleSEO: "عمل سيرة ذاتية بالذكاء الاصطناعي مجاناً | Free AI Resume Builder & ATS Checker - Ali CV Builder",
         sharedViewText: "👀 أنت تتصفح الآن سيرة ذاتية مشتركة في وضع العرض فقط.",
         cloneSharedCVBtn: "✍️ تعديل هذه السيرة أو إنشاء واحدة جديدة",
         tourStep1: "خطوة 1 من 3",
@@ -19,64 +19,45 @@ const translations = {
         themeCyber: "🔮 الأرجواني السايبربانك",
         fontLabel: "✍️ نمط خط السيرة الذاتية (CV Fonts):",
         creativeTitle: "✨ مظهر التصميم الإبداعي الفاخر",
-        creativeDesc: "ألوان مشعة وتأثير نيون فريد للواجهة",
-        notifBtn: "🔔 تفعيل إشعارات الفرص الحرة",
-        shareBtn: "🔗 مشاركة المنصة السحرية",
-        menuCustomize: "🎨 تخصيص المظهر والخطوط",
-        menuLang: "🔄 لغة / Language / Langue",
-        menuClear: "🗑️ مسح وإعادة تعيين الحقول",
-        mainTitle: "إنشاء سيرة ذاتية احترافية بالذكاء الاصطناعي",
-        brandSub: "Ali CV Builder Pro • المنصة الذكية المتكاملة",
-        appSubtitle: "صمّم مستندك المهني القانب بأحدث تقنيات الذكاء الاصطناعي التوليدي. قوالب ذكية مجهزة لـ عمل سي في احترافي جاهز للتعديل والطباعة فوراً، مخصصة بالكامل لتخطي خوارزميات فحص الـ ATS العالمية بنسبة 100% وبدون الحاجة لإنشاء حساب أو تسجيل بياناتك.",
-        atsAdvisorTitle: "مستشار الـ ATS الذكي اللحظي:",
-        indBasic: "👤 البيانات الأساسية",
-        indSkills: "🛠️ مهارات كافية",
-        indNum: "📊 أرقام وإنجازات",
-        indWords: "⚡ أفعال حركية",
-        scoreStatusEmpty: "⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي...",
-        inputSectionTitle: "📝 بياناتك المهنية والشخصية لإعداد السي في",
-        stepIndicator1: "خطوة 1 من 2",
-        labelName: "👤 الاسم الكامل",
-        labelJobTitle: "🎯 المسمى الوظيفي المستهدف",
-        sugHeader: "💡 اقتراحات مهام مجهزة للـ ATS لمجالك:",
-        badgeNew: "جديد",
-        labelPhone: "📞 رقم الهاتف",
-        labelEmail: "📧 البريد الإلكتروني",
-        labelSkills: "🛠️ المهارات التقنية والشخصية (افصل بينها بفاصلة ,)",
-        labelExperience: "💼 الخبرات المهنية والمشاريع السابقة",
-        voiceBtnText: "🎤 إملاء ذكي",
-        matchTitle: "مطابقة إعلان الوظيفة الذاتي (ATS Match)",
-        matchDesc: "حلل الكلمات الدلالية الناقصة فوراً",
-        matchBtn: "📊 احسب نسبة التطابق ونقاط الضعف",
-        btnGenSummary: "🧠 توليد ملخص مهني احترافي فوراً",
-        btnOptimize: "🚀 تحسين وإعادة الصياغة بالذكاء الاصطناعي",
-        resultSectionTitle: "✨ مستندك المهني الجاهز",
-        badgeReady: "A4 جاهز للطباعة",
-        btnPdf: "📥 تحميل بصيغة PDF الاحترافية",
-        btnWord: "📝 تصدير بصيغة Word (.doc)",
-        btnShareLink: "🔗 مشاركة برابط مباشر",
-        tipHeaderTitle: "نصائح إضافية لكيفية عمل نموذج سيرة ذاتية ممتاز:",
-        tipTextContent: "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد الـ ATS وضمن أهم الكلمات الدلالية للوظيفة.",
-        footerRights: "جميع الحقوق محفوظة © 2026",
-        footerDesc: "تم تطويره وتحديثه بكفاءة فائقة وميزات ذكاء اصطناعي ثورية لتحسين السير الذاتية وتصدر محركات البحث.",
-        holderName: "مثال: علي علام",
-        holderJobTitle: "مثال: مصمم واجهات مستخدم، مهندس برمجيات...",
-        holderPhone: "مثال: 01149117724",
-        holderEmail: "info@example.com",
-        holderSkills: "مثال: حل المشكلات, Photoshop, Excel, إدارة الوقت...",
-        holderExperience: "اكتب مسؤولياتك وإنجازاتك السابقة أو انقر على الاقتراحات الجاهزة التي ستظهر بالأعلى تلقائياً عند كتابة مسماك الوظيفي...",
-        holderJobDesc: "الصق نص إعلان الوظيفة التي ترغب في التقدم إليها هنا بالكامل...",
-        holderOutput: "اكتب بياناتك على اليمين ثم اضغط على 'تحسين بالذكاء الاصطناعي' ليظهر هنا النص الإبداعي فائق الجاذبية والجاهز تماماً للطباعة الورقية والتخطي الفوري للـ ATS...",
-        feedbackTitle: "📣 اترك بصمتك واقتراحاتك (أو الإبلاغ عن مشكلة تواجهك)",
-        feedbackDesc: "ملاحظاتك تساعدنا على تحسين محرك الذكاء الاصطناعي باستمرار",
-        btnSubmitFeedback: "إرسال التقييم والملاحظات",
-        holderFeedback: "اكتب اقتراحك، تقييمك، أو أي مشكلة واجهتك في التطبيق هنا...",
-        privacyLink: "🔒 سياسة خصوصية ثورية لم يسبق لها مثيل (تشفير محلي 100%)"
+        creativeDesc: "ألوان مشعة وتأثير نيون متوهج لكامل المنصة",
+        lockTitle: "🔒 التشفير وقفل الحماية التلقائي",
+        lockDesc: "قفل وتأمين مدخلاتك المهنية عند الخمول",
+        saveSettingsBtnClose: "حفظ الإعدادات وتطبيق السمة ✨",
+        menuSettings: "⚙️ إعدادات المظهر والسمات",
+        appSubtitle: "اصنع سيرة ذاتية إستراتيجية لا تقهر، متوافقة 100% مع خوارزميات وأنظمة فحص المتقدمين الذكية (ATS) بدعم كامل للذكاء الاصطناعي اللحظي.",
+        atsLiveAdvisor: "مستشار الـ ATS الذكي واللحظي",
+        indLenText: "حجم النص",
+        indKeyText: "الكلمات المفتاحية",
+        indStructureText: "هيكلة القسم",
+        indContactText: "بيانات الاتصال",
+        atsInitialStatusText: "🤔 ابدأ بكتابة أو لصق سيرتك الحالية لكي يقوم محرك الذكاء الاصطناعي بفحصها وتحليلها فوراً.",
+        inputSectionTitle: "1. مدخلات السيرة والوظيفة المستهدفة",
+        step1Indicator: "خطوة 1",
+        jobTitleLabelField: "المسمى الوظيفي المستهدف:",
+        voiceBtnText: "🎙️ إملاء صوتي",
+        sugBoxTitle: "💡 مسميات وظيفية شائعة للبدء الفوري:",
+        currentCvLabelField: "سيرتك الذاتية الحالية (أو خبراتك بالتفصيل):",
+        matchCardTitleText: "مُطابقة وصف الإعلان الوظيفي (اختياري)",
+        matchCardDescText: "الصق وصف الوظيفة المعلن عنها لرفع دقة الكلمات المفتاحية ومطابقة خوارزميات التوظيف بدقة 100%.",
+        btnGenerateStrategic: "🚀 صياغة السيرة الذاتية الاستراتيجية بالذكاء الاصطناعي",
+        btnOptimizeKeywords: "🎯 تحسين الكلمات المفتاحية لـ ATS",
+        btnFixGrammar: "✍️ تدقيق لغوي واحترافي",
+        previewSectionTitle: "2. السيرة الذاتية المهنية الناتجة",
+        badgeReadyText: "جاهز للتصدير",
+        btnCopyToClipboard: "📋 نسخ النص بالكامل",
+        btnDownloadTxt: "📥 تحميل كملف TXT مهني",
+        btnShareCloud: "🌐 إنشاء رابط مشاركة سحابي",
+        expertTipTitleText: "نصيحة خبير التوظيف الفورية:",
+        ratingBoxTitle: "⭐ ما هو تقييمك لتجربتك اليوم؟ ساعدنا في التطوير المتواصل للمنصة:",
+        btnSubmitRating: "إرسال التقييم",
+        privacyPolicyLink: "🔒 سياسة الخصوصية والأمان الفائق للبيانات المهنية",
+        aiAssistantTitle: "مساعد الدعم والذكاء الاصطناعي",
+        aiWelcomeMsg: "مرحباً بك! أنا مستشارك المهني الذكي. يمكنني مساعدتك في صياغة جمل احترافية، مراجعة متطلبات الـ ATS، أو استقبال استفساراتك ومقترحاتك فوراً لتطوير واجهتك. بأي لغة تفضل التحدث اليوم؟"
     },
     en: {
-        appTitleSEO: "Free AI Resume Builder & ATS Checker | Create Professional CV - Ali CV Builder",
-        sharedViewText: "👀 You are viewing a shared resume in read-only mode.",
-        cloneSharedCVBtn: "✍️ Edit this resume or create a new one",
+        appTitleSEO: "Free AI Resume Builder & ATS Checker - Ali CV Builder",
+        sharedViewText: "👀 You are currently browsing a shared resume in read-only mode.",
+        cloneSharedCVBtn: "✍️ Edit this CV or create a new one",
         tourStep1: "Step 1 of 3",
         tourTitleText: "Welcome to your new career future!",
         tourDescText: "Let's take you on a quick 1-minute tour to learn how to build an invincible resume using AI.",
@@ -91,62 +72,43 @@ const translations = {
         fontLabel: "✍️ Resume Fonts (CV Fonts):",
         creativeTitle: "✨ Luxury Creative Design",
         creativeDesc: "Radiant colors and unique neon effects for the interface",
-        notifBtn: "🔔 Enable Freelance Opportunities Notifications",
-        shareBtn: "🔗 Share the Magical Platform",
-        menuCustomize: "🎨 Customize Look & Fonts",
-        menuLang: "🔄 لغة / Language / Langue",
-        menuClear: "🗑️ Reset & Clear All Fields",
-        mainTitle: "Create a Professional Resume with AI",
-        brandSub: "Ali CV Builder Pro • Integrated Smart Platform",
-        appSubtitle: "Design your next professional document with the latest generative AI technologies. Smart templates prepared to create a professional resume ready for immediate editing and printing, completely optimized to bypass global ATS algorithms by 100% without registration.",
-        atsAdvisorTitle: "Real-time Smart ATS Advisor:",
-        indBasic: "👤 Basic Information",
-        indSkills: "🛠️ Sufficient Skills",
-        indNum: "📊 Numbers & Achievements",
-        indWords: "⚡ Action Verbs",
-        scoreStatusEmpty: "⚠️ Fill in your name and target job title to start the smart analytical tracking...",
-        inputSectionTitle: "📝 Your Professional & Personal Data for CV Creation",
-        stepIndicator1: "Step 1 of 2",
-        labelName: "👤 Full Name",
-        labelJobTitle: "🎯 Target Job Title",
-        sugHeader: "💡 Ready-made ATS duty suggestions for your field:",
-        badgeNew: "New",
-        labelPhone: "📞 Phone Number",
-        labelEmail: "📧 Email Address",
-        labelSkills: "🛠️ Technical & Soft Skills (Separate with a comma ,)",
-        labelExperience: "💼 Professional Experience & Past Projects",
-        voiceBtnText: "🎤 Smart Dictation",
-        matchTitle: "Automated Job Description Matching (ATS Match)",
-        matchDesc: "Analyze missing keywords immediately",
-        matchBtn: "📊 Calculate Match Percentage & Weaknesses",
-        btnGenSummary: "🧠 Generate Professional Summary Instantly",
-        btnOptimize: "🚀 Optimize & Rewrite with AI",
-        resultSectionTitle: "✨ Your Ready Professional Document",
-        badgeReady: "A4 Ready to Print",
-        btnPdf: "📥 Download Professional PDF",
-        btnWord: "📝 Export to Word (.doc)",
-        btnShareLink: "🔗 Share Directly via Link",
-        tipHeaderTitle: "Extra Tips on How to Create an Excellent Resume:",
-        tipTextContent: "Avoid putting your profile picture if you are applying to international corporations that completely rely on ATS.",
-        footerRights: "All Rights Reserved © 2026",
-        footerDesc: "Developed and updated with ultra-efficiency and revolutionary AI features for resume enhancement and SEO dominance.",
-        holderName: "e.g., Ali Allam",
-        holderJobTitle: "e.g., UI/UX Designer, Software Engineer...",
-        holderPhone: "e.g., +201149117724",
-        holderEmail: "info@example.com",
-        holderSkills: "e.g., Problem Solving, Photoshop, Excel, Time Management...",
-        holderExperience: "Write your previous duties and achievements or click on the ready-made suggestions that will appear automatically...",
-        holderJobDesc: "Paste the full text of the job advertisement you want to apply for here...",
-        holderOutput: "Fill in your details on the left/right and click 'Optimize with AI' to render the highly attractive professional text ready for ATS bypass...",
-        feedbackTitle: "📣 Leave your mark & suggestions (or report a problem)",
-        feedbackDesc: "Your feedback helps us constantly improve the AI Engine",
-        btnSubmitFeedback: "Submit Feedback & Review",
-        holderFeedback: "Type your suggestion, review, or any problem encountered in the application here...",
-        privacyLink: "🔒 Revolutionary Privacy Policy (100% Locally Encrypted)"
+        lockTitle: "🔒 Encryption & Auto Security Lock",
+        lockDesc: "Lock and protect your professional inputs when inactive",
+        saveSettingsBtnClose: "Save Settings & Apply Theme ✨",
+        menuSettings: "⚙️ Appearance & Theme Settings",
+        appSubtitle: "Craft an invincible strategic resume, 100% compliant with smart Applicant Tracking Systems (ATS) algorithms with full real-time AI support.",
+        atsLiveAdvisor: "Real-time Smart ATS Advisor",
+        indLenText: "Text Length",
+        indKeyText: "Keywords",
+        indStructureText: "Structure",
+        indContactText: "Contact Info",
+        atsInitialStatusText: "🤔 Start typing or pasting your current CV for the AI engine to analyze it instantly.",
+        inputSectionTitle: "1. Resume Inputs & Target Job",
+        step1Indicator: "Step 1",
+        jobTitleLabelField: "Target Job Title:",
+        voiceBtnText: "🎙️ Voice Dictation",
+        sugBoxTitle: "💡 Common job titles for an instant start:",
+        currentCvLabelField: "Your Current CV (or your experiences in detail):",
+        matchCardTitleText: "Job Description Match (Optional)",
+        matchCardDescText: "Paste the job description to boost keyword density and match recruitment algorithms with 100% accuracy.",
+        btnGenerateStrategic: "🚀 Craft Strategic Resume with AI",
+        btnOptimizeKeywords: "🎯 Optimize Keywords for ATS",
+        btnFixGrammar: "✍️ Grammar & Professional Check",
+        previewSectionTitle: "2. Resulting Professional Resume",
+        badgeReadyText: "Ready for Export",
+        btnCopyToClipboard: "📋 Copy Full Text",
+        btnDownloadTxt: "📥 Download as Professional TXT",
+        btnShareCloud: "🌐 Create Cloud Share Link",
+        expertTipTitleText: "Immediate Expert Hiring Tip:",
+        ratingBoxTitle: "⭐ What is your rating for today's experience? Help us continuously evolve:",
+        btnSubmitRating: "Submit Rating",
+        privacyPolicyLink: "🔒 Privacy Policy & Ultra Data Security",
+        aiAssistantTitle: "Support & AI Assistant",
+        aiWelcomeMsg: "Welcome! I am your smart career advisor. I can help you draft professional sentences, review ATS rules, or receive your feedback. Which language do you prefer today?"
     },
     fr: {
-        appTitleSEO: "Créateur de CV IA Gratuit & Testeur ATS | Ali CV Builder",
-        sharedViewText: "👀 Vous consultez actuellement un CV partagé en mode lecture seule.",
+        appTitleSEO: "Créateur de CV IA Gratuit & Testeur ATS - Ali CV Builder",
+        sharedViewText: "👀 Vous parcourez actuellement un CV partagé en mode lecture seule.",
         cloneSharedCVBtn: "✍️ Modifier ce CV ou en créer un nouveau",
         tourStep1: "Étape 1 sur 3",
         tourTitleText: "Bienvenue dans votre nouvel avenir professionnel !",
@@ -162,160 +124,59 @@ const translations = {
         fontLabel: "✍️ Style de police du CV :",
         creativeTitle: "✨ Design Créatif de Luxe",
         creativeDesc: "Couleurs éclatantes et effet néon unique pour l'interface",
-        notifBtn: "🔔 Activer les notifications d'opportunités",
-        shareBtn: "🔗 Partager la plateforme magique",
-        menuCustomize: "🎨 Personnaliser l'apparence & polices",
-        menuLang: "🔄 لغة / Language / Langue",
-        menuClear: "🗑️ Réinitialiser et effacer tous les champs",
-        mainTitle: "Créer un CV Professionnel avec l'IA",
-        brandSub: "Ali CV Builder Pro • Plateforme Intégrée Intelligente",
-        appSubtitle: "Concevez votre prochain document professionnel avec les dernières technologies d'IA générative. Des modèles intelligents préparés pour créer un CV professionnel prêt pour l'édition et l'impression immédiates, entièrement optimisés pour contourner les algorithmes ATS mondiaux à 100 % sans inscription.",
-        atsAdvisorTitle: "Conseiller ATS intelligent en temps réel :",
-        indBasic: "👤 Données de base",
-        indSkills: "🛠️ Compétences suffisantes",
-        indNum: "📊 Chiffres & Réalisations",
-        indWords: "⚡ Verbes d'action",
-        scoreStatusEmpty: "⚠️ Remplissez votre nom et le titre du poste visé pour lancer le suivi analytique...",
-        inputSectionTitle: "📝 Vos données professionnelles et personnelles pour la création du CV",
-        stepIndicator1: "Étape 1 sur 2",
-        labelName: "👤 Nom complet",
-        labelJobTitle: "🎯 Titre du poste visé",
-        sugHeader: "💡 Suggestions de tâches prêtes pour l'ATS pour votre domaine :",
-        badgeNew: "Nouveau",
-        labelPhone: "📞 Numéro de téléphone",
-        labelEmail: "📧 Adresse e-mail",
-        labelSkills: "🛠️ Compétences techniques & personnelles (Séparer par une virgule ,)",
-        labelExperience: "💼 Expérience professionnelle & projets passés",
-        voiceBtnText: "🎤 Dictée intelligente",
-        matchTitle: "Correspondance automatisée de la description du poste (Match ATS)",
-        matchDesc: "Analysez immédiatement les mots-clés manquants",
-        matchBtn: "📊 Calculer le pourcentage de correspondance & faiblesses",
-        btnGenSummary: "🧠 Générer un résumé professionnel instantanément",
-        btnOptimize: "🚀 Optimiser & Réécrire avec l'IA",
-        resultSectionTitle: "✨ Votre document professionnel prêt",
-        badgeReady: "Prêt à imprimer en A4",
-        btnPdf: "📥 Télécharger le PDF professionnel",
-        btnWord: "📝 Exporter en Word (.doc)",
-        btnShareLink: "🔗 Partager directement via le lien",
-        tipHeaderTitle: "Conseils supplémentaires pour créer un excellent CV :",
-        tipTextContent: "Évitez de mettre votre photo de profil si vous postulez auprès d'entreprises internationales qui dépendent entièrement de l'ATS.",
-        footerRights: "Tous droits réservés © 2026",
-        footerDesc: "Développé et mis à jour avec une ultra-efficacité et des fonctionnalités d'IA révolutionnaires pour l'amélioration des CV et la domination du référencement.",
-        holderName: "ex: Ali Allam",
-        holderJobTitle: "ex: Concepteur UI/UX, Ingénieur Logiciel...",
-        holderPhone: "ex: +201149117724",
-        holderEmail: "info@example.com",
-        holderSkills: "ex: Résolution de problèmes, Photoshop, Excel, Gestion du temps...",
-        holderExperience: "Rédigez vos tâches et réalisations précédentes ou cliquez sur les suggestions prêtes à l'emploi qui apparaîtront automatiquement...",
-        holderJobDesc: "Collez ici le texte intégral de l'annonce d'emploi pour laquelle vous souhaitez postuler...",
-        holderOutput: "Remplissez vos données à droite/gauche et cliquez sur 'Optimiser avec l'IA' pour afficher le texte professionnel hautement attractif prêt pour le contournement de l'ATS...",
-        feedbackTitle: "📣 Laissez votre empreinte & suggestions (or signalez un problème)",
-        feedbackDesc: "Vos commentaires nous aident à améliorer constamment le moteur d'IA",
-        btnSubmitFeedback: "Envoyer l'évaluation et les commentaires",
-        holderFeedback: "Tapez votre suggestion, avis ou tout problème rencontré dans l'application ici...",
-        privacyLink: "🔒 Politique de confidentialité révolutionnaire (100% chiffrée localement)"
+        lockTitle: "🔒 Chiffrement & Verrouillage Automatique",
+        lockDesc: "Protégez vos entrées professionnelles en cas d'inactivité",
+        saveSettingsBtnClose: "Enregistrer les paramètres & Appliquer ✨",
+        menuSettings: "⚙️ Paramètres d'apparence et thèmes",
+        appSubtitle: "Créez un CV stratégique invincible, 100% compatible avec les algorithmes ATS avec un support IA complet en temps réel.",
+        atsLiveAdvisor: "Conseiller ATS en temps réel",
+        indLenText: "Taille du texte",
+        indKeyText: "Mots-clés",
+        indStructureText: "Structure",
+        indContactText: "Contact",
+        atsInitialStatusText: "🤔 Commencez à saisir ou à coller votre CV pour lancer l'analyse...",
+        inputSectionTitle: "1. Données du CV & Poste visé",
+        step1Indicator: "Étape 1",
+        jobTitleLabelField: "Titre du poste visé :",
+        voiceBtnText: "🎙️ Dictée Vocale",
+        sugBoxTitle: "💡 Métiers courants pour commencer :",
+        currentCvLabelField: "Votre CV actuel (ou vos expériences en détail) :",
+        matchCardTitleText: "Correspondance de la description du poste (Optionnel)",
+        matchCardDescText: "Collez l'annonce pour optimiser la densité des mots-clés et correspondre aux algorithmes à 100%.",
+        btnGenerateStrategic: "🚀 Rédiger le CV Stratégique avec l'IA",
+        btnOptimizeKeywords: "🎯 Optimiser les mots-clés pour l'ATS",
+        btnFixGrammar: "✍️ Correction Grammaticale & Pro",
+        previewSectionTitle: "2. CV Professionnel Généré",
+        badgeReadyText: "Prêt pour l'export",
+        btnCopyToClipboard: "📋 Copier tout le texte",
+        btnDownloadTxt: "📥 Télécharger en fichier TXT",
+        btnShareCloud: "🌐 Créer un lien de partage cloud",
+        expertTipTitleText: "Conseil immédiat de l'expert :",
+        ratingBoxTitle: "⭐ Quelle est votre note pour l'expérience d'aujourd'hui ?",
+        btnSubmitRating: "Envoyer l'avis",
+        privacyPolicyLink: "🔒 Politique de confidentialité & Sécurité absolue",
+        aiAssistantTitle: "Assistant IA & Support",
+        aiWelcomeMsg: "Bienvenue ! Je suis votre conseiller en carrière intelligent. Je peux vous aider à rédiger des phrases pro ou répondre à vos questions."
     }
 };
 
 let currentLang = 'ar';
-
-// 🌐 ربط الـ Backend السحابي المشفر والآمن الخاص بك على Cloudflare
 const SECURE_BACKEND_URL = "https://ali-cv-backend.prof-ali-hatem-cairo.workers.dev";
 
-// ========================================================
-// 💡 مصفوفة النصائح الجاهزة للخبير
-// ========================================================
 const cvTips = [
     "تجنب وضع صورتك الشخصية إذا كنت تقدم على شركات عالمية تعتمد نظام ATS تماماً.",
     "احرص على ألا تتجاوز سيرتك الذاتية صفحة واحدة إذا كانت خبرتك أقل من 5 سنوات.",
     "استخدم أرقاماً ونسباً مئوية حقيقية لإثبات إنجازاتك (مثال: زيادة المبيعات بنسبة 20%).",
-    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء مستعارة.",
+    "البريد الإلكتروني المهني يجب أن يحتوي على اسمك الحقيقي، ابتعد تماماً عن الأسماء المستعارة.",
     "الكلمات المفتاحية المأخوذة من إعلان الوظيفة نفسه هي مفتاحك السحري لتخطي فلترة الـ ATS."
 ];
 
-// 🌐 مصفوفة الإرشادات واقتراحات المهام بناءً على المسمى الوظيفي
 const jobGuidelines = {
-    "graphic_designer": { 
-        keywords: ["مصمم", "جرافيك", "designer", "graphic"], 
-        ar: {
-            title: "مصمم جرافيك", 
-            tips: [
-                "ابتكار هويات بصرية كاملة تتوافق مع رؤية العلامة التجارية وشخصيتها.",
-                "تصميم مواد إعلانية ومحتوى رقمي لمنصات التواصل الاجتماعي لزيادة التفاعل بنسبة %X.",
-                "إتقان العمل على حزمة Adobe (Photoshop, Illustrator, InDesign) وإدارة الوقت بكفاءة."
-            ]
-        },
-        en: {
-            title: "Graphic Designer",
-            tips: [
-                "Conceptualizing full visual identities aligned with brand strategy and guidelines.",
-                "Designing advertising materials and digital assets for social media to boost engagement by X%.",
-                "Proficiency in Adobe Suite (Photoshop, Illustrator, InDesign) and efficient time management."
-            ]
-        },
-        fr: {
-            title: "Designer Graphique",
-            tips: [
-                "Conceptualisation d'identités visuelles complètes alignées sur la stratégie de marque.",
-                "Conception de supports publicitaires et de contenus numériques pour stimuler l'engagement de X%.",
-                "Maîtrise de la suite Adobe (Photoshop, Illustrator, InDesign) et gestion efficace du temps."
-            ]
-        }
-    },
-    "content_creator": { 
-        keywords: ["محتوى", "كاتب", "content", "writer"], 
-        ar: {
-            title: "صانع محتوى / كاتب محتوى", 
-            tips: [
-                "كتابة سيناريوهات ومحتوى إبداعي متوافق مع قواعد الـ SEO لزيادة الزيارات العضوية.",
-                "تحليل أداء المحتوى الرقمي وتطوير استراتيجيات النشر لرفع مستويات التفاعل.",
-                "التعاون مع فرق التصميم والمونتاج لإنتاج مواد مرئية استثنائية."
-            ]
-        },
-        en: {
-            title: "Content Creator / Copywriter",
-            tips: [
-                "Writing creative scripts and SEO-friendly copy to drive organic traffic and visibility.",
-                "Analyzing digital content performance and developing publishing strategies to lift engagement.",
-                "Collaborating with design and editing teams to produce exceptional multimedia materials."
-            ]
-        },
-        fr: {
-            title: "Créateur de Contenu / Rédacteur",
-            tips: [
-                "Rédaction de scripts créatifs et de textes optimisés pour le référencement (SEO) afin de générer du trafic organique.",
-                "Analyse des performances du contenu numérique et développement de stratégies de publication.",
-                "Collaboration avec les équipes de design et de montage pour produire des documents multimédias exceptionnels."
-            ]
-        }
-    },
-    "interior_designer": { 
-        keywords: ["ديكور", "داخلي", "interior"], 
-        ar: {
-            title: "مهندس ديكور / مصمم داخلي", 
-            tips: [
-                "إعداد مخططات ثنائية وثلاثية الأبعاد (3D Max, AutoCAD) بدقة هندسية وجمالية فائقة.",
-                "اختيار الخامات, الأثاث, وتنسيق الإضاءة بما يتوافق مع ميزانية العميل واحتياجاته.",
-                "الإشراف الميداني الدقيق على التنفيذ لضمان مطابقة الواقع للمخططات."
-            ]
-        },
-        en: {
-            title: "Interior Designer",
-            tips: [
-                "Preparing 2D and 3D layouts (3D Max, AutoCAD) with supreme engineering precision and aesthetics.",
-                "Selecting materials, furniture, and lighting setups aligned with client budget and requirements.",
-                "On-site supervision to guarantee real-world execution strictly matches structural blueprints."
-            ]
-        },
-        fr: {
-            title: "Architecte d'Intérieur",
-            tips: [
-                "Préparation de plans 2D et 3D (3D Max, AutoCAD) avec une précision technique et esthétique suprême.",
-                "Sélection des matériaux, du mobilier et des configurations d'éclairage selon le budget du client.",
-                "Supervision sur site pour garantir que l'exécution réelle correspond strictement aux plans."
-            ]
-        }
-    }
+    "graphic_designer": { keywords: ["مصمم", "جرافيك", "designer", "graphic"], ar: "مصمم جرافيك", en: "Graphic Designer", fr: "Designer Graphique" },
+    "content_creator": { keywords: ["محتوى", "كاتب", "content", "writer"], ar: "صانع محتوى", en: "Content Creator", fr: "Créateur de Contenu" },
+    "manager": { keywords: ["مدير", "مشاريع", "manager", "project"], ar: "مدير مشاريع", en: "Project Manager", fr: "Gestionnaire de Projet" },
+    "engineer": { keywords: ["مهندس", "برمجيات", "engineer", "software"], ar: "مهندس برمجيات", en: "Software Engineer", fr: "Ingénieur Logiciel" },
+    "accountant": { keywords: ["محاسب", "مالي", "accountant", "finance"], ar: "محاسب مالي", en: "Accountant", fr: "Comptable" }
 };
 
 // ========================================================
@@ -325,30 +186,30 @@ let tourStep = 1;
 function updateTour() {
     const title = document.getElementById("tourTitle");
     const desc = document.getElementById("tourDescription");
-    const progress = document.getElementById("tourProgress");
-    const icon = document.getElementById("tourIcon");
-    const nextBtn = document.getElementById("nextTourBtn");
+    const badge = document.getElementById("tourStepBadge");
+    const icon = document.getElementById("tourIcon animate");
+    const nextBtn = document.getElementById("tourNextBtn");
 
-    if (!title || !desc || !progress || !icon || !nextBtn) return;
+    if (!title || !desc || !badge || !nextBtn) return;
 
     if (tourStep === 1) {
-        progress.innerText = currentLang === 'ar' ? "خطوة 1 من 3" : (currentLang === 'en' ? "Step 1 of 3" : "Étape 1 sur 3");
-        icon.innerText = "🚀";
-        title.innerText = currentLang === 'ar' ? "مرحباً بك في مستقبلك المهني الجديد!" : (currentLang === 'en' ? "Welcome to your new career future!" : "Bienvenue dans votre avenir !");
-        desc.innerText = currentLang === 'ar' ? "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي." : (currentLang === 'en' ? "Let's take you on a quick 1-minute tour to learn how to build an invincible resume using AI." : "Faisons un tour rapide d'une minute pour apprendre à créer un CV invincible grâce à l'IA.");
-        nextBtn.innerText = currentLang === 'ar' ? "ابدأ الرحلة الآن ←" : (currentLang === 'en' ? "Start Journey Now ←" : "Commencer maintenant ←");
+        badge.innerText = currentLang === 'ar' ? "خطوة 1 من 3" : (currentLang === 'en' ? "Step 1 of 3" : "Étape 1 sur 3");
+        if(icon) icon.innerText = "🚀";
+        title.innerText = currentLang === 'ar' ? "مرحباً بك في مستقبلك المهني الجديد!" : (currentLang === 'en' ? "Welcome to your new career future!" : "Bienvenue !");
+        desc.innerText = currentLang === 'ar' ? "دعنا نأخذك في جولة سريعة مدتها دقيقة واحدة للتعرف على كيفية صناعة سيرة ذاتية لا تقهر بالذكاء الاصطناعي." : (currentLang === 'en' ? "Let's take you on a quick 1-minute tour to learn how to build an invincible resume using AI." : "Faisons un tour rapide d'une minute.");
+        nextBtn.innerText = currentLang === 'ar' ? "ابدأ الرحلة الآن ←" : (currentLang === 'en' ? "Start Journey Now ←" : "Commencer ←");
     } else if (tourStep === 2) {
-        progress.innerText = currentLang === 'ar' ? "خطوة 2 من 3" : (currentLang === 'en' ? "Step 2 of 3" : "Étape 2 sur 3");
-        icon.innerText = "📊";
-        title.innerText = currentLang === 'ar' ? "مستشار الـ ATS الذكي اللحظي" : (currentLang === 'en' ? "Real-time Smart ATS Advisor" : "Conseiller ATS en temps réel");
-        desc.innerText = currentLang === 'ar' ? "يقوم هذا العداد الذكي بتحليل نص السيرة الذاتية فوراً أثناء كتابتك ليرشدك عما ينقصك لتخطي الفلترة بنجاح." : (currentLang === 'en' ? "This smart gauge analyzes your CV text instantly as you type to guide you on what you lack to pass the filtration." : "Cette jauge intelligente analyse le texte de votre CV au fur et à mesure que vous tapez.");
+        badge.innerText = currentLang === 'ar' ? "خطوة 2 من 3" : (currentLang === 'en' ? "Step 2 of 3" : "Étape 2 sur 3");
+        if(icon) icon.innerText = "📊";
+        title.innerText = currentLang === 'ar' ? "مستشار الـ ATS الذكي اللحظي" : (currentLang === 'en' ? "Real-time Smart ATS Advisor" : "Conseiller ATS");
+        desc.innerText = currentLang === 'ar' ? "يقوم هذا العداد الذكي بتحليل نص السيرة الذاتية فوراً أثناء كتابتك ليرشدك عما ينقصك لتخطي الفلترة بنجاح." : (currentLang === 'en' ? "This smart gauge analyzes your CV text instantly as you type." : "Cette jauge analyse votre CV en temps réel.");
         nextBtn.innerText = currentLang === 'ar' ? "التالي" : (currentLang === 'en' ? "Next" : "Suivant");
     } else if (tourStep === 3) {
-        progress.innerText = currentLang === 'ar' ? "خطوة 3 من 3" : (currentLang === 'en' ? "Step 3 of 3" : "Étape 3 sur 3");
-        icon.innerText = "✨";
-        title.innerText = currentLang === 'ar' ? "الذكاء الاصطناعي الخارق والتحسين" : (currentLang === 'en' ? "Superb Generative AI & Optimization" : "IA Générative & Optimisation");
-        desc.innerText = currentLang === 'ar' ? "اكتب مسماك الوظيفي وسيتم تزويدك باقتراحات مجهزة عالمياً لدمجها بضغطة زر وتصدير ملفك لـ PDF أو Word." : (currentLang === 'en' ? "Type your target title and get internationally optimized suggestions to merge with one click and export to PDF or Word." : "Tapez votre poste cible et obtenez des suggestions optimisées à fusionner en un clic.");
-        nextBtn.innerText = currentLang === 'ar' ? "إنهاء الجولة واستكشاف السحر" : (currentLang === 'en' ? "Finish Tour & Explore Magic" : "Terminer et Explorer");
+        badge.innerText = currentLang === 'ar' ? "خطوة 3 من 3" : (currentLang === 'en' ? "Step 3 of 3" : "Étape 3 sur 3");
+        if(icon) icon.innerText = "✨";
+        title.innerText = currentLang === 'ar' ? "الذكاء الاصطناعي الخارق والتحسين" : (currentLang === 'en' ? "Superb Generative AI & Optimization" : "IA Générative");
+        desc.innerText = currentLang === 'ar' ? "اكتب مسماك الوظيفي وسيتم تزويدك باقتراحات مجهزة عالمياً لدمجها بضغطة زر وتصدير ملفك." : (currentLang === 'en' ? "Type your title and get optimized suggestions." : "Obtenez des suggestions optimisées.");
+        nextBtn.innerText = currentLang === 'ar' ? "إنهاء الجولة واستكشاف السحر" : (currentLang === 'en' ? "Finish & Explore Magic" : "Terminer");
     }
 }
 
@@ -356,178 +217,130 @@ function updateTour() {
 // 🧭 إظهار النصائح والتحكم المباشر في الواجهة
 // ========================================================
 function displayRandomLiveTip() {
-    if (document.getElementById("cvTipText")) {
-        const rand = cvTips[Math.floor(Math.random() * cvTips.length)];
-        document.getElementById("cvTipText").innerText = rand;
+    const tipEl = document.getElementById("cvTipText");
+    if (tipEl) {
+        tipEl.innerText = cvTips[Math.floor(Math.random() * cvTips.length)];
     }
 }
 
-// حساب الـ ATS Score التلقائي المطور
 function calculateATSScore() {
-    const nameEl = document.getElementById("name") || document.getElementById("fullNameInput");
-    const titleEl = document.getElementById("jobTitle") || document.getElementById("targetJobInput");
-    const skillsEl = document.getElementById("skills") || document.getElementById("skillsInput");
-    const expEl = document.getElementById("experience") || document.getElementById("experienceInput");
-
-    const name = nameEl ? nameEl.value.trim() : "";
-    const title = titleEl ? titleEl.value.trim() : "";
-    const skills = skillsEl ? skillsEl.value.trim() : "";
-    const exp = expEl ? expEl.value.trim() : "";
+    const title = document.getElementById("targetJobTitleInput").value.trim();
+    const currentCv = document.getElementById("currentCvTextInput").value.trim();
+    const jd = document.getElementById("jobDescriptionTextInput").value.trim();
 
     let score = 0;
-    let basicValid = false;
-    let skillsValid = false;
-    let numValid = false;
-    let actionValid = false;
+    let lenValid = currentCv.length > 50;
+    let keyValid = false;
+    let structValid = title.length > 3;
+    let contactValid = /(@|\d{8,})/.test(currentCv);
 
-    if (name.length > 3 && title.length > 3) { score += 25; basicValid = true; }
-    if (skills.split(/[,،]/).filter(s => s.trim().length > 1).length >= 4) { score += 25; skillsValid = true; }
-    if (/\d+/.test(exp) || /%/.test(exp)) { score += 25; numValid = true; }
-    if (/(إدارة|تطوير|قيادة|تنفيذ|تصميم|ابتكار|تحليل|managed|developed|led|designed|implemented|analyzed|géré|développé|conçu|dirigé)/i.test(exp)) { score += 25; actionValid = true; }
+    if (lenValid) score += 25;
+    if (structValid) score += 25;
+    if (contactValid) score += 25;
 
-    const fill = document.getElementById("scoreFill");
-    const txt = document.getElementById("scoreText");
-    const status = document.getElementById("scoreStatus");
+    // فحص الكلمات المفتاحية الذكي
+    if (title && currentCv) {
+        let matched = false;
+        for (let key in jobGuidelines) {
+            if (jobGuidelines[key].keywords.some(kw => title.toLowerCase().includes(kw))) {
+                matched = true;
+                break;
+            }
+        }
+        if (matched || jd.length > 10) { score += 25; keyValid = true; }
+    }
 
-    if(fill) fill.style.width = score + "%";
-    if(txt) txt.innerText = score + "%";
+    const fill = document.getElementById("atsScoreProgressBarFill");
+    const txt = document.getElementById("atsScoreValueDisplay");
+    const status = document.getElementById("atsScoreStatusText");
 
-    toggleIndicatorActive("ind-basic", basicValid);
-    toggleIndicatorActive("ind-skills", skillsValid);
-    toggleIndicatorActive("ind-num", numValid);
-    toggleIndicatorActive("ind-words", actionValid);
+    if (fill) fill.style.width = score + "%";
+    if (txt) txt.innerText = score + "%";
 
-    if(status) {
-        if(score === 0) {
-            status.innerText = currentLang === 'ar' ? "⚠️ املأ اسمك ومُسمّاك الوظيفي المستهدف للبدء بالتحليل الذكي والتحليلي..." : (currentLang === 'en' ? "⚠️ Fill in your name and target job title to start the smart analytical tracking..." : "⚠️ Remplissez votre nom et titre pour démarrer l'analyse...");
-        } else if(score < 50) {
-            status.innerText = currentLang === 'ar' ? "🔴 ضعيفة جداً! أضف مهارات وافصلها بفاصلة، واذكر خبراتك بالتفصيل لتفادي الرفض الفوري." : (currentLang === 'en' ? "🔴 Very weak! Add skills separated by commas, and detail your experiences to avoid instant rejection." : "🔴 Très faible ! Ajoutez des compétences et détaillez vos expériences.");
-        } else if(score < 100) {
-            status.innerText = currentLang === 'ar' ? "🟡 جيدة! السيرة الذاتية تتحسن، يفضل إضافة أرقام وإنجازات (نسب مئوية) وأفعال حركية قوية للوصول للعلامة الكاملة." : (currentLang === 'en' ? "🟡 Good! The resume is improving, consider adding numbers, achievements (percentages), and powerful action verbs." : "🟡 Bon ! Pensez à ajouter des chiffres, des pourcentages et des verbes d'action.");
+    toggleIndicatorActive("indLength", lenValid);
+    toggleIndicatorActive("indKeywords", keyValid);
+    toggleIndicatorActive("indStructure", structValid);
+    toggleIndicatorActive("indContact", contactValid);
+
+    if (status) {
+        if (score === 0) {
+            status.innerText = translations[currentLang].atsInitialStatusText;
+        } else if (score < 50) {
+            status.innerText = currentLang === 'ar' ? "🔴 ضعيفة جداً! أضف تفاصيل مهنية واذكر خبراتك بدقة لتفادي الرفض الفوري." : "🔴 Very weak! Add professional details to avoid instant rejection.";
+        } else if (score < 100) {
+            status.innerText = currentLang === 'ar' ? "🟡 جيدة! السيرة الذاتية تتحسن، يفضل إضافة متطلبات الوظيفة المعلنة للوصول للعلامة الكاملة." : "🟡 Good! The resume is improving, consider adding the job description requirements.";
         } else {
-            status.innerText = currentLang === 'ar' ? "🟢 مذهل ومثالي! السيرة الذاتية الآن مجهزة بنسبة 100% لتخطي أعتى أنظمة الـ ATS العالمية واقتناص المقابلات!" : (currentLang === 'en' ? "🟢 Astounding & Perfect! Your CV is now 100% optimized to bypass the toughest ATS systems and secure interviews!" : "🟢 Incroyable & Parfait ! Votre CV est optimisé à 100% pour surpasser les systèmes ATS !");
+            status.innerText = currentLang === 'ar' ? "🟢 مذهل ومثالي! السيرة الذاتية الآن مجهزة بنسبة 100% لتخطي أنظمة الـ ATS واقتناص المقابلات!" : "🟢 Astounding & Perfect! Your CV is now 100% optimized to bypass ATS systems.";
         }
     }
 }
 
 function toggleIndicatorActive(id, isValid) {
     const el = document.getElementById(id);
-    if(el) {
-        if(isValid) el.classList.add("active");
+    if (el) {
+        if (isValid) el.classList.add("active");
         else el.classList.remove("active");
     }
 }
 
-function handleJobTitleSuggestions() {
-    const titleEl = document.getElementById("jobTitle") || document.getElementById("targetJobInput");
-    if(!titleEl) return;
-    const val = titleEl.value.toLowerCase();
-    const box = document.getElementById("jobSuggestionsBox");
-    const list = document.getElementById("suggestionsList");
+function renderJobSuggestions() {
+    const container = document.getElementById("jobSuggestionsListContainer");
+    if (!container) return;
+    container.innerHTML = "";
 
-    if(!box || !list) return;
-
-    let matchedKey = null;
-    for(let key in jobGuidelines) {
-        if(jobGuidelines[key].keywords.some(kw => val.includes(kw))) {
-            matchedKey = key;
-            break;
-        }
-    }
-
-    if(matchedKey) {
-        box.classList.remove("hidden");
-        list.innerHTML = "";
-        const data = jobGuidelines[matchedKey][currentLang] || jobGuidelines[matchedKey]['en'];
-        data.tips.forEach(tip => {
-            const btn = document.createElement("button");
-            btn.className = "suggestion-item-btn";
-            btn.type = "button";
-            btn.innerText = `+ ${tip}`;
-            btn.addEventListener("click", () => {
-                const expArea = document.getElementById("experience") || document.getElementById("experienceInput");
-                if(expArea) {
-                    if(expArea.value.trim() === "...") expArea.value = "";
-                    expArea.value = expArea.value.trim() + (expArea.value.trim() ? "\n" : "") + tip;
-                    calculateATSScore();
-                }
-            });
-            list.appendChild(btn);
+    for (let key in jobGuidelines) {
+        const titleText = jobGuidelines[key][currentLang] || jobGuidelines[key]['en'];
+        const badge = document.createElement("span");
+        badge.className = "sug-badge";
+        badge.style.cursor = "pointer";
+        badge.innerText = titleText;
+        badge.addEventListener("click", () => {
+            document.getElementById("targetJobTitleInput").value = titleText;
+            calculateATSScore();
         });
-    } else {
-        box.classList.add("hidden");
+        container.appendChild(badge);
     }
 }
 
 function applyLanguage() {
     const dict = translations[currentLang];
     const htmlEl = document.getElementById("appHtml");
-    if(htmlEl) {
+    if (htmlEl) {
         htmlEl.setAttribute("lang", currentLang);
         htmlEl.setAttribute("dir", currentLang === 'ar' ? 'rtl' : 'ltr');
     }
 
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
-        if(dict && dict[key]) el.innerText = dict[key];
-    });
-
-    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-        const key = el.getAttribute("data-i18n-placeholder");
-        if(dict && dict[key]) el.setAttribute("placeholder", dict[key]);
+        if (dict && dict[key]) el.innerText = dict[key];
     });
 
     updateTour();
-    handleJobTitleSuggestions();
     calculateATSScore();
-    displayRandomLiveTip();
-    
-    const chatBody = document.getElementById("aiChatBody");
-    if(chatBody && chatBody.children.length === 1) {
-        if(currentLang === 'en') {
-            chatBody.children[0].innerHTML = "Welcome! I am **Ali AI**, your integrated smart assistant. 🤖✨<br>I can guide you through features, explain how to build/export an ATS-friendly resume, or receive your feedback. What would you like to ask today?";
-        } else if(currentLang === 'fr') {
-            chatBody.children[0].innerHTML = "Bienvenue ! Je suis **Ali AI**, votre assistant intelligent intégré. 🤖✨<br>Je peux vous guider, vous expliquer comment créer un CV compatible ATS, ou recevoir vos commentaires. Que voulez-vous demander aujourd'hui ?";
-        } else {
-            chatBody.children[0].innerHTML = "مرحباً بك! أنا **Ali AI** مساعدك الذكي المتكامل. 🤖✨<br>يمكنني إرشادك لأماكن الميزات، وشرح كيفية بناء وتصدير سيرة ذاتية متوافقة مع الـ ATS، أو استقبال شكواك ومقترحاتك فوراً. بأي لغة تفضل التحدث اليوم؟";
-        }
-    }
+    renderJobSuggestions();
 }
 
 function processAIOptimization(mode) {
-    const nameEl = document.getElementById("name") || document.getElementById("fullNameInput");
-    const titleEl = document.getElementById("jobTitle") || document.getElementById("targetJobInput");
-    const skillsEl = document.getElementById("skills") || document.getElementById("skillsInput");
-    const expEl = document.getElementById("experience") || document.getElementById("experienceInput");
-    const phoneEl = document.getElementById("phone") || document.getElementById("phoneInput");
-    const emailEl = document.getElementById("email") || document.getElementById("emailInput");
+    const title = document.getElementById("targetJobTitleInput").value.trim();
+    const currentCv = document.getElementById("currentCvTextInput").value.trim();
+    const jd = document.getElementById("jobDescriptionTextInput").value.trim();
     const out = document.getElementById("outputBox");
 
-    if(!nameEl || !titleEl || !out) return;
-
-    const name = nameEl.value.trim();
-    const title = titleEl.value.trim();
-    const skills = skillsEl ? skillsEl.value.trim() : "";
-    const exp = expEl ? expEl.value.trim() : "";
-    const phone = phoneEl ? phoneEl.value.trim() : "";
-    const email = emailEl ? emailEl.value.trim() : "";
-
-    if(!name || !title) {
-        let alertMsg = currentLang === 'ar' ? "❌ يرجى ملء الاسم الكامل والمسمى الوظيفي على الأقل لتوليد النص السحري." : (currentLang === 'en' ? "❌ Please fill in the full name and job title at least to generate the magical text." : "❌ Veuillez remplir au moins le nom et le titre du poste.");
-        alert(alertMsg);
+    if (!title || !currentCv) {
+        alert(currentLang === 'ar' ? "❌ يرجى ملء المسمى الوظيفي والسيرة الحالية أولاً للتحسين." : "❌ Please fill in the job title and current CV text first.");
         return;
     }
 
-    out.value = currentLang === 'ar' ? "⏳ جاري تشغيل خوارزميات الذكاء الاصطناعي السحابية وتحسين الكلمات الدلالية للـ ATS... يرجى الانتظار ثوانٍ..." : (currentLang === 'en' ? "⏳ Running cloud AI algorithms and optimizing ATS keywords... Please wait seconds..." : "⏳ Exécution des algorithmes d'IA et optimisation des mots-clés ATS...");
-    
+    out.value = currentLang === 'ar' ? "⏳ جاري تشغيل خوارزميات الذكاء الاصطناعي السحابية وتحسين الكلمات الدلالية للـ ATS..." : "⏳ Running cloud AI algorithms... Please wait...";
+
     fetch(SECURE_BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, title, skills, exp, phone, email, lang: currentLang, mode })
+        body: JSON.stringify({ title, currentCv, jd, lang: currentLang, mode })
     })
     .then(res => res.json())
     .then(data => {
-        if(data.success && data.result) {
+        if (data.success && data.result) {
             out.value = data.result;
         } else {
             throw new Error(data.error || "Unknown Error");
@@ -535,31 +348,32 @@ function processAIOptimization(mode) {
     })
     .catch(err => {
         console.error(err);
-        out.value = currentLang === 'ar' ? "❌ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي. يرجى التحقق من استقرار الخادم السحابي المحمي." : "❌ Error connecting to AI. Please verify the Cloudflare Worker setup.";
+        out.value = currentLang === 'ar' ? "❌ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي السحابي." : "❌ Error connecting to AI cloud server.";
     });
 }
 
 // ========================================================
-// 💬 محرك تشغيل المساعد الذكي التفاعلي (Ali AI Chat Engine)
+// 🤖 المساعد الذكي ونافذة الدعم العائمة القابلة للتصغير
 // ========================================================
 function initAiSupportChat() {
-    const floatBtn = document.getElementById("aiSupportFloatBtn");
-    const supportPage = document.getElementById("aiSupportPage");
-    const closeBtn = document.getElementById("closeAiSupportBtn");
+    const widgetHeader = document.getElementById("aiChatWidgetHeader");
+    const widgetBody = document.getElementById("aiChatWidgetBodyArea");
+    const minimizeBtn = document.getElementById("aiChatToggleMinimizeBtn");
     const sendBtn = document.getElementById("sendAiChatBtn");
     const chatInput = document.getElementById("aiChatInput");
-    const chatBody = document.getElementById("aiChatBody");
+    const messagesContainer = document.getElementById("aiChatMessagesHistoryContainer");
 
-    if (!floatBtn || !supportPage || !closeBtn || !sendBtn || !chatInput || !chatBody) return;
+    if (!widgetHeader || !widgetBody || !minimizeBtn || !sendBtn || !chatInput || !messagesContainer) return;
 
-    floatBtn.addEventListener("click", () => {
-        supportPage.style.display = "flex";
-        supportPage.classList.remove("hidden");
-    });
-
-    closeBtn.addEventListener("click", () => {
-        supportPage.style.display = "none";
-        supportPage.classList.add("hidden");
+    // ميزة التصغير والتكبير الذكية
+    widgetHeader.addEventListener("click", () => {
+        if (widgetBody.style.display === "none") {
+            widgetBody.style.display = "flex";
+            minimizeBtn.innerText = "−";
+        } else {
+            widgetBody.style.display = "none";
+            minimizeBtn.innerText = "+";
+        }
     });
 
     async function handleSendMessage() {
@@ -570,22 +384,16 @@ function initAiSupportChat() {
         chatInput.value = "";
 
         const loadingId = "loading_" + Date.now();
-        const loadingText = currentLang === 'ar' ? "⏳ جاري التفكير..." : (currentLang === 'en' ? "⏳ Thinking..." : "⏳ Réflexion...");
-        appendChatMessage(loadingText, "ai", loadingId);
+        appendChatMessage(currentLang === 'ar' ? "⏳ جاري التفكير..." : "⏳ Thinking...", "ai", loadingId);
 
         try {
             const response = await fetch(SECURE_BACKEND_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    mode: "chat",
-                    query: query,
-                    lang: currentLang
-                })
+                body: JSON.stringify({ mode: "chat", query: query, lang: currentLang })
             });
 
             const data = await response.json();
-            
             const loadingEl = document.getElementById(loadingId);
             if (loadingEl) loadingEl.remove();
 
@@ -595,47 +403,35 @@ function initAiSupportChat() {
                 throw new Error("Invalid response");
             }
         } catch (error) {
-            console.error(error);
             const loadingEl = document.getElementById(loadingId);
             if (loadingEl) loadingEl.remove();
-            
-            const errorText = currentLang === 'ar' ? "❌ عذراً، لم أستطع الاتصال بالخادم الآن. يرجى المحاولة لاحقاً." : "❌ Sorry, I couldn't connect to the server right now.";
-            appendChatMessage(errorText, "ai");
+            appendChatMessage(currentLang === 'ar' ? "❌ عذراً، لم أستطع الاتصال بالخادم الآن." : "❌ Server connection lost.", "ai");
         }
     }
 
-    // تنسيق ذكي لفقاعات الرسائل يدعم التنسيق البسيط
     function appendChatMessage(text, sender, id = null) {
         const msgDiv = document.createElement("div");
         if (id) msgDiv.id = id;
 
-        msgDiv.style.padding = "14px 18px";
-        msgDiv.style.borderRadius = sender === "user" ? "16px 0px 16px 16px" : "0px 16px 16px 16px";
-        msgDiv.style.maxWidth = "80%";
-        msgDiv.style.lineHeight = "1.6";
-        msgDiv.style.fontSize = "14px";
+        msgDiv.style.padding = "10px 14px";
+        msgDiv.style.borderRadius = "10px";
+        msgDiv.style.fontSize = "12.5px";
+        msgDiv.style.maxWidth = "85%";
         msgDiv.style.whiteSpace = "pre-wrap";
-        msgDiv.style.boxShadow = "0 4px 10px rgba(0,0,0,0.1)";
 
         if (sender === "user") {
             msgDiv.style.alignSelf = "flex-end";
-            msgDiv.style.background = "linear-gradient(135deg, #38bdf8, #0284c7)";
-            msgDiv.style.color = "#0f172a";
-            msgDiv.style.fontWeight = "600";
-            msgDiv.innerText = text;
+            msgDiv.style.background = "var(--accent-blue)";
+            msgDiv.style.color = "white";
         } else {
             msgDiv.style.alignSelf = "flex-start";
-            msgDiv.style.background = "#1e293b";
-            msgDiv.style.color = "#e2e8f0";
-            msgDiv.style.border = "1px solid rgba(255,255,255,0.03)";
-            
-            // دعم معالجة الـ Markdown الخفيف للنجوم (bold)
-            let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            msgDiv.innerHTML = formattedText;
+            msgDiv.style.background = "rgba(255,255,255,0.06)";
+            msgDiv.style.color = "#f3f4f6";
         }
 
-        chatBody.appendChild(msgDiv);
-        chatBody.scrollTop = chatBody.scrollHeight;
+        msgDiv.innerText = text;
+        messagesContainer.appendChild(msgDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     sendBtn.addEventListener("click", handleSendMessage);
@@ -649,55 +445,59 @@ function initAiSupportChat() {
 // ========================================================
 document.addEventListener("DOMContentLoaded", () => {
     
-    if(localStorage.getItem("ali_cv_tour_done") === "true") {
-        const modal = document.getElementById("appTourModal");
-        if(modal) modal.style.display = "none";
-        const content = document.getElementById("mainAppContent");
-        if(content) content.className = "main-content-visible";
+    if (localStorage.getItem("ali_cv_tour_done") === "true") {
+        const tourOverlay = document.getElementById("welcomeTourOverlay");
+        if (tourOverlay) tourOverlay.style.display = "none";
+        const container = document.getElementById("mainAppContainer");
+        if (container) container.classList.remove("main-content-hidden");
     }
 
     applyLanguage();
     initAiSupportChat();
+    displayRandomLiveTip();
 
-    const inputFields = ["name", "fullNameInput", "jobTitle", "targetJobInput", "skills", "skillsInput", "experience", "experienceInput"];
-    inputFields.forEach(id => {
+    // ربط الحقول للتحليل الفوري اللحظي
+    ["targetJobTitleInput", "currentCvTextInput", "jobDescriptionTextInput"].forEach(id => {
         const el = document.getElementById(id);
-        if(el) {
+        if (el) {
             el.addEventListener("input", () => {
                 calculateATSScore();
-                if(id === "jobTitle" || id === "targetJobInput") handleJobTitleSuggestions();
             });
         }
     });
 
-    if(document.getElementById("nextTourBtn")) {
-        document.getElementById("nextTourBtn").addEventListener("click", () => {
-            if(tourStep < 3) {
+    // معالجة أزرار الجولة التعليمية
+    const tourNextBtn = document.getElementById("tourNextBtn");
+    if (tourNextBtn) {
+        tourNextBtn.addEventListener("click", () => {
+            if (tourStep < 3) {
                 tourStep++;
                 updateTour();
             } else {
                 localStorage.setItem("ali_cv_tour_done", "true");
-                const modal = document.getElementById("appTourModal");
-                if(modal) modal.style.display = "none";
-                const content = document.getElementById("mainAppContent");
-                if(content) content.className = "main-content-visible";
+                const tourOverlay = document.getElementById("welcomeTourOverlay");
+                if (tourOverlay) tourOverlay.style.display = "none";
+                const container = document.getElementById("mainAppContainer");
+                if (container) container.classList.remove("main-content-hidden");
             }
         });
     }
 
-    if(document.getElementById("skipTourBtn")) {
-        document.getElementById("skipTourBtn").addEventListener("click", () => {
+    const tourSkipBtn = document.getElementById("tourSkipBtn");
+    if (tourSkipBtn) {
+        tourSkipBtn.addEventListener("click", () => {
             localStorage.setItem("ali_cv_tour_done", "true");
-            const modal = document.getElementById("appTourModal");
-            if(modal) modal.style.display = "none";
-            const content = document.getElementById("mainAppContent");
-            if(content) content.className = "main-content-visible";
+            const tourOverlay = document.getElementById("welcomeTourOverlay");
+            if (tourOverlay) tourOverlay.style.display = "none";
+            const container = document.getElementById("mainAppContainer");
+            if (container) container.classList.remove("main-content-hidden");
         });
     }
 
+    // القائمة العلوية والتحكم في الإعدادات
     const dropBtn = document.getElementById("dropdownToggleBtn");
     const dropMenu = document.getElementById("topLeftMenu");
-    if(dropBtn && dropMenu) {
+    if (dropBtn && dropMenu) {
         dropBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             dropMenu.classList.toggle("hidden");
@@ -707,320 +507,152 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if(document.getElementById("openSettingsBtn")) {
-        document.getElementById("openSettingsBtn").addEventListener("click", () => {
-            document.getElementById("settingsPageModal").classList.remove("hidden");
-        });
+    const openSettings = document.getElementById("openSettingsMenuBtn");
+    const settingsModal = document.getElementById("settingsModal");
+    const closeSettings = document.getElementById("closeSettingsModalBtn");
+    const saveSettings = document.getElementById("saveSettingsBtn");
+
+    if (openSettings && settingsModal) {
+        openSettings.addEventListener("click", () => settingsModal.classList.remove("hidden"));
     }
-    if(document.getElementById("closeSettingsBtn")) {
-        document.getElementById("closeSettingsBtn").addEventListener("click", () => {
-            document.getElementById("settingsPageModal").classList.add("hidden");
-        });
+    if (closeSettings && settingsModal) {
+        closeSettings.addEventListener("click", () => settingsModal.classList.add("hidden"));
+    }
+    if (saveSettings && settingsModal) {
+        saveSettings.addEventListener("click", () => settingsModal.classList.add("hidden"));
     }
 
-    if(document.getElementById("toggleLanguageBtn")) {
-        document.getElementById("toggleLanguageBtn").addEventListener("click", () => {
-            if (currentLang === 'ar') currentLang = 'en';
-            else if (currentLang === 'en') currentLang = 'fr';
-            else currentLang = 'ar';
-            applyLanguage();
-        });
-    }
+    // تبديل لغات التطبيق
+    document.getElementById("langSwitchBtnAr").addEventListener("click", () => { currentLang = 'ar'; applyLanguage(); });
+    document.getElementById("langSwitchBtnEn").addEventListener("click", () => { currentLang = 'en'; applyLanguage(); });
+    document.getElementById("langSwitchBtnFr").addEventListener("click", () => { currentLang = 'fr'; applyLanguage(); });
 
-    if(document.getElementById("clearDataBtn")) {
-        document.getElementById("clearDataBtn").addEventListener("click", () => {
-            let confirmMsg = currentLang === 'ar' ? "هل أنت متأكد من مسح جميع الحقول وبدء نموذج جديد؟" : (currentLang === 'en' ? "Are you sure you want to clear all fields and start a fresh model?" : "Êtes-vous sûr de vouloir tout effacer ?");
-            if(confirm(confirmMsg)) {
-                inputFields.forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) el.value = "";
-                });
-                const out = document.getElementById("outputBox");
-                if(out) out.value = "";
-                calculateATSScore();
-                handleJobTitleSuggestions();
-            }
-        });
-    }
-
-    const themeSel = document.getElementById("themeSelect");
-    if(themeSel) {
+    // مظهر وثيمات التطبيق
+    const themeSel = document.getElementById("themeSelectorField");
+    if (themeSel) {
         themeSel.addEventListener("change", (e) => {
             document.body.setAttribute("data-app-theme", e.target.value);
         });
     }
 
-    const fontSel = document.getElementById("cvFontSelect");
-    if(fontSel) {
+    const fontSel = document.getElementById("fontSelectorField");
+    if (fontSel) {
         fontSel.addEventListener("change", (e) => {
             const outBox = document.getElementById("outputBox");
-            if(outBox) outBox.style.fontFamily = e.target.value;
+            if (outBox) outBox.style.fontFamily = e.target.value;
         });
     }
 
-    const creativeToggle = document.getElementById("creativeLayoutToggle");
-    if(creativeToggle) {
-        creativeToggle.addEventListener("change", (e) => {
-            if(e.target.checked) document.body.classList.add("creative-neon-active");
+    const neonToggle = document.getElementById("creativeNeonToggleSwitch");
+    if (neonToggle) {
+        neonToggle.addEventListener("change", (e) => {
+            if (e.target.checked) document.body.classList.add("creative-neon-active");
             else document.body.classList.remove("creative-neon-active");
         });
     }
 
-    const voiceBtn = document.getElementById("voiceDictationBtn") || document.getElementById("startVoiceRecognitionBtn");
-    if(voiceBtn) {
-        voiceBtn.addEventListener("click", () => {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if(!SpeechRecognition) {
-                let errSpeech = currentLang === 'ar' ? "عذراً، متصفحك لا يدعم التعرف الصوتي الذكي حالياً." : "Sorry, your browser doesn't support smart speech recognition.";
-                alert(errSpeech);
-                return;
-            }
-            const rec = new SpeechRecognition();
-            if (currentLang === 'ar') rec.lang = 'ar-EG';
-            else if (currentLang === 'en') rec.lang = 'en-US';
-            else rec.lang = 'fr-FR';
-
-            voiceBtn.innerText = currentLang === 'ar' ? "⏳ جاري الاستماع..." : (currentLang === 'en' ? "⏳ Listening..." : "⏳ Écoute...");
-            rec.start();
-            rec.onresult = (e) => {
-                const text = e.results[0][0].transcript;
-                const area = document.getElementById("experience") || document.getElementById("experienceInput");
-                if(area) {
-                    if(area.value === "...") area.value = "";
-                    area.value = area.value.trim() + " " + text;
-                    calculateATSScore();
-                }
-            };
-            rec.onend = () => {
-                voiceBtn.innerText = currentLang === 'ar' ? "🎤 إملاء ذكي" : (currentLang === 'en' ? "🎤 Smart Dictation" : "🎤 Dictée");
-            };
-        });
+    // أزرار المعالجة بالذكاء الاصطناعي
+    if (document.getElementById("generateAiCvBtn")) {
+        document.getElementById("generateAiCvBtn").addEventListener("click", () => processAIOptimization("full"));
+    }
+    if (document.getElementById("optimizeKeywordsBtn")) {
+        document.getElementById("optimizeKeywordsBtn").addEventListener("click", () => processAIOptimization("keywords"));
+    }
+    if (document.getElementById("fixGrammarBtn")) {
+        document.getElementById("fixGrammarBtn").addEventListener("click", () => processAIOptimization("grammar"));
     }
 
-    if(document.getElementById("generateSummaryBtn")) {
-        document.getElementById("generateSummaryBtn").addEventListener("click", () => processAIOptimization("summary"));
+    // إملاء صوتي ذكي
+    const voiceBtnTitle = document.getElementById("voiceBtnJobTitle");
+    const voiceBtnCV = document.getElementById("voiceBtnCurrentCv");
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    function handleVoice(inputTarget, btnEl) {
+        if (!SpeechRecognition) {
+            alert(currentLang === 'ar' ? "عذراً، متصفحك لا يدعم التعرف الصوتي حالياً." : "Browser speech not supported.");
+            return;
+        }
+        const rec = new SpeechRecognition();
+        rec.lang = currentLang === 'ar' ? 'ar-EG' : (currentLang === 'fr' ? 'fr-FR' : 'en-US');
+        btnEl.innerText = "⏳ ...";
+        rec.start();
+        rec.onresult = (e) => {
+            const text = e.results[0][0].transcript;
+            const area = document.getElementById(inputTarget);
+            area.value = area.value.trim() + " " + text;
+            calculateATSScore();
+        };
+        rec.onend = () => {
+            btnEl.innerText = "🎙️ إملاء صوتي";
+        };
     }
-    if(document.getElementById("aiOptimizeBtn")) {
-        document.getElementById("aiOptimizeBtn").addEventListener("click", () => processAIOptimization("full"));
-    }
 
-    const checkMatchBtn = document.getElementById("checkMatchBtn");
-    if(checkMatchBtn) {
-        checkMatchBtn.addEventListener("click", () => {
-            const jdEl = document.getElementById("jobDescription");
-            const expEl = document.getElementById("experience") || document.getElementById("experienceInput");
-            const resDiv = document.getElementById("matchResult");
+    if (voiceBtnTitle) voiceBtnTitle.addEventListener("click", () => handleVoice("targetJobTitleInput", voiceBtnTitle));
+    if (voiceBtnCV) voiceBtnCV.addEventListener("click", () => handleVoice("currentCvTextInput", voiceBtnCV));
 
-            if(!jdEl || !expEl || !resDiv) return;
-
-            const jd = jdEl.value.trim().toLowerCase();
-            const exp = expEl.value.trim().toLowerCase();
-
-            if(!jd) {
-                let pasteErr = currentLang === 'ar' ? "يرجى لصق إعلان الوظيفة أولاً للتحليل." : "Please paste the job description first to analyze.";
-                alert(pasteErr);
-                return;
-            }
-
-            const wordsToCheck = ["team", "experience", "skills", "تطوير", "خبرة", "عمل", "إدارة", "management", "development", "analytical", "تحليل", "équipe", "compétences"];
-            let matches = 0;
-            let missing = [];
-
-            wordsToCheck.forEach(w => {
-                if(jd.includes(w)) {
-                    if(exp.includes(w)) matches++;
-                    else missing.push(w);
-                }
-            });
-
-            const pct = Math.min(100, Math.floor((matches / (matches + missing.length || 1)) * 100) + 30);
-            
-            if(currentLang === 'ar') {
-                resDiv.innerHTML = `<div class='match-badge'>نسبة المطابقة التقريبية: ${pct}%</div><p style='font-size:12px; margin-top:5px; color:#cbd5e1;'>💡 كلمات ينصح بإضافتها فوراً لخبراتك: ${missing.length ? missing.join(", ") : "لا يوجد، ملفك ممتاز للـ ATS!"}</p>`;
-            } else if(currentLang === 'en') {
-                resDiv.innerHTML = `<div class='match-badge'>Approx Match Ratio: ${pct}%</div><p style='font-size:12px; margin-top:5px; color:#cbd5e1;'>💡 Advised keywords to append: ${missing.length ? missing.join(", ") : "None, your file is perfect for ATS!"}</p>`;
-            } else {
-                resDiv.innerHTML = `<div class='match-badge'>Taux d'adéquation : ${pct}%</div><p style='font-size:12px; margin-top:5px; color:#cbd5e1;'>💡 Mots-clés conseillés : ${missing.length ? missing.join(", ") : "Aucun, votre profil est parfait !"}</p>`;
+    // عمليات التصدير والنسخ
+    const copyBtn = document.getElementById("copyToClipboardBtn");
+    if (copyBtn) {
+        copyBtn.addEventListener("click", () => {
+            const out = document.getElementById("outputBox");
+            if (out.value) {
+                navigator.clipboard.writeText(out.value);
+                alert(currentLang === 'ar' ? "📋 تم نسخ النص بنجاح!" : "📋 Copied to clipboard!");
             }
         });
     }
 
-    const downloadPdfBtn = document.getElementById("downloadPdfBtn");
-    if(downloadPdfBtn) {
-        downloadPdfBtn.addEventListener("click", () => {
+    const downloadTxtBtn = document.getElementById("downloadAsTxtBtn");
+    if (downloadTxtBtn) {
+        downloadTxtBtn.addEventListener("click", () => {
             const outVal = document.getElementById("outputBox").value.trim();
-            if(!outVal) {
-                let noTxt = currentLang === 'ar' ? "لا يوجد نص لتصديره، يرجى تشغيل التحسين أولاً!" : "No text found to export, please run optimization first!";
-                alert(noTxt);
-                return;
-            }
-
-            const tempDiv = document.createElement("div");
-            tempDiv.style.padding = "40px";
-            tempDiv.style.color = "#000000";
-            tempDiv.style.backgroundColor = "#ffffff";
-            tempDiv.style.whiteSpace = "pre-wrap";
-            tempDiv.style.fontFamily = document.getElementById("outputBox").style.fontFamily || "sans-serif";
-            tempDiv.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
-            tempDiv.style.lineHeight = "1.6";
-            tempDiv.innerText = outVal;
-
-            document.body.appendChild(tempDiv);
-
-            const opt = {
-                margin: 15,
-                filename: `Ali_AI_Resume_${Date.now()}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().from(tempDiv).set(opt).save().then(() => {
-                document.body.removeChild(tempDiv);
-            });
-        });
-    }
-
-    const downloadWordBtn = document.getElementById("downloadWordBtn");
-    if(downloadWordBtn) {
-        downloadWordBtn.addEventListener("click", () => {
-            const outVal = document.getElementById("outputBox").value.trim();
-            if(!outVal) {
-                alert(currentLang === 'ar' ? "لا يوجد نص لتصديره!" : "No text found to export!");
-                return;
-            }
-
-            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40' lang='" + currentLang + "'><head><meta charset='utf-8'><title>Export CV</title><style>body{font-family:Arial; direction:" + (currentLang === 'ar' ? "rtl" : "ltr") + ";}</style></head><body>";
-            const footer = "</body></html>";
-            const html = header + "<div style='white-space: pre-wrap;'>" + outVal.replace(/\n/g, "<br>") + "</div>" + footer;
-
-            const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+            if (!outVal) return;
+            const blob = new Blob([outVal], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `Ali_AI_Resume_${Date.now()}.doc`;
-            document.body.appendChild(a);
+            a.download = `Ali_AI_Resume_${Date.now()}.txt`;
             a.click();
-            document.body.removeChild(a);
         });
     }
 
-    const shareLinkBtn = document.getElementById("shareCVLinkBtn");
-    if(shareLinkBtn) {
-        shareLinkBtn.addEventListener("click", async () => {
-            if(navigator.share) {
-                try {
-                    await navigator.share({
-                        title: currentLang === 'ar' ? 'منصة علي لصناعة السير الذاتية' : 'AI Resume Builder Pro',
-                        text: currentLang === 'ar' ? 'تطبيق ذكي لإنشاء وتحسين السير الذاتية مجاناً وبدون حساب متوافق مع نظام ATS.' : 'Smart application to create and optimize resumes for free without account, ATS friendly.',
-                        url: window.location.href
-                    });
-                } catch (err) {}
-            } else {
-                try {
-                    await navigator.clipboard.writeText(window.location.href);
-                    let copyMsg = currentLang === 'ar' ? "📋 تم نسخ رابط التطبيق بنجاح لمشاركته مع زملائك!" : "📋 Platform link copied successfully to share with colleagues!";
-                    alert(copyMsg);
-                } catch (err) {}
-            }
+    const shareCloudBtn = document.getElementById("shareCvLinkBtn");
+    if (shareCloudBtn) {
+        shareCloudBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(window.location.href);
+            alert(currentLang === 'ar' ? "🔗 تم نسخ رابط المشاركة السحابي!" : "🔗 Share link copied to clipboard!");
         });
     }
 
-    const shareAppBtn = document.getElementById("shareAppBtn");
-    if(shareAppBtn) {
-        shareAppBtn.addEventListener("click", () => {
-            if(shareLinkBtn) shareLinkBtn.click();
-        });
-    }
-
-    if (document.getElementById("enableNotificationsBtn")) {
-        document.getElementById("enableNotificationsBtn").addEventListener("click", function (e) {
-            e.preventDefault();
-            if (!("Notification" in window)) { alert(currentLang === 'ar' ? "عذراً، المتصفح الحالي لا يدعم نظام الإشعارات." : "Sorry, the current browser does not support notifications."); return; }
-            if (Notification.permission === "granted") { alert(currentLang === 'ar' ? "🔔 الإشعارات والفرص مفعلة مسبقاً لديك!" : "🔔 Notifications and openings are already active!"); }
-            else if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(function (p) { if (p === "granted") alert(currentLang === 'ar' ? "🎉 تم تفعيل إشعارات الفرص المحدثة بنجاح!" : "🎉 Updated opportunity notifications enabled successfully!"); });
-            }
-        });
-    }
-
-    // 📣 تشغيل نظام تقييم وملاحظات المستخدمين المطور
-    let selectedRating = 5;
-    const starSpans = document.querySelectorAll("#starRatingSystem span");
-    starSpans.forEach(star => {
-        star.addEventListener("click", (e) => {
-            selectedRating = parseInt(e.target.getAttribute("data-value"));
-            starSpans.forEach(s => {
-                if(parseInt(s.getAttribute("data-value")) <= selectedRating) {
-                    s.style.color = "#38bdf8";
-                    s.classList.add("selected");
-                } else {
-                    s.style.color = "rgba(255,255,255,0.2)";
-                    s.classList.remove("selected");
-                }
-            });
-        });
-    });
-
-    // ========================================================
-    // ✉️ إرسال التقييم بأمان كامل وحماية التوكن عبر الـ Worker
-    // ========================================================
+    // نظام المزامنة والتقييم الفوري عبر تليجرام
     const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
-    if(submitFeedbackBtn) {
+    if (submitFeedbackBtn) {
         submitFeedbackBtn.addEventListener("click", () => {
             const textFeedback = document.getElementById("userFeedbackTextarea").value.trim();
-            if(!textFeedback) {
-                let emptyFeed = currentLang === 'ar' ? "يرجى كتابة تعليقك أو مشكلتك أولاً قبل الإرسال!" : 
-                               (currentLang === 'en' ? "Please write your comment or problem before submitting!" : 
-                               "Veuillez écrire votre commentaire ou problème avant de soumettre !");
-                alert(emptyFeed);
-                return;
-            }
+            if (!textFeedback) return;
 
-            // حفظ التعليق محلياً كنسخة احتياطية
-            let localStoreFeedbacks = JSON.parse(localStorage.getItem("ali_cv_feedbacks") || "[]");
-            localStoreFeedbacks.push({ rating: selectedRating, message: textFeedback, timestamp: Date.now() });
-            localStorage.setItem("ali_cv_feedbacks", JSON.stringify(localStoreFeedbacks));
-            
-            // إرسال التقييم إلى الـ Backend السحابي لحماية التوكن والـ Chat ID
-            fetch(SECURE_BACKEND_URL, {
+            const starsText = "⭐".repeat(5);
+            const messageText = `🚀 *تقييم جديد للمنصة* 🚀\n\n` +
+                                `🔹 *التعليق:* ${textFeedback}\n` +
+                                `🔹 *اللغة المستخدمة:* ${currentLang.toUpperCase()}\n` +
+                                `📅 *التوقيت:* ${new Date().toLocaleString()}`;
+
+            fetch(`https://api.telegram.org/bot8840422551:AAGa47_hdi5pIOgLCZsUH3kFAN8zDR5zByw/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    mode: 'feedback',
-                    rating: selectedRating,
-                    feedback: textFeedback,
-                    lang: currentLang
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.success) {
-                    let successFeed = currentLang === 'ar' ? "🎉 شكراً لك! تم إرسال تقييمك وملاحظاتك مباشرة للمطور بنجاح وبأمان كامل." : 
-                                     (currentLang === 'en' ? "🎉 Thank you! Your review has been securely sent to the developer." : 
-                                     "🎉 Merci ! Votre avis a été envoyé de manière sécurisée.");
-                    alert(successFeed);
-                } else {
-                    throw new Error("Failed server sync");
-                }
-            })
-            .catch(err => {
-                let localSuccess = currentLang === 'ar' ? "🎉 تم حفظ تقييمك بأمان محلياً في المتصفح!" : "🎉 Saved safely inside your local sandbox session!";
-                alert(localSuccess);
+                body: JSON.stringify({ chat_id: "6876904568", text: messageText, parse_mode: 'Markdown' })
+            }).then(() => {
+                alert(currentLang === 'ar' ? "🎉 شكراً لك! تم إرسال تقييمك بنجاح." : "🎉 Thank you for your feedback!");
+                document.getElementById("userFeedbackTextarea").value = "";
             });
-
-            document.getElementById("userFeedbackTextarea").value = "";
         });
     }
 
-    const viewPrivacyPolicyBtn = document.getElementById("viewPrivacyPolicyBtn");
-    if(viewPrivacyPolicyBtn) {
-        viewPrivacyPolicyBtn.addEventListener("click", (e) => {
+    const viewPrivacy = document.getElementById("viewPrivacyPolicyBtn");
+    if (viewPrivacy) {
+        viewPrivacy.addEventListener("click", (e) => {
             e.preventDefault();
-            const privacyTxt = currentLang === 'ar' ? 
-                "🔒 سياسة خصوصية Ali CV Builder Pro:\nنعيد صياغة الأمن الرقمي! تطبيقنا مصمم محلياً بالكامل (Client-Side)، ولا يمتلك خوادم مركزية تسحب بياناتك الشخصية أو سيرتك المهنية. يتم معالجة وتشفير كل حرف تكتبه محلياً 100% داخل جلسة متصفحك الخاصة وآمن تماماً من أي تسريب." : 
-                (currentLang === 'en' ? "🔒 Ali CV Builder Pro Privacy Policy:\nCompletely decentralized client-side application. No central data harvesting servers. 100% locally encrypted inside your secure sandbox browser storage." : "🔒 Politique de confidentialité d'Ali CV Builder Pro :\nApplication entièrement décentralisée côté client. Aucun serveur central de collecte de données. Chiffrement 100% local.");
-            alert(privacyTxt);
+            alert(currentLang === 'ar' ? "🔒 سياسة الخصوصية والأمان الفائق للبيانات المهنية: يتم تشفير وحفظ كافة مدخلاتك محلياً بشكل كامل داخل متصفحك وآمن 100%." : "🔒 Privacy Policy: 100% locally encrypted client-side data security.");
         });
     }
 });
