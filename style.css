@@ -20,750 +20,268 @@
 
 /* التبديل الديناميكي للسمات الكونية */
 body[data-app-theme="royal"] {
-    --cosmic-bg-gradient: linear-gradient(135deg, #0b1528 0%, #0f2347 100%);
+    --cosmic-bg-gradient: linear-gradient(135deg, #0b1528 0%, #020617 100%);
     --btn-gradient: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
     --accent-blue: #60a5fa;
     --neon-border: rgba(96, 165, 250, 0.15);
 }
+
 body[data-app-theme="emerald"] {
-    --cosmic-bg-gradient: linear-gradient(135deg, #041a12 0%, #062e1e 100%);
-    --btn-gradient: linear-gradient(135deg, #047857 0%, #10b981 100%);
+    --cosmic-bg-gradient: linear-gradient(135deg, #062f22 0%, #022c22 100%);
+    --btn-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
     --accent-blue: #34d399;
     --neon-border: rgba(52, 211, 153, 0.15);
 }
+
 body[data-app-theme="cyber"] {
-    --cosmic-bg-gradient: linear-gradient(135deg, #180828 0%, #2e0854 100%);
-    --btn-gradient: linear-gradient(135deg, #7c3aed 0%, #d946ef 100%);
+    --cosmic-bg-gradient: linear-gradient(135deg, #1e1b4b 0%, #030712 100%);
+    --btn-gradient: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
     --accent-blue: #f472b6;
     --neon-border: rgba(244, 114, 182, 0.15);
 }
 
-/* الوضع الإبداعي الفاخر وتأثير النيون المشع */
-.creative-neon-active {
-    --cosmic-bg-gradient: linear-gradient(135deg, #1a0b2e 0%, #0d041c 100%);
-    --card-bg: rgba(26, 12, 47, 0.65);
-    --input-bg: #2d1447;
-    --accent-blue: #ec4899;
-    --accent-purple: #a855f7;
-    --btn-gradient: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
-}
-.creative-neon-active h2 { color: #ec4899 !important; }
-.creative-neon-active h2::before { background: #ec4899 !important; }
-.creative-neon-active .container {
-    box-shadow: 0 0 35px rgba(236, 72, 153, 0.25);
-    border-color: rgba(236, 72, 153, 0.25);
-}
-
 /* ========================================================
-   🚀 تجربة المستخدم الاحترافية والوصول الشامل (UX & Scrollbar)
+   🎨 التنسيقات الهيكلية والتأثيرات العامة للمنصة
    ======================================================== */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: #111827;
-}
-::-webkit-scrollbar-thumb {
-    background: var(--accent-blue);
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-purple);
-}
-
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-    font-family: var(--font-active); 
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
+    font-family: var(--font-active);
     background: var(--cosmic-bg-gradient);
-    color: var(--text-main); 
-    min-height: 100vh; 
-    padding: 100px 20px 40px 20px;
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.5;
+    transition: background 0.3s ease;
     overflow-x: hidden;
 }
 
-button, .badge-new, .badge-ready, .ats-ind, .step-badge, #starRatingSystem span {
-    user-select: none;
-    -webkit-user-select: none;
+/* مظهر النيون المتوهج النشط اختياريًا */
+body.neon-glow-active {
+    --neon-border: rgba(56, 189, 248, 0.45);
+    text-shadow: 0 0 1px rgba(255,255,255,0.1);
 }
 
-button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 2px solid var(--accent-blue);
-    outline-offset: 3px;
+body.neon-glow-active .score-section,
+body.neon-glow-active .modal-content,
+body.neon-glow-active #aiChatWidgetContainer {
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
 }
 
-/* ========================================================
-   🏠 حاوية التطبيق وتخطيط الواجهة البسيطة الذكية
-   ======================================================== */
+/* حاوية التطبيق المركزية الفاخرة */
 .container {
-    width: 100%; 
-    max-width: 1280px; 
-    background: var(--card-bg);
-    backdrop-filter: blur(20px); 
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    padding: 40px;
-    border-radius: var(--radius-xl); 
-    box-shadow: var(--shadow-main);
-    position: relative;
-    animation: fadeInContainer 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeInContainer {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.main-app-header {
-    position: relative;
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.logo-badge { 
-    display: inline-block; 
-    background: rgba(56, 189, 248, 0.08); 
-    border: 1px solid rgba(56, 189, 248, 0.2); 
-    color: var(--accent-blue); 
-    padding: 6px 18px; 
-    border-radius: 50px; 
-    font-size: 12px; 
-    font-weight: 700; 
-    letter-spacing: 0.5px; 
-    margin-bottom: 14px; 
-}
-
-.app-title { 
-    font-size: 2.6rem; 
-    font-weight: 800; 
-    margin: 0; 
-    background: linear-gradient(135deg, #ffffff 40%, #9ca3af 100%); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
-}
-
-.branding-sub { 
-    font-size: 1.1rem; 
-    font-weight: 700; 
-    color: var(--accent-blue); 
-    letter-spacing: 1.5px; 
-    margin-bottom: 14px; 
-    text-transform: uppercase; 
-}
-
-.app-subtitle { 
-    color: var(--text-muted); 
-    font-size: 1.05rem; 
-    max-width: 700px; 
+    max-width: 1200px;
     margin: 0 auto;
-    line-height: 1.6; 
-}
-
-/* ========================================================
-   ⚙️ أزرار التحكم والقائمة العلوية الذكية (Dropdown)
-   ======================================================== */
-#dropdownToggleBtn {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(31, 41, 55, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 99;
-}
-#dropdownToggleBtn:hover {
-    transform: rotate(45deg) scale(1.05);
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-}
-[dir="rtl"] #dropdownToggleBtn { left: auto; right: 0; }
-
-#topLeftMenu {
-    position: absolute;
-    top: 55px;
-    left: 0;
-    background: #111827;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 14px;
-    width: 240px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-    overflow: hidden;
-    z-index: 100;
-}
-[dir="rtl"] #topLeftMenu { left: auto; right: 0; }
-
-.menu-item {
-    display: block;
-    width: 100%;
-    padding: 14px 20px;
-    background: transparent;
-    color: #e5e7eb;
-    text-align: right;
-    font-size: 13.5px;
-    font-weight: 600;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    cursor: pointer;
-}
-.menu-item:hover {
-    background: rgba(56, 189, 248, 0.1);
-    color: var(--accent-blue);
-    padding-right: 25px;
-}
-[dir="ltr"] .menu-item { text-align: left; }
-[dir="ltr"] .menu-item:hover { padding-left: 25px; padding-right: 20px; }
-.menu-item:last-child { border-bottom: none; }
-
-/* ========================================================
-   📊 لوحة الـ ATS الذكية والمؤشرات اللحظية
-   ======================================================== */
-.score-section {
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--neon-border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    margin-bottom: 35px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 50px 40px;
+    box-shadow: var(--shadow-main);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.score-top-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
+/* قناع الحماية لإخفاء المحتوى السري محلياً عند الخمول */
+.main-content-hidden {
+    opacity: 0;
+    transform: scale(0.98);
+    pointer-events: none;
+    user-select: none;
 }
 
-.score-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.pulse-dot {
-    width: 10px;
-    height: 10px;
-    background: #10b981;
-    border-radius: 50%;
-    animation: pulseGlow 1.8s infinite;
-}
-
-@keyframes pulseGlow {
-    0% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
-    70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-    100% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
-
-.score-value {
-    font-size: 26px;
-    font-weight: 800;
-    color: var(--accent-blue);
-    text-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
-}
-
-.score-bar-container {
-    height: 10px;
-    background: #1f2937;
-    border-radius: 50px;
-    overflow: hidden;
-    margin-bottom: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.score-fill {
-    height: 100%;
-    width: 0%;
-    background: var(--btn-gradient);
-    border-radius: 50px;
-    transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.ats-indicators-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.ats-ind {
-    background: #1f2937;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 10px;
-    font-size: 12px;
-    text-align: center;
-    color: var(--text-muted);
-    font-weight: 700;
-}
-
-.ats-ind.active {
-    background: rgba(16, 185, 129, 0.12);
-    border-color: rgba(16, 185, 129, 0.3);
-    color: #34d399;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-}
-
-.score-status {
-    color: #cbd5e1;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-/* ========================================================
-   📝 تخطيط أقسام التطبيق والمدخلات (App Layout)
-   ======================================================== */
-.app-layout { 
-    display: flex; 
-    gap: 35px; 
-}
-
-section { 
-    flex: 1; 
-    background: rgba(15, 23, 42, 0.4); 
-    padding: 30px; 
-    border: 1px solid rgba(255, 255, 255, 0.05); 
-    border-radius: var(--radius-lg); 
-    display: flex; 
-    flex-direction: column; 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    padding-bottom: 14px;
-}
-
-h2 { 
-    color: var(--accent-blue); 
-    font-size: 19px; 
-    font-weight: 700; 
-    position: relative; 
-    padding-right: 14px; 
-}
-[dir="ltr"] h2 { padding-right: 0; padding-left: 14px; }
-
-h2::before { 
-    content: ''; 
-    position: absolute; 
-    right: 0; 
-    top: 20%; 
-    height: 60%; 
-    width: 4px; 
-    background: var(--accent-blue); 
-    border-radius: 4px; 
-}
-[dir="ltr"] h2::before { right: auto; left: 0; }
-
-.step-indicator, .badge-new, .badge-ready {
-    background: rgba(99, 102, 241, 0.15);
-    color: #818cf8;
-    font-size: 11.5px;
-    padding: 5px 12px;
-    border-radius: 50px;
-    font-weight: 700;
-}
-.badge-ready {
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-}
-
-.form-group { margin-bottom: 22px; }
-
-label { 
-    display: block; 
-    margin-bottom: 8px; 
-    font-size: 13.5px; 
-    font-weight: 700; 
-    color: #e5e7eb; 
-}
-
-.textarea-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    flex-wrap: wrap; 
-    gap: 8px;        
-}
-.textarea-header label { margin-bottom: 0; }
-
-.voice-btn {
-    width: auto;
-    padding: 6px 14px;
-    background: rgba(139, 92, 246, 0.12);
-    border: 1px solid rgba(139, 92, 246, 0.25);
-    color: #a78bfa;
-    font-size: 11.5px;
-    font-weight: 700;
-    border-radius: 50px;
-    margin: 0;
-    box-shadow: none;
-    cursor: pointer;
-}
-.voice-btn:hover {
-    background: #8b5cf6;
-    color: white;
-    transform: translateY(-1px);
-}
-.voice-btn.recording {
-    background: #ef4444;
-    color: white;
-    animation: pulseRecording 1.2s infinite alternate;
-}
-
-@keyframes pulseRecording {
-    from { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
-    to { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
-}
-
-input[type="text"], textarea, select { 
-    width: 100%; 
-    padding: 14px 18px; 
-    background: var(--input-bg); 
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    border-radius: 14px; 
-    color: var(--text-main); 
-    font-size: 14px; 
-    outline: none;
-}
-input[type="text"]:focus, textarea:focus, select:focus { 
-    border-color: var(--accent-blue); 
-    background: #111827; 
-    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15); 
-}
-input[type="text"]::placeholder, textarea::placeholder { color: #6b7280; }
-
-/* الأزرار الأساسية والتفاعلية */
-button { 
-    width: 100%; 
-    padding: 16px; 
-    background: var(--btn-gradient); 
-    color: #ffffff; 
-    border: none; 
-    border-radius: 14px; 
-    font-size: 15px; 
-    font-weight: 700; 
-    cursor: pointer; 
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2); 
-    margin-top: auto; 
-}
-button:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3); 
-}
-button:active { transform: translateY(0); }
-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
-
-/* صندوق اقتراحات المسميات الوظيفية */
-.suggestions-box {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px dashed rgba(56, 189, 248, 0.35);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 22px;
-}
-.sug-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    margin-bottom: 12px;
-}
-.suggestions-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-height: 160px;
-    overflow-y: auto;
-}
-.suggestion-item-btn {
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid rgba(255,255,255,0.04);
-    border-radius: 10px;
-    padding: 11px 14px;
-    font-size: 12.5px;
-    color: #d1d5db;
-    text-align: right;
-    width: 100%;
-    box-shadow: none;
-    margin: 0;
-}
-[dir="ltr"] .suggestion-item-btn { text-align: left; }
-.suggestion-item-btn:hover {
-    background: var(--accent-blue);
-    color: #111827;
-    font-weight: 700;
-    transform: translateX(-4px);
-}
-[dir="ltr"] .suggestion-item-btn:hover { transform: translateX(4px); }
-
-/* ========================================================
-   🎯 كارت مطابقة الإعلان والأزرار المساعدة
-   ======================================================== */
-.job-match-card {
-    background: rgba(31, 41, 55, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 20px;
-}
-.job-match-card .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-.job-match-card h4 { font-size: 14.5px; color: #f3f4f6; margin: 0; }
-.job-match-card p { font-size: 12px; color: var(--text-muted); margin: 0; line-height: 1.5; }
-
-.actions-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-/* تدرجات أزرار التحكم الفاخرة */
-.ai-aux-btn {
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    color: #a5b4fc;
-    box-shadow: none;
-}
-.ai-aux-btn:hover { background: #6366f1; color: white; }
-
-.super-gradient-btn {
-    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
-}
-.super-gradient-btn:hover { background: linear-gradient(135deg, #db2777 0%, #7c3aed 100%); }
-
-.green-gradient-btn {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
-}
-.green-gradient-btn:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
-
-.blue-gradient-btn {
-    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.15);
-}
-.blue-gradient-btn:hover { background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%); }
-
-.orange-gradient-btn {
-    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
-    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.15);
-}
-.orange-gradient-btn:hover { background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%); }
-
-.flex-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    width: 100%;
-}
-.flex-wrap button { flex: 1; min-width: 190px; }
-
-/* ========================================================
-   ✨ قسم ومربع عرض المخرج النهائي (Output Preview)
-   ======================================================== */
-.preview-area-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: #0b0f19;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.6);
-    margin-bottom: 20px;
-}
-
-#outputBox {
-    flex: 1;
-    min-height: 530px;
-    background: transparent;
-    border: none !important;
-    box-shadow: none !important;
-    resize: none;
-    font-family: 'Almarai', sans-serif; 
-    font-size: 14.5px;
-    line-height: 1.8;
-    color: #e5e7eb;
-    outline: none;
-}
-
-/* ========================================================
-   🔗 شاشات العرض المنبثقة واللافتات (Modals & Banners)
-   ======================================================== */
+/* شريط تصفح الرابط المشترك السحابي العالي الجاذبية */
 .shared-view-banner {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100vw; 
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border-bottom: 2px solid #e11d48;
-    color: #f8fafc;
-    padding: 14px 20px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: linear-gradient(90deg, #b91c1c 0%, #dc2626 100%);
+    color: white;
+    padding: 12px 20px;
     text-align: center;
+    font-size: 13.5px;
+    font-weight: 700;
+    z-index: 99999;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
-    z-index: 999999; 
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
-    animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .shared-view-banner .clone-btn {
-    background: #e11d48;
-    color: #fff;
+    background: white;
+    color: #b91c1c;
     border: none;
-    padding: 8px 20px;
+    padding: 6px 14px;
     border-radius: 8px;
-    cursor: pointer;
     font-weight: 700;
-    font-size: 13px;
-    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
-    width: auto; 
-    margin: 0; 
+    cursor: pointer;
+    font-size: 12.5px;
+    transition: transform 0.2s;
 }
-.shared-view-banner .clone-btn:hover { background: #be123c; transform: translateY(-1px); }
 
-/* نافذة الترحيب والجولات */
-.welcome-overlay, .modal-overlay {
+.shared-view-banner .clone-btn:hover {
+    transform: scale(1.03);
+}
+
+/* ========================================================
+   🧩 تصميم شبكة لوحة التحكم والتنقل الثنائي (Layout Columns)
+   ======================================================== */
+.app-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-top: 30px;
+}
+
+@media (max-width: 850px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+/* حقول الإدخال والتعامل الفاخر مع النصوص */
+input[type="text"], select, textarea {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+/* ========================================================
+   🔘 أزرار العمليات الكونية والتأثيرات الضوئية (Button Components)
+   ======================================================== */
+button {
+    font-family: inherit;
+}
+
+.super-gradient-btn {
+    width: 100%;
+    background: var(--btn-gradient);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, filter 0.2s ease;
+    margin-bottom: 5px;
+}
+
+.super-gradient-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.super-gradient-btn:active {
+    transform: translateY(0);
+}
+
+.ai-aux-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: #e5e7eb;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ai-aux-btn:hover {
+    border-color: var(--accent-blue);
+    background: rgba(56, 189, 248, 0.04);
+    color: white;
+}
+
+/* ========================================================
+   🗔 النوافذ العائمة المنبثقة والجولات التوجيهية (Modals & Overlays)
+   ======================================================== */
+.modal-overlay, .welcome-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(7, 10, 17, 0.9);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(4, 7, 13, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 99999;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99999;
     padding: 20px;
+    transition: opacity 0.3s ease;
 }
 
-.welcome-card, .modal-content {
+.modal-content, .welcome-card {
     background: #111827;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
+    border: 1px solid var(--neon-border);
+    border-radius: var(--radius-xl);
+    max-width: 520px;
     width: 100%;
-    max-width: 480px;
     padding: 35px;
-    box-shadow: 0 25px 55px -12px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.1);
-    text-align: center;
-    direction: rtl;
-    animation: modalAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    position: relative;
+    box-shadow: var(--shadow-main);
 }
 
-@keyframes modalAppear {
-    from { opacity: 0; transform: scale(0.96) translateY(15px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+.settings-section {
+    margin-bottom: 20px;
+}
+
+.settings-section label {
+    display: block;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* أزرار وجزيئات الجولة التعليمية التفاعلية */
+.step-badge {
+    position: absolute;
+    top: -15px; left: 35px;
+    background: var(--btn-gradient);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+[dir="rtl"] .step-badge {
+    left: auto; right: 35px;
 }
 
 .rocket-icon {
-    font-size: 54px;
-    margin-bottom: 18px;
-    display: inline-block;
-    animation: floatIcon 2s ease-in-out infinite alternate;
-}
-@keyframes floatIcon {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
-}
-
-.main-content-hidden, .hidden { display: none !important; }
-
-/* ========================================================
-   💡 نظام التعليقات والتقييم والخصوصية بالفوتر
-   ======================================================== */
-.expert-tip-container {
-    background: rgba(31, 41, 55, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 25px;
+    font-size: 44px;
     text-align: center;
-}
-.tip-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 13.5px;
-    color: #f59e0b;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-#cvTipText { font-size: 13px; color: #e5e7eb; line-height: 1.5; }
-
-#starRatingSystem {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 14px 0;
-}
-#starRatingSystem span {
-    font-size: 28px;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.15);
-}
-#starRatingSystem span:hover, #starRatingSystem span.selected {
-    transform: scale(1.2);
-    color: #f59e0b;
+    margin-bottom: 15px;
 }
 
-.footer-copyright { display: flex; flex-direction: column; gap: 6px; }
-.footer-copyright small { color: #4b5563; font-weight: 600; }
-
-/* نافذة الإعدادات */
-.settings-section { margin-bottom: 22px; text-align: right; }
-.settings-section.flex-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(31, 41, 55, 0.35);
-    padding: 16px;
-    border-radius: 12px;
-}
-.settings-section.flex-row h4 { font-size: 14px; color: white; margin-bottom: 2px; }
-.settings-section.flex-row p { font-size: 11.5px; color: var(--text-muted); }
-
-/* أزرار المفاتيح الذكية (Switches) */
-.switch { 
+/* مفتاح التبديل الذكي (Toggle Switch CSS) */
+.switch {
     position: relative; 
     display: inline-block; 
     width: 48px; 
@@ -778,14 +296,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important;
     background-color: #374151; 
     border-radius: 24px; 
 }
-.slider::before { 
-    content: ""; 
-    position: absolute; 
-    height: 16px; width: 16px; 
-    left: 4px; bottom: 4px; 
-    background-color: white; 
-    border-radius: 50%; 
-}
+.slider::before { \n    content: ""; \n    position: absolute; \n    height: 16px; width: 16px; \n    left: 4px; bottom: 4px; \n    background-color: white; \n    border-radius: 50%; \n}
 input:checked + .slider { background-image: var(--btn-gradient); }
 input:checked + .slider::before { transform: translateX(24px); }
 
@@ -796,18 +307,12 @@ input:checked + .slider::before { transform: translateX(24px); }
    📱 متجاوب بالكامل وتوافقي فائق (Responsive Design)
    ======================================================== */
 @media (max-width: 1024px) {
-    body { padding: 120px 15px 30px 15px; }
-    .container { padding: 25px 20px; }
-    .app-layout { flex-direction: column; gap: 30px; }
-    #outputBox { min-height: 450px; }
+    body { padding: 40px 15px; }
+    .container { padding: 30px 20px; }
 }
 
-@media (max-width: 600px) {
-    .app-title { font-size: 1.85rem; }
-    .branding-sub { font-size: 0.95rem; }
-    .ats-indicators-grid { grid-template-columns: repeat(2, 1fr); }
-    section { padding: 22px 16px; }
-    .shared-view-banner { flex-direction: column; gap: 10px; padding: 12px; }
-    body { padding-top: 140px; }
-    .flex-wrap button { min-width: 100%; }
-}
+@media (max-width: 640px) {
+    .app-title { font-size: 24px !important; }
+    .app-subtitle { font-size: 13.5px !important; }
+    .container { padding: 25px 15px; border-radius: 16px; }
+   }
