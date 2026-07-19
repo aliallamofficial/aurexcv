@@ -14,7 +14,14 @@ const aurexTranslations = {
         sectionExp: "Professional Experience",
         sectionEdu: "Education & Credentials",
         metaTitle: "AurexCV | The World's First Unbeatable AI Career Platform & ATS Checker",
-        metaDesc: "Create an unbeatable, ATS-optimized resume for free with AurexCV v5.0. Powered by Qwen2.5-72B AI."
+        metaDesc: "Create an unbeatable, ATS-optimized resume for free with AurexCV v5.0. Powered by Qwen2.5-72B AI.",
+        // إضافات التحول الكامل للواجهة
+        labelName: "Full Name",
+        labelTitle: "Target Title",
+        labelEmail: "Email",
+        labelPhone: "Phone / Location",
+        btnGenerate: "⚡ GENERATE UNBEATABLE ATS CV NOW",
+        placeholderSkills: "AI Models, Web3 Architecture, Predictive Modeling..."
     },
     ar: {
         globalTagline: "أول منصة مهنية مدعومة بالذكاء الاصطناعي لا يمكن هزيمتها",
@@ -27,7 +34,14 @@ const aurexTranslations = {
         sectionExp: "الخبرات المهنية والعملية",
         sectionEdu: "المؤهلات الأكاديمية والشهادات",
         metaTitle: "AurexCV | أول منصة سيرة ذاتية وفحص ATS بالذكاء الاصطناعي لا تقهر عالمياً",
-        metaDesc: "أنشئ سيرة ذاتية لا تقهر ومتوافقة تماماً مع أنظمة الـ ATS مجاناً عبر منصة AurexCV v5.0 وبدعم من ذكاء Qwen2.5-72B."
+        metaDesc: "أنشئ سيرة ذاتية لا تقهر ومتوافقة تماماً مع أنظمة الـ ATS مجاناً عبر منصة AurexCV v5.0 وبدعم من ذكاء Qwen2.5-72B.",
+        // إضافات التحول الكامل للواجهة
+        labelName: "الاسم الكامل",
+        labelTitle: "المسمى الوظيفي المستهدف",
+        labelEmail: "البريد الإلكتروني",
+        labelPhone: "الهاتف / الموقع",
+        btnGenerate: "⚡ أنشئ سيرة ذاتية لا تقهر الآن",
+        placeholderSkills: "نماذج الذكاء الاصطناعي، هندسة الويب 3، النمذجة التنبؤية..."
     },
     fr: {
         globalTagline: "La première plateforme de carrière IA imbattable au monde",
@@ -40,7 +54,13 @@ const aurexTranslations = {
         sectionExp: "Expérience Professionnelle",
         sectionEdu: "Éducation & Diplômes",
         metaTitle: "AurexCV | La première plateforme de carrière IA imbattable au monde",
-        metaDesc: "Créez un CV optimisé pour les ATS gratuitement avec AurexCV v5.0."
+        metaDesc: "Créez un CV optimisé pour les ATS gratuitement avec AurexCV v5.0.",
+        labelName: "Nom Complet",
+        labelTitle: "Titre Visé",
+        labelEmail: "Email",
+        labelPhone: "Téléphone / Lieu",
+        btnGenerate: "⚡ GÉNÉRER UN CV ATS IMBATTABLE MAINTENANT",
+        placeholderSkills: "Modèles d'IA, Architecture Web3..."
     },
     de: {
         globalTagline: "Die weltweit erste unschlagbare KI-Karriereplattform",
@@ -53,7 +73,13 @@ const aurexTranslations = {
         sectionExp: "Berufserfahrung",
         sectionEdu: "Ausbildung & Zeugnisse",
         metaTitle: "AurexCV | Die weltweit erste unschlagbare KI-Karriereplattform",
-        metaDesc: "Erstellen Sie kostenlos einen ATS-optimierten Lebenslauf mit AurexCV v5.0."
+        metaDesc: "Erstellen Sie kostenlos einen ATS-optimierten Lebenslauf mit AurexCV v5.0.",
+        labelName: "Vollständiger Name",
+        labelTitle: "Zielposition",
+        labelEmail: "E-Mail",
+        labelPhone: "Telefon / Standort",
+        btnGenerate: "⚡ JETZT UNSCHLAGBAREN ATS-LEBENSLAUF ERSTELLEN",
+        placeholderSkills: "KI-Modelle, Web3-Architektur..."
     },
     es: {
         globalTagline: "La primera plataforma de carrera de IA imbatible del mundo",
@@ -66,7 +92,13 @@ const aurexTranslations = {
         sectionExp: "Experiencia Profesional",
         sectionEdu: "Educación & Credenciales",
         metaTitle: "AurexCV | La primera plataforma de carrera de IA imbatible del mundo",
-        metaDesc: "Cree un currículum optimizado para ATS de forma gratuita con AurexCV v5.0."
+        metaDesc: "Cree un currículum optimizado para ATS de forma gratuita con AurexCV v5.0.",
+        labelName: "Nombre Completo",
+        labelTitle: "Puesto Objetivo",
+        labelEmail: "Correo Electrónico",
+        labelPhone: "Teléfono / Ubicación",
+        btnGenerate: "⚡ GENERAR CV ATS IMBATIBLE AHORA",
+        placeholderSkills: "Modelos de IA, Arquitectura Web3..."
     },
     tr: {
         globalTagline: "Dünyanın İlk Yenilmez Yapay Zeka Kariyer Platformu",
@@ -79,7 +111,13 @@ const aurexTranslations = {
         sectionExp: "Profesyonel Deneyim",
         sectionEdu: "Eğitim & Sertifikalar",
         metaTitle: "AurexCV | Dünyanın İlk Yenilmez Yapay Zeka Kariyer Platformu",
-        metaDesc: "AurexCV v5.0 ile ücretsiz, ATS uyumlu bir özgeçmiş oluşturun."
+        metaDesc: "AurexCV v5.0 ile ücretsiz, ATS uyumlu bir özgeçmény oluşturun.",
+        labelName: "Adı Soyadı",
+        labelTitle: "Hedef Unvan",
+        labelEmail: "E-posta",
+        labelPhone: "Telefon / Konum",
+        btnGenerate: "⚡ ŞİMDİ YENİLMEZ ATS CV OLUŞTUR",
+        placeholderSkills: "Yapay Zeka Modelleri, Web3 Mimarisi..."
     },
     hi: {
         globalTagline: "दुनिया का पहला अजेय एआई करियर प्लेटफॉर्म",
@@ -92,7 +130,13 @@ const aurexTranslations = {
         sectionExp: "पेशेवर अनुभव",
         sectionEdu: "शिक्षा और प्रमाण पत्र",
         metaTitle: "AurexCV | दुनिया का पहला अजेय एआई करियर प्लेटफॉर्म",
-        metaDesc: "AurexCV v5.0 के साथ मुफ्त में ATS-अनुकूलित रेज्यूमे बनाएं।"
+        metaDesc: "AurexCV v5.0 के साथ मुफ्त में ATS-अनुकुलित रेज्यूमे बनाएं।",
+        labelName: "पूरा नाम",
+        labelTitle: "लक्षित पद",
+        labelEmail: "ईमेल",
+        labelPhone: "फोन / स्थान",
+        btnGenerate: "⚡ अभी अजेय ATS रेज्यूमे बनाएं",
+        placeholderSkills: "एआई मॉडल, वेब3 आर्किटेक्चर..."
     },
     zh: {
         globalTagline: "全球首个无敌AI职业平台",
@@ -105,7 +149,13 @@ const aurexTranslations = {
         sectionExp: "工作经历",
         sectionEdu: "教育背景与证书",
         metaTitle: "AurexCV | 全球首个无敌AI职业平台",
-        metaDesc: "使用 AurexCV v5.0 免费创建针对 ATS 优化的简历。"
+        metaDesc: "使用 AurexCV v5.0 免费创建针对 ATS 优化的简历。",
+        labelName: "全名",
+        labelTitle: "目标职称",
+        labelEmail: "电子邮箱",
+        labelPhone: "电话 / 地点",
+        btnGenerate: "⚡ 立即 click 生成无敌 ATS 简历",
+        placeholderSkills: "AI 模型, Web3 架构..."
     },
     ru: {
         globalTagline: "Первая в мире непобедимая карьерная платформа с ИИ",
@@ -118,7 +168,13 @@ const aurexTranslations = {
         sectionExp: "Профессиональный опыт",
         sectionEdu: "Образование и сертификаты",
         metaTitle: "AurexCV | Первая в мире непобедимая карьерная платформа с ИИ",
-        metaDesc: "Создайте резюме, оптимизированное для ATS, бесплатно с помощью AurexCV v5.0."
+        metaDesc: "Создайте резюме, оптимизированное для ATS, бесплатно с помощью AurexCV v5.0.",
+        labelName: "Полное Имя",
+        labelTitle: "Целевая Должность",
+        labelEmail: "Email",
+        labelPhone: "Телефон / Локация",
+        btnGenerate: "⚡ СОЗДАТЬ НЕПОБЕДИМОЕ ATS РЕЗЮМЕ",
+        placeholderSkills: "Модели ИИ, Архитектура Web3..."
     },
     it: {
         globalTagline: "La prima piattaforma di carriera AI imbattibile al mondo",
@@ -131,7 +187,13 @@ const aurexTranslations = {
         sectionExp: "Esperienza Professionale",
         sectionEdu: "Formazione e Titoli",
         metaTitle: "AurexCV | La prima piattaforma di carriera AI imbattibile al mondo",
-        metaDesc: "Crea un curriculum ottimizzato per ATS gratuitamente con AurexCV v5.0."
+        metaDesc: "Crea un curriculum ottimizzato per ATS gratuitamente con AurexCV v5.0.",
+        labelName: "Nome Completo",
+        labelTitle: "Ruolo Obiettivo",
+        labelEmail: "Email",
+        labelPhone: "Telefono / Posizione",
+        btnGenerate: "⚡ GENERA ORA UN CV ATS IMBATTIBILE",
+        placeholderSkills: "Modelli IA, Architettura Web3..."
     }
 };
 
@@ -139,7 +201,7 @@ function applyQuantumI18n(lang) {
     const htmlTag = document.getElementById("aurexHtml");
     if (!htmlTag) return;
 
-    // ضبط اتجاه الصفحة ديناميكياً لتوفير تجربة مستخدم كاملة السلاسة (يدعم العربية حالياً)
+    // ضبط اتجاه الصفحة ديناميكياً لتوفير تجربة مستخدم كاملة السلاسة
     if (lang === 'ar') {
         htmlTag.setAttribute("dir", "rtl");
         htmlTag.setAttribute("lang", "ar");
@@ -150,7 +212,7 @@ function applyQuantumI18n(lang) {
 
     const dict = aurexTranslations[lang] || aurexTranslations['en'];
 
-    // ترجمة النصوص الحية في الـ DOM
+    // 1️⃣ ترجمة النصوص الحية التي تحمل معرّف [data-i18n]
     document.querySelectorAll("[data-i18n]").forEach(element => {
         const key = element.getAttribute("data-i18n");
         if (dict[key]) {
@@ -158,7 +220,40 @@ function applyQuantumI18n(lang) {
         }
     });
 
-    // تحديث محددات الميتا لـ SEO جوجل فوري
+    // 2️⃣ تحويل حقول لوحة التحكم والمسميات بشكل كامل ولحظي
+    const labelMapping = {
+        'cvFullName': 'labelName',
+        'cvTargetTitle': 'labelTitle',
+        'cvEmail': 'labelEmail',
+        'cvPhone': 'labelPhone'
+    };
+
+    // تحديث عناوين الحقول (Labels) والحقول نفسها (Placeholders)
+    Object.keys(labelMapping).forEach(inputId => {
+        const inputEl = document.getElementById(inputId);
+        if (inputEl) {
+            const translationKey = labelMapping[inputId];
+            // ابحث عن الـ label التابع للحقل وقم بتحديثه
+            const labelEl = inputEl.previousElementSibling;
+            if (labelEl && labelEl.classList.contains('aurex-label') && dict[translationKey]) {
+                labelEl.textContent = dict[translationKey];
+            }
+        }
+    });
+
+    // تحديث نص زر التوليد الرئيسي
+    const masterBtn = document.getElementById("masterAiGenerationBtn");
+    if (masterBtn && dict.btnGenerate) {
+        masterBtn.querySelector('span').textContent = dict.btnGenerate;
+    }
+
+    // تحديث تلميح حقل المهارات
+    const skillsInput = document.getElementById("cvSkillsMatrix");
+    if (skillsInput && dict.placeholderSkills) {
+        skillsInput.setAttribute("placeholder", dict.placeholderSkills);
+    }
+
+    // 3️⃣ تحديث محددات الميتا لـ SEO جوجل فوري
     const metaTitleEl = document.getElementById("metaTitle");
     if (metaTitleEl) {
         metaTitleEl.textContent = dict.metaTitle || aurexTranslations['en'].metaTitle;
