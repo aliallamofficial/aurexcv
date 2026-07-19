@@ -22,12 +22,12 @@ const translations = {
         creativeDesc: "ألوان مشعة وتأثير نيون فريد للواجهة",
         notifBtn: "🔔 تفعيل إشعارات الفرص الحرة",
         shareBtn: "🔗 مشاركة المنصة السحرية",
-        menuCustomize: "🎨 تخصيص Mظهر والخطوط",
+        menuCustomize: "🎨 تخصيص المظهر والخطوط",
         menuLang: "🔄 لغة / Language / Langue",
         menuClear: "🗑️ مسح وإعادة تعيين الحقول",
         mainTitle: "إنشاء سيرة ذاتية احترافية بالذكاء الاصطناعي",
         brandSub: "Ali CV Builder Pro • المنصة الذكية المتكاملة",
-        appSubtitle: "صمّم مستندك المهني القادم بأحدث تقنيات الذكاء الاصطناعي التوليدي. قوالب ذكية مجهزة لـ عمل سي في احترافي جاهز للتعديل والطباعة فوراً، مخصصة بالكامل لتخطي خوارزميات فحص الـ ATS العالمية بنسبة 100% وبدون الحاجة لإنشاء حساب أو تسجيل بياناتك.",
+        appSubtitle: "صمّم مستندك المهني القانب بأحدث تقنيات الذكاء الاصطناعي التوليدي. قوالب ذكية مجهزة لـ عمل سي في احترافي جاهز للتعديل والطباعة فوراً، مخصصة بالكامل لتخطي خوارزميات فحص الـ ATS العالمية بنسبة 100% وبدون الحاجة لإنشاء حساب أو تسجيل بياناتك.",
         atsAdvisorTitle: "مستشار الـ ATS الذكي اللحظي:",
         indBasic: "👤 البيانات الأساسية",
         indSkills: "🛠️ مهارات كافية",
@@ -362,12 +362,17 @@ function displayRandomLiveTip() {
     }
 }
 
-// حساب الـ ATS Score التلقائي
+// حساب الـ ATS Score التلقائي المطور
 function calculateATSScore() {
-    const name = document.getElementById("name").value.trim();
-    const title = document.getElementById("jobTitle").value.trim();
-    const skills = document.getElementById("skills").value.trim();
-    const exp = document.getElementById("experience").value.trim();
+    const nameEl = document.getElementById("name") || document.getElementById("fullNameInput");
+    const titleEl = document.getElementById("jobTitle") || document.getElementById("targetJobInput");
+    const skillsEl = document.getElementById("skills") || document.getElementById("skillsInput");
+    const expEl = document.getElementById("experience") || document.getElementById("experienceInput");
+
+    const name = nameEl ? nameEl.value.trim() : "";
+    const title = titleEl ? titleEl.value.trim() : "";
+    const skills = skillsEl ? skillsEl.value.trim() : "";
+    const exp = expEl ? expEl.value.trim() : "";
 
     let score = 0;
     let basicValid = false;
@@ -376,7 +381,7 @@ function calculateATSScore() {
     let actionValid = false;
 
     if (name.length > 3 && title.length > 3) { score += 25; basicValid = true; }
-    if (skills.split(",").filter(s => s.trim().length > 1).length >= 4) { score += 25; skillsValid = true; }
+    if (skills.split(/[,،]/).filter(s => s.trim().length > 1).length >= 4) { score += 25; skillsValid = true; }
     if (/\d+/.test(exp) || /%/.test(exp)) { score += 25; numValid = true; }
     if (/(إدارة|تطوير|قيادة|تنفيذ|تصميم|ابتكار|تحليل|managed|developed|led|designed|implemented|analyzed|géré|développé|conçu|dirigé)/i.test(exp)) { score += 25; actionValid = true; }
 
@@ -414,7 +419,9 @@ function toggleIndicatorActive(id, isValid) {
 }
 
 function handleJobTitleSuggestions() {
-    const val = document.getElementById("jobTitle").value.toLowerCase();
+    const titleEl = document.getElementById("jobTitle") || document.getElementById("targetJobInput");
+    if(!titleEl) return;
+    const val = titleEl.value.toLowerCase();
     const box = document.getElementById("jobSuggestionsBox");
     const list = document.getElementById("suggestionsList");
 
@@ -438,10 +445,12 @@ function handleJobTitleSuggestions() {
             btn.type = "button";
             btn.innerText = `+ ${tip}`;
             btn.addEventListener("click", () => {
-                const expArea = document.getElementById("experience");
-                if(expArea.value.trim() === "...") expArea.value = "";
-                expArea.value = expArea.value.trim() + (expArea.value.trim() ? "\n" : "") + tip;
-                calculateATSScore();
+                const expArea = document.getElementById("experience") || document.getElementById("experienceInput");
+                if(expArea) {
+                    if(expArea.value.trim() === "...") expArea.value = "";
+                    expArea.value = expArea.value.trim() + (expArea.value.trim() ? "\n" : "") + tip;
+                    calculateATSScore();
+                }
             });
             list.appendChild(btn);
         });
@@ -473,7 +482,6 @@ function applyLanguage() {
     calculateATSScore();
     displayRandomLiveTip();
     
-    // تحديث لغة الترحيب داخل الشات عند تغيير اللغة
     const chatBody = document.getElementById("aiChatBody");
     if(chatBody && chatBody.children.length === 1) {
         if(currentLang === 'en') {
@@ -486,15 +494,23 @@ function applyLanguage() {
     }
 }
 
-// 🧠 استدعاء خادم الـ Cloudflare Worker لإجراء معالجة وتحسين الـ CV بالذكاء الاصطناعي
 function processAIOptimization(mode) {
-    const name = document.getElementById("name").value.trim();
-    const title = document.getElementById("jobTitle").value.trim();
-    const skills = document.getElementById("skills").value.trim();
-    const exp = document.getElementById("experience").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const email = document.getElementById("email").value.trim();
+    const nameEl = document.getElementById("name") || document.getElementById("fullNameInput");
+    const titleEl = document.getElementById("jobTitle") || document.getElementById("targetJobInput");
+    const skillsEl = document.getElementById("skills") || document.getElementById("skillsInput");
+    const expEl = document.getElementById("experience") || document.getElementById("experienceInput");
+    const phoneEl = document.getElementById("phone") || document.getElementById("phoneInput");
+    const emailEl = document.getElementById("email") || document.getElementById("emailInput");
     const out = document.getElementById("outputBox");
+
+    if(!nameEl || !titleEl || !out) return;
+
+    const name = nameEl.value.trim();
+    const title = titleEl.value.trim();
+    const skills = skillsEl ? skillsEl.value.trim() : "";
+    const exp = expEl ? expEl.value.trim() : "";
+    const phone = phoneEl ? phoneEl.value.trim() : "";
+    const email = emailEl ? emailEl.value.trim() : "";
 
     if(!name || !title) {
         let alertMsg = currentLang === 'ar' ? "❌ يرجى ملء الاسم الكامل والمسمى الوظيفي على الأقل لتوليد النص السحري." : (currentLang === 'en' ? "❌ Please fill in the full name and job title at least to generate the magical text." : "❌ Veuillez remplir au moins le nom et le titre du poste.");
@@ -504,7 +520,6 @@ function processAIOptimization(mode) {
 
     out.value = currentLang === 'ar' ? "⏳ جاري تشغيل خوارزميات الذكاء الاصطناعي السحابية وتحسين الكلمات الدلالية للـ ATS... يرجى الانتظار ثوانٍ..." : (currentLang === 'en' ? "⏳ Running cloud AI algorithms and optimizing ATS keywords... Please wait seconds..." : "⏳ Exécution des algorithmes d'IA et optimisation des mots-clés ATS...");
     
-    // إرسال البيانات إلى السيرفر بدلاً من التوليد المحلي البدائي
     fetch(SECURE_BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -520,7 +535,7 @@ function processAIOptimization(mode) {
     })
     .catch(err => {
         console.error(err);
-        out.value = currentLang === 'ar' ? "❌ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي. يرجى التحقق من مفتاح الـ API والـ Worker." : "❌ Error connecting to AI. Please verify the API key and Worker setup.";
+        out.value = currentLang === 'ar' ? "❌ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي. يرجى التحقق من استقرار الخادم السحابي المحمي." : "❌ Error connecting to AI. Please verify the Cloudflare Worker setup.";
     });
 }
 
@@ -537,34 +552,28 @@ function initAiSupportChat() {
 
     if (!floatBtn || !supportPage || !closeBtn || !sendBtn || !chatInput || !chatBody) return;
 
-    // فتح صفحة الدعم والمساعد الذكي
     floatBtn.addEventListener("click", () => {
         supportPage.style.display = "flex";
         supportPage.classList.remove("hidden");
     });
 
-    // إغلاق صفحة الدعم والعودة للتطبيق
     closeBtn.addEventListener("click", () => {
         supportPage.style.display = "none";
         supportPage.classList.add("hidden");
     });
 
-    // دالة إرسال واستقبال الرسائل من الـ Worker
     async function handleSendMessage() {
         const query = chatInput.value.trim();
         if (!query) return;
 
-        // 1. إضافة رسالة المستخدم في الواجهة
         appendChatMessage(query, "user");
         chatInput.value = "";
 
-        // 2. إضافة رسالة الانتظار (تأثير جاري التحميل)
         const loadingId = "loading_" + Date.now();
         const loadingText = currentLang === 'ar' ? "⏳ جاري التفكير..." : (currentLang === 'en' ? "⏳ Thinking..." : "⏳ Réflexion...");
         appendChatMessage(loadingText, "ai", loadingId);
 
         try {
-            // 3. إرسال السؤال إلى الـ Cloudflare Worker باستغلال وضع الـ "chat"
             const response = await fetch(SECURE_BACKEND_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -577,7 +586,6 @@ function initAiSupportChat() {
 
             const data = await response.json();
             
-            // إزالة رسالة الانتظار
             const loadingEl = document.getElementById(loadingId);
             if (loadingEl) loadingEl.remove();
 
@@ -596,12 +604,11 @@ function initAiSupportChat() {
         }
     }
 
-    // دالة بناء وحقن فقاعات المحادثة بشكل منسق واحترافي
+    // تنسيق ذكي لفقاعات الرسائل يدعم التنسيق البسيط
     function appendChatMessage(text, sender, id = null) {
         const msgDiv = document.createElement("div");
         if (id) msgDiv.id = id;
 
-        // تطبيق الاستايلات البرمجية مباشرة لتتوافق مع تصميمك الأنيق
         msgDiv.style.padding = "14px 18px";
         msgDiv.style.borderRadius = sender === "user" ? "16px 0px 16px 16px" : "0px 16px 16px 16px";
         msgDiv.style.maxWidth = "80%";
@@ -615,21 +622,22 @@ function initAiSupportChat() {
             msgDiv.style.background = "linear-gradient(135deg, #38bdf8, #0284c7)";
             msgDiv.style.color = "#0f172a";
             msgDiv.style.fontWeight = "600";
+            msgDiv.innerText = text;
         } else {
             msgDiv.style.alignSelf = "flex-start";
             msgDiv.style.background = "#1e293b";
             msgDiv.style.color = "#e2e8f0";
             msgDiv.style.border = "1px solid rgba(255,255,255,0.03)";
+            
+            // دعم معالجة الـ Markdown الخفيف للنجوم (bold)
+            let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            msgDiv.innerHTML = formattedText;
         }
 
-        msgDiv.innerText = text;
         chatBody.appendChild(msgDiv);
-        
-        // التمرير التلقائي لأسفل الشات دائماً مع كل رسالة جديدة
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    // تفعيل الإرسال عند الضغط على الزر أو زر Enter بكيبورد المستخدم
     sendBtn.addEventListener("click", handleSendMessage);
     chatInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") handleSendMessage();
@@ -649,15 +657,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     applyLanguage();
-    initAiSupportChat(); // تشغيل محرك الشات الذكي الفوري
+    initAiSupportChat();
 
-    const inputFields = ["name", "jobTitle", "skills", "experience"];
+    const inputFields = ["name", "fullNameInput", "jobTitle", "targetJobInput", "skills", "skillsInput", "experience", "experienceInput"];
     inputFields.forEach(id => {
         const el = document.getElementById(id);
         if(el) {
             el.addEventListener("input", () => {
                 calculateATSScore();
-                if(id === "jobTitle") handleJobTitleSuggestions();
+                if(id === "jobTitle" || id === "targetJobInput") handleJobTitleSuggestions();
             });
         }
     });
@@ -710,7 +718,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // دورة اللغات المحدثة: تنقل ديناميكي بين العربية، الإنجليزية، والفرنسية
     if(document.getElementById("toggleLanguageBtn")) {
         document.getElementById("toggleLanguageBtn").addEventListener("click", () => {
             if (currentLang === 'ar') currentLang = 'en';
@@ -759,7 +766,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const voiceBtn = document.getElementById("voiceDictationBtn");
+    const voiceBtn = document.getElementById("voiceDictationBtn") || document.getElementById("startVoiceRecognitionBtn");
     if(voiceBtn) {
         voiceBtn.addEventListener("click", () => {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -777,10 +784,12 @@ document.addEventListener("DOMContentLoaded", () => {
             rec.start();
             rec.onresult = (e) => {
                 const text = e.results[0][0].transcript;
-                const area = document.getElementById("experience");
-                if(area.value === "...") area.value = "";
-                area.value = area.value.trim() + " " + text;
-                calculateATSScore();
+                const area = document.getElementById("experience") || document.getElementById("experienceInput");
+                if(area) {
+                    if(area.value === "...") area.value = "";
+                    area.value = area.value.trim() + " " + text;
+                    calculateATSScore();
+                }
             };
             rec.onend = () => {
                 voiceBtn.innerText = currentLang === 'ar' ? "🎤 إملاء ذكي" : (currentLang === 'en' ? "🎤 Smart Dictation" : "🎤 Dictée");
@@ -798,9 +807,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkMatchBtn = document.getElementById("checkMatchBtn");
     if(checkMatchBtn) {
         checkMatchBtn.addEventListener("click", () => {
-            const jd = document.getElementById("jobDescription").value.trim().toLowerCase();
-            const exp = document.getElementById("experience").value.trim().toLowerCase();
+            const jdEl = document.getElementById("jobDescription");
+            const expEl = document.getElementById("experience") || document.getElementById("experienceInput");
             const resDiv = document.getElementById("matchResult");
+
+            if(!jdEl || !expEl || !resDiv) return;
+
+            const jd = jdEl.value.trim().toLowerCase();
+            const exp = expEl.value.trim().toLowerCase();
 
             if(!jd) {
                 let pasteErr = currentLang === 'ar' ? "يرجى لصق إعلان الوظيفة أولاً للتحليل." : "Please paste the job description first to analyze.";
@@ -831,7 +845,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 📥 معالجة وحقن النص في حاوية متوافقة تماماً لحل مشكلة الصفحة البيضاء الناتجة عن الـ raw textarea
     const downloadPdfBtn = document.getElementById("downloadPdfBtn");
     if(downloadPdfBtn) {
         downloadPdfBtn.addEventListener("click", () => {
@@ -931,7 +944,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 📣 تشغيل نظام تقييم وملاحظات المستخدمين وحفظها تشفيرياً محلياً للمتصفح 
+    // 📣 تشغيل نظام تقييم وملاحظات المستخدمين المطور
     let selectedRating = 5;
     const starSpans = document.querySelectorAll("#starRatingSystem span");
     starSpans.forEach(star => {
@@ -950,14 +963,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ========================================================
-    // ✉️ نظام المزامنة الفورية للتعليقات عبر تليجرام (محدث ومحمي)
+    // ✉️ إرسال التقييم بأمان كامل وحماية التوكن عبر الـ Worker
     // ========================================================
-    const _p1 = "8840422551";
-    const _p2 = "AAGa47_hdi5pIOgLCZsUH3kFAN8zDR5zByw";
-    const TELEGRAM_TOKEN = `${_p1}:${_p2}`;
-    
-    const TELEGRAM_CHAT_ID = "6876904568";
-
     const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
     if(submitFeedbackBtn) {
         submitFeedbackBtn.addEventListener("click", () => {
@@ -970,48 +977,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // 1. حفظ التعليق محلياً في المتصفح كنسخة احتياطية آمنة
+            // حفظ التعليق محلياً كنسخة احتياطية
             let localStoreFeedbacks = JSON.parse(localStorage.getItem("ali_cv_feedbacks") || "[]");
             localStoreFeedbacks.push({ rating: selectedRating, message: textFeedback, timestamp: Date.now() });
             localStorage.setItem("ali_cv_feedbacks", JSON.stringify(localStoreFeedbacks));
             
-            // 2. صياغة نص الرسالة الاحترافية لتصلك على تليجرام
-            const starsText = "⭐".repeat(selectedRating);
-            const messageText = `🚀 *تقييم جديد للمنصة* 🚀\n\n` +
-                                `🔹 *التقييم:* ${starsText} (${selectedRating}/5)\n` +
-                                `🔹 *التعليق:* ${textFeedback}\n` +
-                                `🔹 *اللغة المستخدمة:* ${currentLang.toUpperCase()}\n` +
-                                `📅 *التوقيت:* ${new Date().toLocaleString()}`;
-
-            // 3. إرسال البيانات فوراً إلى تليجرام بشكل خلفي (Async)
-            fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+            // إرسال التقييم إلى الـ Backend السحابي لحماية التوكن والـ Chat ID
+            fetch(SECURE_BACKEND_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: messageText,
-                    parse_mode: 'Markdown'
+                    mode: 'feedback',
+                    rating: selectedRating,
+                    feedback: textFeedback,
+                    lang: currentLang
                 })
             })
-            .then(response => {
-                if(response.ok) {
-                    let successFeed = currentLang === 'ar' ? "🎉 شكراً لك! تم إرسال تقييمك وملاحظاتك مباشرة للمطور بنجاح." : 
-                                     (currentLang === 'en' ? "🎉 Thank you! Your review has been sent directly to the developer." : 
-                                     "🎉 Merci ! Votre avis a été envoyé directement au développeur.");
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    let successFeed = currentLang === 'ar' ? "🎉 شكراً لك! تم إرسال تقييمك وملاحظاتك مباشرة للمطور بنجاح وبأمان كامل." : 
+                                     (currentLang === 'en' ? "🎉 Thank you! Your review has been securely sent to the developer." : 
+                                     "🎉 Merci ! Votre avis a été envoyé de manière sécurisée.");
                     alert(successFeed);
                 } else {
-                    let localSuccess = currentLang === 'ar' ? "🎉 تم حفظ تقييمك بأمان محلياً وسيتزامن فوراً عند استقرار الشبكة!" : 
-                                       (currentLang === 'en' ? "🎉 Feedback saved safely in your local session!" : 
-                                       "🎉 Commentaire enregistré localement avec succès !");
-                    alert(localSuccess);
+                    throw new Error("Failed server sync");
                 }
             })
             .catch(err => {
-                let localSuccess = currentLang === 'ar' ? "🎉 تم حفظ تقييمك بأمان محلياً!" : "🎉 Saved locally!";
+                let localSuccess = currentLang === 'ar' ? "🎉 تم حفظ تقييمك بأمان محلياً في المتصفح!" : "🎉 Saved safely inside your local sandbox session!";
                 alert(localSuccess);
             });
 
-            // تصفير صندوق النصوص بعد الإرسال
             document.getElementById("userFeedbackTextarea").value = "";
         });
     }
