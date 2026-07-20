@@ -2,13 +2,15 @@
 // 🛡️ AUREX CV QUANTUM SERVICE WORKER (OFFLINE INFRASTRUCTURE ENGINE)
 // ==========================================================================
 
-const CACHE_NAME = 'aurex-cv-v5-cache';
+// تم تحديث اسم الكاش لضمان تحميل الملفات الجديدة لدى المستخدمين فوراً
+const CACHE_NAME = 'aurex-cv-v5.2-cache';
 
 // استخدام المسارات النسبية المتوافقة تماماً مع وسم الـ <base href="/aurexcv/">
 const STATIC_ASSETS = [
   './',
   './index.html',
   './assets/style.css',
+  './assets/logo.svg', // 🚀 إضافة ملف الأيقونة الجديد في الكاش ليعمل بدون إنترنت
   './js/i18n.js',
   './js/ai.js',
   './js/core.js',
