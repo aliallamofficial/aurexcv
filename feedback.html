@@ -45,8 +45,8 @@
             submitBtn.disabled = true;
             btnText.textContent = "Transmitting via Secure Wire...";
 
-            // إرسال البيانات إلى المسار الخلفي المخفي في موقعك (Vercel API)
-            fetch('/api/send-feedback', {
+            // إرسال البيانات مباشرة إلى رابط Vercel الـ API الخارجي
+            fetch('https://aurexcv.vercel.app/api/send-feedback', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, message: message })
