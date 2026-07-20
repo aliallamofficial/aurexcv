@@ -653,3 +653,33 @@ body {
     color: var(--text-muted);
     margin-top: 15px;
 }
+
+/* ==========================================================================
+   ⚡ OPTIMIZED UPGRADES PACK (GLOW SYSTEMS & DYNAMIC RTL BLUEPRINTS)
+   ========================================================================== */
+
+/* 1. Core Matrix Glow Animation Engine */
+@keyframes glowPulse {
+    0% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.25); }
+    50% { text-shadow: 0 0 18px rgba(212, 175, 55, 0.6); }
+    100% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.25); }
+}
+
+.animate-glow {
+    animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+/* 2. Dynamic RTL Arabic Fine-Tuning */
+[dir="rtl"] body {
+    font-family: 'Cairo', 'Inter', sans-serif;
+}
+
+[dir="rtl"] .brand-name, 
+[dir="rtl"] .hero-title,
+[dir="rtl"] .dock-title,
+[dir="rtl"] .card-header-title,
+[dir="rtl"] .canvas-section-title,
+[dir="rtl"] h1, h2, h3, h4 {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+}
