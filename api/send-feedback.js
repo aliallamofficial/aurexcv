@@ -1,5 +1,16 @@
 // api/send-feedback.js
+
 export default async function handler(req, res) {
+    // 1. إعدادات CORS للسماح لرابط GitHub Pages بالاتصال بالسيرفر
+    res.setHeader('Access-Control-Allow-Origin', 'https://aliallamofficial.github.io');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // التعامل مع طلبات التمهيد الأمنية المسبقة (Preflight) من المتصفح
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     // السماح فقط بطلبات POST لحماية الدالة
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
