@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" id="aurexHtml">
 <head>
+    <base href="/aurexcv/">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
@@ -43,15 +45,16 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <meta name="theme-color" content="#0A0A0A">
-    <link rel="manifest" href="/aurexcv/manifest.json">
-    <link rel="icon" href="/aurexcv/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="/aurexcv/assets/icon-192.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=600;700&family=Inter:wght=300;400;500;600;700&family=Cairo:wght=400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/aurexcv/assets/style.css">
+    <link rel="stylesheet" href="assets/style.css">
 
     <script type="application/ld+json">
     {
@@ -323,17 +326,17 @@
                 <article class="blog-article-card">
                     <h3>How to Bypass Applicant Tracking Systems (ATS) in 2026</h3>
                     <p>Discover the exact algorithmic metrics used by corporate recruiters to pre-filter applications. Learn why heavy layouts, unreadable fonts, and complex tables can instantly tank your score...</p>
-                    <a href="/aurexcv/blog-ats.html" class="blog-read-link">Read Full Blueprint →</a>
+                    <a href="blog-ats.html" class="blog-read-link">Read Full Blueprint →</a>
                 </article>
                 <article class="blog-article-card">
                     <h3>The Psychology of Executive Resume Writing</h3>
                     <p>An in-depth analysis of how high-tier executives present structural business impacts. Moving away from passive descriptions to hyper-focused numerical metrics...</p>
-                    <a href="/aurexcv/blog-executive.html" class="blog-read-link">Read Full Blueprint →</a>
+                    <a href="blog-executive.html" class="blog-read-link">Read Full Blueprint →</a>
                 </article>
                 <article class="blog-article-card">
                     <h3>AI Resume Optimization vs. Artificial Plagiarism</h3>
                     <p>Understanding the thin line between optimizing your genuine career milestones for crawlers and generating generic hallucinated text. Introducing Aurex Ghost Mode...</p>
-                    <a href="/aurexcv/blog-ai.html" class="blog-read-link">Read Full Blueprint →</a>
+                    <a href="blog-ai.html" class="blog-read-link">Read Full Blueprint →</a>
                 </article>
             </div>
         </section>
@@ -341,16 +344,26 @@
 
     <footer class="aurex-footer">
         <div class="footer-links">
-            <a href="/aurexcv/about.html">About Platform</a>
-            <a href="/aurexcv/privacy.html">Privacy Encryption Matrix</a>
-            <a href="/aurexcv/feedback.html">Submit Feedback Wire</a>
+            <a href="about.html">About Platform</a>
+            <a href="privacy.html">Privacy Encryption Matrix</a>
+            <a href="feedback.html">Submit Feedback Wire</a>
         </div>
         <p class="footer-copyright">© 2026 AurexCV. Powered by Infinite Quantum Client Engine. 100% Sovereign and Free.</p>
     </footer>
 
-    <script src="/aurexcv/js/i18n.js"></script>
-    <script src="/aurexcv/js/ai.js"></script>
-    <script src="/aurexcv/js/core.js"></script>
-    <script src="/aurexcv/js/app.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[Aurex PWA] Quantum Core Service Worker registered scope:', reg.scope))
+                    .catch(err => console.error('[Aurex PWA] Service Worker linkage failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>
