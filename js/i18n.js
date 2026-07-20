@@ -228,7 +228,7 @@ const aurexTranslations = {
         placeholderPhone: "Estándar Global",
         
         panelExperience: "💼 Crónica de Experiencia Profesional",
-        btnAddNode: "+ Añadir",
+        btnAdNode: "+ Añadir",
         placeholderCompany: "Nombre de la Empresa",
         placeholderRole: "Título del Puesto",
         placeholderExpDesc: "Responsabilidades y logros clave (Métricas recomendadas para ATS)",
@@ -394,7 +394,7 @@ const aurexTranslations = {
         radarSubtitle: "वास्तविक समय एल्गोरिदमिक संकलन जाँच",
         templatesTitle: "🎨 प्रीमियम एक्जीक्यूटिव ATS टेम्पलेट्स",
         previewBadge: "ऑरेक्स लाइव रेंडर सिस्टम (ATS अनुपालन)",
-        previewDefaultText: "लाइव डिस्प्ले कैनवास को अपडेट करने के लिए बाईं ओर इनपुट भरें...",
+        previewDefaultText: "लाइev डिस्प्ले कैनवास को अपडेट करने के लिए बाईं ओर इनपुट भरें...",
         
         blogTitle: "📖 ऑरेक्स ग्लोबल करियर ज्ञानकोश",
         blogDesc: "आवेदक ट्रैकिंग सिस्टम अनुक्रमण के लिए ऑडिट किए गए विशेषज्ञ लेख।"
@@ -456,7 +456,7 @@ const aurexTranslations = {
         dockTitle: "🛡️ Suite Quantistiche Sovrane Aurex 14",
         atsEmptyState: "ℹ️ Compila i dettagli del profilo o esegui 'Aurex Job Match' per avviare la scansione.",
         sectionSkills: "Competenze Tecniche Core",
-        sectionExp: "Experienza Professionale",
+        sectionExp: "Esperienza Professionnelle",
         sectionEdu: "Formazione e Titoli",
         metaTitle: "AurexCV | La prima piattaforma di carriera AI imbattibile al mondo",
         metaDesc: "Crea un curriculum ottimizzato per ATS gratuitamente.",
@@ -479,7 +479,7 @@ const aurexTranslations = {
         placeholderExpDesc: "Responsabilità e risultati chiave (Metriche consigliate per il punteggio ATS)",
         
         panelSkills: "🛠️ Matrice delle Competenze",
-        labelSkillsNote: "Separa le competenze con le virgole",
+        labelSkillsNote: "Separa le competenze con le virgoles",
         placeholderSkills: "Modelli IA, Architettura Web3...",
         
         panelEducation: "🎓 Titoli Accademici e Certificazioni",
@@ -489,7 +489,7 @@ const aurexTranslations = {
         btnGenerate: "⚡ GENERA ORA UN CV ATS IMBATTIBILE",
         
         radarTitle: "🧠 Radar del Punteggio ATS Cognitivo Aurex",
-        radarSubtitle: "Verifica algoritmica di compilazione in tempo reale",
+        radarSubtitle: "Verifica algoritmica di compilazione in tempo real",
         templatesTitle: "🎨 Modelli ATS Executive Premium",
         previewBadge: "Sistema di Rendering Live Aurex (Conforme ATS)",
         previewDefaultText: "Compila i campi a sinistra per aggiornare l'anteprima...",
@@ -499,116 +499,140 @@ const aurexTranslations = {
     }
 };
 
-function applyQuantumI18n(lang) {
-    const htmlTag = document.getElementById("aurexHtml");
-    if (!htmlTag) return;
-
-    // ضبط اتجاه الصفحة ديناميكياً لتوفير تجربة مستخدم كاملة السلاسة وحل مشاكل الـ RTL
-    if (lang === 'ar') {
-        htmlTag.setAttribute("dir", "rtl");
-        htmlTag.setAttribute("lang", "ar");
-    } else {
-        htmlTag.setAttribute("dir", "ltr");
-        htmlTag.setAttribute("lang", lang);
-    }
-
-    const dict = aurexTranslations[lang] || aurexTranslations['en'];
-
-    // 1️⃣ ترجمة النصوص الحية التي تحمل معرّف [data-i18n] المدمجة في الـ HTML
-    document.querySelectorAll("[data-i18n]").forEach(element => {
-        const key = element.getAttribute("data-i18n");
-        if (dict[key]) {
-            element.textContent = dict[key];
-        }
-    });
-
-    // 2️⃣ تحويل حقول وأقسام لوحة التحكم بالكامل ولحظياً (مع فحص حماية في حالة عدم وجود العناصر بالصفحات الفرعية)
+// جعل الكائن متاحاً على النطاق العالمي لتسهيل استدعائه من الملفات الأخرى
+window.AurexI18n = {
+    currentLang: 'en',
+    translations: aurexTranslations,
     
-    // عناوين بطاقات لوحة التحكم
-    const cards = document.querySelectorAll('.aurex-card');
-    if (cards.length >= 4 && dict.panelIdentity) {
-        if (cards[0].querySelector('.card-header-title')) cards[0].querySelector('.card-header-title').textContent = dict.panelIdentity;
-        if (cards[1].querySelector('.card-header-title')) cards[1].querySelector('.card-header-title').textContent = dict.panelExperience;
-        if (cards[1].querySelector('.aurex-btn-secondary')) cards[1].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
-        if (cards[2].querySelector('.card-header-title')) cards[2].querySelector('.card-header-title').textContent = dict.panelSkills;
-        if (cards[2].querySelector('.aurex-label')) cards[2].querySelector('.aurex-label').textContent = dict.labelSkillsNote;
-        if (cards[3].querySelector('.card-header-title')) cards[3].querySelector('.card-header-title').textContent = dict.panelEducation;
-        if (cards[3].querySelector('.aurex-btn-secondary')) cards[3].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
-    }
+    switchLanguage(lang) {
+        this.currentLang = lang;
+        
+        // استهداف عنصر html الرئيسي لتبديل الخصائص
+        const htmlTag = document.documentElement;
+        
+        // ضبط اتجاه الصفحة ديناميكياً لتوفير تجربة مستخدم كاملة السلاسة وحل مشاكل الـ RTL للغة العربية
+        if (lang === 'ar') {
+            htmlTag.setAttribute("dir", "rtl");
+            htmlTag.setAttribute("lang", "ar");
+        } else {
+            htmlTag.setAttribute("dir", "ltr");
+            htmlTag.setAttribute("lang", lang);
+        }
 
-    // تسميات حقول الهوية (Labels) والتلميحات (Placeholders)
-    const setFieldData = (id, labelText, placeholderText) => {
-        const input = document.getElementById(id);
-        if (input) {
-            if (placeholderText) input.setAttribute("placeholder", placeholderText);
-            const label = input.previousElementSibling;
-            if (label && label.classList.contains('aurex-label') && labelText) {
-                label.textContent = labelText;
+        const dict = this.translations[lang] || this.translations['en'];
+
+        // 1️⃣ ترجمة النصوص الحية التي تحمل معرّف [data-i18n] المدمجة في الـ HTML
+        document.querySelectorAll("[data-i18n]").forEach(element => {
+            const key = element.getAttribute("data-i18n");
+            if (dict[key]) {
+                element.textContent = dict[key];
             }
+        });
+
+        // 2️⃣ تحويل حقول وأقسام لوحة التحكم بالكامل ولحظياً
+        const cards = document.querySelectorAll('.aurex-card');
+        if (cards.length >= 4 && dict.panelIdentity) {
+            if (cards[0].querySelector('.card-header-title')) cards[0].querySelector('.card-header-title').textContent = dict.panelIdentity;
+            if (cards[1].querySelector('.card-header-title')) cards[1].querySelector('.card-header-title').textContent = dict.panelExperience;
+            if (cards[1].querySelector('.aurex-btn-secondary')) cards[1].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
+            if (cards[2].querySelector('.card-header-title')) cards[2].querySelector('.card-header-title').textContent = dict.panelSkills;
+            if (cards[2].querySelector('.aurex-label')) cards[2].querySelector('.aurex-label').textContent = dict.labelSkillsNote;
+            if (cards[3].querySelector('.card-header-title')) cards[3].querySelector('.card-header-title').textContent = dict.panelEducation;
+            if (cards[3].querySelector('.aurex-btn-secondary')) cards[3].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
         }
-    };
 
-    setFieldData('cvFullName', dict.labelName, dict.placeholderName);
-    setFieldData('cvTargetTitle', dict.labelTitle, dict.placeholderTitle);
-    setFieldData('cvEmail', dict.labelEmail, dict.placeholderEmail);
-    setFieldData('cvPhone', dict.labelPhone, dict.placeholderPhone);
+        // تسميات حقول الهوية (Labels) والتلميحات (Placeholders)
+        const setFieldData = (id, labelText, placeholderText) => {
+            const input = document.getElementById(id);
+            if (input) {
+                if (placeholderText) input.setAttribute("placeholder", placeholderText);
+                const label = input.previousElementSibling;
+                if (label && label.classList.contains('aurex-label') && labelText) {
+                    label.textContent = labelText;
+                }
+            }
+        };
 
-    // تحديث تلميحات العقد الديناميكية (الخبرات والتعليم)
-    document.querySelectorAll('.exp-company').forEach(el => el.setAttribute("placeholder", dict.placeholderCompany));
-    document.querySelectorAll('.exp-role').forEach(el => el.setAttribute("placeholder", dict.placeholderRole));
-    document.querySelectorAll('.exp-desc').forEach(el => el.setAttribute("placeholder", dict.placeholderExpDesc));
-    document.querySelectorAll('.edu-school').forEach(el => el.setAttribute("placeholder", dict.placeholderSchool));
-    document.querySelectorAll('.edu-degree').forEach(el => el.setAttribute("placeholder", dict.placeholderDegree));
+        setFieldData('cvFullName', dict.labelName, dict.placeholderName);
+        setFieldData('cvTargetTitle', dict.labelTitle, dict.placeholderTitle);
+        setFieldData('cvEmail', dict.labelEmail, dict.placeholderEmail);
+        setFieldData('cvPhone', dict.labelPhone, dict.placeholderPhone);
 
-    // حقل المهارات
-    const skillsInput = document.getElementById("cvSkillsMatrix");
-    if (skillsInput && dict.placeholderSkills) {
-        skillsInput.setAttribute("placeholder", dict.placeholderSkills);
+        // تحديث تلميحات العقد الديناميكية (الخبرات والتعليم)
+        document.querySelectorAll('.exp-company').forEach(el => el.setAttribute("placeholder", dict.placeholderCompany));
+        document.querySelectorAll('.exp-role').forEach(el => el.setAttribute("placeholder", dict.placeholderRole));
+        document.querySelectorAll('.exp-desc').forEach(el => el.setAttribute("placeholder", dict.placeholderExpDesc));
+        document.querySelectorAll('.edu-school').forEach(el => el.setAttribute("placeholder", dict.placeholderSchool));
+        document.querySelectorAll('.edu-degree').forEach(el => el.setAttribute("placeholder", dict.placeholderDegree));
+
+        // حقل المهارات
+        const skillsInput = document.getElementById("cvSkillsMatrix");
+        if (skillsInput && dict.placeholderSkills) {
+            skillsInput.setAttribute("placeholder", dict.placeholderSkills);
+        }
+
+        // نص زر التوليد الرئيسي لـ AI
+        const masterBtn = document.getElementById("masterAiGenerationBtn");
+        if (masterBtn && dict.btnGenerate) {
+            const span = masterBtn.querySelector('span');
+            if (span) span.textContent = dict.btnGenerate;
+        }
+
+        // 3️⃣ ترجمة لوحة المعاينة والرادار اليمنى
+        const radarTitle = document.querySelector('.ats-radar-title');
+        if (radarTitle && dict.radarTitle) radarTitle.textContent = dict.radarTitle;
+        
+        const radarSubtitle = document.querySelector('.ats-radar-subtitle');
+        if (radarSubtitle && dict.radarSubtitle) radarSubtitle.textContent = dict.radarSubtitle;
+
+        const templatesTitle = document.querySelector('.preview-panel-column .aurex-card:nth-child(2) .card-header-title');
+        if (templatesTitle && dict.templatesTitle) templatesTitle.textContent = dict.templatesTitle;
+
+        const previewBadge = document.querySelector('.canvas-badge');
+        if (previewBadge && dict.previewBadge) previewBadge.textContent = dict.previewBadge;
+
+        const renderSkills = document.getElementById('renderSkills');
+        if (renderSkills && (renderSkills.textContent.includes('Fill inputs') || renderSkills.textContent.includes('امْلأ الحقول'))) {
+            renderSkills.textContent = dict.previewDefaultText;
+        }
+
+        // 4️⃣ ترجمة عنوان المدونة السفلية
+        const blogTitle = document.querySelector('.blog-matrix-title');
+        if (blogTitle && dict.blogTitle) blogTitle.textContent = dict.blogTitle;
+        
+        const blogDesc = document.querySelector('.blog-matrix-desc');
+        if (blogDesc && dict.blogDesc) blogDesc.textContent = dict.blogDesc;
+
+        // 5️⃣ تحديث محددات الميتا لـ SEO جوجل فوري
+        const metaTitleEl = document.getElementById("metaTitle");
+        if (metaTitleEl) {
+            metaTitleEl.textContent = dict.metaTitle;
+        }
+        
+        const metaDescEl = document.querySelector('meta[name="description"]');
+        if (metaDescEl) {
+            metaDescEl.setAttribute("content", dict.metaDesc);
+        }
+        
+        // حفظ اللغة المختارة في جلسة المستخدم المحلية
+        localStorage.setItem("aurex_preferred_lang", lang);
+
+        // إطلاق حدث داخلي لإعلام نظام التتبع (Tracker) بأن نصوص الواجهة تم تحديثها
+        window.dispatchEvent(new CustomEvent('aurexLanguageChanged', { detail: { lang } }));
+    },
+
+    // دالة استدعاء تلقائي عند إقلاع التطبيق
+    init() {
+        const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
+        this.switchLanguage(savedLang);
+        
+        // تحديث خيار القائمة المنسدلة إن وُجدت
+        const selector = document.getElementById('langSelector');
+        if (selector) selector.value = savedLang;
     }
+};
 
-    // نص زر التوليد الرئيسي لـ AI
-    const masterBtn = document.getElementById("masterAiGenerationBtn");
-    if (masterBtn && dict.btnGenerate) {
-        const span = masterBtn.querySelector('span');
-        if (span) span.textContent = dict.btnGenerate;
-    }
-
-    // 3️⃣ ترجمة لوحة المعاينة والرادار اليمنى
-    const radarTitle = document.querySelector('.ats-radar-title');
-    if (radarTitle && dict.radarTitle) radarTitle.textContent = dict.radarTitle;
-    
-    const radarSubtitle = document.querySelector('.ats-radar-subtitle');
-    if (radarSubtitle && dict.radarSubtitle) radarSubtitle.textContent = dict.radarSubtitle;
-
-    const templatesTitle = document.querySelector('.preview-panel-column .aurex-card:nth-child(2) .card-header-title');
-    if (templatesTitle && dict.templatesTitle) templatesTitle.textContent = dict.templatesTitle;
-
-    const previewBadge = document.querySelector('.canvas-badge');
-    if (previewBadge && dict.previewBadge) previewBadge.textContent = dict.previewBadge;
-
-    const renderSkills = document.getElementById('renderSkills');
-    if (renderSkills && (renderSkills.textContent.includes('Fill inputs') || renderSkills.textContent.includes('امْلأ الحقول'))) {
-        renderSkills.textContent = dict.previewDefaultText;
-    }
-
-    // 4️⃣ ترجمة عنوان المدونة السفلية
-    const blogTitle = document.querySelector('.blog-matrix-title');
-    if (blogTitle && dict.blogTitle) blogTitle.textContent = dict.blogTitle;
-    
-    const blogDesc = document.querySelector('.blog-matrix-desc');
-    if (blogDesc && dict.blogDesc) blogDesc.textContent = dict.blogDesc;
-
-    // 5️⃣ تحديث محددات الميتا لـ SEO جوجل فوري
-    const metaTitleEl = document.getElementById("metaTitle");
-    if (metaTitleEl) {
-        metaTitleEl.textContent = dict.metaTitle || aurexTranslations['en'].metaTitle;
-    }
-    
-    const metaDescEl = document.querySelector('meta[name="description"]');
-    if (metaDescEl) {
-        metaDescEl.setAttribute("content", dict.metaDesc || aurexTranslations['en'].metaDesc);
-    }
-    
-    // حفظ اللغة المختارة في جلسة المستخدم المحلية
-    localStorage.setItem("aurex_preferred_lang", lang);
-}
+// تشغيل نظام الترجمة فور إقلاع ملف الـ DOM
+document.addEventListener("DOMContentLoaded", () => {
+    window.AurexI18n.init();
+});
