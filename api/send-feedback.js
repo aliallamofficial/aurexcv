@@ -1,42 +1,47 @@
 // api/send-feedback.js
 
 export default async function handler(req, res) {
-    // 1. إعدادات CORS للسماح لرابط GitHub Pages بالاتصال بالسيرفر
     res.setHeader('Access-Control-Allow-Origin', 'https://aliallamofficial.github.io');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // التعامل مع طلبات التمهيد الأمنية المسبقة (Preflight) من المتصفح
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
 
-    // السماح فقط بطلبات POST لحماية الدالة
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        const { email, message } = req.body;
+        // استقبال البيانات المضافة حديثاً
+        const { email, rating, message, language, timestamp } = req.body;
 
-        // التحقق من وجود المدخلات لمنع الطلبات الفارغة
         if (!email || !message) {
             return res.status(400).json({ error: 'Missing email or message payload' });
         }
 
-        // استدعاء الأسرار من بيئة Vercel المحمية
         const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
         const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-        // فحص إضافي: للتأكد من أن السيرفر يرى المتغيرات البيئية
         if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
             console.error('Environment variables missing on Vercel!');
             return res.status(500).json({ error: 'Server configuration error' });
         }
 
-        const textMatrix = `🚀 *New AurexCV Feedback Wire* \n\n📧 *Email:* \`${email}\` \n📝 *Message:* \n${message}`;
+        // تحويل التقييم الرقمي إلى نجوم نصية في الرسالة
+        const stars = "⭐".repeat(parseInt(rating || 5));
 
-        // إرسال الطلب من الخادم إلى تليجرام (مخفي تماماً عن المتصفح)
+        // تنسيق الرسالة الاحترافية لتليجرام
+        const textMatrix = `🚀 *New AurexCV Feedback Wire* \n` +
+                           `----------------------------------\n` +
+                           `📧 *Email:* \`${email}\` \n` +
+                           `⭐ *Rating:* ${stars} (${rating}/5)\n` +
+                           `🌐 *Language:* \`${language || 'Unknown'}\` \n` +
+                           `📅 *Timestamp:* \`${timestamp || 'Unknown'}\` \n` +
+                           `----------------------------------\n` +
+                           `📝 *Message:* \n${message}`;
+
         const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -48,7 +53,6 @@ export default async function handler(req, res) {
         });
 
         if (telegramResponse.ok) {
-            // إرجاع استجابة ناجحة متوافقة تماماً مع شرط response.ok في الـ HTML
             return res.status(200).json({ success: true });
         } else {
             const errorData = await telegramResponse.json();
