@@ -15,6 +15,7 @@ const aurexTranslations = {
         sectionEdu: "Education & Credentials",
         metaTitle: "AurexCV | The World's First Unbeatable AI Career Platform & ATS Checker",
         metaDesc: "Create an unbeatable, ATS-optimized resume for free with AurexCV v5.0. Powered by Qwen2.5-72B AI.",
+        backToBlog: "← Back to Terminal Core",
         
         // لوحة التحكم والحقول
         panelIdentity: "👤 Personal Identity & Profile",
@@ -66,7 +67,9 @@ const aurexTranslations = {
         sectionEdu: "المؤهلات الأكاديمية والشهادات",
         metaTitle: "AurexCV | أول منصة سيرة ذاتية وفحص ATS بالذكاء الاصطناعي لا تقهر عالمياً",
         metaDesc: "أنشئ سيرة ذاتية لا تقهر ومتوافقة تماماً مع أنظمة الـ ATS مجاناً عبر منصة AurexCV v5.0 وبدعم من ذكاء Qwen2.5-72B.",
+        backToBlog: "← العودة للمركز الرئيسي",
         
+        // الهوية والملف الشخصي
         panelIdentity: "👤 الهوية والملف الشخصي",
         labelName: "الاسم الكامل",
         placeholderName: "الاسم بمعايير الشركات العالمية",
@@ -114,6 +117,7 @@ const aurexTranslations = {
         sectionEdu: "Éducation & Diplômes",
         metaTitle: "AurexCV | Plateforme de Carrière IA",
         metaDesc: "Créez un CV optimisé pour les ATS gratuitement.",
+        backToBlog: "← Retour au Centre de Contrôle",
         
         panelIdentity: "👤 Identité Personnelle & Profil",
         labelName: "Nom Complet",
@@ -154,7 +158,7 @@ const aurexTranslations = {
         globalTagline: "Die weltweit erste unschlagbare KI-Karriereplattform",
         unlimitedFree: "100% Kostenlos Pro Max",
         heroTitle: "Meistern Sie jedes Interview mit",
-        heroSubtitle: "Auf Perfektion ausgelegt. Von Google AI geprüft. Keine Einschränkungen, lokale Verschlüsselung.",
+        heroSubtitle: "Auf Perfektion ausgelegt. Von Google KI geprüft. Keine Einschränkungen, lokale Verschlüsselung.",
         dockTitle: "🛡️ Aurex 14 Souveräne Quantum-Suites",
         atsEmptyState: "ℹ️ Füllen Sie Ihr Profil aus oder starten Sie 'Aurex Job Match' für den Tiefenscan.",
         sectionSkills: "Technische Kernkompetenzen",
@@ -162,6 +166,7 @@ const aurexTranslations = {
         sectionEdu: "Ausbildung & Zeugnisse",
         metaTitle: "AurexCV | KI-Karriereplattform",
         metaDesc: "Erstellen Sie kostenlos einen ATS-optimierten Lebenslauf.",
+        backToBlog: "← Zurück zum Haupt-Dashboard",
         
         panelIdentity: "👤 Persönliche Identität & Profil",
         labelName: "Vollständiger Name",
@@ -210,6 +215,7 @@ const aurexTranslations = {
         sectionEdu: "Educación & Credenciales",
         metaTitle: "AurexCV | Plataforma de Carrera IA",
         metaDesc: "Cree un currículum optimizado para ATS de forma gratuita.",
+        backToBlog: "← Volver al Centro de Control",
         
         panelIdentity: "👤 Identidad Personal & Perfil",
         labelName: "Nombre Completo",
@@ -258,6 +264,7 @@ const aurexTranslations = {
         sectionEdu: "Eğitim & Sertifikalar",
         metaTitle: "AurexCV | Yapay Zeka Kariyer Platformu",
         metaDesc: "Ücretsiz, ATS uyumlu bir özgeçmiş oluşturun.",
+        backToBlog: "← Ana Panele Geri Dön",
         
         panelIdentity: "👤 Kişisel Kimlik & Profil",
         labelName: "Adı Soyadı",
@@ -306,6 +313,7 @@ const aurexTranslations = {
         sectionEdu: "教育背景与证书",
         metaTitle: "AurexCV | 全球首个无敌AI职业平台",
         metaDesc: "使用 AurexCV v5.0 免费创建针对 ATS 优化的简历。",
+        backToBlog: "← 返回主控制台",
         
         panelIdentity: "👤 个人身份与文件",
         labelName: "全名",
@@ -354,6 +362,7 @@ const aurexTranslations = {
         sectionEdu: "शिक्षा और प्रमाण पत्र",
         metaTitle: "AurexCV | दुनिया का पहला अजेय एआई करियर प्लेटफॉर्म",
         metaDesc: "무료 ATS रेज्यूमे मेकर।",
+        backToBlog: "← मुख्य डैशबोर्ड पर वापस जाएं",
         
         panelIdentity: "👤 व्यक्तिगत पहचान और प्रोफ़ाइल",
         labelName: "पूरा नाम",
@@ -366,13 +375,13 @@ const aurexTranslations = {
         placeholderPhone: "ग्लोबल स्टैंडर्ड",
         
         panelExperience: "💼 व्यावसायिक अनुभव इतिहास",
-        btnAddNode: "+ सेक्शन जोड़ें",
+        btnAddNode: "+ सेक्शन जोड़ें",
         placeholderCompany: "कंपनी / संस्थान का नाम",
         placeholderRole: "पद का नाम",
         placeholderExpDesc: "जिम्मेदारियां और मुख्य उपलब्धियां (ATS स्कोर के लिए संख्याएं और आंकड़े अत्यधिक अनुशंसित हैं)",
         
         panelSkills: "🛠️ कौशल मैट्रिक्स और मुख्य क्षमताएं",
-        labelSkillsNote: "कौशलों को अल्पविराम (,) से अलग करें",
+        labelSkillsNote: "कौशलों को अल्पвиराम (,) से अलग करें",
         placeholderSkills: "एआई मॉडल, वेब3 आर्किटेक्चर...",
         
         panelEducation: "🎓 शैक्षणिक योग्यता और प्रमाणपत्र",
@@ -387,7 +396,7 @@ const aurexTranslations = {
         previewBadge: "ऑरेक्स लाइव रेंडर सिस्टम (ATS अनुपालन)",
         previewDefaultText: "लाइव डिस्प्ले कैनवास को अपडेट करने के लिए बाईं ओर इनपुट भरें...",
         
-        blogTitle: "📖 ऑरेक्स ग्लोबल करियर नॉलेज बेस",
+        blogTitle: "📖 ऑरेक्स ग्लोबल करियर ज्ञानकोश",
         blogDesc: "आवेदक ट्रैकिंग सिस्टम अनुक्रमण के लिए ऑडिट किए गए विशेषज्ञ लेख।"
     },
     ru: {
@@ -402,6 +411,7 @@ const aurexTranslations = {
         sectionEdu: "Образование и сертификаты",
         metaTitle: "AurexCV | Первая в мире непобедимая карьерная платформа с ИИ",
         metaDesc: "Создайте резюме, оптимизированное для ATS, бесплатно.",
+        backToBlog: "← Вернуться в Главный Терминал",
         
         panelIdentity: "👤 Личные Данные и Профиль",
         labelName: "Полное Имя",
@@ -450,8 +460,9 @@ const aurexTranslations = {
         sectionEdu: "Formazione e Titoli",
         metaTitle: "AurexCV | La prima piattaforma di carriera AI imbattibile al mondo",
         metaDesc: "Crea un curriculum ottimizzato per ATS gratuitamente.",
+        backToBlog: "← Torna al Terminale Principale",
         
-        panelIdentity: "👤 Identità Personale & Profilo",
+        panelIdentity: "👤 Identità Personelle & Profilo",
         labelName: "Nome Completo",
         placeholderName: "Nome standard aziendale",
         labelTitle: "Ruolo Obiettivo",
@@ -478,7 +489,7 @@ const aurexTranslations = {
         btnGenerate: "⚡ GENERA ORA UN CV ATS IMBATTIBILE",
         
         radarTitle: "🧠 Radar del Punteggio ATS Cognitivo Aurex",
-        radarSubtitle: "Verifica algoritmica di compilazione in tempo real",
+        radarSubtitle: "Verifica algoritmica di compilazione in tempo reale",
         templatesTitle: "🎨 Modelli ATS Executive Premium",
         previewBadge: "Sistema di Rendering Live Aurex (Conforme ATS)",
         previewDefaultText: "Compila i campi a sinistra per aggiornare l'anteprima...",
@@ -511,18 +522,18 @@ function applyQuantumI18n(lang) {
         }
     });
 
-    // 2️⃣ تحويل حقول وأقسام لوحة التحكم بالكامل ولحظياً
+    // 2️⃣ تحويل حقول وأقسام لوحة التحكم بالكامل ولحظياً (مع فحص حماية في حالة عدم وجود العناصر بالصفحات الفرعية)
     
     // عناوين بطاقات لوحة التحكم
     const cards = document.querySelectorAll('.aurex-card');
     if (cards.length >= 4 && dict.panelIdentity) {
-        cards[0].querySelector('.card-header-title').textContent = dict.panelIdentity;
-        cards[1].querySelector('.card-header-title').textContent = dict.panelExperience;
-        cards[1].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
-        cards[2].querySelector('.card-header-title').textContent = dict.panelSkills;
-        cards[2].querySelector('.aurex-label').textContent = dict.labelSkillsNote;
-        cards[3].querySelector('.card-header-title').textContent = dict.panelEducation;
-        cards[3].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
+        if (cards[0].querySelector('.card-header-title')) cards[0].querySelector('.card-header-title').textContent = dict.panelIdentity;
+        if (cards[1].querySelector('.card-header-title')) cards[1].querySelector('.card-header-title').textContent = dict.panelExperience;
+        if (cards[1].querySelector('.aurex-btn-secondary')) cards[1].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
+        if (cards[2].querySelector('.card-header-title')) cards[2].querySelector('.card-header-title').textContent = dict.panelSkills;
+        if (cards[2].querySelector('.aurex-label')) cards[2].querySelector('.aurex-label').textContent = dict.labelSkillsNote;
+        if (cards[3].querySelector('.card-header-title')) cards[3].querySelector('.card-header-title').textContent = dict.panelEducation;
+        if (cards[3].querySelector('.aurex-btn-secondary')) cards[3].querySelector('.aurex-btn-secondary').textContent = dict.btnAddNode;
     }
 
     // تسميات حقول الهوية (Labels) والتلميحات (Placeholders)
@@ -576,7 +587,7 @@ function applyQuantumI18n(lang) {
     if (previewBadge && dict.previewBadge) previewBadge.textContent = dict.previewBadge;
 
     const renderSkills = document.getElementById('renderSkills');
-    if (renderSkills && renderSkills.textContent.includes('Fill inputs') || renderSkills && renderSkills.textContent.includes('امْلأ الحقول')) {
+    if (renderSkills && (renderSkills.textContent.includes('Fill inputs') || renderSkills.textContent.includes('امْلأ الحقول'))) {
         renderSkills.textContent = dict.previewDefaultText;
     }
 
