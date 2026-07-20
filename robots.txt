@@ -1,0 +1,24 @@
+Enter# ==========================================================================
+# 🛡️ AUREX CV QUANTUM ROBOTS INFRASTRUCTURE CONFIG
+# ==========================================================================
+
+User-agent: *
+Allow: /
+
+# منع ملفات النظام الحساسة فقط (مع السماح بالوصول الكامل للـ JS و الأصول لـ SEO مثالي)
+Disallow: /aurexcv/node_modules/
+Disallow: /aurexcv/.git/
+Disallow: /aurexcv/.github/
+
+# تكامل محرك البحث: الإشارة المباشرة إلى خريطة الموقع الكاملة
+Sitemap: https://aliallamofficial.github.io/aurexcv/sitemap.xml
+
+# حماية المحتوى والبيانات من روبوتات الذكاء الاصطناعي (منع التدريب والكشط)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
