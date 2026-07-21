@@ -3,74 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Psychology of Executive Resume Writing | AurexCV Blueprint</title>
-    <meta name="description" content="Discover how high-tier executives must structure business impacts, strategic governance, and numerical metrics to capture executive recruiters.">
-    <meta name="keywords" content="executive resume writing, C-level resume template, executive biography, board of directors CV, leadership metrics resume">
+    <title id="metaTitle">The Psychology of Executive Resume Writing | AurexCV Blueprint</title>
+    <meta name="description" id="metaDesc" content="Discover how high-tier executives must structure business impacts, strategic governance, and numerical metrics to capture executive recruiters.">
+    <meta name="keywords" content="executive resume template 2026, executive resume writing, C-level resume template, executive biography, board of directors CV, leadership metrics resume">
     
-    <link rel="icon" type="image/svg+xml" href="./assets/logo.svg">
-    
+    <link rel="icon" type="image/svg+xml" href="/aurexcv/assets/logo.svg">
     <link rel="stylesheet" href="/aurexcv/assets/style.css">
     
     <style>
-        body { background: #0A0A0C; color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
-        .blog-header { text-align: center; margin-bottom: 40px; padding-top: 60px; }
-        .blog-meta { font-size: 0.9rem; color: #a0a0a5; margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; }
-        .gold-gradient-text { background: linear-gradient(135deg, #FFF 30%, #D4AF37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.8rem; line-height: 1.2; margin-bottom: 20px; font-weight: 800; }
-        .article-body { font-size: 1.15rem; line-height: 1.9; color: #e4e4e7; }
-        .article-body p { margin-bottom: 25px; text-align: justify; }
-        .article-body h2 { color: #D4AF37; font-size: 1.8rem; margin-top: 50px; margin-bottom: 20px; border-left: 4px solid #D4AF37; padding-left: 15px; }
-        .highlight-box { background: rgba(212, 175, 55, 0.05); border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 25px; margin: 35px 0; }
-        .highlight-box h4 { color: #D4AF37; margin-top: 0; font-size: 1.2rem; }
-        .tag-cloud { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 50px; padding-top: 20px; border-top: 1px solid #222; }
-        .tag { background: #141416; border: 1px solid #222; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; color: #a0a0a5; }
+        body { 
+            background: var(--bg-dark-master); 
+            color: var(--text-pure); 
+            font-family: var(--font-global); 
+            margin: 0; 
+        }
+        .blog-header { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            padding-top: 60px; 
+        }
+        .blog-meta { 
+            font-size: 0.9rem; 
+            color: var(--text-muted); 
+            margin-bottom: 20px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+        }
+        .gold-gradient-text { 
+            background: linear-gradient(135deg, #FFF 30%, var(--gold-primary) 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            font-size: 2.8rem; 
+            line-height: 1.2; 
+            margin-bottom: 20px; 
+            font-weight: 800; 
+        }
+        .article-body { 
+            font-family: var(--font-global); /* ✅ التعديل الأول: ربط الـ Article Body بخط الطباعة الموحد للـ SEO والـ Crawlers */
+            font-size: 1.15rem; 
+            line-height: 1.9; 
+            color: var(--text-secondary); 
+        }
+        .article-body p { 
+            margin-bottom: 25px; 
+            text-align: justify; 
+        }
+        .article-body h2 { 
+            color: var(--gold-primary); 
+            font-size: 1.8rem; 
+            margin-top: 50px; 
+            margin-bottom: 20px; 
+            border-left: 4px solid var(--gold-primary); 
+            padding-left: 15px; 
+        }
+        /* ✅ التعديل الثاني: دعم كامل ومحترم للـ RTL عند قلب الصفحة للعربية */
+        [dir="rtl"] .article-body h2 {
+            border-left: none;
+            border-right: 4px solid var(--gold-primary);
+            padding-left: 0;
+            padding-right: 15px;
+        }
+        .highlight-box { 
+            background: rgba(212, 175, 55, 0.04); 
+            border: 1px dashed var(--card-border); 
+            border-radius: var(--radius-premium); 
+            padding: 25px; 
+            margin: 35px 0; 
+        }
+        .highlight-box h4 { 
+            color: var(--gold-primary); 
+            margin-top: 0; 
+            font-size: 1.2rem; 
+        }
+        .tag-cloud { 
+            display: flex; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+            margin-top: 50px; 
+            padding-top: 20px; 
+            border-top: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+        .tag { 
+            background: var(--card-surface); 
+            border: 1px solid var(--card-border); 
+            padding: 5px 12px; 
+            border-radius: 15px; 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+        }
         
-        /* 🛡️ تأثير حركي احترافي لزر العودة */
-        .back-to-blog { display: inline-flex; align-items: center; gap: 8px; color: #D4AF37; text-decoration: none; font-weight: 600; margin-bottom: 40px; transition: 0.3s ease; }
-        .back-to-blog:hover { transform: translateX(-6px); color: #fff; }
+        .back-to-blog { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            color: var(--gold-primary); 
+            text-decoration: none; 
+            font-weight: 600; 
+            margin-bottom: 40px; 
+            transition: var(--transition-smooth); 
+        }
+        .back-to-blog:hover { 
+            transform: translateX(-6px); 
+            color: var(--text-pure); 
+        }
+        [dir="rtl"] .back-to-blog:hover {
+            transform: translateX(6px);
+        }
+
+        .blog-read-link {
+            font-size: 14px;
+            color: var(--gold-primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            transition: var(--transition-smooth);
+        }
+        .blog-read-link:hover {
+            text-shadow: 0 0 8px var(--gold-glow);
+            color: #fff;
+        }
         
-        @media (max-width: 768px) { .gold-gradient-text { font-size: 2rem; } .article-body { font-size: 1.05rem; } }
+        @media (max-width: 768px) { 
+            .gold-gradient-text { font-size: 2rem; } 
+            .article-body { font-size: 1.05rem; } 
+        }
     </style>
 
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="schemaArticle">
     {
       "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "The Psychology of Executive Resume Writing",
+      "@type": "TechArticle",
+      "headline": "The Psychology of Executive Resume Writing: Validating C-Suite Authority",
       "description": "An in-depth behavioral analysis of how executive recruiters review C-suite CVs and the metrics needed to validate strategic impact.",
       "image": "https://aliallamofficial.github.io/aurexcv/assets/executive-banner.jpg", 
-      "author": { "@type": "Organization", "name": "AurexCV Development Core" },
+      "author": { 
+        "@type": "Organization", 
+        "name": "AurexCV Development Core" 
+      },
       "publisher": {
         "@type": "Organization",
         "name": "AurexCV",
-        "logo": { "@type": "ImageObject", "url": "https://aliallamofficial.github.io/aurexcv/assets/logo.svg" }
+        "logo": { 
+          "@type": "ImageObject", 
+          "url": "https://aliallamofficial.github.io/aurexcv/assets/logo.svg" 
+        }
       },
       "datePublished": "2026-07-20",
+      "dateModified": "2026-07-20", 
       "mainEntityOfPage": "https://aliallamofficial.github.io/aurexcv/blog-executive.html"
     }
     </script>
 </head>
 <body>
     <main class="aurex-app-container" style="padding-bottom: 100px;">
-        <article style="max-width:850px; margin:0 auto; padding: 0 20px;">
+        <article style="max-width:850px; margin:0 auto; padding: 0 20px;" itemscope itemtype="https://schema.org/TechArticle">
+            
             <header class="blog-header">
                 <a href="/aurexcv/#blog" class="back-to-blog" data-i18n="backToBlog">← Back to Terminal Core</a>
-                <div class="blog-meta"><span>📅 July 20, 2026</span><span>⏱️ 9 Min Read</span><span>📂 Executive Strategy</span></div>
-                <h1 class="gold-gradient-text">The Psychology of Executive Resume Writing: Validating C-Suite Authority</h1>
-            </header>
-            <section class="article-body">
-                <p>At the executive level, recruitment undergoes a fundamental behavioral shift. A C-suite or Board-level CV is judged purely on <strong>risk mitigation, asset governance, and strategic monetization</strong>. If your profile reads like a dense list of operational duties, it signals tactical dependency rather than sovereign leadership authority.</p>
-                <h2>1. Shifting from Tactical Execution to Strategic Stewardship</h2>
-                <p>Executive placement boards seek to answer one critical psychological question: <em>What happens to the equity value of the enterprise when this individual takes control?</em> Every single phrase must tie an action directly to a corporate macro-metric, such as EBITDA optimization, capitalization enhancement, or margin expansion.</p>
-                <div class="highlight-box">
-                    <h4>📊 The Rule of Three: Scaling Your Executive Metrics</h4>
-                    <p>To establish immediate authority, every bullet point under your executive experience must quantify three distinct vectors: The <strong>Financial Scale</strong> of the asset governed, the <strong>Operational Velocity</strong> of the change, and the <strong>Human Capital Ecosystem</strong> mobilized.</p>
+                
+                <div class="blog-meta">
+                    <span data-i18n="blogDateExec">📅 July 20, 2026</span>
+                    <span data-i18n="blogReadTimeExec">⏱️ 9 Min Read</span>
+                    <span data-i18n="blogCategoryExec">📂 Executive Strategy</span>
                 </div>
-                <h2>2. The Architecture of a High-Impact Sovereign Executive Summary</h2>
-                <p>The top 25% of your document is the digital real estate that dictates your path. Standard summaries are filled with empty corporate jargon. Instead, your sovereign summary must act as a precise executive brief outlining your target authority domain and your cumulative P&L responsibility scope.</p>
-                <div class="tag-cloud"><span class="tag">#ExecutiveLeadership</span><span class="tag">#CSuiteStrategy</span><span class="tag">#ResumePsychology</span></div>
+                
+                <h1 class="gold-gradient-text" itemprop="headline" data-i18n="blogExecTitle">
+                    The Psychology of Executive Resume Writing: Validating C-Suite Authority
+                </h1>
+            </header>
+            
+            <section class="article-body" itemprop="articleBody">
+                <p data-i18n="blogExecP1">
+                    At the executive level, recruitment undergoes a fundamental behavioral shift. A C-suite or Board-level CV is judged purely on risk mitigation, asset governance, and strategic monetization. If your profile reads like a dense list of operational duties, it signals tactical dependency rather than sovereign leadership authority.
+                </p>
+                
+                <h2 data-i18n="blogExecH2_1">1. Shifting from Tactical Execution to Strategic Stewardship</h2>
+                <p data-i18n="blogExecP2">
+                    Executive placement boards seek to answer one critical psychological question: What happens to the equity value of the enterprise when this individual takes control? Every single phrase must tie an action directly to a corporate macro-metric, such as EBITDA optimization, capitalization enhancement, or margin expansion.
+                </p>
+                
+                <div class="highlight-box">
+                    <h4 data-i18n="blogExecBoxTitle">📊 The Rule of Three: Scaling Your Executive Metrics</h4>
+                    <p data-i18n="blogExecBoxDesc">
+                        To establish immediate authority, every bullet point under your executive experience must quantify three distinct vectors: The Financial Scale of the asset governed, the Operational Velocity of the change, and the Human Capital Ecosystem mobilized.
+                    </p>
+                </div>
+                
+                <h2 data-i18n="blogExecH2_2">2. The Architecture of a High-Impact Sovereign Executive Summary</h2>
+                <p data-i18n="blogExecP3">
+                    The top 25% of your document is the digital real estate that dictates your path. Standard summaries are filled with empty corporate jargon. Instead, your sovereign summary must act as a precise executive brief outlining your target authority domain and your cumulative P&L responsibility scope.
+                </p>
+
+                <div class="highlight-box" style="margin-top:50px;">
+                    <h4 data-i18n="nextGuideAts">📚 Next Architectural Phase: ATS Algorithmic Domination</h4>
+                    <p data-i18n="nextGuideDescAts">Learn the exact technical blueprints to master underlying parser layers and achieve absolute screening immunity.</p>
+                    <a href="/aurexcv/blog-ats.html" class="blog-read-link" data-i18n="readAtsBtn">Read ATS Blueprint →</a>
+                </div>
+                
+                <div class="tag-cloud">
+                    <span class="tag">#ExecutiveLeadership</span>
+                    <span class="tag">#CSuiteStrategy</span>
+                    <span class="tag">#ResumePsychology</span>
+                </div>
             </section>
+            
         </article>
     </main>
+
     <script src="/aurexcv/js/i18n.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
+            const htmlEl = document.getElementById("aurexHtml");
+            if(htmlEl) {
+                htmlEl.setAttribute("lang", savedLang);
+                htmlEl.setAttribute("dir", savedLang === 'ar' ? 'rtl' : 'ltr');
+            }
+        });
+    </script>
 </body>
 </html>
