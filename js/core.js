@@ -34,7 +34,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     setupRealtimeSyncInputEngine();
+    setupTemplateSwitcherMatrix(); // تشغيل محرك تبديل القوالب الفاخرة
 });
+
+// ==========================================================================
+// 🎨 NEW: AUREX TEMPLATE SWITCHER MATRIX (إصلاح عدم استجابة القوالب)
+// ==========================================================================
+function setupTemplateSwitcherMatrix() {
+    // استهداف كافة الأزرار التي تعبر عن القوالب داخل حاوية "قوالب ATS تنفيذية فاخرة"
+    // يدعم الكلاسات المباشرة أو التحديد الهيكلي من الـ DOM
+    const templateButtons = document.querySelectorAll(".preview-panel-column .aurex-card button, .template-btn");
+    const previewCanvas = document.getElementById("cvPreviewCanvas"); // تأكد أن هذا الـ ID هو الحاوية الرئيسية للمعاينة في الـ HTML
+
+    templateButtons.forEach(button => {
+        // فلترة الأزرار للتأكد من أنها أزرار اختيار قوالب وليست أزرار التصدير (PDF/DOCX)
+        if (button.textContent.includes("Export") || button.id === "exportPdfBtn" || button.id === "exportDocxBtn") return;
+
+        button.addEventListener("click", () => {
+            // إزالة حالة النشاط البصري من كافة أزرار القوالب وإضافتها للزر الحالي
+            templateButtons.forEach(btn => btn.classList.remove("active-template"));
+            button.classList.add("active-template");
+
+            // استخراج اسم القالب برمجياً وتحويله لكلاس قياسي (e.g., "US Federal (Standard)" -> "us-federal-standard")
+            const templateClass = button.textContent.trim().toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+
+            if (previewCanvas) {
+                // تصفية الكلاسات القديمة للمعاينة وإعادة تعيين الكلاس الرئيسي
+                previewCanvas.className = "preview-canvas-render";
+                
+                // حقن كلاس التصميم الجديد ليقوم الـ CSS بتغيير الألوان، الخطوط، وتوزيع الـ ATS فوراً
+                previewCanvas.classList.add(`template-${templateClass}`);
+                
+                console.log(`🎨 Aurex UI: Active Template Switched to [template-${templateClass}]`);
+            }
+        });
+    });
+}
 
 // مصفوفة إدارة وتبديل الـ 14 ميزة الثورية الحصرية
 function switchSuite(suiteName) {
