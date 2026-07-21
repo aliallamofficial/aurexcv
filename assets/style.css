@@ -1,5 +1,5 @@
 /* ==========================================================================
-   🌌 AUREX CV QUANTUM DESIGN SYSTEM - PRIMARY CSS SHEET
+   🌌 AUREX CV QUANTUM DESIGN SYSTEM - PRIMARY CSS SHEET (PRODUCTION v5.7)
    ========================================================================== */
 
 /* 🎨 GLOBAL MATRIX SYSTEM VARIABLES */
@@ -11,11 +11,12 @@
     --gold-glow: rgba(212, 175, 55, 0.35);
     --gold-gradient: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA7C11 100%);
     --text-pure: #F5F5F7;
-    --text-secondary: #9A9A1A;
+    --text-secondary: #A0A0A0;
     --text-muted: #8E8E93;
     --radius-premium: 14px;
     --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --font-global: 'Inter', 'Cairo', sans-serif;
+    --font-print: 'Arial', 'Tajawal', sans-serif; /* ✅ تم إضافة خطوط الطباعة لمنع بكسلة العربي */
 }
 
 /* 🧱 ARCHITECTURAL RESET */
@@ -423,6 +424,8 @@ body {
     stroke-width: 6;
     stroke-linecap: round;
     transition: stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 226;  /* ✅ محيط الدائرة المحسوب بدقة */
+    stroke-dashoffset: 226; /* ✅ نقطة البداية الصفرية القابلة للتحكم بالـ JS */
 }
 
 .score-digits-overlay {
@@ -682,4 +685,53 @@ body {
 [dir="rtl"] h1, h2, h3, h4 {
     font-family: 'Cairo', sans-serif;
     font-weight: 700;
+}
+
+/* ⚡ 3. MOBILE RESPONSIVE LAYOUT MATRIX OVERRIDES */
+@media (max-width: 768px) {
+    .blog-posts-grid, .blog-article-card {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+}
+
+/* ♿ 4. LIGHTHOUSE ACCESSIBILITY & REDUCED MOTION SAFE HAVEN */
+@media (prefers-reduced-motion: reduce) {
+    .animate-glow, .aurex-btn-gold:hover, .progress-circle {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* 🖨️ 5. PRINT / PDF MODE CRITICAL MATRIX (Pure Text Optimization for ATS Systems) */
+@media print {
+    body, .cv-render-paper {
+        font-family: var(--font-print) !important; /* ✅ تم دمج المتغير لضمان قراءة خوارزميات الـ ATS للنصوص دون مشاكل */
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    .aurex-header, 
+    .unbeatable-features-dock, 
+    .control-panel-column, 
+    .canvas-action-bar, 
+    .ats-radar-card, 
+    .template-selector-grid, 
+    .aurex-seo-blog-matrix, 
+    .aurex-footer,
+    .hero-intro-section {
+        display: none !important;
+    }
+    
+    .workspace-layout-grid {
+        display: block !important;
+        margin-top: 0 !important;
+    }
+    
+    .preview-panel-column {
+        width: 100% !important;
+    }
 }
