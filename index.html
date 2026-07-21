@@ -139,7 +139,7 @@
             
             <div class="header-controls">
                 <div class="lang-selector-wrapper">
-                    <select id="globalLangSelector" class="aurex-select-minimal">
+                    <select id="langSelector" class="aurex-select-minimal">
                         <option value="en">English</option>
                         <option value="ar">العربية</option>
                         <option value="fr">Français</option>
@@ -342,19 +342,19 @@
             <p class="blog-matrix-desc">Expert articles audited for structural keyword rich rankings and direct applicant tracking system indexing.</p>
             <div class="blog-posts-grid">
                 <article class="blog-article-card">
-                    <h3>How to Bypass Applicant Tracking Systems (ATS) in 2026</h3>
-                    <p>Discover the exact algorithmic metrics used by corporate recruiters to pre-filter applications. Learn why heavy layouts, unreadable fonts, and complex tables can instantly tank your score...</p>
-                    <a href="blog-ats.html" class="blog-read-link">Read Full Blueprint →</a>
+                    <h3 data-i18n="blogAtsCardTitle">How to Bypass Applicant Tracking Systems (ATS) in 2026</h3>
+                    <p data-i18n="blogAtsCardDesc">Discover the exact algorithmic metrics used by corporate recruiters to pre-filter applications. Learn why heavy layouts, unreadable fonts, and complex tables can instantly tank your score...</p>
+                    <a href="blog-ats.html" class="blog-read-link" data-i18n="readMoreBtn">Read Full Blueprint →</a>
                 </article>
                 <article class="blog-article-card">
-                    <h3>The Psychology of Executive Resume Writing</h3>
-                    <p>An in-depth analysis of how high-tier executives present structural business impacts. Moving away from passive descriptions to hyper-focused numerical metrics...</p>
-                    <a href="blog-executive.html" class="blog-read-link">Read Full Blueprint →</a>
+                    <h3 data-i18n="blogExecCardTitle">The Psychology of Executive Resume Writing</h3>
+                    <p data-i18n="blogExecCardDesc">An in-depth analysis of how high-tier executives present structural business impacts. Moving away from passive descriptions to hyper-focused numerical metrics...</p>
+                    <a href="blog-executive.html" class="blog-read-link" data-i18n="readMoreBtn">Read Full Blueprint →</a>
                 </article>
                 <article class="blog-article-card">
-                    <h3>AI Resume Optimization vs. Artificial Plagiarism</h3>
-                    <p>Understanding the thin line between optimizing your genuine career milestones for crawlers and generating generic hallucinated text. Introducing Aurex Ghost Mode...</p>
-                    <a href="blog-ai.html" class="blog-read-link">Read Full Blueprint →</a>
+                    <h3 data-i18n="blogAiCardTitle">AI Resume Optimization vs. Artificial Plagiarism</h3>
+                    <p data-i18n="blogAiCardDesc">Understanding the thin line between optimizing your genuine career milestones for crawlers and generating generic hallucinated text. Introducing Aurex Ghost Mode...</p>
+                    <a href="blog-ai.html" class="blog-read-link" data-i18n="readMoreBtn">Read Full Blueprint →</a>
                 </article>
             </div>
         </section>
@@ -370,6 +370,17 @@
     </footer>
 
     <script src="/aurexcv/js/i18n.js"></script>
+    
+    <script>
+        document.getElementById('langSelector').addEventListener('change', function() {
+            if (window.AurexI18n && typeof window.AurexI18n.switchLanguage === 'function') {
+                window.AurexI18n.switchLanguage(this.value);
+            }
+            const newUrl = window.location.pathname + '?lang=' + this.value;
+            window.history.pushState({path:newUrl}, '', newUrl);
+        });
+    </script>
+
     <script src="/aurexcv/js/ai.js"></script>
     <script src="/aurexcv/js/core.js"></script>
     <script src="/aurexcv/js/app.js"></script>
