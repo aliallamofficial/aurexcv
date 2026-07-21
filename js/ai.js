@@ -1,59 +1,36 @@
 // ==========================================================================
-// 🧠 AUREX CV ADVANCED 3-TIER HYBRID AI INFRASTRUCTURE ENGINE v5.1
+// 🧠 AUREX CV ADVANCED 3-TIER HYBRID AI INFRASTRUCTURE ENGINE v5.2
 // ==========================================================================
 
-// الطبقة 1: Qwen - الأقوى والأضخم لعمليات التحليل المعقدة والعميقة
-const ENDPOINT_TIER1 = "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct";
-// الطبقة 2: Mistral - الاحتياطي السريع والمتجاوب لتقليل الضغط وضمان الاستمرارية
-const ENDPOINT_TIER2 = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3";
-
-// مصفوفة التوكنات العامة المشفرة ديناميكياً لتخطي قيود الطلبات وحمايتها من الزحف والتفتيش المباشر
-const TOKEN_POOL = [
-    "hf_" + btoa("AurexCV").slice(0, 5) + "AbCdeFgH", 
-    "hf_" + btoa("Quantum").slice(0, 5) + "XyZ12AbC"
-];
-let tokenIndex = 0;
-
-// محرك جلب البيانات الموحد للطبقات السحابية (Tier 1 & Tier 2)
-async function queryTier(url, token, system, user) {
-    const res = await fetch(url, {
+// محرك جلب البيانات الموحد الذي يتصل بالـ Serverless Proxy الآمن على Vercel
+async function queryQuantumProxy(system, user) {
+    // الاتصال بالـ Backend المخصص لحماية التوكنات من المتصفح
+    const res = await fetch("/api/quantum-ai", {
         method: "POST",
         headers: { 
-            "Authorization": `Bearer ${token}`, 
             "Content-Type": "application/json" 
         },
-        body: JSON.stringify({
-            inputs: `<|im_start|>system\n${system}<|im_end|>\n<|im_start|>user\n${user}<|im_end|>\n<|im_start|>assistant\n`,
-            parameters: { max_new_tokens: 800, temperature: 0.4 }
-        })
+        body: JSON.stringify({ systemPrompt: system, userPrompt: user })
     });
-    if (!res.ok) throw new Error("Tier Execution Failed");
+    
+    if (!res.ok) throw new Error("Vercel Tier Cloud Execution Failed");
     const data = await res.json();
-    return sanitizeAiOutput(data[0]?.generated_text || data.generated_text || "", system, user);
+    
+    // تنظيف المخرجات وحذف أي بصمات خوارزمية زائدة
+    return sanitizeAiOutput(data.result || "", system, user);
 }
 
-// الموزع الذكي ثلاثي الطبقات الحقيقي (3-Layer Hybrid AI Architecture)
+// الموزع الذكي ثلاثي الطبقات الحقيقي عبر الـ Backend الآمن (3-Layer Hybrid AI Architecture)
 async function queryAurexQuantumAI(systemPrompt, userPrompt) {
-    const token = TOKEN_POOL[tokenIndex % TOKEN_POOL.length];
-    
-    // 1️⃣ الطبقة الأولى: Qwen 72B
+    // 1️⃣ & 2️⃣ الطبقات السحابية (Qwen 72B & Mistral 7B يتم إدارتهما عبر الـ Proxy الخلفي)
     try {
-        console.log("🚀 Trying Tier 1: Qwen 72B...");
-        return await queryTier(ENDPOINT_TIER1, token, systemPrompt, userPrompt);
+        console.log("🚀 Initiating Cloud AI Optimization via Vercel Secure Proxy...");
+        return await queryQuantumProxy(systemPrompt, userPrompt);
     } catch(e) { 
-        console.warn("⚠️ Tier 1 Failed. Switching directly to Tier 2 (Mistral)...");
-        tokenIndex++; // تدوير التوكين للطلب القادم
+        console.warn("⚠️ Cloud Tiers unreachable or quota exhausted. Activating Tier 3: Local Fallback Engine...");
     }
 
-    // 2️⃣ الطبقة الثانية: Mistral 7B
-    try {
-        console.log("⚡ Trying Tier 2: Mistral 7B...");
-        return await queryTier(ENDPOINT_TIER2, token, systemPrompt, userPrompt);
-    } catch(e) {
-        console.warn("⚠️ Tier 2 Failed. Activating Tier 3: Local Fallback Engine (100% Offline Stability)...");
-    }
-
-    // 3️⃣ الطبقة الثالثة: المحرك المحلي المستقل (استحالة التوقف)
+    // 3️⃣ الطبقة الثالثة: المحرك المحلي المستقر (ضمان عدم التوقف تماماً)
     return executeLocalFallbackEngine(userPrompt);
 }
 
@@ -149,5 +126,5 @@ async function activateGhostModeFilter() {
 // ربط المستمعين والأحداث فور جاهزية الـ DOM لتفادي أخطاء التحميل المبكر
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("triggerJobMatchBtn")?.addEventListener("click", executeAurexJobMatch);
-    console.log("[Aurex AI Core] 3-Tier Hybrid Architecture (Qwen/Mistral/Local) deployed and listening.");
+    console.log("[Aurex AI Core] Secure Proxy-Based 3-Tier Architecture deployed and listening.");
 });
