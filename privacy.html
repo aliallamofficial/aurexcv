@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Encryption Matrix | AurexCV</title>
+    
+    <link rel="icon" type="image/svg+xml" href="./assets/logo.svg">
+    
     <link rel="stylesheet" href="/aurexcv/assets/style.css">
     <style>
-        body { background: #0A0A0C; color: #fff; font-family: 'Inter', sans-serif; padding: 40px 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { color: #D4AF37; border-bottom: 1px solid #222; padding-bottom: 10px; }
-        p { color: #a0a0a5; line-height: 1.6; }
-        .secure-badge { background: rgba(212, 175, 55, 0.1); color: #D4AF37; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-bottom: 20px; }
+        body { background: #0A0A0C; color: #fff; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; margin: 0; }
+        .container { max-width: 800px; margin: 60px auto 0 auto; }
+        h1 { color: #D4AF37; border-bottom: 1px solid #222; padding-bottom: 15px; margin-top: 10px; font-size: 2.2rem; }
+        p { color: #a0a0a5; line-height: 1.8; font-size: 1.1rem; }
+        .secure-badge { background: rgba(212, 175, 55, 0.1); color: #D4AF37; padding: 6px 12px; border-radius: 4px; display: inline-block; margin-bottom: 20px; font-weight: 500; font-size: 0.95rem; }
+        
+        /* 🛡️ تنسيق رابط العودة وتأثيراته الحركية */
+        .back-link { display: inline-block; margin-top: 30px; color: #D4AF37; text-decoration: none; border: 1px solid #D4AF37; padding: 10px 20px; border-radius: 6px; font-weight: 500; transition: all 0.3s ease; }
+        .back-link:hover { background: #D4AF37; color: #0A0A0C; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -18,7 +25,7 @@
         <span class="secure-badge">🔒 100% Zero-Knowledge Local Encryption</span>
         <h1>Sovereign Privacy Encryption Matrix</h1>
         <p>Your career data belongs to you. AurexCV operates under a strict sovereign cryptographic architecture. We do not store, view, or sell your personal credentials. All information compiled within the platform is cached locally in your client terminal database (IndexedDB) and never transmits to external cloud servers, ensuring maximum enterprise-grade protection.</p>
-        <p style="margin-top: 20px;"><a href="/aurexcv/" style="color: #D4AF37; text-decoration: none;">← Return to Hub</a></p>
+        <p><a href="/aurexcv/" class="back-link">← Return to Hub</a></p>
     </div>
 </body>
 </html>
