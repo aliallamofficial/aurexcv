@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.classList.add("active");
             
             const targetTemplate = btn.getAttribute("data-template");
+            // توحيد المعرف البرمجي لمنع تجمد القوالب
             const canvas = document.getElementById("aurexLiveRenderCanvas");
             if (canvas) {
                 canvas.className = `cv-render-paper template-${targetTemplate}`;
@@ -69,7 +70,7 @@ function exportAurexCanvasToStandardPdf() {
             </div>
             <script>
                 window.onload = function() { window.print(); setTimeout(function() { window.close(); }, 500); };
-            </script>
+            <\/script>
         </body>
         </html>
     `);
@@ -213,10 +214,9 @@ function saveAurexSecureLocalSession() {
     }
 }
 
+// تحميل الجلسة والتحقق الآمن لمنع التعارض في الحقول
 function loadAurexSecureLocalSession() {
-    // إعطاء الأولوية للـ Vault العسكري المشفر إن وجد لمنع تعارض الحقول الداكنة
     if (window.AurexVault && localStorage.getItem('aurex_secure_cv_payload')) {
-        // يتم التحميل تلقائياً بواسطة معالج الأحداث في core.js
         setTimeout(() => { renderDynamicNodesToCanvas(); }, 50);
         return;
     }
