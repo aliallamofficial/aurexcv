@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/quantum-ai",
+      "destination": "/api/quantum-ai.js"
+    }
+  ]
+}
