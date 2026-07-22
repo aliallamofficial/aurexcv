@@ -1,5 +1,5 @@
 // ==========================================================================
-// 🧠 AUREX CV ADVANCED 3-TIER HYBRID AI INFRASTRUCTURE ENGINE v5.2
+// 🧠 AUREX CV ADVANCED 3-TIER HYBRID AI INFRASTRUCTURE ENGINE v5.2 (Stable)
 // ==========================================================================
 
 // محرك جلب البيانات الموحد الذي يتصل بالـ Serverless Proxy الآمن على Vercel
@@ -36,6 +36,8 @@ async function queryAurexQuantumAI(systemPrompt, userPrompt) {
 
 // 👻 جناح تنظيف المخرجات وفلترة بصمات المحادثة الزائدة لحماية الملف المهني
 function sanitizeAiOutput(text, systemPrompt, userPrompt) {
+    if (!text || typeof text !== "string") return "";
+
     let cleanText = text
         .replace(/<\|.*?\|>/g, "")
         .replace(/<\|im_start\|>/g, "")
@@ -45,10 +47,10 @@ function sanitizeAiOutput(text, systemPrompt, userPrompt) {
     
     // إزالة تكرار الـ Prompts الهيكلية من المخرجات النهائية إذا أعادها النموذج
     if (systemPrompt && cleanText.includes(systemPrompt)) {
-        cleanText = cleanText.replace(systemPrompt, "");
+        cleanText = cleanText.split(systemPrompt).join("");
     }
     if (userPrompt && cleanText.includes(userPrompt)) {
-        cleanText = cleanText.replace(userPrompt, "");
+        cleanText = cleanText.split(userPrompt).join("");
     }
     return cleanText.trim();
 }
