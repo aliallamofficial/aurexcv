@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
     const finalLang = langParam || savedLang;
     
-    const selector = document.getElementById("globalLangSelector");
+    // 🛠️ تم التصحيح: توحيد المحدد ليصبح langSelector ليتوافق مع i18n.js و ai.js
+    const selector = document.getElementById("langSelector");
     if (selector) {
         selector.value = finalLang;
         selector.addEventListener("change", (e) => {
@@ -38,33 +39,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==========================================================================
-// 🎨 NEW: AUREX TEMPLATE SWITCHER MATRIX (إصلاح عدم استجابة القوالب)
+// 🎨 AUREX TEMPLATE SWITCHER MATRIX (إصلاح عدم استجابة القوالب)
 // ==========================================================================
 function setupTemplateSwitcherMatrix() {
-    // استهداف كافة الأزرار التي تعبر عن القوالب داخل حاوية "قوالب ATS تنفيذية فاخرة"
-    // يدعم الكلاسات المباشرة أو التحديد الهيكلي من الـ DOM
     const templateButtons = document.querySelectorAll(".preview-panel-column .aurex-card button, .template-btn");
-    const previewCanvas = document.getElementById("cvPreviewCanvas"); // تأكد أن هذا الـ ID هو الحاوية الرئيسية للمعاينة في الـ HTML
+    const previewCanvas = document.getElementById("cvPreviewCanvas"); 
 
     templateButtons.forEach(button => {
-        // فلترة الأزرار للتأكد من أنها أزرار اختيار قوالب وليست أزرار التصدير (PDF/DOCX)
         if (button.textContent.includes("Export") || button.id === "exportPdfBtn" || button.id === "exportDocxBtn") return;
 
         button.addEventListener("click", () => {
-            // إزالة حالة النشاط البصري من كافة أزرار القوالب وإضافتها للزر الحالي
             templateButtons.forEach(btn => btn.classList.remove("active-template"));
             button.classList.add("active-template");
 
-            // استخراج اسم القالب برمجياً وتحويله لكلاس قياسي (e.g., "US Federal (Standard)" -> "us-federal-standard")
             const templateClass = button.textContent.trim().toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
 
             if (previewCanvas) {
-                // تصفية الكلاسات القديمة للمعاينة وإعادة تعيين الكلاس الرئيسي
                 previewCanvas.className = "preview-canvas-render";
-                
-                // حقن كلاس التصميم الجديد ليقوم الـ CSS بتغيير الألوان، الخطوط، وتوزيع الـ ATS فوراً
                 previewCanvas.classList.add(`template-${templateClass}`);
-                
                 console.log(`🎨 Aurex UI: Active Template Switched to [template-${templateClass}]`);
             }
         });
@@ -73,7 +65,6 @@ function setupTemplateSwitcherMatrix() {
 
 // مصفوفة إدارة وتبديل الـ 14 ميزة الثورية الحصرية
 function switchSuite(suiteName) {
-    // تحديث مظهر الأزرار في الـ Dock
     document.querySelectorAll(".dock-btn").forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-suite="${suiteName}"]`);
     if (activeBtn) activeBtn.classList.add('active');
@@ -81,7 +72,6 @@ function switchSuite(suiteName) {
     const workspace = document.getElementById("suiteQuantumWorkspace");
     if (!workspace) return;
 
-    // هندسة محتويات الأجنحة الـ 14 غير الموجودة في أي منصة عالمية أخرى
     let suiteHtml = "";
     
     switch(suiteName) {
@@ -90,7 +80,7 @@ function switchSuite(suiteName) {
                 <h3 class="workspace-panel-title">Aurex Job Match (ATS Target Matrix)</h3>
                 <p class="workspace-panel-desc">Paste target job description. Aurex AI extracts keyword architecture instantly.</p>
                 <textarea id="targetJobDescriptionInput" class="aurex-textarea" placeholder="Paste target job listing description here..."></textarea>
-                <button class="aurex-btn-gold mt-15" id="triggerJobMatchBtn" onclick="executeAurexJobMatch()">Execute Reverse Optimization</button>
+                <button class="aurex-btn-gold mt-15" id="triggerJobMatchBtn">Execute Reverse Optimization</button>
             `;
             break;
         case 'interview':
@@ -133,6 +123,13 @@ function switchSuite(suiteName) {
     }
     
     workspace.innerHTML = suiteHtml;
+
+    // 🛠️ إعادة ربط الأحداث ديناميكياً فور حقن الـ HTML لتفادي التضارب
+    if (suiteName === 'match') {
+        document.getElementById("triggerJobMatchBtn")?.addEventListener("click", () => {
+            if (typeof executeAurexJobMatch === "function") executeAurexJobMatch();
+        });
+    }
 }
 
 // إدارة العقد الديناميكية (Dynamic Input Nodes Engine)
@@ -140,7 +137,7 @@ function addNewExperienceNode() {
     const container = document.getElementById("experienceNodesContainer");
     if (!container) return;
     const div = document.createElement("div");
-    div.className = "dynamic-node-block mt-10";
+    div.className = "dynamic-node-block experience-node mt-10"; // إضافة كلاس تمييزي
     div.innerHTML = `
         <input type="text" class="aurex-input exp-company" placeholder="Company / Enterprise Name">
         <input type="text" class="aurex-input exp-role mt-10" placeholder="Role Title">
@@ -155,7 +152,7 @@ function addNewEducationNode() {
     const container = document.getElementById("educationNodesContainer");
     if (!container) return;
     const div = document.createElement("div");
-    div.className = "dynamic-node-block mt-10";
+    div.className = "dynamic-node-block education-node mt-10"; // إضافة كلاس تمييزي
     div.innerHTML = `
         <input type="text" class="aurex-input edu-school" placeholder="University / Institution">
         <input type="text" class="aurex-input edu-degree mt-10" placeholder="Degree / Certification Acquired">
@@ -175,7 +172,6 @@ function setupRealtimeSyncInputEngine() {
         }
     });
 
-    // مراقبة الحقول التي يتم إنشاؤها ديناميكياً
     document.querySelectorAll('.exp-company, .exp-role, .exp-desc, .edu-school, .edu-degree').forEach(el => {
         el.removeEventListener("input", syncInputsToCanvas);
         el.addEventListener("input", syncInputsToCanvas);
@@ -193,7 +189,6 @@ function syncInputsToCanvas() {
     
     updateAtsRadarCalculations();
 
-    // تشغيل الحفظ التلقائي المشفر فوراً عند التعديل لحماية البيانات
     if (window.AurexVault && typeof window.AurexVault.saveCurrentStateToVault === "function") {
         window.AurexVault.saveCurrentStateToVault();
     }
@@ -217,7 +212,6 @@ function updateAtsRadarCalculations() {
     
     if (score > 100) score = 100;
     
-    // تحديث الدائرة الرادارية بالـ CSS المتقدم
     const ring = document.getElementById("atsScoreIndicatorRing");
     if (ring) {
         const circumference = 213.6;
@@ -228,7 +222,6 @@ function updateAtsRadarCalculations() {
     const digits = document.getElementById("atsScoreValueDigits");
     if (digits) digits.textContent = `${score}%`;
 
-    // إطلاق حدث للمزامنة مع نظام الـ Tracking الخارجي إن وُجد
     window.dispatchEvent(new CustomEvent('atsScoreUpdated', { detail: { score: score } }));
 }
 
@@ -248,10 +241,9 @@ window.AurexVault = {
     encryptAndSave(payloadData) {
         const secretKey = this.getVaultKey();
         const jsonString = JSON.stringify(payloadData);
-        // التشفير الآمن باستخدام تكنولوجيا الترميز المتقدم Matrix Base64/AES Prototype
         const encrypted = btoa(encodeURIComponent(jsonString) + "|" + secretKey);
         localStorage.setItem('aurex_secure_cv_payload', encrypted);
-        console.log("[Aurex Vault] Content encrypted via AES-256 standard and secured in LocalStorage.");
+        console.log("[Aurex Vault] Content encrypted and secured in LocalStorage.");
     },
 
     loadAndDecrypt() {
@@ -275,7 +267,8 @@ window.AurexVault = {
             educations: []
         };
 
-        document.querySelectorAll(".dynamic-node-block").forEach(block => {
+        // 🛠️ تم التصحيح الجوهري: فصل الحلقات التكرارية لضمان عدم الخلط وتوليد بيانات فارغة
+        document.querySelectorAll(".experience-node, .dynamic-node-block:not(.education-node)").forEach(block => {
             const comp = block.querySelector(".exp-company");
             const role = block.querySelector(".exp-role");
             const desc = block.querySelector(".exp-desc");
@@ -286,7 +279,9 @@ window.AurexVault = {
                     desc: desc ? desc.value : ""
                 });
             }
+        });
 
+        document.querySelectorAll(".education-node").forEach(block => {
             const school = block.querySelector(".edu-school");
             const degree = block.querySelector(".edu-degree");
             if (school || degree) {
@@ -308,14 +303,13 @@ window.AurexVault = {
         if (document.getElementById("cvTargetTitle") && data.targetTitle) document.getElementById("cvTargetTitle").value = data.targetTitle;
         if (document.getElementById("cvSkillsMatrix") && data.skillsMatrix) document.getElementById("cvSkillsMatrix").value = data.skillsMatrix;
 
-        // إعادة بناء حقول الخبرة المسترجعة
         if (data.experiences && data.experiences.length > 0) {
             const expContainer = document.getElementById("experienceNodesContainer");
             if (expContainer) {
                 expContainer.innerHTML = "";
                 data.experiences.forEach(exp => {
                     const div = document.createElement("div");
-                    div.className = "dynamic-node-block mt-10";
+                    div.className = "dynamic-node-block experience-node mt-10"; // كلاس تمييزي
                     div.innerHTML = `
                         <input type="text" class="aurex-input exp-company" placeholder="Company / Enterprise Name" value="${exp.company || ''}">
                         <input type="text" class="aurex-input exp-role mt-10" placeholder="Role Title" value="${exp.role || ''}">
@@ -326,14 +320,13 @@ window.AurexVault = {
             }
         }
 
-        // إعادة بناء حقول التعليم المسترجعة
         if (data.educations && data.educations.length > 0) {
             const eduContainer = document.getElementById("educationNodesContainer");
             if (eduContainer) {
                 eduContainer.innerHTML = "";
                 data.educations.forEach(edu => {
                     const div = document.createElement("div");
-                    div.className = "dynamic-node-block mt-10";
+                    div.className = "dynamic-node-block education-node mt-10"; // كلاس تمييزي
                     div.innerHTML = `
                         <input type="text" class="aurex-input edu-school" placeholder="University / Institution" value="${edu.school || ''}">
                         <input type="text" class="aurex-input edu-degree mt-10" placeholder="Degree / Certification Acquired" value="${edu.degree || ''}">
@@ -343,7 +336,6 @@ window.AurexVault = {
             }
         }
 
-        // تحديث المعاينة المرئية فورا
         if(document.getElementById("renderName")) document.getElementById("renderName").textContent = data.fullName || "YOUR FULL NAME";
         if(document.getElementById("renderTitle")) document.getElementById("renderTitle").textContent = data.targetTitle || "Target Job Title";
         if(document.getElementById("renderSkills")) document.getElementById("renderSkills").textContent = data.skillsMatrix || "No competencies added yet.";
@@ -352,7 +344,6 @@ window.AurexVault = {
     }
 };
 
-// تشفير وتصدير ملف للمستخدم بصيغة .aurex آمنة بالكامل للكمبيوتر الشخصي
 function downloadAurexEncryptedVault() {
     window.AurexVault.saveCurrentStateToVault();
     const dataStr = localStorage.getItem('aurex_secure_cv_payload');
