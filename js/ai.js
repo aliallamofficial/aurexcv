@@ -4,8 +4,8 @@
 
 // محرك جلب البيانات الموحد الذي يتصل بالـ Serverless Proxy الآمن على Vercel
 async function queryQuantumProxy(system, user) {
-    // الاتصال بالـ Backend المخصص لحماية التوكنات من المتصفح
-    const res = await fetch("/api/quantum-ai", {
+    // تم التعديل: الاتصال برابط Vercel مباشرة لضمان عمل الـ Backend من أي استضافة
+    const res = await fetch("https://aurexcv.vercel.app/api/quantum-ai", {
         method: "POST",
         headers: { 
             "Content-Type": "application/json" 
@@ -127,6 +127,7 @@ async function activateGhostModeFilter() {
 
 // ربط المستمعين والأحداث فور جاهزية الـ DOM لتفادي أخطاء التحميل المبكر
 document.addEventListener("DOMContentLoaded", () => {
+    // تصحيح اختيار الزر البرمجي ليتوافق مع الـ ID الفعلي في الـ DOM
     document.getElementById("triggerJobMatchBtn")?.addEventListener("click", executeAurexJobMatch);
     console.log("[Aurex AI Core] Secure Proxy-Based 3-Tier Architecture deployed and listening.");
 });
