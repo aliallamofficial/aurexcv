@@ -4,33 +4,37 @@
 
 // محرك جلب البيانات الموحد الذي يتصل بالـ Serverless Proxy الآمن على Vercel
 async function queryQuantumProxy(system, user) {
-    // تم التعديل: الاتصال برابط Vercel مباشرة لضمان عمل الـ Backend من أي استضافة
+    // الاتصال برابط Vercel مباشرة مع إضافة ترويسات متوافقة
     const res = await fetch("https://aurexcv.vercel.app/api/quantum-ai", {
         method: "POST",
         headers: { 
-            "Content-Type": "application/json" 
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({ systemPrompt: system, userPrompt: user })
     });
     
-    if (!res.ok) throw new Error("Vercel Tier Cloud Execution Failed");
-    const data = await res.json();
+    if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Vercel Tier Cloud Execution Failed: ${res.status} - ${errorText}`);
+    }
     
-    // تنظيف المخرجات وحذف أي بصمات خوارزمية زائدة
+    const data = await res.json();
     return sanitizeAiOutput(data.result || "", system, user);
 }
 
 // الموزع الذكي ثلاثي الطبقات الحقيقي عبر الـ Backend الآمن (3-Layer Hybrid AI Architecture)
 async function queryAurexQuantumAI(systemPrompt, userPrompt) {
-    // 1️⃣ & 2️⃣ الطبقات السحابية (Qwen 72B & Mistral 7B يتم إدارتهما عبر الـ Proxy الخلفي)
     try {
         console.log("🚀 Initiating Cloud AI Optimization via Vercel Secure Proxy...");
         return await queryQuantumProxy(systemPrompt, userPrompt);
     } catch(e) { 
+        // طباعة الخطأ الحقيقي لمعرفة سبب المشكلة في السيرفر (مثل CORS أو انقطاع مفتاح الـ API)
+        console.error("❌ Cloud Tier Error Details:", e);
         console.warn("⚠️ Cloud Tiers unreachable or quota exhausted. Activating Tier 3: Local Fallback Engine...");
     }
 
-    // 3️⃣ الطبقة الثالثة: المحرك المحلي المستقر (ضمان عدم التوقف تماماً)
+    // الطبقة الثالثة: المحرك المحلي المستقر
     return executeLocalFallbackEngine(userPrompt);
 }
 
@@ -45,7 +49,6 @@ function sanitizeAiOutput(text, systemPrompt, userPrompt) {
         .replace(/assistant/i, "")
         .trim();
     
-    // إزالة تكرار الـ Prompts الهيكلية من المخرجات النهائية إذا أعادها النموذج
     if (systemPrompt && cleanText.includes(systemPrompt)) {
         cleanText = cleanText.split(systemPrompt).join("");
     }
@@ -57,7 +60,8 @@ function sanitizeAiOutput(text, systemPrompt, userPrompt) {
 
 // محرك التصفح والمعالجة المحلي المستقر (Tier-3 Execution Engine)
 function executeLocalFallbackEngine(prompt) {
-    const lang = document.getElementById("globalLangSelector")?.value;
+    // 🛠️ تم التصحيح هنا من globalLangSelector إلى langSelector ليتطابق مع ملف index.html
+    const lang = document.getElementById("langSelector")?.value;
     const isAr = lang === 'ar';
     
     const templates = {
@@ -127,7 +131,6 @@ async function activateGhostModeFilter() {
 
 // ربط المستمعين والأحداث فور جاهزية الـ DOM لتفادي أخطاء التحميل المبكر
 document.addEventListener("DOMContentLoaded", () => {
-    // تصحيح اختيار الزر البرمجي ليتوافق مع الـ ID الفعلي في الـ DOM
     document.getElementById("triggerJobMatchBtn")?.addEventListener("click", executeAurexJobMatch);
     console.log("[Aurex AI Core] Secure Proxy-Based 3-Tier Architecture deployed and listening.");
 });
