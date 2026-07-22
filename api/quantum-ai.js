@@ -1,21 +1,35 @@
 // api/quantum-ai.js
-export default async function handler(req, res) {
-    if (req.method!== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+
+export const config = {
+    runtime: 'edge', // تشغيل على الـ Edge لسرعة استجابة فائقة وتفادي الـ Timeout
+};
+
+export default async function handler(req) {
+    // التحقق من نوع الطلب POST في بيئة Edge Runtime
+    if (req.method !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+            status: 405,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     // 1. جلب التوكينات من Vercel بأمان
     const tokenPool = [
         process.env.HF_TOKEN_PRIMARY,
         process.env.HF_TOKEN_SECONDARY
-    ].filter(Boolean); // فلترة الفاضي
+    ].filter(Boolean);
 
     if (tokenPool.length === 0) {
-        return res.status(500).json({ error: 'No HF_TOKEN configured in Vercel' });
+        return new Response(JSON.stringify({ error: 'No HF_TOKEN configured in Vercel' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     const activeToken = tokenPool[Math.floor(Math.random() * tokenPool.length)];
-    const { systemPrompt, userPrompt } = req.body; // عدلت الاسم عشان يطابق ai.js
+    
+    // قراءة البيانات المرسلة بأمان
+    const { systemPrompt, userPrompt } = await req.json();
 
     const ENDPOINT_TIER1 = "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct";
     const ENDPOINT_TIER2 = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3";
@@ -34,9 +48,15 @@ export default async function handler(req, res) {
         });
         if (r1.ok) {
             const d1 = await r1.json();
-            return res.status(200).json({ result: d1[0]?.generated_text || d1.generated_text }); // مهم جدا
+            const text1 = d1[0]?.generated_text || d1.generated_text || "";
+            return new Response(JSON.stringify({ result: text1 }), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
-    } catch (e) { console.log("Qwen failed, trying Mistral") }
+    } catch (e) { 
+        console.log("Qwen failed, trying Mistral");
+    }
 
     // 3. Tier 2: Mistral Fallback
     try {
@@ -47,9 +67,18 @@ export default async function handler(req, res) {
         });
         if (r2.ok) {
             const d2 = await r2.json();
-            return res.status(200).json({ result: d2[0]?.generated_text || d2.generated_text });
+            const text2 = d2[0]?.generated_text || d2.generated_text || "";
+            return new Response(JSON.stringify({ result: text2 }), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
-    } catch (e) { console.log("Mistral failed") }
+    } catch (e) { 
+        console.log("Mistral failed");
+    }
 
-    return res.status(500).json({ error: "All cloud tiers failed" });
+    return new Response(JSON.stringify({ error: "All cloud tiers failed" }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+    });
 }
