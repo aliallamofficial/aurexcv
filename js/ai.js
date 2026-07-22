@@ -1,17 +1,24 @@
 // ==========================================================================
-// 🧠 AUREX CV ADVANCED 3-TIER HYBRID AI INFRASTRUCTURE ENGINE v5.2 (Stable)
+// 🧠 AUREX CV ADVANCED 3-TIER HYBRID AI INFRASTRUCTURE ENGINE v6.0 (Optimized for Qwen2.5-72B)
 // ==========================================================================
 
-// محرك جلب البيانات الموحد الذي يتصل بالـ Serverless Proxy الآمن على Vercel
-async function queryQuantumProxy(system, user) {
-    // الاتصال برابط Vercel مباشرة مع إضافة ترويسات متوافقة
+// محرك جلب البيانات الموحد المطور لضمان أعلى أداء واستقبال البث اللحظي (Streaming)
+async function queryQuantumProxy(system, user, onChunkReceived = null) {
+    // الاتصال برابط Vercel مع تمرير معلمات الاستدلال المثالية لـ Qwen2.5-72B لتقليل الضغط
     const res = await fetch("https://aurexcv.vercel.app/api/quantum-ai", {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        body: JSON.stringify({ systemPrompt: system, userPrompt: user })
+        body: JSON.stringify({ 
+            systemPrompt: system, 
+            userPrompt: user,
+            temperature: 0.2,       // حرارة منخفضة تمنع التخريف وتضمن صياغة مهنية صارمة
+            top_p: 0.9,             // تركيز دقيق على الكلمات الافتتاحية لنظام الـ ATS
+            max_tokens: 2048,       // سقف التوليد لحفظ الاستهلاك وسرعة الإستجابة
+            stream: onChunkReceived ? true : false
+        })
     });
     
     if (!res.ok) {
@@ -19,23 +26,44 @@ async function queryQuantumProxy(system, user) {
         throw new Error(`Vercel Tier Cloud Execution Failed: ${res.status} - ${errorText}`);
     }
     
+    // دعم قراءة البث اللحظي (Streaming) لتحديث الواجهة كلمة بكلمة
+    if (onChunkReceived && res.body) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let fullText = "";
+        
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            fullText += chunk;
+            // إرسال النص بعد تنظيفه أولاً بأول للواجهة
+            onChunkReceived(sanitizeAiOutput(fullText, system, user));
+        }
+        return sanitizeAiOutput(fullText, system, user);
+    }
+    
+    // الاسترجاع التقليدي (Fallback) في حال عدم استخدام دالة البث
     const data = await res.json();
     return sanitizeAiOutput(data.result || "", system, user);
 }
 
-// الموزع الذكي ثلاثي الطبقات الحقيقي عبر الـ Backend الآمن (3-Layer Hybrid AI Architecture)
-async function queryAurexQuantumAI(systemPrompt, userPrompt) {
+// الموزع الذكي ثلاثي الطبقات الحقيقي عبر الـ Backend الآمن
+async function queryAurexQuantumAI(systemPrompt, userPrompt, onChunkReceived = null) {
     try {
-        console.log("🚀 Initiating Cloud AI Optimization via Vercel Secure Proxy...");
-        return await queryQuantumProxy(systemPrompt, userPrompt);
+        console.log("🚀 Initiating Cloud AI Optimization via Vercel Secure Proxy [Qwen2.5-72B Engine]...");
+        return await queryQuantumProxy(systemPrompt, userPrompt, onChunkReceived);
     } catch(e) { 
-        // طباعة الخطأ الحقيقي لمعرفة سبب المشكلة في السيرفر (مثل CORS أو انقطاع مفتاح الـ API)
         console.error("❌ Cloud Tier Error Details:", e);
         console.warn("⚠️ Cloud Tiers unreachable or quota exhausted. Activating Tier 3: Local Fallback Engine...");
     }
 
     // الطبقة الثالثة: المحرك المحلي المستقر
-    return executeLocalFallbackEngine(userPrompt);
+    const fallbackText = executeLocalFallbackEngine(userPrompt);
+    if (onChunkReceived) {
+        onChunkReceived(fallbackText);
+    }
+    return fallbackText;
 }
 
 // 👻 جناح تنظيف المخرجات وفلترة بصمات المحادثة الزائدة لحماية الملف المهني
@@ -60,7 +88,6 @@ function sanitizeAiOutput(text, systemPrompt, userPrompt) {
 
 // محرك التصفح والمعالجة المحلي المستقر (Tier-3 Execution Engine)
 function executeLocalFallbackEngine(prompt) {
-    // 🛠️ تم التصحيح هنا من globalLangSelector إلى langSelector ليتطابق مع ملف index.html
     const lang = document.getElementById("langSelector")?.value;
     const isAr = lang === 'ar';
     
@@ -83,14 +110,16 @@ async function executeAurexJobMatch() {
     workspace.innerHTML = `<div class="text-center" style="color: #D4AF37; font-weight: 500; padding: 20px;">🧠 Aurex Quantum AI is reverse-engineering the hiring metrics...</div>`;
     
     const sys = "You are an elite ATS recruitment expert. Analyze this Job Description and return ONLY the top 5 missing power keywords, each on a new line. Be concise, bullet points only.";
-    const result = await queryAurexQuantumAI(sys, jd);
     
-    workspace.innerHTML = `
-        <h3 class="workspace-panel-title">🎯 Aurex Reverse Optimization Complete</h3>
-        <p class="workspace-panel-desc">Inject these critical matrix keywords into your skills or experience blocks to bypass strict filters:</p>
-        <div class="ats-feedback-list-box" style="white-space: pre-line; color: #D4AF37; background: rgba(20,20,20,0.4); padding: 15px; border-radius: 6px; border: 1px solid #D4AF37; line-height: 1.6;">${result}</div>
-        <button class="aurex-btn-secondary mt-15" onclick="location.reload()">← Reset Optimization Matrix</button>
-    `;
+    // استخدام الـ Streaming هنا لعرض الكلمات المفتاحية فور خروجها من نموذج Qwen
+    await queryAurexQuantumAI(sys, jd, (chunk) => {
+        workspace.innerHTML = `
+            <h3 class="workspace-panel-title">🎯 Aurex Reverse Optimization Complete</h3>
+            <p class="workspace-panel-desc">Inject these critical matrix keywords into your skills or experience blocks to bypass strict filters:</p>
+            <div class="ats-feedback-list-box" style="white-space: pre-line; color: #D4AF37; background: rgba(20,20,20,0.4); padding: 15px; border-radius: 6px; border: 1px solid #D4AF37; line-height: 1.6;">${chunk}</div>
+            <button class="aurex-btn-secondary mt-15" onclick="location.reload()">← Reset Optimization Matrix</button>
+        `;
+    });
 }
 
 // 🎙️ محاكي المقابلات الشخصية الذكي المتقدم (Aurex AI Interview Simulator)
@@ -107,8 +136,10 @@ async function triggerAiInterviewSimulation() {
     const sys = "You are a demanding Fortune 500 Lead Technical Recruiter. Generate 5 intense, tailored, role-specific interview questions based strictly on the provided user profile.";
     const user = `Target Role: ${titleVal}\nCandidate: ${nameVal}\nCompetencies: ${skillsVal}`;
 
-    const result = await queryAurexQuantumAI(sys, user);
-    consoleDiv.innerHTML = `<div style="white-space: pre-line; background: #111; padding: 15px; border-radius: 6px; text-align: left; border-left: 3px solid #D4AF37; line-height: 1.6; color: #FFF;">${result}</div>`;
+    // طباعة الأسئلة فوراً للمستخدم حرفاً بحرف
+    await queryAurexQuantumAI(sys, user, (chunk) => {
+        consoleDiv.innerHTML = `<div style="white-space: pre-line; background: #111; padding: 15px; border-radius: 6px; text-align: left; border-left: 3px solid #D4AF37; line-height: 1.6; color: #FFF;">${chunk}</div>`;
+    });
 }
 
 // 👻 مرشح التمويه وتخطي كواشف الذكاء الاصطناعي (Aurex Ghost Mode Filter)
@@ -120,12 +151,15 @@ async function activateGhostModeFilter() {
     const sys = "You are an expert copywriter. Rewrite the text to completely bypass commercial AI-detectors (like GPTZero, Turnitin) by introducing natural human burstiness and perplexity. Maintain perfect enterprise vocabulary. Return ONLY the rewritten text.";
     
     alert("Activating Anti-AI Tracking Filter... Rewriting corporate patterns.");
-    const sanitizedText = await queryAurexQuantumAI(sys, originalText);
     
-    skillsInput.value = sanitizedText;
-    if (typeof syncInputsToCanvas === "function") {
-        syncInputsToCanvas();
-    }
+    // تحديث صندوق النص بشكل حي أثناء التوليد
+    await queryAurexQuantumAI(sys, originalText, (chunk) => {
+        skillsInput.value = chunk;
+        if (typeof syncInputsToCanvas === "function") {
+            syncInputsToCanvas();
+        }
+    });
+    
     alert("Text structural sanitization complete! Check your Live Canvas.");
 }
 
