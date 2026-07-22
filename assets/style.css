@@ -1,5 +1,5 @@
 /* ==========================================================================
-   🌌 AUREX CV QUANTUM DESIGN SYSTEM - PRIMARY CSS SHEET (PRODUCTION v5.7)
+   🌌 AUREX CV QUANTUM DESIGN SYSTEM - PRIMARY CSS SHEET (PRODUCTION v6.0)
    ========================================================================== */
 
 /* 🎨 GLOBAL MATRIX SYSTEM VARIABLES */
@@ -532,6 +532,7 @@ body {
     min-height: 800px;
     width: 100%;
     font-family: 'Inter', sans-serif;
+    transition: var(--transition-smooth);
 }
 
 .render-field-name {
@@ -575,6 +576,102 @@ body {
     font-size: 13px;
     color: #333;
     line-height: 1.6;
+}
+
+/* ==========================================================================
+   🏛️ 🚀 EXECUTIVE TEMPLATE STYLES MATRIX (THE ENGINE UPGRADE)
+   ========================================================================== */
+
+/* 1️⃣ القالب الأول: US Federal Template - كلاسيكي أسود ملكي متوافق كلياً مع ATS */
+.cv-render-paper.template-us {
+    font-family: 'Georgia', serif;
+    border-top: 8px solid #111111;
+    padding: 45px;
+}
+.cv-render-paper.template-us .render-field-name {
+    text-align: center;
+    color: #111;
+    font-size: 28px;
+}
+.cv-render-paper.template-us .render-field-title {
+    text-align: center;
+    font-style: italic;
+    color: #444;
+}
+.cv-render-paper.template-us .render-field-contact {
+    text-align: center;
+    border-bottom: 1px double #222;
+    padding-bottom: 12px;
+}
+.cv-render-paper.template-us .canvas-section-title {
+    border-bottom: 2px solid #111;
+    color: #111;
+    letter-spacing: 1px;
+}
+
+/* 2️⃣ القالب الثاني: GCC Executive Template - فاخر بلون كحلي ملكي وذهبي للشركات الخليجية والعالمية */
+.cv-render-paper.template-gcc {
+    font-family: 'Tajawal', 'Arial', sans-serif;
+    border-top: 8px solid #0F2C59;
+    padding: 40px;
+}
+.cv-render-paper.template-gcc .render-field-name {
+    color: #0F2C59;
+    font-size: 26px;
+    border-left: 4px solid #D4AF37;
+    padding-left: 10px;
+}
+[dir="rtl"] .cv-render-paper.template-gcc .render-field-name {
+    border-left: none;
+    border-right: 4px solid #D4AF37;
+    padding-left: 0;
+    padding-right: 10px;
+}
+.cv-render-paper.template-gcc .canvas-section-title {
+    color: #0F2C59;
+    border-bottom: 1px solid #D4AF37;
+    background: rgba(15, 44, 89, 0.03);
+    padding: 4px 8px;
+}
+
+/* 3️⃣ القالب الثالث: EuroPass Modern Template - هادئ بتنسيق أوروبي باللون الرمادي والشرائح الرأسية البسيطة */
+.cv-render-paper.template-eu {
+    font-family: 'Inter', sans-serif;
+    border-top: 8px solid #2B3A42;
+}
+.cv-render-paper.template-eu .render-field-name {
+    color: #2B3A42;
+}
+.cv-render-paper.template-eu .canvas-section-title {
+    color: #2B3A42;
+    border-bottom: 2px dashed #2B3A42;
+}
+
+/* 4️⃣ القالب الرابع: India Technical Template - مخصص للوظائف التقنية والهندسية وشركات الـ IT */
+.cv-render-paper.template-in {
+    font-family: 'Consolas', 'Courier New', monospace;
+    border-top: 8px solid #006666;
+}
+.cv-render-paper.template-in .render-field-name {
+    color: #006666;
+}
+.cv-render-paper.template-in .canvas-section-title {
+    color: #006666;
+    border-bottom: 2px solid #006666;
+}
+
+/* 5️⃣ القالب الخامس: China Corporate Template - قوي باللون الأحمر الداكن والخطوط العريضة للشركات الكبرى */
+.cv-render-paper.template-cn {
+    font-family: 'SimSun', 'Arial', sans-serif;
+    border-top: 8px solid #800000;
+}
+.cv-render-paper.template-cn .render-field-name {
+    color: #800000;
+}
+.cv-render-paper.template-cn .canvas-section-title {
+    color: #800000;
+    border-bottom: 1px solid #800000;
+    letter-spacing: 2px;
 }
 
 /* ✍️ SEO ACCUMULATION CONTENT MATRIX */
