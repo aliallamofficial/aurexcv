@@ -194,11 +194,23 @@
     <script src="/aurexcv/js/i18n.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
-            const htmlEl = document.getElementById("aurexHtml");
-            if(htmlEl) {
-                htmlEl.setAttribute("lang", savedLang);
-                htmlEl.setAttribute("dir", savedLang === 'ar' ? 'rtl' : 'ltr');
+            // التحقق من تفعيل كائن الترجمة وحقن النصوص تلقائياً بناءً على اللغة المفضلة
+            if (window.AurexI18n) {
+                // استرجاع اللغة المفضلة من الرابط أو من التخزين المحلي، والافتراضي الإنجليزية
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlLang = urlParams.get('lang');
+                const savedLang = urlLang || localStorage.getItem("aurex_preferred_lang") || 'en';
+                
+                // تشغيل المحرك لترجمة عناصر [data-i18n] المفقودة في الصورة فوراً
+                window.AurexI18n.switchLanguage(savedLang);
+            } else {
+                // نظام احتياطي في حال تأخر تحميل ملف السكربت الخارجي
+                const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
+                const htmlEl = document.getElementById("aurexHtml");
+                if(htmlEl) {
+                    htmlEl.setAttribute("lang", savedLang);
+                    htmlEl.setAttribute("dir", savedLang === 'ar' ? 'rtl' : 'ltr');
+                }
             }
         });
     </script>
