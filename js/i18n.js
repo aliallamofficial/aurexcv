@@ -1,5 +1,5 @@
 // ==========================================================================
-// 🌐 AUREX CV QUANTUM MULTI-LANGUAGE DICTIONARY & SMART SYSTEMS (V6.0 SOVEREIGN ULTIMATE ECLIPSE)
+// 🌐 AUREX CV QUANTUM MULTI-LANGUAGE DICTIONARY & SMART SYSTEMS (V6.5 ECLIPSE ULTIMATE)
 // ==========================================================================
 
 const aurexTranslations = {
@@ -55,7 +55,20 @@ const aurexTranslations = {
         executeMatch: "Execute Reverse Optimization",
         lockHeader: "🛡️ SOVEREIGN QUANTUM LOCK",
         lockBody: "AI processing channel isolated and local context encrypted due to 10 minutes of complete user inactivity.",
-        lockBtn: "RE-AUTHENTICATE ENGINE CHANNEL"
+        lockBtn: "RE-AUTHENTICATE ENGINE CHANNEL",
+        
+        // 🎨 Premium Templates Keys (Added V6.5)
+        tmplUS: "US Federal (Standard)",
+        tmplGCC: "GCC Executive (Gold)", 
+        tmplEU: "EuroPass Modern",
+        tmplIN: "India Tech Metric",
+        tmplCN: "China Corporate Elite",
+        
+        // 📑 Footer Keys (Added V6.5)
+        footAbout: "About Platform",
+        footPrivacy: "Privacy Encryption Matrix", 
+        footFeedback: "Submit Feedback Wire",
+        footCopyright: "© 2026 AurexCV. Powered by Infinite Quantum Client Engine."
     },
     ar: {
         globalTagline: "أول منصة مهنية مدعومة بالذكاء الاصطناعي لا يمكن هزيمتها",
@@ -91,7 +104,7 @@ const aurexTranslations = {
         canvasSkillsFallback: "امْلأ الحقول في اللوحة اليسرى لتحديث لوحة العرض الحية...",
         blogGlobalTitle: "📖 قاعدة المعرفة المهنية العالمية من Aurex",
         blogGlobalDesc: "مقالات خبراء خاضعة للفحص لتعزيز الكلمات المفتاحية وأرشفة أنظمة تتبع المتقدمين مباشرة.",
-        blogAtsCardTitle: "كيفية تخطي أنظمة ATS في 2026",
+        blogAtsCardTitle: "كيفية تخطي أنظمة ATS in 2026",
         blogAtsCardDesc: "إتقان المقاييس الخوارزمية للحصول على 99% تقييم ATS.",
         blogExecCardTitle: "سيكولوجية كتابة السيرة التنفيذية",
         blogExecCardDesc: "إثبات سلطة الإدارة العليا بالمقاييس الاستراتيجية والحوكمة.",
@@ -109,7 +122,20 @@ const aurexTranslations = {
         executeMatch: "تنفيذ الامتثال الخوارزمي العكسي",
         lockHeader: "🛡️ قفل الأمان الذكي للذكاء الاصطناعي",
         lockBody: "تم عزل وإغلاق قناة معالجة الذكاء الاصطناعي مؤقتاً لحماية تشفير جلسة البيانات بسبب 10 دقائق من الخمول.",
-        lockBtn: "إعادة تفعيل ومصادقة الاتصال"
+        lockBtn: "إعادة تفعيل ومصادقة الاتصال",
+        
+        // 🎨 Premium Templates Keys (Added V6.5)
+        tmplUS: "النظام الفيدرالي الأمريكي (قياسي)",
+        tmplGCC: "التنفيذي الخليجي (الذهبي)", 
+        tmplEU: "يورPass الأوروبي الحديث",
+        tmplIN: "التقني الهندي الرقمي",
+        tmplCN: "نخبة الشركات الصينية",
+        
+        // 📑 Footer Keys (Added V6.5)
+        footAbout: "عن المنصة",
+        footPrivacy: "مصفوفة تشفير الخصوصية", 
+        footFeedback: "إرسال تقرير وملاحظات",
+        footCopyright: "© 2026 أوريكس سي في. يعمل بمحرك الكلاينت اللانهائي الحوسبي."
     },
     fr: {
         globalTagline: "La première plateforme de carrière IA imbattable au monde",
@@ -162,7 +188,7 @@ const aurexTranslations = {
         blogGlobalTitle: "📖 Globale Karriere-Wissensdatenbank",
         readMoreBtn: "Vollständigen Leitfaden lesen →",
         lockHeader: "🛡️ SOUVERÄNE QUANTENSPERRE",
-        lockBody: "KI-Verarbeitungskanal aufgrund von 10 Minuten Inaktivität des Benutzers isoliert.",
+        lockBody: "KI-Verarbeitungskanal aufgrund von 10 minutes Inaktivität des Benutzers isoliert.",
         lockBtn: "INFERENCE-KANAL ERNEUT AKTIVIEREN"
     }
 };
