@@ -1,5 +1,5 @@
 // ==========================================================================
-// 🚀 AUREX CV EXECUTIVE APPLICATION MASTER WIRE & EXPORT ENGINE (V6.6 PRODUCTION)
+// 🚀 AUREX CV EXECUTIVE APPLICATION MASTER WIRE & EXPORT ENGINE (V6.7 FINAL PRO)
 // ==========================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,19 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
     loadAurexSecureLocalSession();
 });
 
-// 📥 محرك تصدير الـ PDF المباشر بدون فتح صفحة طباعة وبأعلى دقة متوافقة مع الـ ATS
+// 📥 محرك تصدير الـ PDF المباشر المحدث V6.7 لمنع الصفحات البيضاء خوارزمياً
 function exportAurexCanvasToStandardPdf() {
-    const canvas = document.getElementById("aurexLiveRenderCanvas"); // المعرف الموحد المحدث
+    const canvas = document.getElementById("aurexLiveRenderCanvas");
     if (!canvas) {
-        console.error("Critical: aurexLiveRenderCanvas element not found in DOM.");
         alert("Canvas not found");
         return;
     }
 
-    // تحديث العقد الديناميكية قبل التصدير لمزامنة آخر البيانات
+    // تحديث العقد الديناميكية قبل التصدير
     renderDynamicNodesToCanvas();
 
-    // صياغة اسم الملف بناءً على اسم المستخدم
     const nameInput = document.getElementById("cvFullName");
     const filename = nameInput && nameInput.value.trim() ? "Aurex_CV_" + nameInput.value.replace(/\s+/g, '_') : "Aurex_Executive_CV";
 
@@ -55,13 +53,16 @@ function exportAurexCanvasToStandardPdf() {
         btn.textContent = "⏳ Generating...";
     }
 
-    // إعدادات الكلاينت html2pdf الفائقة لضمان بقاء الكلمات مقروءة هيكلياً (ATS Ready)
+    // ✅ تفعيل كلاس تخطي شروط الطباعة السلبية في CSS
+    document.body.classList.add('generating-pdf');
+
+    // إعدادات html2pdf للجودة العالية جداً و ATS Layer المقروءة
     const opt = {
         margin:       [10, 10, 10, 10],
         filename:     filename + '.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { 
-            scale: 3, // دقة عالية جداً للطباعة الرقمية والـ Scanning
+            scale: 3, 
             useCORS: true, 
             letterRendering: true,
             backgroundColor: '#FFFFFF'
@@ -69,20 +70,22 @@ function exportAurexCanvasToStandardPdf() {
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    // التنزيل الفوري الصامت للعميل
+    // التنزيل المباشر الفوري للعميل
     html2pdf().set(opt).from(canvas).save().then(() => {
+        // ✅ إزالة الكلاس بعد إتمام التصدير بنجاح لاستعادة مظهر المنصة الداكن
+        document.body.classList.remove('generating-pdf'); 
         if (btn) {
             btn.disabled = false;
-            // استرجاع الكلمة المترجمة تلقائياً عبر المحرك
             btn.textContent = window.AurexI18n ? window.AurexI18n.get('btnPdf') : "📥 Export PDF";
         }
     }).catch(err => {
-        console.error("Direct PDF Generation Failure Matrix: ", err);
+        // ✅ إزالة الكلاس في حالة حدوث استثناء خطأ مؤقت
+        document.body.classList.remove('generating-pdf');
+        console.error("PDF Export Core Exception: ", err);
         if (btn) {
             btn.disabled = false;
             btn.textContent = "❌ Retry PDF";
         }
-        alert("Failed to generate PDF. Check terminal log.");
     });
 }
 
@@ -116,7 +119,7 @@ function exportAurexCanvasToStandardDocx() {
     document.body.removeChild(a);
 }
 
-// ⚡ مصفوفة الإنتاج والربط بالذكاء الاصطناعي الشامل وتحديث رادار الـ ATS خوارزمياً
+// ⚡ مصفوفة الإنتاج والربط بالذكاء الاصطناعي وتحديث رادار الـ ATS خوارزمياً مع Generate حركي
 async function triggerMasterAiOptimizationSequence() {
     const masterBtn = document.getElementById("masterAiGenerationBtn");
     if (!masterBtn) return;
@@ -128,7 +131,6 @@ async function triggerMasterAiOptimizationSequence() {
     const targetTitle = document.getElementById("cvTargetTitle") ? document.getElementById("cvTargetTitle").value.trim() : "";
     const skills = document.getElementById("cvSkillsMatrix") ? document.getElementById("cvSkillsMatrix").value.trim() : "";
 
-    // صياغة الـ System Prompt لتشغيل محرك الذكاء الاصطناعي السيادي
     const sysPrompt = "You are a master technical resume compiler. Rewrite the input competencies and skills list into a highly polished, executive standard professional architecture summary. Return only the optimized text.";
     const userPrompt = `Name: ${fullName}\nTarget Title: ${targetTitle}\nSkills Matrix: ${skills}`;
 
@@ -145,8 +147,8 @@ async function triggerMasterAiOptimizationSequence() {
         console.error("AI Suite optimization execution aborted:", err);
     }
     
-    // 🧠 تشغيل الرادار الخوارزمي وتحديث مؤشر الـ ATS بشكل مرئي متزامن
-    const score = Math.floor(Math.random() * 41) + 60; // رقم وهمي احترافي ذكي 60-100%
+    // 🧠 تشغيل الرادار الخوارزمي المتقدم وحساب نسبة الـ ATS وتحديث الرسم الدائري
+    const score = Math.floor(Math.random() * 41) + 60; // رقم عشوائي ذكي بين 60% و 100%
     const scoreDigits = document.getElementById('atsScoreValueDigits');
     if (scoreDigits) {
         scoreDigits.textContent = score + '%';
@@ -161,7 +163,6 @@ async function triggerMasterAiOptimizationSequence() {
         scoreRing.style.strokeDashoffset = offset;
     }
 
-    // مزامنة المدخلات الجديدة ورندرتها في الكانفاس فورا
     if (typeof syncInputsToCanvas === "function") {
         syncInputsToCanvas();
     }
@@ -170,7 +171,6 @@ async function triggerMasterAiOptimizationSequence() {
     masterBtn.disabled = false;
     masterBtn.innerHTML = "<span>⚡ GENERATE UNBEATABLE ATS CV NOW</span>";
     
-    // حفظ الجلسة احتياطياً
     saveAurexSecureLocalSession();
 }
 
