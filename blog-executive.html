@@ -40,7 +40,7 @@
             font-weight: 800; 
         }
         .article-body { 
-            font-family: var(--font-global); /* ✅ التعديل الأول: ربط الـ Article Body بخط الطباعة الموحد للـ SEO والـ Crawlers */
+            font-family: var(--font-global); /* ✅ ربط الـ Article Body بخط الطباعة الموحد للـ SEO والـ Crawlers */
             font-size: 1.15rem; 
             line-height: 1.9; 
             color: var(--text-secondary); 
@@ -57,7 +57,7 @@
             border-left: 4px solid var(--gold-primary); 
             padding-left: 15px; 
         }
-        /* ✅ التعديل الثاني: دعم كامل ومحترم للـ RTL عند قلب الصفحة للعربية */
+        /* ✅ دعم كامل للـ RTL عند قلب الصفحة للعربية */
         [dir="rtl"] .article-body h2 {
             border-left: none;
             border-right: 4px solid var(--gold-primary);
@@ -215,11 +215,64 @@
     <script src="/aurexcv/js/i18n.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
-            const htmlEl = document.getElementById("aurexHtml");
-            if(htmlEl) {
-                htmlEl.setAttribute("lang", savedLang);
-                htmlEl.setAttribute("dir", savedLang === 'ar' ? 'rtl' : 'ltr');
+            // التحقق من تحميل ملف i18n وحقن الكلمات المفتاحية الذكية للمقالة التنفيذية فوراً
+            if (window.AurexI18n) {
+                if (window.AurexI18n.translations) {
+                    // 1. حقن قاموس النسخة الإنجليزية
+                    if (window.AurexI18n.translations.en) {
+                        Object.assign(window.AurexI18n.translations.en, {
+                            blogDateExec: "July 20, 2026",
+                            blogReadTimeExec: "9 min read",
+                            blogCategoryExec: "Executive Strategy",
+                            blogExecTitle: "The Psychology of Executive Resume Writing: Validating C-Suite Authority",
+                            blogExecP1: "At the executive level, recruitment undergoes a fundamental behavioral shift. A C-suite or Board-level CV is judged purely on risk mitigation, asset governance, and strategic monetization. If your profile reads like a dense list of operational duties, it signals tactical dependency rather than sovereign leadership authority.",
+                            blogExecH2_1: "1. Shifting from Tactical Execution to Strategic Stewardship",
+                            blogExecP2: "Executive placement boards seek to answer one critical psychological question: What happens to the equity value of the enterprise when this individual takes control? Every single phrase must tie an action directly to a corporate macro-metric, such as EBITDA optimization, capitalization enhancement, or margin expansion.",
+                            blogExecBoxTitle: "📊 The Rule of Three: Scaling Your Executive Metrics",
+                            blogExecBoxDesc: "To establish immediate authority, every bullet point under your executive experience must quantify three distinct vectors: The Financial Scale of the asset governed, the Operational Velocity of the change, and the Human Capital Ecosystem mobilized.",
+                            blogExecH2_2: "2. The Architecture of a High-Impact Sovereign Executive Summary",
+                            blogExecP3: "The top 25% of your document is the digital real estate that dictates your path. Standard summaries are filled with empty corporate jargon. Instead, your sovereign summary must act as a precise executive brief outlining your target authority domain and your cumulative P&L responsibility scope.",
+                            nextGuideAts: "📚 Next Architectural Phase: ATS Algorithmic Domination",
+                            nextGuideDescAts: "Learn the exact technical blueprints to master underlying parser layers and achieve absolute screening immunity.",
+                            readAtsBtn: "Read ATS Blueprint →"
+                        });
+                    }
+                    // 2. حقن قاموس النسخة العربية لتعريب المقالة بالكامل
+                    if (window.AurexI18n.translations.ar) {
+                        Object.assign(window.AurexI18n.translations.ar, {
+                            blogDateExec: "٢٠ يوليو ٢٠٢٦",
+                            blogReadTimeExec: "قراءة في ٩ دقائق",
+                            blogCategoryExec: "الاستراتيجية التنفيذية",
+                            blogExecTitle: "سيكولوجية كتابة السيرة الذاتية التنفيذية: إثبات سلطة الإدارة العليا (C-Suite)",
+                            blogExecP1: "عند المستويات القيادية والتنفيذية، يمر التوظيف بتحول سلوكي جذري. حيث يتم تقييم السيرة الذاتية للمديرين التنفيذيين أو أعضاء مجالس الإدارة بناءً على تخفيف المخاطر، وحوكمة الأصول، والقدرة على تحقيق أرباح استراتيجية. إذا كان ملفك الشخصي يبدو وكأنه قائمة مكتظة بالواجبات التشغيلية اليومية، فإن هذا يشير إلى التبعية التكتيكية بدلاً من السلطة السيادية في القيادة.",
+                            blogExecH2_1: "1. الانتقال من التنفيذ التكتيكي إلى الحوكمة الاستراتيجية",
+                            blogExecP2: "تسعى لجان اختيار المسؤولين التنفيذيين للإجابة على سؤال سيكولوجي واحد حاسم: ماذا سيحدث للقيمة السوقية والرأسمالية للمؤسسة عندما يتولى هذا الشخص زمام الأمور؟ يجب أن تربط كل عبارة تصيغها فعلاً تشغيلياً مباشراً بمقياس كلي للشركة، مثل تحسين الأرباح قبل الفوائد والضرائب والإهلاك والاستهلاك (EBITDA)، أو تعزيز الرسملة، أو توسيع هوامش الربح.",
+                            blogExecBoxTitle: "📊 قاعدة الثلاثية: توسيع نطاق المقاييس التنفيذية الخاصة بك",
+                            blogExecBoxDesc: "لتأسيس سلطة مهنية فورية، يجب أن تحدد كل نقطة تحت خبرتك التنفيذية ثلاثة ناقلات متميزة: النطاق المالي للأصول المحوكمة، والسرعة التشغيلية للتغيير، ومنظومة رأس المال البشري التي تم تحريكها وتوجيهها.",
+                            blogExecH2_2: "2. هندسة الملخص التنفيذي السيادي عالي التأثير",
+                            blogExecP3: "الـ 25% العلوية من وثيقتك هي المساحة الرقمية الحقيقية التي تحدد مسارك المهني بالكامل. عادةً ما تمتلئ الملخصات القياسية بالمصطلحات الشركاتية الجوفاء. بدلاً من ذلك، يجب أن يعمل ملخصك السيادي كموجز تنفيذي دقيق يحدد نطاق سلطتك المستهدفة وحجم مسؤوليتك التراكمية عن الأرباح والخسائر (P&L).",
+                            nextGuideAts: "📚 المرحلة الهيكلية التالية: السيطرة الخوارزمية على أنظمة الـ ATS",
+                            nextGuideDescAts: "تعرف على المخططات التقنية الدقيقة لإتقان طبقات التحليل الأساسية والحصول على حصانة مطلقة من الفرز الآلي.",
+                            readAtsBtn: "اقرأ مخطط أنظمة ATS الشامل ←"
+                        });
+                    }
+                }
+
+                // استنباط اللغة المفضلة من محدد الرابط (Query Param) أو التخزين المحلي للمستخدم
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlLang = urlParams.get('lang');
+                const savedLang = urlLang || localStorage.getItem("aurex_preferred_lang") || 'en';
+                
+                // تشغيل المحرك لتبديل اللغات وتحديث اتجاه الـ DOM
+                window.AurexI18n.switchLanguage(savedLang);
+            } else {
+                // آلية دعم احتياطية لتغيير الهيكل الأساسي في حال تأخر استيراد الملف
+                const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
+                const htmlEl = document.getElementById("aurexHtml");
+                if(htmlEl) {
+                    htmlEl.setAttribute("lang", savedLang);
+                    htmlEl.setAttribute("dir", savedLang === 'ar' ? 'rtl' : 'ltr');
+                }
             }
         });
     </script>
