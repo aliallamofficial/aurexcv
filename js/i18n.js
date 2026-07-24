@@ -68,7 +68,21 @@ const aurexTranslations = {
         footAbout: "About Platform",
         footPrivacy: "Privacy Encryption Matrix", 
         footFeedback: "Submit Feedback Wire",
-        footCopyright: "© 2026 AurexCV. Powered by Infinite Quantum Client Engine."
+        footCopyright: "© 2026 AurexCV. Powered by Infinite Quantum Client Engine.",
+
+        // 📝 Article Sub-page Keys (Added V6.7 for fix)
+        backToBlog: "← Back to Blog",
+        blogDate: "July 25, 2026",
+        blogReadTime: "5 min read",
+        blogCategory: "AI & Tech",
+        blogAiTitle: "AI Resume Optimization vs. Artificial Plagiarism",
+        blogAiP1: "Understanding the thin line between optimizing your genuine career milestones for crawlers and generating generic hallucinated text.",
+        blogAiH2_1: "The Mechanics of AI Crawlers",
+        blogAiP2: "Modern applicant tracking systems use advanced LLMs to evaluate context, not just static keywords.",
+        blogAiBoxTitle: "Crucial Rule",
+        blogAiBoxDesc: "Always review AI-generated results to ensure they reflect your real numbers and actual workspace metrics.",
+        blogAiH2_2: "Introducing Aurex Ghost Mode",
+        blogAiP3: "Our signature system strips machine-like patterns, leaving a clean human fingerprint that bypasses rigorous compliance checkers easily."
     },
     ar: {
         globalTagline: "أول منصة مهنية مدعومة بالذكاء الاصطناعي لا يمكن هزيمتها",
@@ -135,7 +149,21 @@ const aurexTranslations = {
         footAbout: "عن المنصة",
         footPrivacy: "مصفوفة تشفير الخصوصية", 
         footFeedback: "إرسال تقرير وملاحظات",
-        footCopyright: "© 2026 أوريكس سي في. يعمل بمحرك الكلاينت اللانهائي الحوسبي."
+        footCopyright: "© 2026 أوريكس سي في. يعمل بمحرك الكلاينت اللانهائي الحوسبي.",
+
+        // 📝 Article Sub-page Keys (Added V6.7 for fix)
+        backToBlog: "← العودة للمدونة",
+        blogDate: "٢٥ يوليو ٢٠٢٦",
+        blogReadTime: "قراءة في ٥ دقائق",
+        blogCategory: "الذكاء الاصطناعي والتقنية",
+        blogAiTitle: "تحسين السيرة بالذكاء الاصطناعي ضد الانتحال الرقمي",
+        blogAiP1: "فهم الخط الفاصل بين تحسين إنجازاتك المهنية الحقيقية لتناسب زواحف الـ ATS وبين توليد نصوص وهمية عامة.",
+        blogAiH2_1: "آلية عمل زواحف تتبع المتقدمين الذكية",
+        blogAiP2: "تستخدم أنظمة تتبع المتقدمين الحديثة نماذج لغوية ضخمة لتقييم السياق الكامل، وليس فقط الكلمات المفتاحية الثابتة.",
+        blogAiBoxTitle: "قاعدة جوهرية",
+        blogAiBoxDesc: "راجع دائماً النتائج التي يولدها الذكاء الاصطناعي لضمان مطابقتها لأرقامك الحقيقية ومقاييس عملك الفعلية.",
+        blogAiH2_2: "تقديم وضع الشبح الرقمي من أوريكس (Ghost Mode)",
+        blogAiP3: "يعمل نظامنا الحصري على تجريد النصوص من الأنماط الآلية المتكررة، مما يترك بصمة بشرية نقية تتخطى فحوصات الامتثال الصارمة بسهولة."
     },
     fr: {
         globalTagline: "La première plateforme de carrière IA imbattable au monde",
@@ -361,7 +389,7 @@ window.AurexI18n = {
             htmlTag.style.fontFamily = "'Inter', sans-serif";
         }
 
-        // 2️⃣ إطلاق كلاس ה-RTL لتشغيل استجابة الـ CSS على الموبايل والشاشات
+        // 2️⃣ إطلاق كلاس الـ RTL لتشغيل استجابة الـ CSS على الموبايل والشاشات
         document.body.classList.toggle('rtl', lang === 'ar');
 
         // 3️⃣ ترجمة عناصر الـ DOM المباشرة [data-i18n]
