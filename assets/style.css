@@ -1,5 +1,5 @@
 /* ==========================================================================
-   🌌 AUREX CV QUANTUM DESIGN SYSTEM - PRIMARY CSS SHEET (PRODUCTION v6.0)
+   🌌 AUREX CV QUANTUM DESIGN SYSTEM - PRIMARY CSS SHEET (PRODUCTION v6.7)
    ========================================================================== */
 
 /* 🎨 GLOBAL MATRIX SYSTEM VARIABLES */
@@ -831,4 +831,20 @@ body {
     .preview-panel-column {
         width: 100% !important;
     }
+}
+
+/* ==========================================================================
+   ☣️ ✅ 6. V6.7 PRODUCTION PATCH: BYPASS ANTI-BLANK LAYER ENGINE
+   ========================================================================== */
+body.generating-pdf .aurex-header,
+body.generating-pdf .unbeatable-features-dock,
+body.generating-pdf .control-panel-column,
+body.generating-pdf .ats-radar-card,
+body.generating-pdf .template-selector-grid,
+body.generating-pdf .hero-intro-section,
+body.generating-pdf .aurex-seo-blog-matrix,
+body.generating-pdf .aurex-footer {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
