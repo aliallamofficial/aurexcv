@@ -1,5 +1,5 @@
 // ==========================================================================
-// 🌐 AUREX CV QUANTUM MULTI-LANGUAGE DICTIONARY & SMART SYSTEMS (V6.5 ECLIPSE ULTIMATE)
+// 🌐 AUREX CV QUANTUM MULTI-LANGUAGE DICTIONARY & SMART SYSTEMS (V6.7 PRO)
 // ==========================================================================
 
 const aurexTranslations = {
@@ -104,8 +104,8 @@ const aurexTranslations = {
         canvasSkillsFallback: "امْلأ الحقول في اللوحة اليسرى لتحديث لوحة العرض الحية...",
         blogGlobalTitle: "📖 قاعدة المعرفة المهنية العالمية من Aurex",
         blogGlobalDesc: "مقالات خبراء خاضعة للفحص لتعزيز الكلمات المفتاحية وأرشفة أنظمة تتبع المتقدمين مباشرة.",
-        blogAtsCardTitle: "كيفية تخطي أنظمة ATS in 2026",
-        blogAtsCardDesc: "إتقان المقاييس الخوارزمية للحصول على 99% تقييم ATS.",
+        blogAtsCardTitle: "كيفية تخطي أنظمة ATS في 2026",
+        blogAtsCardDesc: "إتقان المقاييس الخوارزمية للحصول على 99% تقييم ATS حقيقي.",
         blogExecCardTitle: "سيكولوجية كتابة السيرة التنفيذية",
         blogExecCardDesc: "إثبات سلطة الإدارة العليا بالمقاييس الاستراتيجية والحوكمة.",
         blogAiCardTitle: "تحسين السيرة بالذكاء الاصطناعي ضد الكشف",
@@ -369,6 +369,31 @@ window.AurexI18n = {
             const key = element.getAttribute("data-i18n");
             element.textContent = this.get(key);
         });
+
+        // 🔥 [V6.7 CRITICAL FIX] المزامنة الإجبارية لقسم المقالات (المدونة) لضمان ظهور النصوص باللغتين
+        const blogTitle = document.querySelector('.blog-matrix-title');
+        if (blogTitle) blogTitle.textContent = this.get('blogGlobalTitle');
+        
+        const blogDesc = document.querySelector('.blog-matrix-desc');
+        if (blogDesc) blogDesc.textContent = this.get('blogGlobalDesc');
+
+        const blogCards = document.querySelectorAll('.blog-article-card');
+        if (blogCards.length >= 3) {
+            // المقالة الأولى
+            if (blogCards[0].querySelector('h3')) blogCards[0].querySelector('h3').textContent = this.get('blogAtsCardTitle');
+            if (blogCards[0].querySelector('p')) blogCards[0].querySelector('p').textContent = this.get('blogAtsCardDesc');
+            if (blogCards[0].querySelector('.blog-read-link')) blogCards[0].querySelector('.blog-read-link').textContent = this.get('readMoreBtn');
+            
+            // المقالة الثانية
+            if (blogCards[1].querySelector('h3')) blogCards[1].querySelector('h3').textContent = this.get('blogExecCardTitle');
+            if (blogCards[1].querySelector('p')) blogCards[1].querySelector('p').textContent = this.get('blogExecCardDesc');
+            if (blogCards[1].querySelector('.blog-read-link')) blogCards[1].querySelector('.blog-read-link').textContent = this.get('readMoreBtn');
+
+            // المقالة الثالثة
+            if (blogCards[2].querySelector('h3')) blogCards[2].querySelector('h3').textContent = this.get('blogAiCardTitle');
+            if (blogCards[2].querySelector('p')) blogCards[2].querySelector('p').textContent = this.get('blogAiCardDesc');
+            if (blogCards[2].querySelector('.blog-read-link')) blogCards[2].querySelector('.blog-read-link').textContent = this.get('readMoreBtn');
+        }
 
         // 4️⃣ ترجمة عناصر التلميحات [data-i18n-placeholder]
         document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
