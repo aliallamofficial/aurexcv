@@ -214,11 +214,65 @@
     <script src="/aurexcv/js/i18n.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
-            const htmlEl = document.getElementById("aurexHtml");
-            if(htmlEl) {
-                htmlEl.setAttribute("lang", savedLang);
-                htmlEl.setAttribute("dir", savedLang === 'ar' ? 'rtl' : 'ltr');
+            // التحقق من تحميل ملف i18n وحقن الكلمات المفتاحية الذكية للمقالة فوراً
+            if (window.AurexI18n) {
+                // دمج مفاتيح المقالة الجديدة ديناميكياً في قاموس الترجمة الحالي لضمان عدم حدوث Undefined
+                if (window.AurexI18n.translations) {
+                    // حقن قاموس النسخة الإنجليزية المفقود للمقالة
+                    if (window.AurexI18n.translations.en) {
+                        Object.assign(window.AurexI18n.translations.en, {
+                            blogDateAts: "July 20, 2026",
+                            blogReadTimeAts: "8 min read",
+                            blogCategoryAts: "Technical Blueprint",
+                            blogAtsTitle: "How to Bypass Applicant Tracking Systems (ATS) in 2026: The Sovereign Guide",
+                            blogAtsP1: "The global recruitment landscape has passed the point of traditional human screening. In 2026, more than 98% of Fortune 500 companies utilize highly sophisticated, Large Language Model (LLM)-driven Applicant Tracking Systems (ATS) to gatekeep talent pipelines. Understanding how to engineer an ats resume template 2026 compliant file is a mandatory survival requirement for competitive corporate placements.",
+                            blogAtsH2_1: "1. The Evolution of Parsing: From Keywords to Semantic Vectors",
+                            blogAtsP2: "Modern 2026 frameworks process text contextually. They do not just look for strings of characters; they analyze contextual adjacency and intent mapping. Uncalibrated keyword stuffing now triggers spam filters, tanking your ranking immediately.",
+                            blogAtsBoxTitle: "⚠️ Critical Blueprint Rule: Eliminating Structural Blockers",
+                            blogAtsBoxDesc: "Never place critical identifying data or core technical stacks inside Headers, Footers, or HTML Tables. Many legacy systems completely ignore header data segments, meaning your credentials could be deleted before parsing even begins.",
+                            blogAtsH2_2: "2. Structural Disruption: Why Complex Layouts Fail",
+                            blogAtsP3: "While complex dual-column designs and graphic icons look compelling to a human eye, they act as destructive noise to an algorithmic parser. To secure a flawless audit, your design core must adhere to a strict linear, single-column visual hierarchy.",
+                            nextGuide: "📚 Next: AI Resume Optimization",
+                            nextGuideDesc: "Learn how to avoid AI detection while optimizing your resume.",
+                            readAiBtn: "Read AI Blueprint →"
+                        });
+                    }
+                    // حقن قاموس النسخة العربية المفقود للمقالة لضمان التعريب بنسبة 100%
+                    if (window.AurexI18n.translations.ar) {
+                        Object.assign(window.AurexI18n.translations.ar, {
+                            blogDateAts: "٢٠ يوليو ٢٠٢٦",
+                            blogReadTimeAts: "قراءة في ٨ دقائق",
+                            blogCategoryAts: "مخطط تقني تفصيلي",
+                            blogAtsTitle: "كيفية تخطي أنظمة تتبع المتقدمين (ATS) في 2026: الدليل السيادي الفائق",
+                            blogAtsP1: "لقد تجاوز مشهد التوظيف العالمي مرحلة الفرز البشري التقليدي. في عام 2026، تستخدم أكثر من 98% من شركات Fortune 500 أنظمة تتبع المتقدمين (ATS) متطورة للغاية ومدعومة بالنماذج اللغوية الضخمة (LLM) لحراسة وتصفية الكوادر المتقدمة. إن فهم كيفية بناء سيرة ذاتية متوافقة تماماً مع معايير أنظمة ATS لعام 2026 هو شرط أساسي للبقاء المهني والمنافسة على المناصب الرفيعة.",
+                            blogAtsH2_1: "1. تطور أدوات الفحص والتفكيك: من الكلمات المفتاحية إلى المتجهات الدلالية",
+                            blogAtsP2: "تعالج الأنظمة والبرمجيات الحديثة لعام 2026 النصوص والخبرات سياقياً. إنها لا تبحث فقط عن مجرد أحرف وكلمات مكررة؛ بل تحلل التجاور السياقي وتطابق نوايا صياغة الجمل. حشو الكلمات المفتاحية بشكل عشوائي وغير مدروس يؤدي الآن إلى تفعيل مرشحات البريد العشوائي (Spam Filters) وخفض ترتيب ملفك فوراً.",
+                            blogAtsBoxTitle: "⚠️ قاعدة هيكلية حاسمة: القضاء على عوائق التفكيك والتحليل",
+                            blogAtsBoxDesc: "لا تضع أبداً بيانات الاتصال الهامة أو حزم مهاراتك التقنية الأساسية داخل الترويسات (Headers)، التذييلات (Footers)، أو الجداول (HTML Tables). تتجاهل العديد من الأنظمة القديمة والحديثة مقاطع الترويسات تماماً، مما يعني إمكانية مسح مؤهلاتك قبل بدء التحليل.",
+                            blogAtsH2_2: "2. التعطيل الهيكلي: لماذا تفشل التصاميم المعقدة والمزخرفة",
+                            blogAtsP3: "بينما تبدو التصاميم المعقدة ذات الأعمدة المزدوجة والأيقونات الرسومية جذابة للعين البشرية، فإنها تعمل كضوضاء مدمرة لمحلل البيانات البرمجي للـ ATS. لتأمين فحص مثالي وخالٍ من الأخطاء، يجب أن يلتزم التصميم الأساسي لسيرتك بهيكل عمودي خطي صارم أحادي العمود.",
+                            nextGuide: "📚 التالي: تحسين السيرة بالذكاء الاصطناعي",
+                            nextGuideDesc: "تعرف على كيفية تجنب كواشف الذكاء الاصطناعي أثناء تحسين وتحديث سيرتك الذاتية.",
+                            readAiBtn: "اقرأ الدليل الشامل للذكاء الاصطناعي ←"
+                        });
+                    }
+                }
+
+                // استنباط اللغة المفضلة من محدد الرابط (Query Param) أو التخزين المحلي
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlLang = urlParams.get('lang');
+                const savedLang = urlLang || localStorage.getItem("aurex_preferred_lang") || 'en';
+                
+                // تشغيل محرك الفحص والتبديل فوراً وتعديل اتجاه النصوص للـ RTL والـ LTR
+                window.AurexI18n.switchLanguage(savedLang);
+            } else {
+                // نظام دعم احتياطي عاجل في حال عدم توفر كائن ملف السكربت مؤقتاً
+                const savedLang = localStorage.getItem("aurex_preferred_lang") || 'en';
+                const htmlEl = document.getElementById("aurexHtml");
+                if(htmlEl) {
+                    htmlEl.setAttribute("lang", savedLang);
+                    htmlEl.setAttribute("dir", savedLang === 'ar' ? 'rtl' : 'ltr');
+                }
             }
         });
     </script>
