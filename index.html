@@ -293,7 +293,7 @@
                             <button class="canvas-action-btn" id="exportToDocxBtn" data-i18n="btnDocx">📝 Export DOCX</button>
                         </div>
                     </div>
-                    <div id="cvPaper" class="cv-render-paper template-us">
+                    <div id="aurexLiveRenderCanvas" class="cv-render-paper template-us">
                         <div id="canvasHeaderArea">
                             <h2 id="renderName" class="render-field-name">YOUR NAME</h2>
                             <p id="renderTitle" class="render-field-title">Target Job Title</p>
@@ -481,52 +481,21 @@
 
             // 3️⃣ نظام التبديل الفوري بين القوالب الخمسة (ATS Template Switcher Engine)
             const templateCards = document.querySelectorAll("#templateSelectorGrid .tmpl-card");
-            const cvPaper = document.getElementById("cvPaper");
+            const canvas = document.getElementById("aurexLiveRenderCanvas");
             
             templateCards.forEach(card => {
                 card.addEventListener("click", () => {
                     templateCards.forEach(c => c.classList.remove("active"));
-                    card.classList.remove("active");
                     card.classList.add("active");
                     
                     const selectedTemplate = card.getAttribute("data-template");
-                    // مسح الكلاسات القديمة الخاصة بالقوالب وضخ الكلاس الجديد
-                    cvPaper.className = `cv-render-paper template-${selectedTemplate}`;
+                    if (canvas) {
+                        canvas.className = `cv-render-paper template-${selectedTemplate}`;
+                    }
                 });
             });
 
-            // 4️⃣ محرك تصدير الـ PDF المحلي بدون خادم (Serverless High-Res PDF Export)
-            const exportPdfBtn = document.getElementById("exportToPdfBtn");
-            exportPdfBtn?.addEventListener("click", () => {
-                const nameVal = document.getElementById("cvFullName")?.value.trim();
-                const fileName = nameVal ? `Aurex_CV_${nameVal.replace(/\s+/g, "_")}.pdf` : "Aurex_Executive_CV.pdf";
-                
-                const opt = {
-                    margin:       [0, 0, 0, 0],
-                    filename:     fileName,
-                    image:        { type: 'jpeg', quality: 0.99 },
-                    html2canvas:  { 
-                        scale: 3, 
-                        useCORS: true, 
-                        letterRendering: true,
-                        scrollX: 0,
-                        scrollY: 0
-                    },
-                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-
-                exportPdfBtn.disabled = true;
-                exportPdfBtn.textContent = "⏳ Generating...";
-
-                html2pdf().set(opt).from(cvPaper).save().then(() => {
-                    exportPdfBtn.disabled = false;
-                    exportPdfBtn.textContent = "📥 Export PDF";
-                }).catch(err => {
-                    console.error("PDF Export Core Exception: ", err);
-                    exportPdfBtn.disabled = false;
-                    exportPdfBtn.textContent = "❌ Retry PDF";
-                });
-            });
+            // 💡 [ملاحظة تم التعديل] تم إزالة مستمع الحدث المتكرر للتصدير من هنا ليعتمد المتصفح بالكامل على الدالة المتقدمة المربوطة في ملف app.js بنجاح وبدون تكرار.
         });
         
         // دوال مسح الحقول الاحتياطية لتجنب الـ Undefined Errors
