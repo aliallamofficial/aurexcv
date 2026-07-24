@@ -9,6 +9,7 @@
     <meta name="keywords" content="free cv maker, ats cv, ai cv builder, cv maker, resume builder, cv professionnel, cv بالعربي, automatic resume writer, ai job match, free ats checker">
     <meta name="author" content="AurexCV International">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    
     <link class="hreflang-link" hreflang="en" href="?lang=en">
     <link class="hreflang-link" hreflang="ar" href="?lang=ar">
     <link class="hreflang-link" hreflang="fr" href="?lang=fr">
@@ -125,28 +126,28 @@
         <section class="unbeatable-features-dock">
             <h2 class="dock-title" data-i18n="dockTitle">🛡️ Aurex 14 Sovereign Quantum Suites</h2>
             <div class="dock-grid">
-                <button class="dock-btn active" data-suite="match" onclick="switchSuite('match')"><span>Aurex Job Match</span></button>
-                <button class="dock-btn" data-suite="interview" onclick="switchSuite('interview')"><span>Aurex Interview</span></button>
-                <button class="dock-btn" data-suite="ghost" onclick="switchSuite('ghost')"><span>Aurex Ghost Mode</span></button>
-                <button class="dock-btn" data-suite="linkedin" onclick="switchSuite('linkedin')"><span>LinkedIn Import</span></button>
-                <button class="dock-btn" data-suite="vault" onclick="switchSuite('vault')"><span>Aurex Vault</span></button>
-                <button class="dock-btn" data-suite="tracker" onclick="switchSuite('tracker')"><span>Aurex Tracker</span></button>
-                <button class="dock-btn" data-suite="boost" onclick="switchSuite('boost')"><span>Aurex Boost</span></button>
-                <button class="dock-btn" data-suite="salary" onclick="switchSuite('salary')"><span>Aurex Salary</span></button>
-                <button class="dock-btn" data-suite="cover" onclick="switchSuite('cover')"><span>Cover Letter</span></button>
-                <button class="dock-btn" data-suite="video" onclick="switchSuite('video')"><span>Video Script</span></button>
-                <button class="dock-btn" data-suite="portfolio" onclick="switchSuite('portfolio')"><span>Instant Portfolio</span></button>
-                <button class="dock-btn" data-suite="agent" onclick="switchSuite('agent')"><span>Aurex Agent</span></button>
-                <button class="dock-btn" data-suite="radar" onclick="switchSuite('radar')"><span>Hiring Radar</span></button>
-                <button class="dock-btn" data-suite="negotiation" onclick="switchSuite('negotiation')"><span>Salary Negotiation</span></button>
+                <button class="dock-btn active" data-suite="match" onclick="switchSuite('match')"><span data-i18n="suiteMatch">Aurex Job Match</span></button>
+                <button class="dock-btn" data-suite="interview" onclick="switchSuite('interview')"><span data-i18n="suiteInterview">Aurex Interview</span></button>
+                <button class="dock-btn" data-suite="ghost" onclick="switchSuite('ghost')"><span data-i18n="suiteGhost">Aurex Ghost Mode</span></button>
+                <button class="dock-btn" data-suite="linkedin" onclick="switchSuite('linkedin')"><span data-i18n="suiteLinkedin">LinkedIn Import</span></button>
+                <button class="dock-btn" data-suite="vault" onclick="switchSuite('vault')"><span data-i18n="suiteVault">Aurex Vault</span></button>
+                <button class="dock-btn" data-suite="tracker" onclick="switchSuite('tracker')"><span data-i18n="suiteTracker">Aurex Tracker</span></button>
+                <button class="dock-btn" data-suite="boost" onclick="switchSuite('boost')"><span data-i18n="suiteBoost">Aurex Boost</span></button>
+                <button class="dock-btn" data-suite="salary" onclick="switchSuite('salary')"><span data-i18n="suiteSalary">Aurex Salary</span></button>
+                <button class="dock-btn" data-suite="cover" onclick="switchSuite('cover')"><span data-i18n="suiteCover">Cover Letter</span></button>
+                <button class="dock-btn" data-suite="video" onclick="switchSuite('video')"><span data-i18n="suiteVideo">Video Script</span></button>
+                <button class="dock-btn" data-suite="portfolio" onclick="switchSuite('portfolio')"><span data-i18n="suitePortfolio">Instant Portfolio</span></button>
+                <button class="dock-btn" data-suite="agent" onclick="switchSuite('agent')"><span data-i18n="suiteAgent">Aurex Agent</span></button>
+                <button class="dock-btn" data-suite="radar" onclick="switchSuite('radar')"><span data-i18n="suiteRadar">Hiring Radar</span></button>
+                <button class="dock-btn" data-suite="negotiation" onclick="switchSuite('negotiation')"><span data-i18n="suiteNegotiation">Salary Negotiation</span></button>
             </div>
 
             <div id="suiteQuantumWorkspace" class="suite-workspace-card">
                 <div id="suiteDefaultDisplay">
-                    <h3 class="workspace-panel-title">Aurex Job Match (ATS Target Matrix)</h3>
-                    <p class="workspace-panel-desc">Paste your target job description below. Aurex AI will instantly perform reverse-engineering on the hiring manager's profile, calculate missing skill gaps, and optimize your keywords to achieve a perfect 100% ATS score.</p>
-                    <textarea id="targetJobDescriptionInput" class="aurex-textarea" placeholder="Paste target job listing description here..."></textarea>
-                    <button class="aurex-btn-gold mt-15" id="triggerJobMatchBtn">Execute Reverse Optimization</button>
+                    <h3 class="workspace-panel-title" data-i18n="matchTitle">Aurex Job Match (ATS Target Matrix)</h3>
+                    <p class="workspace-panel-desc" data-i18n="matchDesc">Paste your target job description below. Aurex AI will instantly perform reverse-engineering on the hiring manager's profile, calculate missing skill gaps, and optimize your keywords to achieve a perfect 100% ATS score.</p>
+                    <textarea id="targetJobDescriptionInput" class="aurex-textarea" data-i18n-placeholder="matchPlaceholder" placeholder="Paste target job listing description here..."></textarea>
+                    <button class="aurex-btn-gold mt-15" id="triggerJobMatchBtn" data-i18n="executeMatch">Execute Reverse Optimization</button>
                 </div>
             </div>
         </section>
@@ -154,66 +155,90 @@
         <div class="workspace-layout-grid">
             
             <div class="control-panel-column">
-                <div class="aurex-card">
-                    <h2 class="card-header-title">👤 Personal Identity & Profile</h2>
+                <div class="aurex-card" id="cardIdentity">
+                    <div class="card-header-flex" style="display:flex; justify-content:space-between; align-items:center;">
+                        <h2 class="card-header-title" data-i18n="cardIdentityTitle">👤 Personal Identity & Profile</h2>
+                        <div class="micro-section-controls" style="display:flex; gap:8px;">
+                            <button class="micro-btn-undo" onclick="restoreSectionData('identity')" title="Undo" style="background:transparent; border:none; color:#64ffda; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">↩️</button>
+                            <button class="micro-btn-clear" onclick="clearSectionData('identity')" title="Clear" style="background:transparent; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">🗑️</button>
+                        </div>
+                    </div>
                     <div class="input-group-row">
                         <div class="input-wrapper">
-                            <label class="aurex-label">Full Name</label>
-                            <input type="text" id="cvFullName" class="aurex-input" placeholder="Rolex / Apple Standard Name">
+                            <label class="aurex-label" data-i18n="labelFullName">Full Name</label>
+                            <input type="text" id="cvFullName" class="aurex-input" data-i18n-placeholder="phFullName" placeholder="Rolex / Apple Standard Name">
                         </div>
                         <div class="input-wrapper">
-                            <label class="aurex-label">Target Title</label>
-                            <input type="text" id="cvTargetTitle" class="aurex-input" placeholder="e.g. Lead Software Architect">
+                            <label class="aurex-label" data-i18n="labelTargetTitle">Target Title</label>
+                            <input type="text" id="cvTargetTitle" class="aurex-input" data-i18n-placeholder="phTargetTitle" placeholder="e.g. Lead Software Architect">
                         </div>
                     </div>
                     <div class="input-group-row mt-15">
                         <div class="input-wrapper">
-                            <label class="aurex-label">Email</label>
-                            <input type="text" id="cvEmail" class="aurex-input" placeholder="executive@aurexcv.com">
+                            <label class="aurex-label" data-i18n="labelEmail">Email</label>
+                            <input type="text" id="cvEmail" class="aurex-input" data-i18n-placeholder="phEmail" placeholder="executive@aurexcv.com">
                         </div>
                         <div class="input-wrapper">
-                            <label class="aurex-label">Phone / Location</label>
-                            <input type="text" id="cvPhone" class="aurex-input" placeholder="Global Standard">
+                            <label class="aurex-label" data-i18n="labelPhone">Phone / Location</label>
+                            <input type="text" id="cvPhone" class="aurex-input" data-i18n-placeholder="phPhone" placeholder="Global Standard">
                         </div>
                     </div>
                 </div>
 
-                <div class="aurex-card mt-25">
-                    <div class="card-header-flex">
-                        <h2 class="card-header-title">💼 Professional Experience Chronicle</h2>
-                        <button class="aurex-btn-secondary" onclick="addNewExperienceNode()">+ Add Node</button>
+                <div class="aurex-card mt-25" id="cardExperience">
+                    <div class="card-header-flex" style="display:flex; justify-content:space-between; align-items:center;">
+                        <h2 class="card-header-title" data-i18n="cardExperienceTitle">💼 Professional Experience Chronicle</h2>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div class="micro-section-controls" style="display:flex; gap:8px;">
+                                <button class="micro-btn-undo" onclick="restoreSectionData('experience')" title="Undo" style="background:transparent; border:none; color:#64ffda; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">↩️</button>
+                                <button class="micro-btn-clear" onclick="clearSectionData('experience')" title="Clear" style="background:transparent; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">🗑️</button>
+                            </div>
+                            <button class="aurex-btn-secondary" onclick="addNewExperienceNode()" data-i18n="addNode">+ Add Node</button>
+                        </div>
                     </div>
                     <div id="experienceNodesContainer">
                         <div class="dynamic-node-block">
-                            <input type="text" class="aurex-input exp-company" placeholder="Company / Enterprise Name">
-                            <input type="text" class="aurex-input exp-role mt-10" placeholder="Role Title">
-                            <textarea class="aurex-textarea mt-10 exp-desc" placeholder="Responsibilities & Core Accomplishments (Metrics & Numbers highly recommended for ATS ranking)"></textarea>
+                            <input type="text" class="aurex-input exp-company" data-i18n-placeholder="phCompany" placeholder="Company / Enterprise Name">
+                            <input type="text" class="aurex-input exp-role mt-10" data-i18n-placeholder="phRole" placeholder="Role Title">
+                            <textarea class="aurex-textarea mt-10 exp-desc" data-i18n-placeholder="phExpDesc" placeholder="Responsibilities & Core Accomplishments (Metrics & Numbers highly recommended for ATS ranking)"></textarea>
                         </div>
                     </div>
                 </div>
 
-                <div class="aurex-card mt-25">
-                    <h2 class="card-header-title">🛠️ Skills Matrix & Core Competencies</h2>
-                    <label class="aurex-label">Separate domains with commas (e.g. Artificial Intelligence, System Architecture, Cloud Kubernetes)</label>
-                    <textarea id="cvSkillsMatrix" class="aurex-textarea" placeholder="AI Models, Web3 Architecture, Predictive Modeling..."></textarea>
+                <div class="aurex-card mt-25" id="cardSkills">
+                    <div class="card-header-flex" style="display:flex; justify-content:space-between; align-items:center;">
+                        <h2 class="card-header-title" data-i18n="cardSkillsTitle">🛠️ Skills Matrix & Core Competencies</h2>
+                        <div class="micro-section-controls" style="display:flex; gap:8px;">
+                            <button class="micro-btn-undo" onclick="restoreSectionData('skills')" title="Undo" style="background:transparent; border:none; color:#64ffda; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">↩️</button>
+                            <button class="micro-btn-clear" onclick="clearSectionData('skills')" title="Clear" style="background:transparent; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">🗑️</button>
+                        </div>
+                    </div>
+                    <label class="aurex-label" data-i18n="labelSkillsDesc">Separate domains with commas (e.g. Artificial Intelligence, System Architecture, Cloud Kubernetes)</label>
+                    <textarea id="cvSkillsMatrix" class="aurex-textarea" data-i18n-placeholder="phSkills" placeholder="AI Models, Web3 Architecture, Predictive Modeling..."></textarea>
                 </div>
 
-                <div class="aurex-card mt-25">
-                    <div class="card-header-flex">
-                        <h2 class="card-header-title">🎓 Academic Credentials & Certifications</h2>
-                        <button class="aurex-btn-secondary" onclick="addNewEducationNode()">+ Add Node</button>
+                <div class="aurex-card mt-25" id="cardEducation">
+                    <div class="card-header-flex" style="display:flex; justify-content:space-between; align-items:center;">
+                        <h2 class="card-header-title" data-i18n="cardEducationTitle">🎓 Academic Credentials & Certifications</h2>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div class="micro-section-controls" style="display:flex; gap:8px;">
+                                <button class="micro-btn-undo" onclick="restoreSectionData('education')" title="Undo" style="background:transparent; border:none; color:#64ffda; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">↩️</button>
+                                <button class="micro-btn-clear" onclick="clearSectionData('education')" title="Clear" style="background:transparent; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.7; transition:0.2s;">🗑️</button>
+                            </div>
+                            <button class="aurex-btn-secondary" onclick="addNewEducationNode()" data-i18n="addNode">+ Add Node</button>
+                        </div>
                     </div>
                     <div id="educationNodesContainer">
                         <div class="dynamic-node-block">
-                            <input type="text" class="aurex-input edu-school" placeholder="University / Institution">
-                            <input type="text" class="aurex-input edu-degree mt-10" placeholder="Degree / Certification Acquired">
+                            <input type="text" class="aurex-input edu-school" data-i18n-placeholder="phSchool" placeholder="University / Institution">
+                            <input type="text" class="aurex-input edu-degree mt-10" data-i18n-placeholder="phDegree" placeholder="Degree / Certification Acquired">
                         </div>
                     </div>
                 </div>
 
                 <div class="engine-trigger-zone mt-25">
                     <button id="masterAiGenerationBtn" class="aurex-btn-gold-trigger">
-                        <span>⚡ GENERATE UNBEATABLE ATS CV NOW</span>
+                        <span data-i18n="btnGenerateCV">⚡ GENERATE UNBEATABLE ATS CV NOW</span>
                     </button>
                 </div>
             </div>
@@ -223,8 +248,8 @@
                 <div class="aurex-card ats-radar-card">
                     <div class="ats-radar-header">
                         <div>
-                            <h3 class="ats-radar-title">🧠 Aurex Cognitive ATS Score Radar</h3>
-                            <p class="ats-radar-subtitle">Real-time compilation algorithmic check</p>
+                            <h3 class="ats-radar-title" data-i18n="radarTitleDigits">🧠 Aurex Cognitive ATS Score Radar</h3>
+                            <p class="ats-radar-subtitle" data-i18n="radarSubtitleDigits">Real-time compilation algorithmic check</p>
                         </div>
                         <div class="ats-radial-score-container">
                             <svg class="radial-progress-svg" width="80" height="80" viewBox="0 0 80 80">
@@ -239,25 +264,31 @@
                             ℹ️ Fill in your profile details or execute "Aurex Job Match" to trigger deep scanning.
                         </div>
                     </div>
+                    
+                    <div class="global-purge-zone" style="margin-top: 20px; border-top: 1px dashed #233554; padding-top: 15px; text-align: center;">
+                        <button id="globalPurgeSystemBtn" onclick="executeGlobalSystemPurge()" style="background: linear-gradient(135deg, rgba(255, 77, 77, 0.1), rgba(255, 77, 77, 0.2)); border: 1px solid #ff4d4d; color: #ff6b6b; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-family: monospace; font-size: 12px; letter-spacing: 1px; transition: all 0.3s; width: 100%; box-shadow: 0 4px 15px rgba(255, 77, 77, 0.05);" onmouseover="this.style.background='#ff4d4d'; this.style.color='#000'; this.style.boxShadow='0 0 15px rgba(255, 77, 77, 0.4)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(255, 77, 77, 0.1), rgba(255, 77, 77, 0.2))'; this.style.color='#ff6b6b'; this.style.boxShadow='0 4px 15px rgba(255, 77, 77, 0.05)'">
+                            ☣️ GLOBAL SOVEREIGN SYSTEM PURGE
+                        </button>
+                    </div>
                 </div>
 
                 <div class="aurex-card mt-25">
-                    <h3 class="card-header-title">🎨 Premium Executive ATS Templates</h3>
+                    <h3 class="card-header-title" data-i18n="tmplSelectorTitle">🎨 Premium Executive ATS Templates</h3>
                     <div class="template-selector-grid">
-                        <button class="tmpl-card active" data-template="us"><span>US Federal (Standard)</span></button>
-                        <button class="tmpl-card" data-template="gcc"><span>GCC Executive (Gold)</span></button>
-                        <button class="tmpl-card" data-template="eu"><span>EuroPass Modern</span></button>
-                        <button class="tmpl-card" data-template="in"><span>India Tech Metric</span></button>
-                        <button class="tmpl-card" data-template="cn"><span>China Corporate Elite</span></button>
+                        <button class="tmpl-card active" data-template="us"><span data-i18n="tmplUS">US Federal (Standard)</span></button>
+                        <button class="tmpl-card" data-template="gcc"><span data-i18n="tmplGCC">GCC Executive (Gold)</span></button>
+                        <button class="tmpl-card" data-template="eu"><span data-i18n="tmplEU">EuroPass Modern</span></button>
+                        <button class="tmpl-card" data-template="in"><span data-i18n="tmplIN">India Tech Metric</span></button>
+                        <button class="tmpl-card" data-template="cn"><span data-i18n="tmplCN">China Corporate Elite</span></button>
                     </div>
                 </div>
 
                 <div class="cv-preview-outer-frame mt-25">
                     <div class="canvas-action-bar">
-                        <span class="canvas-badge">Aurex Live Render System (ATS Compliant)</span>
+                        <span class="canvas-badge" data-i18n="liveRenderBadge">Aurex Live Render System (ATS Compliant)</span>
                         <div class="canvas-actions">
-                            <button class="canvas-action-btn" id="exportToPdfBtn">📥 Export PDF</button>
-                            <button class="canvas-action-btn" id="exportToDocxBtn">📝 Export DOCX</button>
+                            <button class="canvas-action-btn" id="exportToPdfBtn" data-i18n="btnPdf">📥 Export PDF</button>
+                            <button class="canvas-action-btn" id="exportToDocxBtn" data-i18n="btnDocx">📝 Export DOCX</button>
                         </div>
                     </div>
                     <div id="aurexLiveRenderCanvas" class="cv-render-paper template-us">
@@ -269,7 +300,7 @@
                         <hr class="canvas-divider">
                         <div id="canvasBodyArea">
                             <h3 class="canvas-section-title" data-i18n="sectionSkills">Core Technical Competencies</h3>
-                            <p id="renderSkills" class="render-field-text">Fill inputs on the left panel to update live display canvas...</p>
+                            <p id="renderSkills" class="render-field-text" data-i18n="canvasSkillsFallback">Fill inputs on the left panel to update live display canvas...</p>
                             
                             <h3 class="canvas-section-title mt-15" data-i18n="sectionExp">Professional Experience</h3>
                             <div id="renderExperience"></div>
@@ -284,8 +315,8 @@
         </div>
 
         <section class="aurex-seo-blog-matrix mt-50" id="blog">
-            <h2 class="blog-matrix-title">📖 Aurex Global Career Knowledge Base</h2>
-            <p class="blog-matrix-desc">Expert articles audited for structural keyword rich rankings and direct applicant tracking system indexing.</p>
+            <h2 class="blog-matrix-title" data-i18n="blogGlobalTitle">📖 Aurex Global Career Knowledge Base</h2>
+            <p class="blog-matrix-desc" data-i18n="blogGlobalDesc">Expert articles audited for structural keyword rich rankings and direct applicant tracking system indexing.</p>
             <div class="blog-posts-grid">
                 <article class="blog-article-card">
                     <h3 data-i18n="blogAtsCardTitle">How to Bypass Applicant Tracking Systems (ATS) in 2026</h3>
@@ -308,11 +339,11 @@
 
     <footer class="aurex-footer">
         <div class="footer-links">
-            <a href="about.html">About Platform</a>
-            <a href="privacy.html">Privacy Encryption Matrix</a>
-            <a href="feedback.html">Submit Feedback Wire</a>
+            <a href="about.html" data-i18n="footAbout">About Platform</a>
+            <a href="privacy.html" data-i18n="footPrivacy">Privacy Encryption Matrix</a>
+            <a href="feedback.html" data-i18n="footFeedback">Submit Feedback Wire</a>
         </div>
-        <p class="footer-copyright">© 2026 AurexCV. Powered by Infinite Quantum Client Engine. 100% Sovereign and Free.</p>
+        <p class="footer-copyright" data-i18n="footCopyright">© 2026 AurexCV. Powered by Infinite Quantum Client Engine. 100% Sovereign and Free.</p>
     </footer>
 
     <script src="js/i18n.js"></script>
