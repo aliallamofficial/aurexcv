@@ -50,6 +50,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="assets/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -197,7 +199,7 @@
                         </div>
                     </div>
                     <div id="experienceNodesContainer">
-                        <div class="dynamic-node-block">
+                        <div class="dynamic-node-block" style="margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 15px;">
                             <input type="text" class="aurex-input exp-company" data-i18n-placeholder="phCompany" placeholder="Company / Enterprise Name">
                             <input type="text" class="aurex-input exp-role mt-10" data-i18n-placeholder="phRole" placeholder="Role Title">
                             <textarea class="aurex-textarea mt-10 exp-desc" data-i18n-placeholder="phExpDesc" placeholder="Responsibilities & Core Accomplishments (Metrics & Numbers highly recommended for ATS ranking)"></textarea>
@@ -229,7 +231,7 @@
                         </div>
                     </div>
                     <div id="educationNodesContainer">
-                        <div class="dynamic-node-block">
+                        <div class="dynamic-node-block" style="margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 15px;">
                             <input type="text" class="aurex-input edu-school" data-i18n-placeholder="phSchool" placeholder="University / Institution">
                             <input type="text" class="aurex-input edu-degree mt-10" data-i18n-placeholder="phDegree" placeholder="Degree / Certification Acquired">
                         </div>
@@ -274,7 +276,7 @@
 
                 <div class="aurex-card mt-25">
                     <h3 class="card-header-title" data-i18n="tmplSelectorTitle">🎨 Premium Executive ATS Templates</h3>
-                    <div class="template-selector-grid">
+                    <div class="template-selector-grid" id="templateSelectorGrid">
                         <button class="tmpl-card active" data-template="us"><span data-i18n="tmplUS">US Federal (Standard)</span></button>
                         <button class="tmpl-card" data-template="gcc"><span data-i18n="tmplGCC">GCC Executive (Gold)</span></button>
                         <button class="tmpl-card" data-template="eu"><span data-i18n="tmplEU">EuroPass Modern</span></button>
@@ -291,7 +293,7 @@
                             <button class="canvas-action-btn" id="exportToDocxBtn" data-i18n="btnDocx">📝 Export DOCX</button>
                         </div>
                     </div>
-                    <div id="aurexLiveRenderCanvas" class="cv-render-paper template-us">
+                    <div id="cvPaper" class="cv-render-paper template-us">
                         <div id="canvasHeaderArea">
                             <h2 id="renderName" class="render-field-name">YOUR NAME</h2>
                             <p id="renderTitle" class="render-field-title">Target Job Title</p>
@@ -361,6 +363,185 @@
     <script src="js/ai.js"></script>
     <script src="js/core.js"></script>
     <script src="js/app.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1️⃣ تحديث المعاينة الحية للحقول الأساسية فورياً (Live Sync System)
+            const syncField = (inputId, previewId, uppercase = false) => {
+                const inputEl = document.getElementById(inputId);
+                const previewEl = document.getElementById(previewId);
+                if (inputEl && previewEl) {
+                    inputEl.addEventListener("input", (e) => {
+                        let value = e.target.value.trim();
+                        if (uppercase) value = value.toUpperCase();
+                        previewEl.textContent = value || inputEl.placeholder;
+                    });
+                }
+            };
+
+            syncField("cvFullName", "renderName", true);
+            syncField("cvTargetTitle", "renderTitle");
+            
+            // دمج الإيميل مع الهاتف في سطر الاتصال بالمعاينة
+            const emailInput = document.getElementById("cvEmail");
+            const phoneInput = document.getElementById("cvPhone");
+            const renderContact = document.getElementById("renderContact");
+            
+            const updateContactPreview = () => {
+                if (renderContact) {
+                    const email = emailInput?.value.trim() || "executive@aurexcv.com";
+                    const phone = phoneInput?.value.trim() || "Global Standard Node";
+                    renderContact.textContent = `${email} | ${phone}`;
+                }
+            };
+            emailInput?.addEventListener("input", updateContactPreview);
+            phoneInput?.addEventListener("input", updateContactPreview);
+
+            // تحديث المهارات فورياً
+            const skillsInput = document.getElementById("cvSkillsMatrix");
+            const renderSkills = document.getElementById("renderSkills");
+            skillsInput?.addEventListener("input", (e) => {
+                if (renderSkills) renderSkills.textContent = e.target.value.trim() || "AI Models, Web3 Architecture...";
+            });
+
+            // 2️⃣ إدارة وتحديث الكتل الديناميكية (الخبرات والتعليم) فوراً
+            window.updateDynamicPreview = () => {
+                // تجميع وتحديث الخبرات
+                const expContainer = document.getElementById("experienceNodesContainer");
+                const renderExp = document.getElementById("renderExperience");
+                if (expContainer && renderExp) {
+                    renderExp.innerHTML = "";
+                    const blocks = expContainer.querySelectorAll(".dynamic-node-block");
+                    blocks.forEach(block => {
+                        const company = block.querySelector(".exp-company")?.value.trim();
+                        const role = block.querySelector(".exp-role")?.value.trim();
+                        const desc = block.querySelector(".exp-desc")?.value.trim();
+                        if (company || role || desc) {
+                            const nodeHtml = `
+                                <div style="margin-bottom: 12px;">
+                                    <strong style="font-size: 13px; color: #111;">${role || 'Role Title'}</strong> - 
+                                    <span style="font-size: 13px; color: #555;">${company || 'Company Name'}</span>
+                                    <p style="font-size: 12px; color: #333; margin-top: 2px; white-space: pre-line;">${desc || ''}</p>
+                                </div>`;
+                            renderExp.insertAdjacentHTML("beforeend", nodeHtml);
+                        }
+                    });
+                }
+
+                // تجميع وتحديث التعليم
+                const eduContainer = document.getElementById("educationNodesContainer");
+                const renderEdu = document.getElementById("renderEducation");
+                if (eduContainer && renderEdu) {
+                    renderEdu.innerHTML = "";
+                    const blocks = eduContainer.querySelectorAll(".dynamic-node-block");
+                    blocks.forEach(block => {
+                        const school = block.querySelector(".edu-school")?.value.trim();
+                        const degree = block.querySelector(".edu-degree")?.value.trim();
+                        if (school || degree) {
+                            const nodeHtml = `
+                                <div style="margin-bottom: 8px;">
+                                    <strong style="font-size: 13px; color: #111;">${degree || 'Degree'}</strong>
+                                    <p style="font-size: 12px; color: #555; margin-top: 1px;">${school || 'Institution'}</p>
+                                </div>`;
+                            renderEdu.insertAdjacentHTML("beforeend", nodeHtml);
+                        }
+                    });
+                }
+            };
+
+            // ربط الاستماع للحقول الحالية في الصفحة
+            document.getElementById("experienceNodesContainer")?.addEventListener("input", window.updateDynamicPreview);
+            document.getElementById("educationNodesContainer")?.addEventListener("input", window.updateDynamicPreview);
+
+            // تمديد الدوال الحالية لإضافة حقول جديدة مع ربط المعاينة الحية
+            const originalAddExp = window.addNewExperienceNode;
+            window.addNewExperienceNode = () => {
+                const container = document.getElementById("experienceNodesContainer");
+                const newBlock = `
+                    <div class="dynamic-node-block" style="margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 15px;">
+                        <input type="text" class="aurex-input exp-company" placeholder="Company / Enterprise Name">
+                        <input type="text" class="aurex-input exp-role mt-10" placeholder="Role Title">
+                        <textarea class="aurex-textarea mt-10 exp-desc" placeholder="Responsibilities & Core Accomplishments..."></textarea>
+                    </div>`;
+                container?.insertAdjacentHTML("beforeend", newBlock);
+                window.updateDynamicPreview();
+            };
+
+            window.addNewEducationNode = () => {
+                const container = document.getElementById("educationNodesContainer");
+                const newBlock = `
+                    <div class="dynamic-node-block" style="margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 15px;">
+                        <input type="text" class="aurex-input edu-school" placeholder="University / Institution">
+                        <input type="text" class="aurex-input edu-degree mt-10" placeholder="Degree / Certification Acquired">
+                    </div>`;
+                container?.insertAdjacentHTML("beforeend", newBlock);
+                window.updateDynamicPreview();
+            };
+
+            // 3️⃣ نظام التبديل الفوري بين القوالب الخمسة (ATS Template Switcher Engine)
+            const templateCards = document.querySelectorAll("#templateSelectorGrid .tmpl-card");
+            const cvPaper = document.getElementById("cvPaper");
+            
+            templateCards.forEach(card => {
+                card.addEventListener("click", () => {
+                    templateCards.forEach(c => c.classList.remove("active"));
+                    card.classList.remove("active");
+                    card.classList.add("active");
+                    
+                    const selectedTemplate = card.getAttribute("data-template");
+                    // مسح الكلاسات القديمة الخاصة بالقوالب وضخ الكلاس الجديد
+                    cvPaper.className = `cv-render-paper template-${selectedTemplate}`;
+                });
+            });
+
+            // 4️⃣ محرك تصدير الـ PDF المحلي بدون خادم (Serverless High-Res PDF Export)
+            const exportPdfBtn = document.getElementById("exportToPdfBtn");
+            exportPdfBtn?.addEventListener("click", () => {
+                const nameVal = document.getElementById("cvFullName")?.value.trim();
+                const fileName = nameVal ? `Aurex_CV_${nameVal.replace(/\s+/g, "_")}.pdf` : "Aurex_Executive_CV.pdf";
+                
+                const opt = {
+                    margin:       [0, 0, 0, 0],
+                    filename:     fileName,
+                    image:        { type: 'jpeg', quality: 0.99 },
+                    html2canvas:  { 
+                        scale: 3, 
+                        useCORS: true, 
+                        letterRendering: true,
+                        scrollX: 0,
+                        scrollY: 0
+                    },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                exportPdfBtn.disabled = true;
+                exportPdfBtn.textContent = "⏳ Generating...";
+
+                html2pdf().set(opt).from(cvPaper).save().then(() => {
+                    exportPdfBtn.disabled = false;
+                    exportPdfBtn.textContent = "📥 Export PDF";
+                }).catch(err => {
+                    console.error("PDF Export Core Exception: ", err);
+                    exportPdfBtn.disabled = false;
+                    exportPdfBtn.textContent = "❌ Retry PDF";
+                });
+            });
+        });
+        
+        // دوال مسح الحقول الاحتياطية لتجنب الـ Undefined Errors
+        function clearSectionData(sec) {
+            if(sec==='identity') {
+                document.getElementById('cvFullName').value='';
+                document.getElementById('cvTargetTitle').value='';
+                document.getElementById('cvEmail').value='';
+                document.getElementById('cvPhone').value='';
+                document.getElementById('cvFullName').dispatchEvent(new Event('input'));
+            }
+        }
+        function restoreSectionData(sec) { console.log('Rollback initial data core matrix for: ' + sec); }
+        function switchSuite(suite) { console.log('Switching workspace matrix logic to: ' + suite); }
+    </script>
 
     <script>
         if ('serviceWorker' in navigator) {
